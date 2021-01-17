@@ -15,4 +15,8 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping("/home.nex")
+	public String homeNEX(Locale locale, Model model) {
+		return "redirect:/nex/index.html";
+	}
 }
