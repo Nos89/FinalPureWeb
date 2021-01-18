@@ -46,6 +46,7 @@ public class InfoController {
 					model.addAttribute("userPart", "교수");
 					return "info/userPage";
 				}
+				
 			} else if (result == 0) {
 				return "/info/login";
 			}

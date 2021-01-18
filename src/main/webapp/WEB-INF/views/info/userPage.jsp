@@ -96,7 +96,7 @@
             </div>
             <div class="row info_school">
                 <div class="col-12">
-               <img src="copyright.png" style="margin-left: 140px">
+               <img src="/resources/img/info/copyright.png" style="margin-left: 140px">
                 </div>
             </div>
             
