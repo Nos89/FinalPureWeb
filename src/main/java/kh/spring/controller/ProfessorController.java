@@ -12,7 +12,7 @@ import com.nexacro.uiadapter17.spring.core.annotation.ParamVariable;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 
 import kh.spring.dto.MilitaryDTO;
-import kh.spring.dto.MilitaryDTO_NEX;
+import kh.spring.dto.ProFileDTO;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.ProfessorDTO_NEX;
 import kh.spring.service.ProfessorService;
@@ -28,11 +28,15 @@ public class ProfessorController {
 	public NexacroResult proInfoOnLoad(@ParamVariable(name="id") String id) {
 		NexacroResult nr = new NexacroResult();
 		System.out.println("신호옴 :"+id);
+		int result = 0;
 		List<ProfessorDTO> infoList = new ArrayList<>();
 		infoList = pservice.selectInfo(id);
 		
 		List<MilitaryDTO> milList = new ArrayList<>();
 		milList = pservice.selectMil(id);
+		
+		ProFileDTO dto =pservice.checkImg(id);
+		nr.addDataSet("out_proFile", dto);
 	    nr.addDataSet("out_proInfo", infoList);
 	    nr.addDataSet("out_proMil", milList);
 		return nr;
