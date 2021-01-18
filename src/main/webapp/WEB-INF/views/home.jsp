@@ -13,21 +13,21 @@
 			<div class="col-1"></div>
 			<div class="col-10 advSliderWrapper">
 				<div class="advSlider">
-					<div class="advItemWrapper"><img></div>
-					<div class="advItemWrapper"><img></div>
-					<div class="advItemWrapper"><img></div>
-					<div class="advItemWrapper"><img></div>
-					<div class="advItemWrapper"><img></div>
-					<div class="advItemWrapper"><img></div>
-					<div class="advItemWrapper"><img></div>
-					<div class="advItemWrapper"><img></div>
-					<div class="advItemWrapper"><img></div>
-					<div class="advItemWrapper"><img></div>
+					<div class="advItemWrapper"><img src="/resources/img/home/adv01.jpg">1</div>
+					<div class="advItemWrapper"><img src="/resources/img/home/adv02.jpg">2</div>
+					<div class="advItemWrapper"><img src="/resources/img/home/adv03.jpg">3</div>
+					<div class="advItemWrapper"><img src="/resources/img/home/adv04.png">4</div>
+					<div class="advItemWrapper"><img src="/resources/img/home/adv05.jpg">5</div>
+					<div class="advItemWrapper"><img src="/resources/img/home/adv06.jpg">6</div>
+					<div class="advItemWrapper"><img src="/resources/img/home/adv07.jpg">7</div>
+					<div class="advItemWrapper"><img src="/resources/img/home/adv08.jpg">8</div>
+					<div class="advItemWrapper"><img src="/resources/img/home/adv09.jpg">9</div>
+					<div class="advItemWrapper"><img src="/resources/img/home/adv10.jpg">10</div>
 				</div>
 			</div>
 			<div class="col-1"></div>
-			<div class="col-1 pt-3"></div>
-			<div class="col-10 pt-3">
+			<div class="col-1 pt-3 mb-3"></div>
+			<div class="col-10 pt-3 mb-3">
 				<div class="row">
 					<div class="col-6 border border-secondary">
 						<div class="row">
@@ -94,7 +94,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-1 pt-3"></div>
+			<div class="col-1 pt-3 mb-3"></div>
 			<script>
 				$(document).ready(function(){
 					$(".homeSlide").bxSlider({
@@ -102,7 +102,18 @@
 						pager: false,
 						controls: false
 					});
+					
+					$(".advSlider").bxSlider({
+						auto: true,
+						minSlides: 4,
+						maxSlides: 4,
+						slideWidth: 200,
+						moveSlides: 1,
+						captions: true,
+						pager: false
+					})
 				})
+				
 			</script>
 		</div>
 <%@ include file="main/footer.jsp" %>
