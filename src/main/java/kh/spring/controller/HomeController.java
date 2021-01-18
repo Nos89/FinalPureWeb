@@ -15,4 +15,14 @@ public class HomeController {
 		return "/info/login";
 	}
 	
+	@RequestMapping("/main")
+	public String simplePageGoTo(String pageGroup, String type, Model model) {
+		model.addAttribute("type", type);
+		return "main/"+pageGroup+"/"+type;
+	}
+	
+	@RequestMapping("/home.nex")
+	public String homeNEX(Locale locale, Model model) {
+		return "redirect:/nex/index.html";
+	}
 }
