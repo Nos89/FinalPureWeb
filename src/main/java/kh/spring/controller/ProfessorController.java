@@ -48,6 +48,8 @@ public class ProfessorController {
 	public NexacroResult lecturePlanOnload(@ParamVariable(name="id") String id) {
 		NexacroResult nr = new NexacroResult();
 		System.out.println("신호옴");
+		List<Lecture> list = new ArrayList<>();
+		pservice.selectlecture(id);
 		return nr;
 	}
 }
