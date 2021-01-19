@@ -12,7 +12,6 @@ import com.nexacro.uiadapter17.spring.core.annotation.ParamVariable;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 
 import kh.spring.dto.MilitaryDTO;
-import kh.spring.dto.MilitaryDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.ProfessorDTO_NEX;
 import kh.spring.service.ProfessorService;
@@ -43,5 +42,12 @@ public class ProfessorController {
 		System.out.println("신호옴");
 		pservice.updateProInfo(pdto);
 		return new NexacroResult();
+	}
+	
+	@RequestMapping("/lecturePlanOnLoad")
+	public NexacroResult lecturePlanOnload(@ParamVariable(name="id") String id) {
+		NexacroResult nr = new NexacroResult();
+		System.out.println("신호옴");
+		return nr;
 	}
 }
