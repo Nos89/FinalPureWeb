@@ -108,10 +108,14 @@ public class MainBoardController {
 		} else {
 			model.addAttribute("view", true);
 		}
-		
-		
 		return "main/" + pageGroup + "/" + type;
 	}
+	
+	// 댓글 보기
+	
+	// 댓글 작성
+	
+	
 	
 	// 게시글 삭제
 	@RequestMapping("/board.delete")
@@ -133,6 +137,7 @@ public class MainBoardController {
 		model.addAttribute("purp", "view");
 		return "redirect:/main/board.view";
 	}
+	
 	// 페이지 유효성
 	private int convertPage( String page ) {
 		int currentPage = 1;
