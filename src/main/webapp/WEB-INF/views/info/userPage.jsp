@@ -23,7 +23,7 @@
             <div class="row menu">
                 <div class="col-4 menu_infosys" style="margin-left: 150px; ">종합정보시스템</div>
            <div class="col-4 menu_eleattend" >전자출결</div>
-                <div class="col-4 menu_homepage" >대표홈페이지</div>
+                <div class="col-4 menu_homepage" ><a href="/">대표홈페이지</a></div>
           
             </div>
             

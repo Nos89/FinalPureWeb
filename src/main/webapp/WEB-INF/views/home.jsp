@@ -86,10 +86,12 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-3 border border-secondary">
-						<div class="row h-100">
+					<div class="col-3 border border-secondary text-center">
+						<div class="row h-100 goBox">
 							<div class="col-12 h-50">입학 정보 한눈에 보기</div>
-							<div class="col-12 h-50">포털 바로가기</div>
+							<div class="col-12 h-50">
+								<a href="/info/login">포털 바로가기</a>
+							</div>
 						</div>
 					</div>
 				</div>
