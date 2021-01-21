@@ -15,18 +15,17 @@
 	</div>
 </div>
 <script>
-	$(document).ready(function(){
-		let listLength = $(".list-group-item").length;
-		let arrType = [];
-		for( let i = 0; i < listLength; i++ ){
-			let href = $(".list-group-item").eq(i).children().attr("href");
-			arrType[i] = href.substring( href.indexOf("type=") + 5, href.length );
+$(document).ready(function(){
+	let listLength = $(".list-group-item").length;
+	let arrType = [];
+	for( let i = 0; i < listLength; i++ ){
+		let href = $(".list-group-item").eq(i).children().attr("href");
+		arrType[i] = href.substring( href.indexOf("type=") + 5, href.length );
+	}
+	for( let i = 0; i < arrType.length; i++ ){
+		if( "${type}" == arrType[i] ){
+			$(".list-group-item").eq(i).addClass("active");
 		}
-		console.log(arrType);
-		for( let i = 0; i < arrType.length; i++ ){
-			if( "${type}" == arrType[i] ){
-				$(".list-group-item").eq(i).addClass("active");
-			}
-		}
-	})
+	}
+})
 </script>

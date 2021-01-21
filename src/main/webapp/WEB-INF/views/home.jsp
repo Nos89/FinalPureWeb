@@ -103,14 +103,19 @@
 						controls: false
 					});
 					
-					$(".advSlider").bxSlider({
+					let advSlider = $(".advSlider").bxSlider({
 						auto: true,
 						minSlides: 4,
 						maxSlides: 4,
 						slideWidth: 200,
 						moveSlides: 1,
 						captions: true,
-						pager: false
+						pager: false,
+						autoHover: true,
+						stopAutoOnClick: true,
+						onSlideAfter: function($slideElement, oldIndex, newIndex){
+							advSlider.startAuto();
+						}
 					})
 				})
 				
