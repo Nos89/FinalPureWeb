@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Board">
+	<!-- 게시물 작성 -->
+	<insert id="insert">
+		insert into board values( board_seq.nextval, 
+		(select code from board_division where title = #{boardType})
+		, #{title}, #{contents}, #{writer}, sysdate)
+	</insert>
+	
+	<!-- 현재 게시판 게시물 갯수 -->
+	<select id="articleCount" resultType="Integer">
+		select count(*) from board where division_code = (select code from board_division where title = #{value})
+	</select>
+	
+	<!-- 현재 페이지당 게시물 목록 가져오기 -->
+	<select id="getArticles" resultType="kh.spring.dto.BoardDTO">
+		select * from 
+			(select 
+			<choose>
+				<when test="boardType == 'board_notice'">
+					board_notice.*
+				</when>
+				<otherwise>
+					board.*
+				</otherwise>
+			</choose>
+			, row_number() over( order by 
+			<choose>
+				<when test="boardType == 'board_notice'">
+					noti_writeDate
+				</when>
+				<otherwise>
+					writeDate		
+				</otherwise>
+			</choose>
+			 desc ) rn 
+			from 
+			<choose>
+				<when test="boardType == 'board_notice'">
+					board_notice)
+				</when>
+				<otherwise>
+					board where division_code = (select code from board_division where title = #{boardType}))
+				</otherwise>
+			</choose>
+			where rn between #{startNumByPage} and #{endNumByPage}
+	</select>
+	
+	<!-- 게시물 하나 seq로 가져오기 -->
+	<select id="getArticle" resultType="kh.spring.dto.BoardDTO">
+		select * from 
+		<choose>
+				<when test="boardType == 'board_notice'">
+					board_notice
+				</when>
+				<otherwise>
+					board
+				</otherwise>
+			</choose>
+		where 
+		<choose>
+			<when test="boardType == 'board_notice'">
+				noti_seq = #{noti_seq}
+			</when>
+			<otherwise>
+				seq = #{seq}			
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 게시물 수정 -->
+	<update id="modifyArticle">
+		update board 
+		set title=#{bdto.title}, contents=#{bdto.contents} 
+		where seq=#{bdto.seq} and division_code = (select code from board_division where title = #{boardType})
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteArticle">
+		delete board where seq = #{seq} and division_code = (select code from board_division where title = #{boardType})
+	</delete>
+</mapper>

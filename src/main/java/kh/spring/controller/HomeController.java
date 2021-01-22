@@ -12,12 +12,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
+		//return "/info/login";
 		return "home";
 	}
 	
 	@RequestMapping("/main")
 	public String simplePageGoTo(String pageGroup, String type, Model model) {
 		model.addAttribute("type", type);
+		model.addAttribute("pageGroup", pageGroup);
+		if( pageGroup.contentEquals("community")) {
+			model.addAttribute("write", false);
+			return "redirect:/main/board.list";
+		}
 		return "main/"+pageGroup+"/"+type;
 	}
 	
