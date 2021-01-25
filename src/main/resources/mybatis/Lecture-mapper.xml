@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Lecture">
+	<select id="openClass_lecPlan" resultType="kh.spring.dto.OpenClass_LecPlan">
+		select oc_code,oc_year,oc_semester,oc_max,oc_part,oc_is_close,oc_close_reason,oc_pro_code,oc_class_room,
+		oc_targetlevel,oc_schedule,s.name,s.reco_score,s.isu
+		from subject s, open_class o where s.code=oc_code AND oc_pro_code=#{value}
+	</select>
+	
+	<select id="selectLecture"  resultType="kh.spring.dto.LectureDTO">
+		select * from lecture where lec_code in (select oc_code from open_class where oc_pro_code=#{value})
+	</select>
+	
+	<update id="updateLecturePlan">
+		update lecture set lec_title=#{lec_title},lec_schedule=#{lec_schedule},lec_summary=#{lec_summary},lec_way=#{lec_way},lec_book=#{lec_book},lec_eval=#{lec_eval} where lec_code=#{lec_code}
+	</update>
+	<insert id="insertLecturePlan">
+	insert into lecture values(#{lec_code},#{lec_title},0,'',#{pro_name},#{lec_semester}
+		,#{lec_targetLevel},#{lec_classroom},#{lec_schedule},#{lec_score},#{lec_isu},#{lec_summary},#{lec_way},#{lec_book},#{lec_eval})
+	</insert>
+
+</mapper>
