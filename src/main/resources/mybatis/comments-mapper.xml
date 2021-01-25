@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Comments">
+	<select id="countAll" resultType="Integer">
+		select count(*) from comments where parent_code = #{value}
+	</select>
+	<select id="getComments" resultType="kh.spring.dto.CommentsDTO">
+		select * from 
+			(select comments.*, row_number() over( order by reg_date desc) rn from comments where parent_code = #{seq})
+		where rn between #{startNumByPage} and #{endNumByPage}
+	</select>
+	<insert id="insertComments">
+		insert into comments values(comment_seq.nextval, #{parent_code}, #{writer}, #{contents}, sysdate)
+	</insert>
+	
+	<delete id="deleteComments">
+		delete from comments where seq=#{value}
+	</delete>
+</mapper>
