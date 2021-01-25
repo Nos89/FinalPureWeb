@@ -9,7 +9,7 @@
 					<div class="col-8 mainMenu">
 						<div class="menuItem" href="#introduce"><a href="/main?pageGroup=intro&type=intro">학사 소개</a></div>
 						<div class="menuItem" href="#intCol"><a href="/main?pageGroup=info&type=info">학사 안내</a></div>
-						<div class="menuItem" href="#community"><a href="/main?pageGroup=community&type=freeBoard">커뮤니티</a></div>
+						<div class="menuItem" href="#community"><a href="/main?pageGroup=community&type=free">커뮤니티</a></div>
 						<div class="menuItem" href="#signUpInfo"><a href="#">입학 안내</a></div>
 					</div>
 					<div class="col-2"></div>
@@ -108,12 +108,12 @@
 							</div>
 							<div class="col-3 menuItemWrapper">
 								<ol>
-									<li><a href="/main?pageGroup==community&type=freeBoard">자유 게시판</a></li>
-									<li><a href="/main?pageGroup==community&type=anonymBoard">대나무숲</a></li>
-									<li><a href="/main?pageGroup==community&type=reportBoard">건의 게시판</a></li>
-									<li><a href="/main?pageGroup==community&type=notice">공지사항</a></li>
-									<li><a href="/main?pageGroup==community&type=promoteBoard">홍보 게시판</a></li>
-									<li><a href="/main?pageGroup==community&type=eventBoard">행사 게시판</a></li>
+									<li><a href="/main?pageGroup=community&type=free">자유 게시판</a></li>
+									<li><a href="/main?pageGroup=community&type=anonym">대나무숲</a></li>
+									<li><a href="/main?pageGroup=community&type=report">건의 게시판</a></li>
+									<li><a href="/main?pageGroup=community&type=notice">공지사항</a></li>
+									<li><a href="/main?pageGroup=community&type=promote">홍보 게시판</a></li>
+									<li><a href="/main?pageGroup=community&type=event">행사 게시판</a></li>
 								</ol>
 							</div>
 						</div>	

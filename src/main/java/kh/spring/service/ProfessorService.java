@@ -1,14 +1,17 @@
 package kh.spring.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kh.spring.dao.ProFileDAO;
 import kh.spring.dao.ProfessorDAO;
+import kh.spring.dto.DepartmentDTO;
+import kh.spring.dto.DepartmentOfficeDTO;
 import kh.spring.dto.MilitaryDTO;
+import kh.spring.dto.ProFileDTO;
+import kh.spring.dto.ProListDTO;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.ProfessorDTO_NEX;
 import kh.spring.utils.ConvertDate;
@@ -18,6 +21,9 @@ public class ProfessorService {
 	
 	@Autowired
 	private ProfessorDAO pdao;
+	
+	@Autowired
+	private ProFileDAO fdao;
 	
 	private ConvertDate con;
 	
@@ -38,5 +44,19 @@ public class ProfessorService {
 		return pdao.updateProInfo(pdto);
 	}
 	
+	public ProFileDTO checkImg(String id) {
+		return fdao.checkImg(id);
+	}
+	
+	public List<ProListDTO> selectProList(String id){
+		return pdao.selectProList(id);
+	}
 
+	public DepartmentDTO selectDepartment(String id) {
+		return pdao.selectDepartment(id);
+	}
+	
+	public DepartmentOfficeDTO selectDepartmentOffice(String id) {
+		return pdao.selectDepartmentOffice(id);
+	}
 }
