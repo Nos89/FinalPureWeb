@@ -9,6 +9,7 @@ public class OpenClass_LecPlan {
 	private String oc_schedule;
 	private int oc_max;
 	private String oc_part;
+	private String oc_is_close;
 	private String oc_close_reason;
 	private String oc_pro_code;
 	private String oc_class_room;
@@ -17,8 +18,8 @@ public class OpenClass_LecPlan {
 	private int reco_score;
 	private String isu;
 	public OpenClass_LecPlan(String oc_code, Date oc_year, String oc_semester, String oc_schedule, int oc_max,
-			String oc_part, String oc_close_reason, String oc_pro_code, String oc_class_room, String oc_targetlevel,
-			String name, int reco_score, String isu) {
+			String oc_part, String oc_is_close, String oc_close_reason, String oc_pro_code, String oc_class_room,
+			String oc_targetlevel, String name, int reco_score, String isu) {
 		super();
 		this.oc_code = oc_code;
 		this.oc_year = oc_year;
@@ -26,6 +27,7 @@ public class OpenClass_LecPlan {
 		this.oc_schedule = oc_schedule;
 		this.oc_max = oc_max;
 		this.oc_part = oc_part;
+		this.oc_is_close = oc_is_close;
 		this.oc_close_reason = oc_close_reason;
 		this.oc_pro_code = oc_pro_code;
 		this.oc_class_room = oc_class_room;
@@ -74,6 +76,12 @@ public class OpenClass_LecPlan {
 	public void setOc_part(String oc_part) {
 		this.oc_part = oc_part;
 	}
+	public String getOc_is_close() {
+		return oc_is_close;
+	}
+	public void setOc_is_close(String oc_is_close) {
+		this.oc_is_close = oc_is_close;
+	}
 	public String getOc_close_reason() {
 		return oc_close_reason;
 	}
@@ -116,6 +124,7 @@ public class OpenClass_LecPlan {
 	public void setIsu(String isu) {
 		this.isu = isu;
 	}
+	
 	
 	
 }
