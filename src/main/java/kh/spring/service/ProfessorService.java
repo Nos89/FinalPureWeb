@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.ProFileDAO;
 import kh.spring.dao.ProfessorDAO;
+import kh.spring.dto.LectureDTO;
 import kh.spring.dto.MilitaryDTO;
+import kh.spring.dto.OpenClass_LecPlan;
 import kh.spring.dto.ProFileDTO;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.ProfessorDTO_NEX;
@@ -44,5 +46,6 @@ public class ProfessorService {
 	public ProFileDTO checkImg(String id) {
 		return fdao.checkImg(id);
 	}
+	
 
 }
