@@ -1,13 +1,14 @@
 package kh.spring.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.LectureDTO;
 import kh.spring.dto.MilitaryDTO;
+import kh.spring.dto.OpenClass_LecPlan;
 import kh.spring.dto.ProfessorDTO;
 
 @Repository
@@ -25,9 +26,9 @@ public class ProfessorDAO {
 	};
 	
 	public int updateProInfo(ProfessorDTO dto) {
-		System.out.println("여기까지옴");
-		int result = db.update("Professor.proInfoUpdate",dto);
-		System.out.println("성공함");
-		return result;
+		return db.update("Professor.proInfoUpdate",dto);
+	
 	}
+	
+
 }
