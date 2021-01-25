@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Student">
+	
+	<select id="selectAllInfo" resultType="kh.spring.dto.StudentInfoDTO">
+			select 
+	    u.id,u.pw,u.name,u.birth,
+	    u.gender,u.country,u.indate,u.outdate,
+	    c.col_title,d.dept_title,
+	    u.zipcode,u.addr1,u.addr2,u.email,u.phone,
+	    u.bank,u.accountnum
+			from
+	    users u, college c, department d
+	    where u.colcode=c.col_code AND u.deptcode=d.dept_code AND id = 'S-1001'
+	</select>
+	
+	<select id="selectArmy" resultType="kh.spring.dto.MilitaryDTO">
+			select
+		m.std_code,m.mil_indate,m.mil_outdate,g.mil_title,m.mil_rank,m.mil_code
+			from military m, militarygroup g
+	    where m.mil_groupcode=g.mil_groupcode AND m.std_code= 'S-1001'
+	</select>
+	
+	<select id="selectStuDetail" resultType="kh.spring.dto.StudentDetailDTO">
+		select * from students where id = 'S-1001'
+	</select>
+	
+	<update id="stuInfoUpdate">
+		update users set name=#{name},gender=#{gender},country=#{country},birth=#{birth},indate=#{inDate},outdate=#{outDate},
+		zipcode=#{zipcode},addr1=#{addr1},addr2=#{addr2},email=#{email},phone=#{phone},bank=#{bank},accountnum=#{accountnum}
+		where id=#{id}
+	</update>
+</mapper>
