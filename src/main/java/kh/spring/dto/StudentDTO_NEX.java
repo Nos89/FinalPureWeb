@@ -2,7 +2,7 @@ package kh.spring.dto;
 
 import java.util.Date;
 
-public class ProfessorDTO_NEX  {
+public class StudentDTO_NEX {
 	private int chk=0;
 	private String id;
 	private String pw;
@@ -14,8 +14,8 @@ public class ProfessorDTO_NEX  {
 	private Date outDate;
 	private String colcode;
 	private String deptcode;
-	private String col_title; //코드로 가져온 대학이름
-	private String dept_title; //코드로 가져온 과 이름
+	private String col_title;
+	private String dept_title;
 	private String zipcode;
 	private String addr1;
 	private String addr2;
@@ -23,12 +23,16 @@ public class ProfessorDTO_NEX  {
 	private String phone;
 	private String bank;
 	private String accountnum;
-	private String pro_office;
-	private String pro_status;
+	private String std_status;
+	private int std_year;
 	
-	public ProfessorDTO_NEX(int chk, String id, String pw, String name, java.util.Date birth, String gender, String country,
-			java.util.Date inDate, java.util.Date outDate, String colcode, String deptcode, String col_title, String dept_title, String zipcode,
-			String addr1, String addr2, String email, String phone, String bank, String accountnum, String pro_office, String pro_status) {
+	public StudentDTO_NEX() {
+		super();
+	}
+	public StudentDTO_NEX(int chk, String id, String pw, String name, Date birth, String gender, String country,
+			Date inDate, Date outDate, String colcode, String deptcode, String col_title, String dept_title,
+			String zipcode, String addr1, String addr2, String email, String phone, String bank, String accountnum,
+			String std_status, int std_year) {
 		super();
 		this.chk = chk;
 		this.id = id;
@@ -50,12 +54,8 @@ public class ProfessorDTO_NEX  {
 		this.phone = phone;
 		this.bank = bank;
 		this.accountnum = accountnum;
-		this.pro_office = pro_office;
-		this.pro_status = pro_status;
-	}
-	public ProfessorDTO_NEX() {
-		super();
-		// TODO Auto-generated constructor stub
+		this.std_status = std_status;
+		this.std_year = std_year;
 	}
 	
 	public int getChk() {
@@ -82,10 +82,10 @@ public class ProfessorDTO_NEX  {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public java.util.Date getBirth() {
+	public Date getBirth() {
 		return birth;
 	}
-	public void setBirth(java.util.Date birth) {
+	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
 	public String getGender() {
@@ -100,16 +100,16 @@ public class ProfessorDTO_NEX  {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public java.util.Date getInDate() {
+	public Date getInDate() {
 		return inDate;
 	}
-	public void setInDate(java.util.Date inDate) {
+	public void setInDate(Date inDate) {
 		this.inDate = inDate;
 	}
-	public java.util.Date getOutDate() {
+	public Date getOutDate() {
 		return outDate;
 	}
-	public void setOutDate(java.util.Date outDate) {
+	public void setOutDate(Date outDate) {
 		this.outDate = outDate;
 	}
 	public String getColcode() {
@@ -178,20 +178,16 @@ public class ProfessorDTO_NEX  {
 	public void setAccountnum(String accountnum) {
 		this.accountnum = accountnum;
 	}
-	public String getPro_office() {
-		return pro_office;
+	public String getStd_status() {
+		return std_status;
 	}
-	public void setPro_office(String pro_office) {
-		this.pro_office = pro_office;
+	public void setStd_status(String std_status) {
+		this.std_status = std_status;
 	}
-	public String getPro_status() {
-		return pro_status;
+	public int getStd_year() {
+		return std_year;
 	}
-	public void setPro_status(String pro_status) {
-		this.pro_status = pro_status;
+	public void setStd_year(int std_year) {
+		this.std_year = std_year;
 	}
-	public void setUtilDate(java.sql.Date date) {
-		this.birth = new java.util.Date(date.getTime());
-	}
-	
 }

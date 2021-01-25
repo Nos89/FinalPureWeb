@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Admin">
+
+<!-- 공지사항 가져오기 -->
+<select id="getNotice" resultType="kh.spring.dto.NoticeDTO">
+	SELECT * FROM BOARD_NOTICE ORDER BY NOTI_SEQ DESC
+</select>
+
+<!-- 교수 목록 가져오기 -->
+<select id="getProfessor" resultType="kh.spring.dto.ProfessorDTO">
+	SELECT
+	    U.ID, PW, NAME, BIRTH, GENDER, COUNTRY,
+	   	INDATE, OUTDATE, COLCODE, DEPTCODE, C.COL_TITLE, D.DEPT_TITLE,
+	    ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE,
+	    BANK, ACCOUNTNUM, PRO_OFFICE, PRO_STATUS
+	FROM USERS U, COLLEGE C, DEPARTMENT D, PROFESSOR P
+	WHERE U.ID=P.PRO_ID AND U.DEPTCODE=D.DEPT_CODE AND D.COL_CODE=C.COL_CODE
+	ORDER BY U.ID
+</select>
+
+<!-- 교수 등록 -->
+<insert id="addProfessor">
+	INSERT ALL
+    	INTO USERS
+    	VALUES(#{id},#{pw},#{birth},#{gender},#{country},
+				#{inDate},#{outDate},#{colcode},#{deptcode},
+				#{zipcode},#{addr1},#{addr2},#{email},#{phone},
+				#{bank},#{accountnum})
+    	INTO PROFESSOR
+    	VALUES(#{id},#{pro_office},#{pro_status})
+	SELECT * FROM DUAL;
+</insert>
+
+<!-- 학생 목록 가져오기 -->
+<select id="getStudent" resultType="kh.spring.dto.StudentDTO">
+	SELECT
+    	U.ID, PW, NAME, BIRTH, GENDER, COUNTRY,
+	    INDATE, OUTDATE, COLCODE, DEPTCODE, C.COL_TITLE, D.DEPT_TITLE,
+	    ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE,
+	    BANK, ACCOUNTNUM,
+	    STD_STATUS, STD_YEAR
+	FROM USERS U, COLLEGE C, DEPARTMENT D, STUDENTS S
+	WHERE U.ID=S.ID AND U.DEPTCODE=D.DEPT_CODE AND D.COL_CODE=C.COL_CODE
+	ORDER BY U.ID
+</select>
+
+<!-- 학생 등록 -->
+<insert id="addStudent">
+	INSERT ALL
+    	INTO USERS
+    	VALUES(#{id},#{pw},#{birth},#{gender},#{country},
+				#{inDate},#{outDate},#{colcode},#{deptcode},
+				#{zipcode},#{addr1},#{addr2},#{email},#{phone},
+				#{bank},#{accountnum})
+    	INTO STUDENTS
+    	VALUES(#{id},#{std_status},#{std_year})
+	SELECT * FROM DUAL;
+</insert>
+
+</mapper>
