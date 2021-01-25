@@ -24,6 +24,10 @@ public class BoardDAO {
 		return session.selectOne("Board.articleCount", type);
 	}
 	
+	public int getArticleCount(Map map) {
+		return session.selectOne("Board.articleSearchCount", map);
+	}
+	
 	// 네비 페이지당 게시물
 	public List<BoardDTO> getArticleByPage( Map map ){
 		return session.selectList("Board.getArticles", map);
@@ -42,5 +46,10 @@ public class BoardDAO {
 	// 게시글 삭제
 	public int deleteArticle( Map map ) {
 		return session.delete("Board.deleteArticle", map);
+	}
+	
+	// 게시글 검색
+	public List<BoardDTO> boardSearch( Map map ){
+		return session.selectList("Board.boardSearch", map);
 	}
 }

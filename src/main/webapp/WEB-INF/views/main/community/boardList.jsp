@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!-- 게시물 목록 페이지 -->
 <div class="row">
 	<div class="col-12 boardWrapper">
 		<div class="row">
@@ -14,8 +15,12 @@
 				<c:forEach var="i" items="${cont.list}">
 				<div class="row">
 					<div class="col-1 boardSeq text-center">${i.seq}</div>
-					<div class="col-6 boardTitle"><a href="/main/board.view?pageGroup=${pageGroup}&type=${type}&seq=${i.seq}&page=${page}&purp=view">${i.title}</a></div>
-					<div class="col-2 boardWriter text-center">${i.writer}</div>
+					<div class="col-6 boardTitle">
+						<a href="/main/board.view?pageGroup=${pageGroup}&type=${type}&seq=${i.seq}&page=${page}&purp=view${ search != null ? '&search=' : '' }${search!=null?search:''}">${i.title}</a>
+					</div>
+					<div class="col-2 boardWriter text-center">
+						${ type == 'notice'? '관리자': type == 'anonym'? '익명' : i.writer}
+					</div>
 					<div class="col-3 boardDate text-center">${i.writeDate}</div>
 				</div>
 				</c:forEach>
@@ -40,7 +45,9 @@
 			<div class="col-2"><button type="button" class="btn btn-outline-primary btnSearch">검색</button></div>
 		</div>
 	</div>
+	<c:if test="${type != 'notice' && type != 'promote' && type != 'event'}">
 	<div class="col-2 mt-4"><button type="button" class="btn btn-outline-primary btnFreeWrite">글쓰기</button></div>
+	</c:if>
 </div>
 <script>
 	$(document).ready(function(){
@@ -52,7 +59,7 @@
 			let searchType = $("select[name=searchType]").val();
 			let search = $(".searchText").val();
 			search = searchType+"-"+search;
-			console.log(search);
+			location.href ="/main/board.search?pageGroup=${pageGroup}&type=${type}&search="+search;
 		})
 	})
 </script>

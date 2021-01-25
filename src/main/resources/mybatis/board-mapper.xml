@@ -81,4 +81,38 @@
 	<delete id="deleteArticle">
 		delete board where seq = #{seq} and division_code = (select code from board_division where title = #{boardType})
 	</delete>
+	
+	<!-- 게시판 검색 -->
+	<!-- 게시물 count -->
+	<select id="articleSearchCount" resultType="Integer">
+		select count(*) from board where
+		division_code = (select code from board_division where title = #{boardType}) and
+		<if test="searchType == 'title'">
+			(title like
+			<foreach collection="searchText" item="i" open="(" close=")" separator="or">
+				'%'||#{i}||'%'
+			</foreach>
+			)
+		</if>
+		<if test="searchType == 'writer'">
+			writer like '%'||#{searchText[0]}||'%' 
+		</if>
+	</select>
+	<select id="boardSearch" resultType="kh.spring.dto.BoardDTO">
+		select * 
+		from (select board.*, row_number() over(order by writeDate desc) rn from board where 
+		division_code = (select code from board_division where title = #{boardType})
+		and
+		<if test="searchType == 'title'">
+			(title like
+			<foreach collection="searchText" item="i" open="(" close=")" separator="or">
+				'%'||#{i}||'%'
+			</foreach>
+			)
+		</if>
+		<if test="searchType == 'writer'">
+			writer like '%'||#{searchText[0]}||'%' 
+		</if>
+		) where rn between #{startNumByPage} and #{endNumByPage}
+	</select>
 </mapper>

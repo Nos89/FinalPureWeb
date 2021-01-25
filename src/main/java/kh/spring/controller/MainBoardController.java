@@ -3,6 +3,7 @@ package kh.spring.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -19,10 +20,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.CommentsDTO;
 import kh.spring.service.BoardService;
+import kh.spring.service.CommentService;
 
 @Controller
 @RequestMapping("/main")
@@ -32,6 +37,8 @@ public class MainBoardController {
 	HttpSession session;
 	@Autowired
 	BoardService bservice;
+	@Autowired
+	CommentService cservice;
 
 	// 게시글 목록 보기
 	@RequestMapping("/board.list")
@@ -43,7 +50,7 @@ public class MainBoardController {
 		model.addAttribute("cont", bservice.getArticles(type, currentPage));
 		model.addAttribute("page", currentPage);
 		model.addAttribute("list", true);
-		return "main/" + pageGroup + "/" + type;
+		return "main/" + pageGroup + "/board";
 	}
 
 	// 게시판 작성 페이지로 전환
@@ -53,7 +60,7 @@ public class MainBoardController {
 		model.addAttribute("type", type);
 		model.addAttribute("write", true);
 		model.addAttribute("page", this.convertPage(page));
-		return "main/" + pageGroup + "/" + type;
+		return "main/" + pageGroup + "/board";
 	}
 
 	// 게시글 작성 로직
@@ -98,24 +105,51 @@ public class MainBoardController {
 
 	// 게시글 보기
 	@RequestMapping("/board.view")
-	public String viewArticle(String pageGroup, String type, int seq, String page, String purp, Model model) {
+	public String viewArticle(String pageGroup, String type, int seq, String page, String purp, String commentPage, String search, Model model) {
 		model.addAttribute("article", bservice.viewArticle(type, seq));
 		model.addAttribute("pageGroup", pageGroup);
 		model.addAttribute("type", type);
 		model.addAttribute("page", this.convertPage(page));
+		model.addAttribute("seq", seq);
 		if( purp.contentEquals("modify")) {
 			model.addAttribute("modify", true);
 		} else {
 			model.addAttribute("view", true);
 		}
-		return "main/" + pageGroup + "/" + type;
+		if( search != null ) {
+			model.addAttribute("search", search);
+		}
+		// 댓글
+		model.addAttribute("commentPage", this.convertPage(commentPage));
+		model.addAttribute("comments", cservice.getComments(seq, this.convertPage(commentPage)));
+		return "main/" + pageGroup + "/board";
 	}
 	
-	// 댓글 보기
-	
 	// 댓글 작성
+	@RequestMapping(value="/insert.comments", produces="text/plain; charset=UTF8")
+	@ResponseBody
+	public String insertComments( CommentsDTO cdto, String commentPage ) {
+		cservice.insertComment(cdto.getParent_code(), cdto.getWriter(), cdto.getContents());
+		return this.ajaxGetComments(cdto.getParent_code(), 1);
+	}
 	
+	// 댓글 삭제
+	@RequestMapping(value="/delete.comments", produces="text/plain; charset=UTF8")
+	@ResponseBody
+	public String deleteComments( CommentsDTO cdto, String commentPage ) {
+		cservice.deleteComment(cdto.getSeq());
+		System.out.println(commentPage);
+		return this.ajaxGetComments(cdto.getParent_code(), this.convertPage(commentPage));
+	}
 	
+	private String ajaxGetComments( int parent_code, int commentPage ) {
+		Map<String, Object> comments = cservice.getComments(parent_code, commentPage);
+		Gson gson = new Gson();
+		JsonArray arr = new JsonArray();
+		arr.add(gson.toJson(comments.get("navi")));
+		arr.add(gson.toJson(comments.get("list")));
+		return arr.toString();
+	}
 	
 	// 게시글 삭제
 	@RequestMapping("/board.delete")
@@ -136,6 +170,20 @@ public class MainBoardController {
 		model.addAttribute("seq", bdto.getSeq());
 		model.addAttribute("purp", "view");
 		return "redirect:/main/board.view";
+	}
+	
+	// 게시판 검색
+	@RequestMapping("/board.search")
+	public String boardSearch(String pageGroup, String type, String search, String page, Model model) {
+		int currentPage = this.convertPage(page);
+		model.addAttribute("pageGroup", pageGroup);
+		model.addAttribute("type", type);
+		model.addAttribute("search", search);
+		model.addAttribute("page", currentPage);
+		model.addAttribute("cont",bservice.boardSearch(type, search, currentPage));
+ 		model.addAttribute("page", currentPage);
+		model.addAttribute("list", true);
+		return "main/"+pageGroup+"/board";
 	}
 	
 	// 페이지 유효성
