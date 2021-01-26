@@ -10,6 +10,7 @@ import kh.spring.dao.ProfessorDAO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.DepartmentOfficeDTO;
 import kh.spring.dto.MilitaryDTO;
+import kh.spring.dto.ProAttendMngDTO;
 import kh.spring.dto.ProFileDTO;
 import kh.spring.dto.ProListDTO;
 import kh.spring.dto.ProfessorDTO;
@@ -58,5 +59,8 @@ public class ProfessorService {
 	
 	public DepartmentOfficeDTO selectDepartmentOffice(String id) {
 		return pdao.selectDepartmentOffice(id);
+	}
+	public List<ProAttendMngDTO> proAttendMngOnload(String id){	
+		return pdao.selectProAttendMngOnload(id);
 	}
 }

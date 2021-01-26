@@ -37,5 +37,8 @@ from military m, militarygroup g
 	<select id="selectDepartmentOffice" resultType="kh.spring.dto.DepartmentOfficeDTO">
 	select * from departmentoffice where ofi_code=(select ofi_code from department where dept_code =(select deptcode from users where id=#{value}))
 	</select>
-
+	
+	<select id="selectProAttendMng" resultType="kh.spring.dto.ProAttendMngDTO">
+	select * from pro_attendmng where att_leccode in(select oc_code from open_class where oc_pro_code=#{value})
+	</select>
 </mapper>

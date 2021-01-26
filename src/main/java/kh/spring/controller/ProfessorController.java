@@ -14,6 +14,7 @@ import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.DepartmentOfficeDTO;
 import kh.spring.dto.MilitaryDTO;
+import kh.spring.dto.ProAttendMngDTO;
 import kh.spring.dto.ProListDTO;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.ProfessorDTO_NEX;
@@ -47,7 +48,7 @@ public class ProfessorController {
 		return new NexacroResult();
 	}
 	
-	@RequestMapping("/departmentInfoOnLoad")
+	@RequestMapping("/departmentInfoOnLoad.nex")
 	public NexacroResult departmentInfoOnload(@ParamVariable(name="id")String id) {
 		NexacroResult nr = new NexacroResult();
 		System.out.println(id);
@@ -63,6 +64,16 @@ public class ProfessorController {
 		nr.addDataSet("out_department", ddto);
 		nr.addDataSet("out_departmentOffice", odto);
 		nr.addDataSet("out_proList", list);
+		return nr;
+	}
+	
+	@RequestMapping("/proStudentInfo.nex")
+	public NexacroResult proAttendMngOnLoad(@ParamVariable(name="id")String id){
+		NexacroResult nr = new NexacroResult();
+		List<ProAttendMngDTO> list = new ArrayList<>();
+		list = pservice.proAttendMngOnload(id);
+		
+		nr.addDataSet("out_proAttendMng", list);
 		return nr;
 	}
 }
