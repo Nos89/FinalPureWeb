@@ -131,5 +131,21 @@ $(document).ready(function() {
 	$(".inputFileWrapper").on("click", ".delFile", function(){
 		$(this).parent().parent().remove();
 	})
+	
+	$(".inputFileWrapper").on( 'change', "input[type=file]", function (e){
+		if( !$(this).val() ) return;
+		 
+		let f = this.files[0];
+		let size = f.size || f.fileSize;
+		
+		let limit = 10000000;
+		
+		if( size > limit ){
+		    alert( '파일용량은 10mb 를 넘을수 없습니다.' );
+		    $(this).val('');
+		    return;
+		}
+        $(this).parent().find('input[type=text]').val( $(this).val() );
+	})
 });
 </script>

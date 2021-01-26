@@ -168,6 +168,5 @@ $(document).ready(function() {
 		}
         $(this).parent().find('input[type=text]').val( $(this).val() );
 	})
-
 });
 </script>
