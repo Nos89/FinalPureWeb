@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.DepartmentOfficeDTO;
 import kh.spring.dto.MilitaryDTO;
+import kh.spring.dto.ProAttendMngDTO;
 import kh.spring.dto.ProListDTO;
 import kh.spring.dto.ProfessorDTO;
 
@@ -37,5 +38,8 @@ public class ProfessorDAO {
 	}
 	public DepartmentOfficeDTO selectDepartmentOffice(String id) {
 		return db.selectOne("Professor.selectDepartmentOffice",id );
+	}
+	public List<ProAttendMngDTO> selectProAttendMngOnload(String id){
+		return db.selectList("Professor.selectProAttendMng", id);
 	}
 }
