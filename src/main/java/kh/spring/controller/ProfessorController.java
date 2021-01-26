@@ -47,6 +47,7 @@ public class ProfessorController {
 		pservice.updateProInfo(pdto);
 		return new NexacroResult();
 	}
+	//학과정보보기
 	
 	@RequestMapping("/departmentInfoOnLoad.nex")
 	public NexacroResult departmentInfoOnload(@ParamVariable(name="id")String id) {
@@ -67,6 +68,7 @@ public class ProfessorController {
 		return nr;
 	}
 	
+	//강의별 학생정보보기
 	@RequestMapping("/proStudentInfo.nex")
 	public NexacroResult proAttendMngOnLoad(@ParamVariable(name="id")String id){
 		NexacroResult nr = new NexacroResult();
