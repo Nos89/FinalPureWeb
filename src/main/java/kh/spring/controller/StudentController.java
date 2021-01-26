@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 
+import kh.spring.dto.MajorApplyDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.ProFileDTO;
 import kh.spring.dto.StudentDetailDTO;
@@ -56,6 +57,12 @@ public class StudentController {
 	@RequestMapping("/stuInfoSave.nex")
 	public NexacroResult stuInfoSave(@ParamDataSet(name="in_stuInfo") StudentInfoDTO sdto){
 		sservice.updateStuInfo(sdto);
+		return new NexacroResult();
+	}
+	
+	@RequestMapping("/stuMajorApply.nex")
+	public NexacroResult stuMajorApply(@ParamDataSet(name="in_majorApply") MajorApplyDTO mdto) {
+		sservice.majorApply(mdto);
 		return new NexacroResult();
 	}
 	

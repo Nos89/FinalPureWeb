@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dao.StudentDAO;
+import kh.spring.dto.MajorApplyDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.StudentDetailDTO;
 import kh.spring.dto.StudentInfoDTO;
@@ -32,4 +33,7 @@ public class StudentService {
 		return sdao.updateStuInfo(dto);
 	}
 	
+	public List<MajorApplyDTO> majorApply(MajorApplyDTO dto){
+		return sdao.majorApply(dto);
+	}
 }

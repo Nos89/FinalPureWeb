@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.MajorApplyDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.StudentDetailDTO;
 import kh.spring.dto.StudentInfoDTO;
@@ -32,5 +33,9 @@ public class StudentDAO {
 		int result = db.update("Student.stuInfoUpdate",dto);
 		return result;
 	}
-
+	
+	public int majorApply(MajorApplyDTO dto){
+		return db.insert("Student.majorApply",dto);
+				
+	}
 }

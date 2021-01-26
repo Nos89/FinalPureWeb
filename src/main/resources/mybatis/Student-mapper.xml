@@ -31,4 +31,8 @@
 		zipcode=#{zipcode},addr1=#{addr1},addr2=#{addr2},email=#{email},phone=#{phone},bank=#{bank},accountnum=#{accountnum}
 		where id=#{id}
 	</update>
+	
+	<insert id="majorApply">
+		insert into ClassRegistration values(ClassRegistration_seq.nextval,#{id},#{lec_code},#{cr_divide},#{cr_completeDiv},#{cr_date})
+	</insert>
 </mapper>
