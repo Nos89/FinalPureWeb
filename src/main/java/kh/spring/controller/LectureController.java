@@ -35,6 +35,21 @@ public class LectureController {
 		nr.addDataSet("out_lecture",list2);
 		return nr;
 	}
+	
+	@RequestMapping("/lectureInfoOnLoad")
+	public NexacroResult lectureInfoOnLoad(@ParamVariable(name="id")String id){
+		NexacroResult nr = new NexacroResult();
+		System.out.println("신호옴");
+		List<OpenClass_LecPlan> list = new ArrayList<>();
+		list = lservice.selectOpenClass_lecPlan(id);
+		
+		List<LectureDTO> list2 = new ArrayList<>();
+		list2 = lservice.selectLecture(id);
+		
+		nr.addDataSet("out_openClass", list);
+		nr.addDataSet("out_lecture",list2);
+		return nr;
+	}
 	@RequestMapping("/updateLecturePlan")
 	public NexacroResult updateLecturePlan(@ParamDataSet(name="in_lecture")LectureDTO dto) {
 		lservice.updateLecturePlan(dto);

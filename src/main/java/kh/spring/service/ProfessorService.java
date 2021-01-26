@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.ProFileDAO;
 import kh.spring.dao.ProfessorDAO;
-import kh.spring.dto.LectureDTO;
+import kh.spring.dto.DepartmentDTO;
+import kh.spring.dto.DepartmentOfficeDTO;
 import kh.spring.dto.MilitaryDTO;
-import kh.spring.dto.OpenClass_LecPlan;
+import kh.spring.dto.ProAttendMngDTO;
 import kh.spring.dto.ProFileDTO;
+import kh.spring.dto.ProListDTO;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.ProfessorDTO_NEX;
 import kh.spring.utils.ConvertDate;
@@ -47,5 +49,18 @@ public class ProfessorService {
 		return fdao.checkImg(id);
 	}
 	
+	public List<ProListDTO> selectProList(String id){
+		return pdao.selectProList(id);
+	}
 
+	public DepartmentDTO selectDepartment(String id) {
+		return pdao.selectDepartment(id);
+	}
+	
+	public DepartmentOfficeDTO selectDepartmentOffice(String id) {
+		return pdao.selectDepartmentOffice(id);
+	}
+	public List<ProAttendMngDTO> proAttendMngOnload(String id){	
+		return pdao.selectProAttendMngOnload(id);
+	}
 }

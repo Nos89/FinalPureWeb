@@ -1,35 +1,41 @@
 @charset "UTF-8";
-  *{box-sizing: border-box; margin: 0px;}
-            div{}
-            .wrapper{ height: 800px;}
-            .row>.title{height: 60px; line-height: 60px; cursor: pointer}
-            .menu{border: 1px solid black; height: 40px;}
-            .row>.menu_infosys, .menu_eleattend, .menu_homepage{height: 40px;line-height: 40px; text-align: center;width: 150px; cursor: pointer;}
-            
-            .left{margin-left: 140px; margin-top: 30px; height: 450px; width: 900px;float: left;}
-            .row>.my{width: 300px;  height: 220px;float: left;border: 1px solid black;}
-            .row>.my>.name{width: 100px; border: 1px solid black; margin-top: 15px; margin-left: -5px; font-weight: bold;}
-            .row>.my>.major{width: 150px; border: 1px solid black; margin-top: 10px; font-size: 12px;  margin-left: -5px; color: blue; }
-            .row>.my>.mail{width: 280px; margin-top: 80px; font-size: 12px;  margin-left: -5px; }
-            .mail>.mail_notRead{width: 45%; float: left; }
-            .mail>.mail_notReadNum{width: 45%; float: right; border: 1px solid black;text-align: end;}
-            .row>.my>.consultReqPart{width: 280px; margin-top: 30px; font-size: 12px;  margin-left: -5px;}
-            .consultReqPart>.consultReq{width: 45%; float: left; }
-             .consultReqPart>.consultReqNum{width: 45%; float: right; border: 1px solid black;text-align: end;}
+
+.row>* {
+    padding-right: none;
+    padding-left: none;
+} .container{padding: none;}
            
-            .row>.board{width: 593px;height: 220px;float: left; margin-left: 5px;border: 1px solid black;}
-            .row>.timetable{width: 300px;margin-top: 30px; height: 450px; margin-left: 5px;margin-bottom: 10px;border: 1px solid black;}
-            .row>.subject{width: 300px;  height: 220px;float: left; margin-top: 7px;border: 1px solid black;}
-            .row>.calendar{width: 300px;height: 220px;float: left; margin-left: 5px;margin-top: 7px;border: 1px solid black;}
-            .row>.schedule{width: 288px;height: 220px;float: left; margin-left: 5px;margin-top: 7px;border: 1px solid black;}
+            .topMenu,.my,.board,.subject,.timetable,.schedule,.footer{padding: 0px;border: 1px solid black;}
+        
+          	.row>.my{ height: 220px;float: left;}
+            .row>.my>.name{width: 100px; margin-top: 15px; margin-left: 5px; font-weight: bold;}
+            .row>.my>.major{width: 150px;margin-top: 10px; font-size: 12px;  margin-left: 5px; color: blue; }
+            .row>.my>.mail{ margin-top: 20px; font-size: 12px;  margin-left: 5px; }
+            .mail>.mail_notRead{width: 45%; float: left; }
+            .mail>.mail_notReadNum{width: 45%; float: left;text-align: end;}
+            .row>.my>.consultReqPart{ margin-top: 30px; font-size: 12px;  margin-left: 5px;}
+            .consultReqPart>.consultReq{width: 45%; float: left; }
+             .consultReqPart>.consultReqNum{width: 45%; float: left;  text-align: end;}
             
-            .row>.classtimetable{margin-left: 20px; margin-top: 30px; height: 450px; width: 300px;float: left;border: 1px solid black;}
+             .row>.board{height: 220px;float: left; }
+            .tab_title{float: left; width: 80%; border: 1px solid black; cursor:pointer}
+            .tab_title:hover{color:blue;}
+            .tab_date{border: 1px solid black; text-align: end; color:gray;}
             
-            .shortcutPart{margin-left: 140px; margin-top: 10px; height: 100px; width: 1208px;float: left; border: 1px solid black;}
-            .row>.shortcut{border: 1px solid black; width: 180px} .row>.toClassSche,.toBus,.toDomi,.toReportBoard,.toExAuth{border: 1px solid black; width: 120px; cursor: pointer;}
+              	.row>.subject{height: 220px;overflow:scroll}
+            .row>.subject>.subject_list>.subject_isu{float:left; width:40%;}
+            .row>.subject>.subject_list>.subject_title{float:left; width:60%; }
+            .row>.subject>.subject_list>.subject_score{font-size: 13px; color: gray;}
             
-            .footerInfo{ width: 1519px; height: 40px; margin-top:10%;border-top: 1px solid black;}
-            .row>.info{border-top: 1px solid black; height: 40px;}
-             .row>.info_personal, .info_infoOpen, .info_emailReject{height: 40px;line-height: 40px; text-align: center;width: 160px; font-size: 12px; cursor: pointer;}
-            .info_school{border-top: 1px solid black; height: 60px; }
+            .row>.timetable{height:440px;;overflow:scroll}
+            .realtimetable{height:380px;}
+            .row>.classtimetable>table>tr{}
             
+            .schedule>.row{margin:0px;}
+            .row>.calendar,.sche{border:1px solid black;height:220px;}
+            
+           
+            
+            .shortcutPart{border: 1px solid black; margin-top:10px; }
+            .shortcut{height: 50px;}
+            .toClassSche,.toBus,.toDomi,.toReportBoard,.toExAuth{border: 1px solid black;height:100px;}
