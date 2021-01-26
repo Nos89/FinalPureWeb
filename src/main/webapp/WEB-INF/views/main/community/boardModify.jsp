@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- 게시글 수정 -->
 <div class="row writerWrapper">
-	<form action="/main/board.modify?pageGroup=community&type=${type}&page=${page}&seq=${article.seq}" method="post">
+	<form action="/main/board.modify?pageGroup=community&type=${type}&page=${page}&seq=${article.seq}" method="post" enctype="multipart/form-data">
 		<div class="col-12">
 			<input type="text" placeholder="제목을 입력하세요" name="title" class="title" value="${article.title}">
 		</div>
@@ -10,7 +10,26 @@
 		</div>
 		<div class="col-12">
 			<div class="row mt-3 text-center">
-				<div class="col-9"></div>
+				<div class="col-9">
+				<div class="row">
+						<div class="col-2">
+							<button type="button" class="btnFile">파일 추가</button>
+						</div>
+						<div class="col-10"></div>
+						<div class="col-12 inputFileWrapper">
+							<c:forEach var="i" items="${files}">
+							<div class="row">
+								<div class="col-12">
+									<a href="/boardFiles/${i.savedName}" target="_blank">${i.oriName}</a>
+									<input type="file" name="inputFile" value="/boardFiles/${i.savedName}" style="display:none">
+									<button type="button" class="delFile">X</button>
+									<input type="hidden" value="${i.seq}">
+								</div>
+							</div>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
 				<div class="col-1"><input type="submit" value="수정하기"></div>
 				<div class="col-2"><button class="btnView" type="button">취소</button></div>
 			</div>
@@ -97,6 +116,14 @@ $(document).ready(function() {
 			alert("내용을 입력 해주세요.");
 			return false;
 		} else {
+			let delsize = $("input[name=delSeq]").length;
+			if( delsize == 0 ){
+				let dummy = $("<input>");
+				dummy.attr("name", "delSeq");
+				dummy.attr("type", "hidden");
+				dummy.val(0);
+				$(".inputFileWrapper").append(dummy);
+			}
 			alert("게시글 수정!!")
 		}
 	})
@@ -104,5 +131,43 @@ $(document).ready(function() {
 	$(".btnView").click(function(){
 		location.href="/main/board.view?pageGroup=${pageGroup}&type=${type}&page=${page}&seq=${article.seq}&purp=view";
 	})
+	
+	$(".btnFile").click(function(){
+		let inputFile = $("input[type=file]");
+		if( inputFile.length <= 5 ){
+			let row = $("<div></div>");
+			row.addClass("row");
+			let div = $("<div></div>");
+			div.addClass("col-12");
+			div.append("<input type=file name=inputFile>");
+			div.append("<button type=button class=delFile>X</button>");
+			row.append(div);
+			$(".inputFileWrapper").append(row);
+		} else {
+			alert("최대 5개의 파일만 업로드 가능합니다.");
+		}
+	})
+	$(".inputFileWrapper").on("click", ".delFile", function(){
+		$(this).siblings("input[type=hidden]").attr("name", "delSeq");
+		$(this).siblings("input[type=file]").remove();
+		$(this).parent().parent().css("display", "none");
+	})
+	
+	$(".inputFileWrapper").on( 'change', "input[type=file]", function (e){
+		if( !$(this).val() ) return;
+		 
+		let f = this.files[0];
+		let size = f.size || f.fileSize;
+		
+		let limit = 10000000;
+		
+		if( size > limit ){
+		    alert( '파일용량은 10mb 를 넘을수 없습니다.' );
+		    $(this).val('');
+		    return;
+		}
+        $(this).parent().find('input[type=text]').val( $(this).val() );
+	})
+
 });
 </script>
