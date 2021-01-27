@@ -52,7 +52,7 @@
 	</select>
 	
 	<select id="takingClass_schedule" resultType="kh.spring.dto.TakingClassDTO">
-		select lec_title,lec_schedule from lecture 
+		select lec_title,lec_schedule,lec_classroom from lecture 
 		where lec_code in 
 			(select lec_code from classregistration where cr_divide='정기' and cr_completediv='완료상태' 
                 and id=#{id} and cr_date=#{classRegDate})
