@@ -4,12 +4,12 @@
 		<div class="col-12"><p>커뮤니티</p></div>
 		<div class="col-12">
 			<ul class="list-group">
-			  <li class="list-group-item"><a href="/main?pageGroup=community&type=freeBoard">자유 게시판</a></li>
-			  <li class="list-group-item"><a href="/main?pageGroup=community&type=anonymBoard">대나무숲</a></li>
-			  <li class="list-group-item"><a href="/main?pageGroup=community&type=reportBoard">건의 게시판</a></li>
+			  <li class="list-group-item"><a href="/main?pageGroup=community&type=free">자유 게시판</a></li>
+			  <li class="list-group-item"><a href="/main?pageGroup=community&type=anonym">대나무숲</a></li>
+			  <li class="list-group-item"><a href="/main?pageGroup=community&type=report">건의 게시판</a></li>
 			  <li class="list-group-item"><a href="/main?pageGroup=community&type=notice">공지사항</a></li>
-			  <li class="list-group-item"><a href="/main?pageGroup=community&type=promoteBoard">홍보 게시판</a></li>
-			  <li class="list-group-item"><a href="/main?pageGroup=community&type=eventBoard">행사 게시판</a></li>
+			  <li class="list-group-item"><a href="/main?pageGroup=community&type=promote">홍보 게시판</a></li>
+			  <li class="list-group-item"><a href="/main?pageGroup=community&type=event">행사 게시판</a></li>
 			</ul>
 		</div>
 	</div>

@@ -15,7 +15,48 @@
 		select dept_title from department where dept_code=(select deptcode from users where id=#{id} and pw=#{pw})
 	</select>		
 	
+	<!-- 학사게시글 최근 6개 -->
+	<select id="recentStd" resultType="kh.spring.dto.InfoBoardDTO">
+		SELECT *
+			FROM (SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_WRITEDATE DESC) N
+					FROM BOARD_NOTICE)
+			WHERE (N BETWEEN 1 AND 6) AND CATEGORY='학사'
+	</select>
+	<!-- 장학게시글 최근 6개 -->
+	<select id="recentScholar" resultType="kh.spring.dto.InfoBoardDTO">
+		SELECT *
+			FROM (SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_WRITEDATE DESC) N
+					FROM BOARD_NOTICE)
+			WHERE (N BETWEEN 1 AND 6) AND CATEGORY='장학'
+	</select>
+	<!-- 입학게시글 최근 6개 -->
+	<select id="recentEnter" resultType="kh.spring.dto.InfoBoardDTO">
+		SELECT *
+			FROM (SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_WRITEDATE DESC) N
+					FROM BOARD_NOTICE)
+			WHERE (N BETWEEN 1 AND 6) AND CATEGORY='입학'
+	</select>
 	
+	<!-- 수강과목 (학생)-->
+	<select id="takingClass_std" resultType="kh.spring.dto.TakingClassDTO">
+		select lec_isu,lec_title,lec_score from lecture 
+		where lec_code in 
+			(select lec_code from classregistration where cr_divide='정기' and cr_completediv='완료상태' and id=#{id} and cr_date=#{classRegDate})
+	</select>
+	
+	<!-- 강의과목 (교수)-->
+	<select id="takingClass_pro" resultType="kh.spring.dto.TakingClassDTO">
+		select lec_isu,lec_title,lec_score from lecture 
+		where lec_code IN 
+			(select oc_code from open_class where oc_semester=#{semester} and oc_is_close='N' and oc_year=#{classOpenDate} AND oc_pro_code=#{id} )
+	</select>
+	
+	<select id="takingClass_schedule" resultType="kh.spring.dto.TakingClassDTO">
+		select lec_title,lec_schedule from lecture 
+		where lec_code in 
+			(select lec_code from classregistration where cr_divide='정기' and cr_completediv='완료상태' 
+                and id=#{id} and cr_date=#{classRegDate})
+	</select>
 	
 	
 	

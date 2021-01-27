@@ -1,6 +1,6 @@
 package kh.spring.service;
 
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.BoardDAO;
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.FilesDTO;
 import kh.spring.statics.PagingConfigurator;
 
 @Service
@@ -20,12 +21,26 @@ public class BoardService {
 	
 	// 게시글 작성
 	public int writeArticle(BoardDTO bdto) {
-		return bdao.writeArticle(convertType(bdto));
+		int result =bdao.writeArticle(convertType(bdto)); 
+		return result;
+	}
+	
+	// 파일 업로드 로직
+	public void uploadFile(Map<String, Object> map) {
+		bdao.insertFile(map);
 	}
 	
 	// 전체 게시글 수
 	private int getArticleCount( String type ) {
 		return bdao.getArticleCount(type);
+	}
+	
+	private int getArticleCount( String type, String searchType, String[] searchText ) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("boardType", type);
+		map.put("searchType", searchType);
+		map.put("searchText", searchText);
+		return bdao.getArticleCount( map );
 	}
 	
 	// 페이징 적용된 게시글
@@ -52,6 +67,20 @@ public class BoardService {
 		return bdao.getArticle(map);
 	}
 	
+	// 게시글 첨부파일
+	public List<FilesDTO> getFiles(int parent_code){
+		return bdao.getFiles(parent_code);
+	}
+	
+	// 게시글 첨부파일 삭제
+	public int delSpecFile(int seq ) {
+		return bdao.delSpecFile(seq);
+	}
+	// 특정 첨부파일 가져오기
+	public List<FilesDTO> getSpecFile( List<Integer> seq ) {
+		return bdao.getSpecFile(seq);
+	}
+	
 	// 게시물 수정
 	public int modifyArticle( BoardDTO bdto, String type ) {
 		Map<String, Object> map = new HashMap<>();
@@ -68,13 +97,34 @@ public class BoardService {
 		return bdao.deleteArticle(map);
 	}
 	
+	// 게시판 검색
+	public Map<String, Object> boardSearch( String type, String search, int page ){
+		Map<String, Object> map = new HashMap<>();
+		map.put("boardType", this.convertType(type));
+		String searchType = search.split("-")[0];
+		String[] searchText = (search.split("-")[1]).split(" ");
+		map.put("searchType", searchType);
+		map.put("searchText", searchText);
+		Map<String, Object> navi = this.getNavigator( this.getArticleCount(type, searchType, searchText), page);
+		System.out.println(navi.get("startNumByPage") + " : " + navi.get("endNumByPage"));
+		map.put("startNumByPage", navi.get("startNumByPage"));
+		map.put("endNumByPage", navi.get("endNumByPage"));
+		
+		List<BoardDTO> list = bdao.boardSearch(map);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("navi", navi);
+		return result;
+	}
+	
+	
 	// 게시판 타입 변경
 	private BoardDTO convertType( BoardDTO bdto ) {
 		if( bdto.getBoardType().contentEquals("notice") ) {
 			bdto.setBoardType("board_notice");
 		} else {
-			bdto.setBoardType(bdto.getBoardType().substring(0, bdto.getBoardType().indexOf("Board")));
-			System.out.println(bdto.getBoardType());
+			//bdto.setBoardType(bdto.getBoardType().substring(0, bdto.getBoardType().indexOf("Board")));
 		}
 		return bdto;
 	}
@@ -83,12 +133,13 @@ public class BoardService {
 		if( type.contentEquals("notice") ) {
 			type = "board_notice";
 		} else {
-			System.out.println(type);
-			type = type.substring(0, type.indexOf("Board"));
-			System.out.println(type);
+			//type = type.substring(0, type.indexOf("Board"));
 		}
 		return type;
 	}
+	
+	
+
 	
 	// paging
 	private Map<String, Object> getNavigator(int recordTotalCount, int currentPage) {

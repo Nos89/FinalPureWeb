@@ -1,24 +1,28 @@
 @charset "UTF-8";
- *{box-sizing: border-box;}
-            .wrapper{position:relative;background-color: lightskyblue; height: 754px;width:100%;}
-            #title{ position:absolute; top:10px; left:100px; width:300px; height:80px; background:#FFFFCC; }
-            #box{position:absolute; top:150px; left:180px; width:1200px; height:500px; background:#FFFFCC;border: 1px solid black;}
+ *{box-sizing: border-box; margin: 0px; padding: 0px;}
+            div{}
+            .container{}
+
+            .container-fluid{padding: 0px;}
+            .title{height: 100px;}
+            .title>div{height: 100px;}
+            .title>.row>div{border: 1px solid black;}
+            .center{margin-top: 50px;}
+            .login,.acaCal,.menu{border: 1px solid black;}
             
-            #loginBox{float: left; width: 45%;height: 500px;border: 1px solid black;}
             #loginTitle, #acdmCalTitle{float: left; margin-left: 30px; margin-top: 30px;}
             #loginTitle_eng, #acdmCalTitle_eng{float: left; margin-left: 10px; margin-top: 38px;}
-            #part{width: 85%; height: 50px; border: 1px solid black;margin-top: 100px;margin-left: 33px}
+            #part{width: 85%; height: 50px; margin-top: 100px;margin-left: 33px}
             #loginStd, #loginPro{width: 50%; border: 1px solid black; height: 50px;float: left; text-align: center; line-height: 50px;cursor: pointer;}
-            
+             
             #loginID{width: 85%; height: 50px; border: 1px solid black;margin-top: 35px;margin-left: 33px}
             #loginPW{width: 85%; height: 50px; border: 1px solid black;margin-top: 10px;margin-left: 33px}
             #idTitle, #pwTitle{margin-left: 10px;margin-top: 10px; color: mediumblue; float: left; width: 5%}
             #idText, #pwText{margin-left: 20px;  width: 85%; height: 100%; border: none; background-color: transparent; }
             #rmbId{margin-left: 33px;font-size: 12px; margin-top: 5px;}
-            #findIDPW{float: right;margin-top: -20px; font-size: 12px; margin-right: 35px;}
+            #findIDPW{float: right;margin-top: -20px; font-size: 12px; margin-right: 45px;}
             #findID, #findPW{border: none; background-color: transparent;}
-            #loginBtn{width: 85%; height: 50px; border: 1px solid black;margin-top: 35px;margin-left: 33px; text-align: center;line-height: 50px; color: white; background-color:#272727; cursor: pointer;}
-            
+            #loginBtn{width: 85%; height: 50px; border: 1px solid black;margin-top: 35px;margin-left: 33px; text-align: center;line-height: 50px; color: white; background-color:#272727; cursor: pointer; margin-bottom: 100px}
             
             #scheBox{float: left;width: 45%;height: 500px;border: 1px solid black;}
             #acmdContainer{float: left;margin-left: 33px; width: 85%;margin-top: 30px; height: 350px}
@@ -27,5 +31,5 @@
             #acmdCalPart{ width: 80%; height: 70px; margin-top: 10px; margin-left: 15px}
             #acmdCalDate{color: darkgray}
             
-            #menuBox{float: left;width: 10%;height: 500px;border: 1px solid black}
-            .menuPart{width: 120px; height: 20%; border: 1px solid black; margin-left: -12px; cursor: pointer;}
+            .menu{}
+            .row>.menuPart{ height: 103px;  cursor: pointer;border: 1px solid black;}
