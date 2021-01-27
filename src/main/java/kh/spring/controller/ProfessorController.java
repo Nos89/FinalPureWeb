@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
 import com.nexacro.uiadapter17.spring.core.annotation.ParamVariable;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
+import com.nexacro17.xapi.data.DataSet;
 
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.DepartmentOfficeDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.ProAttendMngDTO;
 import kh.spring.dto.ProListDTO;
+import kh.spring.dto.ProScheduleDTO;
+import kh.spring.dto.ProScheduleDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.ProfessorDTO_NEX;
 import kh.spring.service.ProfessorService;
@@ -78,4 +81,42 @@ public class ProfessorController {
 		nr.addDataSet("out_proAttendMng", list);
 		return nr;
 	}
+	
+	@RequestMapping("/proScheduleOnload.nex")
+	public NexacroResult proScheduleOnload(@ParamVariable(name="id")String id) {
+		NexacroResult nr = new NexacroResult();
+		List<ProScheduleDTO> list = new ArrayList<>();
+		list = pservice.proScheduleOnload(id);
+		nr.addDataSet("out_proSchedule", list);
+		return nr;
+	}
+	
+	@RequestMapping("/delProSchedule")
+	public NexacroResult delProSchedule(@ParamDataSet(name="in_ds")List<ProScheduleDTO_NEX> list) {
+		NexacroResult nr = new NexacroResult();
+		int result = pservice.delProSchedule(list);
+		if(result != -1) {
+			nr.setErrorMsg("성공");
+			nr.setErrorCode(1);
+		}else {
+			nr.setErrorMsg("실패");
+			nr.setErrorCode(0);
+		}
+		return nr;
+	}
+	
+	@RequestMapping("/updateProSchedule")
+	public NexacroResult updateProSchedule(@ParamDataSet(name="in_ds")ProScheduleDTO_NEX dto, @ParamVariable(name="id")String id) {
+		NexacroResult nr = new NexacroResult();
+		int result = pservice.updateProSchedule(dto,id);
+		if(result >=1) {
+			nr.setErrorCode(1);
+		}else {
+			
+			nr.setErrorCode(0);
+		}
+		
+		return nr;
+	}
+	
 }
