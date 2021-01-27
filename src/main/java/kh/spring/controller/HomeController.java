@@ -27,6 +27,11 @@ public class HomeController {
 		return "main/"+pageGroup+"/"+type;
 	}
 	
+	@RequestMapping("/info")
+	public String infoPageGoTo() {
+		return "info/info";
+	}
+	
 	@RequestMapping("/home.nex")
 	public String homeNEX(Locale locale, Model model) {
 		return "redirect:/nex/index.html";

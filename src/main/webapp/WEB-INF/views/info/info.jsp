@@ -483,93 +483,12 @@
 											</nav>
 										</div>
 									</div>
-
 									<div class="realtimetable">
-										<table border="1"
-											style="height: 100%; width: 100%; text-align: center;">
-											<tr>
-												<td></td>
-												<td>월</td>
-												<td>화</td>
-												<td>수</td>
-												<td>목</td>
-												<td>금</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>4</td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>5</td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>6</td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>7</td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>8</td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>9</td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-										</table>
-
-
+									
+												<c:forEach var="i" items="${timeList}" varStatus="status">
+												<div class="subject_isu">${i}</div>
+											</c:forEach>
+											
 									</div>
 								</div>
 
@@ -634,7 +553,6 @@
 												<td id=mon9></td><td id=tue9></td><td></td><td></td><td id=fri9></td>
 											</tr>
 										</table>
-
 
 									</div>
 								</div>
