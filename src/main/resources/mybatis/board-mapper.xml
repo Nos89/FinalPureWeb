@@ -7,7 +7,16 @@
 		insert into board values( board_seq.nextval, 
 		(select code from board_division where title = #{boardType})
 		, #{title}, #{contents}, #{writer}, sysdate)
+		<selectKey keyProperty="seq" resultType="Integer">
+			select board_seq.currval as seq from dual
+		</selectKey>
 	</insert>
+	
+	<!-- 파일첨부 -->
+	<insert id="insertFile">
+		insert into files_board values(files_board_seq.nextval, #{parent_code}, #{oriName}, #{savedName}, sysdate)
+	</insert>
+	
 	
 	<!-- 현재 게시판 게시물 갯수 -->
 	<select id="articleCount" resultType="Integer">
@@ -70,6 +79,24 @@
 		</choose>
 	</select>
 	
+	<!-- 게시물 첨부 파일 가져오기 -->
+	<select id="getFiles" resultType="kh.spring.dto.FilesDTO">
+		select * from files_board where parent_code = #{value} order by reg_date desc
+	</select>
+	
+	<!-- 특정 첨부파일 가져오기 -->
+	<select id="getSpecFile" resultType="kh.spring.dto.FilesDTO">
+		select * from files_board where seq in
+		<foreach item="i" collection="list" open="(" close=")" separator=",">
+			#{i}
+		</foreach>
+	</select>
+	
+	<!-- 게시글 파일 삭제 -->
+	<delete id="delSpecFile">
+		delete from files_board where seq = #{seq}
+	</delete>
+	
 	<!-- 게시물 수정 -->
 	<update id="modifyArticle">
 		update board 
@@ -115,4 +142,5 @@
 		</if>
 		) where rn between #{startNumByPage} and #{endNumByPage}
 	</select>
+	
 </mapper>

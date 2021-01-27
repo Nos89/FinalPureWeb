@@ -12,7 +12,19 @@
 				<div class="col-10"></div>
 				</c:if>
 				<c:if test="${loginID == article.writer}">
-				<div class="col-8"></div>
+				<div class="col-8">
+					<div class="row">
+						<div class="col-12 inputFileWrapper">
+							<c:forEach var="i" items="${files}">
+							<div class="row">
+								<div class="col-12">
+									<a href="/boardFiles/${i.savedName}" target="_blank">${i.oriName}</a>
+								</div>
+							</div>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
 				<div class="col-1"><button class="btn btn-outline-success btnModify" type="button">수정</button></div>
 				<div class="col-1"><button class="btn btn-outline-danger btnDelete" type="button">삭제</button></div>
 				</c:if>
