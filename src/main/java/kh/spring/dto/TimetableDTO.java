@@ -1,6 +1,8 @@
 package kh.spring.dto;
 
 public class TimetableDTO {
+	
+	
 	private String title;
 	private String time;
 	private String classroom;
@@ -32,8 +34,6 @@ public class TimetableDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 	
 	
 

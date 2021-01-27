@@ -487,7 +487,6 @@
 									
 												<c:forEach var="i" items="${timeList}" varStatus="status">
 												<div class="subject_isu">${i}</div>
-												
 											</c:forEach>
 											
 									</div>
