@@ -94,7 +94,6 @@ public class ProfessorController {
 	@RequestMapping("/delProSchedule")
 	public NexacroResult delProSchedule(@ParamDataSet(name="in_ds")List<ProScheduleDTO_NEX> list) {
 		NexacroResult nr = new NexacroResult();
-
 		int result = pservice.delProSchedule(list);
 		if(result != -1) {
 			nr.setErrorMsg("성공");
