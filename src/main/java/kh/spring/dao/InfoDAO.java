@@ -70,7 +70,15 @@ public class InfoDAO {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id",id);
 		param.put("classRegDate",classRegDate);
-		return db.selectList("Info.takingClass_schedule", param);
+		return db.selectList("Info.takingClass_schedule_std", param);
+	}
+
+	public List<TakingClassDTO> classSche(String id, String semester, String classOpenDate) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("id",id);
+		param.put("semester",semester);
+		param.put("classOpenDate",classOpenDate);
+		return db.selectList("Info.takingClass_schedule_pro", param);
 	}
 
 
