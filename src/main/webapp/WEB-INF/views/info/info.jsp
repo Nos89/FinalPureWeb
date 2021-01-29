@@ -188,7 +188,7 @@
 						<div class="col-sm-2 menu">
 							<div class="row">
 								<div class="col-3 col-sm-12 menuPart">수강신청</div>
-								<div class="col-3 col-sm-12 menuPart">대표홈페이지</div>
+								<div class="col-3 col-sm-12 menuPart"><a href="/" class="d-inline-block">대표홈페이지</a></div>
 								<div class="col-2 col-sm-12  menuPart">~~로 이동</div>
 								<div class="col-2 col-sm-12  menuPart">~~로 이동</div>
 								<div class="col-2 col-sm-12  menuPart">도움말</div>
@@ -222,7 +222,7 @@
 					<div class="col-12 ">
 						<nav class="navbar navbar-expand-lg navbar-light bg-light">
 							<div class="container">
-								<a class="navbar-brand" href="#">oo대학교 포털사이트</a>
+								<a class="navbar-brand" href="/">oo대학교 포털사이트</a>
 
 								<ul class="nav justify-content-end">
 
@@ -250,11 +250,11 @@
 										<div class="container">
 											<ul class="navbar-nav mr-auto">
 												<li class="nav-item active"><a class="nav-link"
-													href="#">종합정보시스템</a></li>
+													href="/home.nex">종합정보시스템</a></li>
 												<li class="nav-item active"><a class="nav-link"
 													href="#">전자출결</a></li>
 												<li class="nav-item active"><a class="nav-link"
-													href="#">대표홈페이지</a></li>
+													href="/">대표홈페이지</a></li>
 											</ul>
 										</div>
 
@@ -279,7 +279,7 @@
 										<div class="container">
 											<ul class="navbar-nav mr-auto">
 												<li class="nav-item active"><a class="nav-link"
-													href="#">종합정보시스템</a></li>
+													href="/home.nex">종합정보시스템</a></li>
 												<li class="nav-item active"><a class="nav-link"
 													href="#">전자출결</a></li>
 											</ul>

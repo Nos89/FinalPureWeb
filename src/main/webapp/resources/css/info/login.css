@@ -33,3 +33,4 @@
             
             .menu{}
             .row>.menuPart{ height: 103px;  cursor: pointer;border: 1px solid black;}
+            .row>.menuPart a{ text-decoration: none; width: 100%; height: 100%;}
