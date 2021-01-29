@@ -5,6 +5,7 @@ public class TakingClassDTO {
 	private String lec_title; //강의명
 	private int lec_score; //학점 1,2,3,4,5
 	private String lec_schedule; //월(3,4)/수(5)
+	private String lec_classroom; //강의실 07-406
 	public String getLec_isu() {
 		return lec_isu;
 	}
@@ -29,16 +30,23 @@ public class TakingClassDTO {
 	public void setLec_schedule(String lec_schedule) {
 		this.lec_schedule = lec_schedule;
 	}
-	public TakingClassDTO(String lec_isu, String lec_title, int lec_score, String lec_schedule) {
+	public String getLec_classroom() {
+		return lec_classroom;
+	}
+	public void setLec_classroom(String lec_classroom) {
+		this.lec_classroom = lec_classroom;
+	}
+	public TakingClassDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public TakingClassDTO(String lec_isu, String lec_title, int lec_score, String lec_schedule, String lec_classroom) {
 		super();
 		this.lec_isu = lec_isu;
 		this.lec_title = lec_title;
 		this.lec_score = lec_score;
 		this.lec_schedule = lec_schedule;
-	}
-	public TakingClassDTO() {
-		super();
-		// TODO Auto-generated constructor stub
+		this.lec_classroom = lec_classroom;
 	}
 	
 	

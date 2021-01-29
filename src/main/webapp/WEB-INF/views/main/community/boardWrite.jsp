@@ -1,14 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- 게시물 작성 페이지 -->
 <div class="row writerWrapper">
-	<form action="/main/board.write?pageGroup=community&type=${type}" method="post">
+	<form action="/main/board.write?pageGroup=community&type=${type}" method="post" enctype="multipart/form-data">
 		<div class="col-12"><input type="text" placeholder="제목을 입력하세요" name="title" class="title"></div>
 		<div class="col-12">
 			<textarea id="summernote" name="contents"></textarea>
 		</div>
 		<div class="col-12">
 			<div class="row mt-3 text-center">
-				<div class="col-9"></div>
+				<div class="col-9">
+					<div class="row">
+						<div class="col-2">
+							<button type="button" class="btnFile">파일 추가</button>
+						</div>
+						<div class="col-10"></div>
+						<div class="col-12 inputFileWrapper">
+							
+						</div>
+					</div>
+				</div>
 				<div class="col-1"><input type="submit" value="작성하기"></div>
 				<div class="col-2"><button class="btnList" type="button">목록으로</button></div>
 			</div>
@@ -101,6 +111,41 @@ $(document).ready(function() {
 	
 	$(".btnList").click(function(){
 		location.href="/main/board.list?pageGroup=${pageGroup}&type=${type}&page=${page}";
+	})
+	
+	$(".btnFile").click(function(){
+		let inputFile = $("input[type=file]");
+		if( inputFile.length <= 5 ){
+			let row = $("<div></div>");
+			row.addClass("row");
+			let div = $("<div></div>");
+			div.addClass("col-12");
+			div.append("<input type=file name=inputFile>");
+			div.append("<button type=button class=delFile>X</button>");
+			row.append(div);
+			$(".inputFileWrapper").append(row);
+		} else {
+			alert("최대 5개의 파일만 업로드 가능합니다.");
+		}
+	})
+	$(".inputFileWrapper").on("click", ".delFile", function(){
+		$(this).parent().parent().remove();
+	})
+	
+	$(".inputFileWrapper").on( 'change', "input[type=file]", function (e){
+		if( !$(this).val() ) return;
+		 
+		let f = this.files[0];
+		let size = f.size || f.fileSize;
+		
+		let limit = 10000000;
+		
+		if( size > limit ){
+		    alert( '파일용량은 10mb 를 넘을수 없습니다.' );
+		    $(this).val('');
+		    return;
+		}
+        $(this).parent().find('input[type=text]').val( $(this).val() );
 	})
 });
 </script>
