@@ -69,7 +69,6 @@ public class InfoController {
 			List<InfoBoardDTO> list_enter = iservice.getRecentEnter();
 			
 
-			session.setAttribute("loginID", id);
 			if (result > 0) {
 				session.setAttribute("loginID", id);
 				session.setAttribute("userName", name);
