@@ -33,6 +33,27 @@
 	</update>
 	
 	<insert id="majorApply">
-		insert into ClassRegistration values(ClassRegistration_seq.nextval,#{id},#{lec_code},#{cr_divide},#{cr_completeDiv},#{cr_date})
+		insert into ClassRegistration values(ClassRegistration_seq.nextval,#{dto.id},#{dto.lec_code},'정기','신청상태',#{date})
 	</insert>
+	
+	<insert id="takeOffApply">
+		insert into takeOffApply values(takeOffapply_seq.nextval,#{dto.id},#{dto.reason},#{dto.takeOffYear},#{dto.takeOffSemester},#{dto.expectedReturnYear},#{date},'신청')
+	</insert>
+	
+	<select id="checkTakeOffApply" resultType="kh.spring.dto.TakeOffApplyDTO">
+		select * from takeOffApply where id=#{id}
+	</select>
+	
+	<select id="checkStatus" resultType="String">
+		select std_status from students where id=#{id}
+	</select>
+	
+	<insert id="changeDeptApply">
+		insert into changeDeptApply values(changeDeptApply_seq.nextval,#{dto.id},#{dto.changeYear},#{dto.changeSemester},#{dto.reason},#{dto.changeCollege},#{dto.changeDept},#{date},'신청')
+	</insert>
+	
+	<select id="checkChangeDeptApply" resultType="kh.spring.dto.ChangeDeptApplyDTO">
+		select * from changeDeptApply where id=#{id}
+	</select>
+	
 </mapper>
