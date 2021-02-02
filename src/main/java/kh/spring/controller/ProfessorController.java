@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
 import com.nexacro.uiadapter17.spring.core.annotation.ParamVariable;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
-import com.nexacro17.xapi.data.DataSet;
 
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.DepartmentOfficeDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.ProAttendMngDTO;
+import kh.spring.dto.ProFileDTO;
 import kh.spring.dto.ProListDTO;
 import kh.spring.dto.ProScheduleDTO;
 import kh.spring.dto.ProScheduleDTO_NEX;
@@ -39,6 +39,11 @@ public class ProfessorController {
 		
 		List<MilitaryDTO> milList = new ArrayList<>();
 		milList = pservice.selectMil(id);
+		
+		ProFileDTO pdto = new ProFileDTO();
+		pdto = pservice.checkImg(id);
+		
+		nr.addDataSet("out_proFile", pdto);
 	    nr.addDataSet("out_proInfo", infoList);
 	    nr.addDataSet("out_proMil", milList);
 		return nr;
