@@ -37,5 +37,27 @@ from military m, militarygroup g
 	<select id="selectDepartmentOffice" resultType="kh.spring.dto.DepartmentOfficeDTO">
 	select * from departmentoffice where ofi_code=(select ofi_code from department where dept_code =(select deptcode from users where id=#{value}))
 	</select>
-
+	
+	<select id="selectProAttendMng" resultType="kh.spring.dto.ProAttendMngDTO">
+	select * from pro_attendmng where att_leccode in(select oc_code from open_class where oc_pro_code=#{value})
+	</select>
+	
+	<select id="selectProSchedule" resultType="kh.spring.dto.ProScheduleDTO">
+	select * from pro_schedule where sche_proid=#{value}
+	</select>
+	
+	<delete id="delProSchedule" parameterType="java.util.List">
+		delete from pro_schedule where sche_seq in
+		<foreach collection="list" item="i" open="(" separator="," close=")">
+			#{i.sche_seq}
+		</foreach>
+	</delete>
+	
+	<insert id="insertProSchedule">
+		insert into pro_schedule values(pro_schedule_seq.nextval,#{sche_proId},#{sche_proName},#{sche_contents},#{sche_date},#{sche_title},#{sche_type})
+	</insert>
+	
+	<update id="updateProSchedule">
+		update pro_schedule set sche_title=#{sche_title},sche_contents=#{sche_contents},sche_date=#{sche_date},sche_type=#{sche_type} where sche_seq=#{sche_seq}
+	</update>
 </mapper>

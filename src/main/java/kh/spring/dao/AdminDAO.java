@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.CollegeDTO;
+import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.StudentDTO;
@@ -57,6 +59,16 @@ public class AdminDAO {
 	// 게시판 삭제
 	public int deleteBoard(List<BoardDTO> list) throws Exception {
 		return db.delete("Admin.deleteBoard", list);
+	}
+	
+	// 단과대 목록
+	public List<CollegeDTO> getCollege() throws Exception {
+		return db.selectList("Admin.getCollege");
+	}
+	
+	// 학과 목록
+	public List<DepartmentDTO> getDepartment() throws Exception {
+		return db.selectList("Admin.getDepartment");
 	}
 	
 	// 교수 목록 가져오기

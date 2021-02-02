@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import kh.spring.dao.AdminDAO;
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
+import kh.spring.dto.CollegeDTO;
+import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
@@ -76,6 +78,16 @@ public class AdminService {
 			list2.add(dto);
 		}
 		return admdao.deleteBoard(list2);
+	}
+	
+	// 단과대 목록
+	public List<CollegeDTO> getCollege() throws Exception {
+		return admdao.getCollege();
+	}
+	
+	// 학과 목록
+	public List<DepartmentDTO> getDepartment() throws Exception {
+		return admdao.getDepartment();
 	}
 	
 	// 교수 목록 가져오기

@@ -11,9 +11,21 @@ public class BoardDTO {
 	private String writer;
 	private Date writeDate;
 	private String boardType;
+	private String category;
 	public BoardDTO() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public BoardDTO(int seq, String title, String contents, String writer, Date writeDate, String boardType, String category) {
+		super();
+		this.seq = seq;
+		this.title = title;
+		this.contents = contents;
+		this.writer = writer;
+		this.writeDate = writeDate;
+		this.boardType = boardType;
+		this.category = category;
 	}
 	public BoardDTO(int chk, int rank, int seq, String title, String contents, String writer, Date writeDate, String boardType) {
 		super();
@@ -26,7 +38,6 @@ public class BoardDTO {
 		this.writeDate = writeDate;
 		this.boardType = boardType;
 	}
-	
 	public int getChk() {
 		return chk;
 	}
@@ -75,5 +86,12 @@ public class BoardDTO {
 	public void setBoardType(String boardType) {
 		this.boardType = boardType;
 	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
 	
 }

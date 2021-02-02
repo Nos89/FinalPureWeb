@@ -77,6 +77,16 @@
 	</foreach>
 </delete>
 
+<!-- 단과대 목록 -->
+<select id="getCollege" resultType="kh.spring.dto.CollegeDTO">
+	SELECT * FROM COLLEGE
+</select>
+
+<!-- 학과 목록 -->
+<select id="getDepartment" resultType="kh.spring.dto.DepartmentDTO">
+	SELECT * FROM DEPARTMENT
+</select>
+
 <!-- 교수 목록 가져오기 -->
 <select id="getProfessor" resultType="kh.spring.dto.ProfessorDTO">
 	SELECT

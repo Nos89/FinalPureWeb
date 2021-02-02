@@ -12,6 +12,8 @@ import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
+import kh.spring.dto.CollegeDTO;
+import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
@@ -101,7 +103,11 @@ public class AdminController {
 	public NexacroResult professorOnLoad() throws Exception {
 		NexacroResult nr = new NexacroResult();
 		List<ProfessorDTO> list = admService.getProfessor();
+		List<CollegeDTO> list2 = admService.getCollege();
+		List<DepartmentDTO> list3 = admService.getDepartment();
 		nr.addDataSet("out_pro", list);
+		nr.addDataSet("out_col",list2);
+		nr.addDataSet("out_dept",list3);
 		return nr;
 	}
 	
@@ -118,7 +124,11 @@ public class AdminController {
 	public NexacroResult getStudentOnLoad() throws Exception {
 		NexacroResult nr = new NexacroResult();
 		List<StudentDTO> list = admService.getStudentOnLoad();
+		List<CollegeDTO> list2 = admService.getCollege();
+		List<DepartmentDTO> list3 = admService.getDepartment();
 		nr.addDataSet("out_std",list);
+		nr.addDataSet("out_col",list2);
+		nr.addDataSet("out_dept",list3);
 		return nr;		
 	}
 	
