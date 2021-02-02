@@ -125,6 +125,7 @@ public class MainBoardController {
 		return "main/" + pageGroup + "/board";
 	}
 	
+	
 	// 댓글 작성
 	@RequestMapping(value="/insert.comments", produces="text/plain; charset=UTF8")
 	@ResponseBody

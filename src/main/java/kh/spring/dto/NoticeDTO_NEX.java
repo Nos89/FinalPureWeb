@@ -1,21 +1,19 @@
 package kh.spring.dto;
 
-import java.sql.Date;
-
-public class NoticeDTO {
+public class NoticeDTO_NEX {
 	private int chk=0;
 	private int rank;
 	private int noti_seq;
 	private String noti_title;
 	private String noti_contents;
-	private Date noti_writeDate;
+	private String noti_writeDate;
 	private String category;
 	
-	public NoticeDTO() {
+	public NoticeDTO_NEX() {
 		super();
 	}
-	public NoticeDTO(int chk, int rank, int noti_seq, String noti_title, String noti_contents, Date noti_writeDate,
-			String category) {
+	public NoticeDTO_NEX(int chk, int rank, int noti_seq, String noti_title, String noti_contents,
+			String noti_writeDate, String category) {
 		super();
 		this.chk = chk;
 		this.rank = rank;
@@ -25,7 +23,6 @@ public class NoticeDTO {
 		this.noti_writeDate = noti_writeDate;
 		this.category = category;
 	}
-
 	public int getChk() {
 		return chk;
 	}
@@ -56,10 +53,10 @@ public class NoticeDTO {
 	public void setNoti_contents(String noti_contents) {
 		this.noti_contents = noti_contents;
 	}
-	public Date getNoti_writeDate() {
+	public String getNoti_writeDate() {
 		return noti_writeDate;
 	}
-	public void setNoti_writeDate(Date noti_writeDate) {
+	public void setNoti_writeDate(String noti_writeDate) {
 		this.noti_writeDate = noti_writeDate;
 	}
 	public String getCategory() {
