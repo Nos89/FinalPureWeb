@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.ClassRegistrationDTO;
+import kh.spring.dto.ShoppingBasketDTO;
 
 @Repository
 public class ClassRegistrationDAO {
@@ -20,10 +21,17 @@ public class ClassRegistrationDAO {
 	public int addClass(ClassRegistrationDTO dto) {
 		return db.insert("CR.addClass",dto);
 	}
-	public int partPlus(ClassRegistrationDTO dto) {
-		return db.update("CR.partPlus",dto);
-	}
 	public int deleteCRList(ClassRegistrationDTO dto) {
 		return db.delete("CR.deleteCRList", dto);
+	}
+	public List<ShoppingBasketDTO> selectBasketList(String id){
+		return db.selectList("CR.selectMyBasket", id);
+		
+	}
+	public int deleteBasketList(ShoppingBasketDTO dto) {
+		return db.delete("CR.deleteBasketList",dto);
+	}
+	public int addClassBasket(ShoppingBasketDTO dto) {
+		return db.insert("CR.addClassBasket", dto);
 	}
 }

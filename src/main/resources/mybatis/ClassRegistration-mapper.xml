@@ -13,5 +13,15 @@
 	delete from classregistration where cr_seq=#{cr_seq}
 	</delete>
 	
+	<select id="selectMyBasket" resultType="kh.spring.dto.ShoppingBasketDTO">
+	select * from shoppingbasket where id=#{value} order by 1 asc
+	</select>
+		<delete id="deleteBasketList">
+	delete from shoppingbasket where shop_seq=#{shop_seq}
+	</delete>
+	
+	<insert id="addClassBasket">
+	insert into shoppingbasket values(shoppingbasket_seq.nextval,#{id},#{lec_code})
+	</insert>
 	
 </mapper>
