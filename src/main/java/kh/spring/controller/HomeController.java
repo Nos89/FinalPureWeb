@@ -48,17 +48,24 @@ public class HomeController {
 	@RequestMapping("/whichUser.nex")
 	public NexacroResult whichUser() {
 		NexacroResult nr = new NexacroResult();
+		
 		String loginID = (String)session.getAttribute("loginID");
+		System.out.println(loginID);
 		if( loginID.split("-")[0].contentEquals("S")) {
 			nr.addVariable("userType", "학생");
 		} else if ( loginID.split("-")[0].contentEquals("P")) {
 			nr.addVariable("userType", "교수");
-		}
+		} 
 		nr.addVariable("loginID", (String)session.getAttribute("loginID"));
 		return nr;
 	}
 	@RequestMapping("/mainHome")
 	public String mainHome() {
 		return "redirect:/";
+	}
+	@RequestMapping("/classRegistration.nex")
+	public String viewClassRegistration() {
+		System.out.println("Sdfsf");
+		return "redirect:/nex/index.html?name=sugang";
 	}
 }

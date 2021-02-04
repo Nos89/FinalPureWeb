@@ -187,7 +187,7 @@
 						</div>
 						<div class="col-sm-2 menu">
 							<div class="row">
-								<div class="col-3 col-sm-12 menuPart">수강신청</div>
+								<div class="col-3 col-sm-12 menuPart"><a href="/classRegistration.nex">수강신청</a></div>
 								<div class="col-3 col-sm-12 menuPart"><a href="/" class="d-inline-block">대표홈페이지</a></div>
 								<div class="col-2 col-sm-12  menuPart">~~로 이동</div>
 								<div class="col-2 col-sm-12  menuPart">~~로 이동</div>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CR">
+	<select id="selectMyList" resultType="kh.spring.dto.ClassRegistrationDTO">
+	select * from classregistration where id=#{value} order by 1 asc
+	</select>
+	<insert id="addClass">
+	insert into classregistration values(ClassRegistration_seq.nextval,#{id},#{lec_code},#{cr_divide},#{cr_completediv},sysdate)
+	</insert>
+	
+	<delete id="deleteCRList">
+	delete from classregistration where cr_seq=#{cr_seq}
+	</delete>
+	
+	<select id="selectMyBasket" resultType="kh.spring.dto.ShoppingBasketDTO">
+	select * from shoppingbasket where id=#{value} order by 1 asc
+	</select>
+		<delete id="deleteBasketList">
+	delete from shoppingbasket where shop_seq=#{shop_seq}
+	</delete>
+	
+	<insert id="addClassBasket">
+	insert into shoppingbasket values(shoppingbasket_seq.nextval,#{id},#{lec_code})
+	</insert>
+	
+</mapper>
