@@ -96,11 +96,14 @@
 }
 
 .container .body .goBox a{
-	display: inline-block;
 	width: 100%;
 	height: 100%;
 }
 
+.container .body .goBox .gotoPortal{
+	
+	background: #09E3F5;	
+}
 
 /* common board */
 .container .body .bodyWrapper .boardTitle a{

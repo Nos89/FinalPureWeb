@@ -187,8 +187,8 @@
 						</div>
 						<div class="col-sm-2 menu">
 							<div class="row">
-								<div class="col-3 col-sm-12 menuPart">수강신청</div>
-								<div class="col-3 col-sm-12 menuPart">대표홈페이지</div>
+								<div class="col-3 col-sm-12 menuPart"><a href="/classRegistration.nex">수강신청</a></div>
+								<div class="col-3 col-sm-12 menuPart"><a href="/" class="d-inline-block">대표홈페이지</a></div>
 								<div class="col-2 col-sm-12  menuPart">~~로 이동</div>
 								<div class="col-2 col-sm-12  menuPart">~~로 이동</div>
 								<div class="col-2 col-sm-12  menuPart">도움말</div>
@@ -222,7 +222,7 @@
 					<div class="col-12 ">
 						<nav class="navbar navbar-expand-lg navbar-light bg-light">
 							<div class="container">
-								<a class="navbar-brand" href="#">oo대학교 포털사이트</a>
+								<a class="navbar-brand" href="/">oo대학교 포털사이트</a>
 
 								<ul class="nav justify-content-end">
 
@@ -250,11 +250,11 @@
 										<div class="container">
 											<ul class="navbar-nav mr-auto">
 												<li class="nav-item active"><a class="nav-link"
-													href="#">종합정보시스템</a></li>
+													href="/home.nex">종합정보시스템</a></li>
 												<li class="nav-item active"><a class="nav-link"
 													href="#">전자출결</a></li>
 												<li class="nav-item active"><a class="nav-link"
-													href="#">대표홈페이지</a></li>
+													href="/">대표홈페이지</a></li>
 											</ul>
 										</div>
 
@@ -279,7 +279,7 @@
 										<div class="container">
 											<ul class="navbar-nav mr-auto">
 												<li class="nav-item active"><a class="nav-link"
-													href="#">종합정보시스템</a></li>
+													href="/home.nex">종합정보시스템</a></li>
 												<li class="nav-item active"><a class="nav-link"
 													href="#">전자출결</a></li>
 											</ul>
@@ -510,49 +510,9 @@
 										</div>
 									</div>
 									<div class="realtimetable">
-										<table border="1"
-											style="height: 100%; width: 100%; text-align: center;">
-											<tr>
-												<td></td>
-												<td>월</td><td>화</td><td>수</td><td>목</td><td>금</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td id=mon1></td><td id=tue1></td><td></td><td></td><td id=fri1></td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td id=mon2></td><td id=tue2></td><td></td><td></td><td id=fri2></td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td id=mon3></td><td id=tue3></td><td></td><td></td><td id=fri3></td>
-											</tr>
-											<tr>
-												<td>4</td>
-												<td id=mon4></td><td id=tue4></td><td></td><td></td><td id=fri4></td>
-											</tr>
-											<tr>
-												<td>5</td>
-												<td id=mon5></td><td id=tue5></td><td></td><td></td><td id=fri5></td>
-											</tr>
-											<tr>
-												<td>6</td>
-												<td id=mon6></td><td id=tue6></td><td></td><td></td><td id=fri6></td>
-											</tr>
-											<tr>
-												<td>7</td>
-												<td id=mon7></td><td id=tue7></td><td></td><td></td><td id=fri7></td>
-											</tr>
-											<tr>
-												<td>8</td>
-												<td id=mon8></td><td id=tue8></td><td></td><td></td><td id=fri8></td>
-											</tr>
-											<tr>
-												<td>9</td>
-												<td id=mon9></td><td id=tue9></td><td></td><td></td><td id=fri9></td>
-											</tr>
-										</table>
+										<c:forEach var="i" items="${timeList}" varStatus="status">
+												<div class="subject_isu">${i}</div>
+										</c:forEach>
 
 									</div>
 								</div>

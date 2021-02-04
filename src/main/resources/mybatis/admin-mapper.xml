@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Admin">
+<!-- 공지사항 가져오기 -->
+<select id="getNotice" resultType="kh.spring.dto.NoticeDTO">
+	SELECT *
+		FROM (SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_SEQ DESC) AS RANK
+				FROM BOARD_NOTICE
+				<if test='value!="전체"'>
+					WHERE CATEGORY=#{category}
+				</if>
+			)
+</select>
+
+<!-- 공지사항 검색 -->
+<select id="searchNotice" resultType="kh.spring.dto.NoticeDTO">
+	SELECT *
+		FROM (
+			SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_SEQ DESC) AS RANK
+				FROM BOARD_NOTICE
+			<trim prefix="WHERE">
+				<if test='search_keyword!="" and !"title_contents".equals(search_target)'>
+					${search_target} LIKE '%'||#{search_keyword}||'%'
+				</if>
+				<if test='search_keyword!="" and "title_contents".equals(search_target)'>
+					(NOTI_TITLE LIKE '%'||#{search_keyword}||'%' OR NOTI_CONTENTS LIKE '%'||#{search_keyword}||'%')
+				</if>
+			</trim>
+			<if test='!"category".equals("전체")'>
+				AND CATEGORY=#{category}
+			</if>
+			)
+</select>
+
+<!-- 공지사항 삭제 -->
+<delete id="deleteNotice">
+ DELETE FROM BOARD_NOTICE WHERE NOTI_SEQ IN 
+ 	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+ 		#{item.seq}
+ 	</foreach>
+</delete>
+
+<!-- 게시판 목록 -->
+<select id="getBoard" resultType="kh.spring.dto.BoardDTO">
+	SELECT *
+    	FROM (
+    		SELECT SEQ, B.TITLE, CONTENTS, WRITER, WRITEDATE, D.TITLE DIV, ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RANK
+    			FROM BOARD B, BOARD_DIVISION D
+    			WHERE CODE=DIVISION_CODE AND D.TITLE=#{bdDiv}
+    		)
+</select>
+
+<!-- 게시판 검색 -->
+<select id="searchBoard" resultType="kh.spring.dto.BoardDTO" parameterType="java.util.Map">
+	SELECT *
+		FROM (
+			SELECT SEQ, B.TITLE, CONTENTS, WRITER, WRITEDATE, D.TITLE DIV, ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RANK
+				FROM BOARD B, BOARD_DIVISION D
+			<trim prefix="WHERE">
+				<if test='search_keyword!="" and !"title_contents".equals(search_target)'>
+					${search_target} LIKE '%'||#{search_keyword}||'%'
+				</if>
+				<if test='search_keyword!="" and "title_contents".equals(search_target)'>
+					B.TITLE LIKE '%'||#{search_keyword}||'%' OR CONTENTS LIKE '%'||#{search_keyword}||'%'
+				</if>
+			</trim>
+			AND CODE=DIVISION_CODE AND D.TITLE=#{bdDiv}
+			)
+</select>
+
+<!-- 게시판 삭제 -->
+<delete id="deleteBoard">
+	DELETE FROM BOARD WHERE SEQ IN
+	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+		#{item.seq}
+	</foreach>
+</delete>
+
+<!-- 단과대 목록 -->
+<select id="getCollege" resultType="kh.spring.dto.CollegeDTO">
+	SELECT * FROM COLLEGE
+</select>
+
+<!-- 학과 목록 -->
+<select id="getDepartment" resultType="kh.spring.dto.DepartmentDTO">
+	SELECT * FROM DEPARTMENT
+</select>
+
+<!-- 교수 목록 가져오기 -->
+<select id="getProfessor" resultType="kh.spring.dto.ProfessorDTO">
+	SELECT
+	    U.ID, PW, NAME, BIRTH, GENDER, COUNTRY,
+	   	INDATE, OUTDATE, COLCODE, DEPTCODE, C.COL_TITLE, D.DEPT_TITLE,
+	    ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE,
+	    BANK, ACCOUNTNUM, PRO_OFFICE, PRO_STATUS
+	FROM USERS U, COLLEGE C, DEPARTMENT D, PROFESSOR P
+	WHERE U.ID=P.PRO_ID AND U.DEPTCODE=D.DEPT_CODE AND D.COL_CODE=C.COL_CODE
+	ORDER BY U.ID
+</select>
+
+<!-- 교수 수정 -->
+<update id="updateProfessor1" parameterType="java.util.List">
+   <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+		UPDATE USERS SET OUTDATE=#{item.outDate} WHERE ID=#{item.id}
+	</foreach>
+</update>
+<update id="updateProfessor2" parameterType="java.util.List">
+   <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+	    UPDATE PROFESSOR
+	    	SET PRO_OFFICE=#{item.pro_office}, PRO_STATUS=#{item.pro_status} WHERE PRO_ID=#{item.id}
+	</foreach>
+</update>
+
+<!-- 학생 목록 가져오기 -->
+<select id="getStudent" resultType="kh.spring.dto.StudentDTO">
+	SELECT
+    	U.ID, PW, NAME, BIRTH, GENDER, COUNTRY,
+	    INDATE, OUTDATE, COLCODE, DEPTCODE, C.COL_TITLE, D.DEPT_TITLE,
+	    ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE,
+	    BANK, ACCOUNTNUM,
+	    STD_STATUS, STD_YEAR
+	FROM USERS U, COLLEGE C, DEPARTMENT D, STUDENTS S
+	WHERE U.ID=S.ID AND U.DEPTCODE=D.DEPT_CODE AND D.COL_CODE=C.COL_CODE
+	ORDER BY U.ID
+</select>
+
+<!-- 학생 수정 -->
+<update id="modifyStudent1" parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+    	UPDATE USERS SET COLCODE=#{item.colcode}, DEPTCODE=#{item.deptcode}, OUTDATE=#{item.outDate}, COUNTRY=#{item.country} WHERE ID=#{item.id}
+    </foreach>
+</update>
+<update id="modifyStudent2" parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+    	UPDATE STUDENTS SET	STD_STATUS=#{item.std_status} WHERE ID=#{item.id}
+    </foreach>
+</update>
+
+</mapper>

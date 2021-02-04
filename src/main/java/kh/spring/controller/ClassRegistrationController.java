@@ -1,12 +1,11 @@
 package kh.spring.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
@@ -23,6 +22,7 @@ import kh.spring.dto.StudentDetailDTO;
 import kh.spring.dto.StudentInfoDTO;
 import kh.spring.service.ClassRegistrationService;
 import kh.spring.service.CommonService;
+import kh.spring.service.InfoService;
 import kh.spring.service.StudentService;
 
 @RequestMapping("/classRegistration")
@@ -37,9 +37,30 @@ public class ClassRegistrationController {
 	@Autowired
 	private CommonService comservice;
 	
+	@Autowired
+	private InfoService iservice;
+	
+	
+	@RequestMapping("login.nex")
+	public NexacroResult login(@ParamVariable(name="id")String id, @ParamVariable(name="pw")String pw) throws Exception {
+		NexacroResult nr = new NexacroResult();
+		int result = iservice.login(id, pw);
+		System.out.println(result);
+		if(result <1) {
+			nr.setErrorCode(0);
+			nr.setErrorMsg("아이디 또는 비밀번호가 틀립니다.");
+			
+		}else {
+			nr.setErrorCode(1);
+			nr.setErrorMsg("로그인 성공");
+		}
+		return nr;
+	}
+	
 	@RequestMapping("onload.nex")
 	public NexacroResult onLoad(@ParamVariable(name="id")String id) {
 		System.out.println("신호신호");
+		System.out.println(id);
 		NexacroResult nr = new NexacroResult();
 		List<OpenClass_LecPlan> oList = new ArrayList<>();
 		oList = cservice.selectAllOpenClass();
@@ -242,6 +263,12 @@ public class ClassRegistrationController {
 		nr.addDataSet("out_basket",bList);
 		
 		return nr;
+	}
+	
+	@ExceptionHandler
+	public String Exceptionhandler(Exception e) {
+		e.printStackTrace();
+		return "error";
 	}
 	
 }

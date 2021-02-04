@@ -3,15 +3,17 @@ package kh.spring.dto;
 public class CollegeDTO {
 	private String col_code;
 	private String col_title;
+	
+	public CollegeDTO() {
+		super();
+	}
+
 	public CollegeDTO(String col_code, String col_title) {
 		super();
 		this.col_code = col_code;
 		this.col_title = col_title;
 	}
-	public CollegeDTO() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+
 	public String getCol_code() {
 		return col_code;
 	}
@@ -24,6 +26,5 @@ public class CollegeDTO {
 	public void setCol_title(String col_title) {
 		this.col_title = col_title;
 	}
-	
-	
+
 }

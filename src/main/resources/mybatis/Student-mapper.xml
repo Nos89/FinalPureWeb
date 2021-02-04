@@ -12,7 +12,7 @@
 	    u.bank,u.accountnum
 			from
 	    users u, college c, department d
-	    where u.colcode=c.col_code AND u.deptcode=d.dept_code AND id = 'S-1002'
+	    where u.colcode=c.col_code AND u.deptcode=d.dept_code AND id = #{value}
 	</select>
 	
 	<select id="selectArmy" resultType="kh.spring.dto.MilitaryDTO">

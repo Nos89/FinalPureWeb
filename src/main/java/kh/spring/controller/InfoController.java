@@ -69,7 +69,6 @@ public class InfoController {
 			List<InfoBoardDTO> list_enter = iservice.getRecentEnter();
 			
 
-			session.setAttribute("loginID", id);
 			if (result > 0) {
 				session.setAttribute("loginID", id);
 				session.setAttribute("userName", name);
@@ -203,6 +202,82 @@ public class InfoController {
 						semester = "1";
 						classOpenDate = currentRegYear + "-01-25";
 						List<TakingClassDTO> list_takingClass = iservice.takingClass(id, semester, classOpenDate);
+						List<TakingClassDTO> list_classSche = iservice.classSche(id, semester, classOpenDate);
+
+						String schedule;
+						String classTitle;
+						String classRoom;
+
+						//List<TimetableDTO> timeList = new ArrayList<>();
+						List<String> timeList = new ArrayList<>();
+						//TimetableDTO dto = new TimetableDTO();
+						for (int j = 0; j < list_classSche.size(); j++) {
+							schedule = list_classSche.get(j).getLec_schedule();
+							classTitle = list_classSche.get(j).getLec_title();
+							classRoom = list_classSche.get(j).getLec_classroom();
+							
+							SimpleDateFormat format1 = new SimpleDateFormat("E"); //오늘날짜 요일 가져오기
+							Date time1 = new Date();
+							String day = format1.format(time1);
+							
+							if (schedule.contains("/")) { // 월(1,4)/수(4,7) 수(1,2)/목(3)
+								String[] divSche_temp = schedule.split("/");// 월(1,4) 수(4,7)
+									
+								for (int i = 0; i < divSche_temp.length; i++) {
+									String divSche[] = divSche_temp[i].split("\\("); // 월(1,4)
+									// System.out.println(divSche[0]); // 월 *****
+									// System.out.println(divSche[1]); // 1,4)
+									divSche[1] = divSche[1].replaceAll("\\)", " "); // )지우기 => 1,4 *****
+
+									if (divSche[1].contains(",")) { // divSche[1]==1,4
+										String divTime[] = divSche[1].split(","); // 1 4
+										
+										for (int j1 = 0; j1 < divTime.length; j1++) {
+											divTime[j1] = divTime[j1].replaceAll(" ", "");
+											int clTime = Integer.parseInt(divTime[j1]);
+											String clDay = divSche[0];
+											
+											timetable(clDay,classTitle,clTime,day,timeList,classRoom);	
+							
+										}										
+										
+									} else if (!divSche[1].contains(",")) {
+										divSche[1] = divSche[1].replaceAll(" ", "");
+										int clTime = Integer.parseInt(divSche[1]);
+										String clDay = divSche[0];
+										
+										timetable(clDay,classTitle,clTime,day,timeList,classRoom);
+									}
+								}
+
+							} else if (!schedule.contains("/")) { // 금(6,7)             금(8)
+								String divSche[] = schedule.split("\\("); // 금 6,7)
+								// System.out.println(divSche[0]); // 금
+								// System.out.println(divSche[1]); // 6,7)
+								divSche[1] = divSche[1].replaceAll("\\)", " "); // )지우기
+								// System.out.println(a[1]); //6,7
+
+								if (divSche[1].contains(",")) {
+									String divTime[] = divSche[1].split(",");
+									for (int j1 = 0; j1 < divTime.length; j1++) {
+										divTime[j1] = divTime[j1].replaceAll(" ", "");
+										int clTime = Integer.parseInt(divTime[j1]);
+										String clDay = divSche[0];
+										
+										timetable(clDay,classTitle,clTime,day,timeList,classRoom);
+									}
+								} else if (!divSche[1].contains(",")) { // 금(8)
+									String divTime[] = schedule.split("\\("); // 금 8)
+									divTime[1] = divTime[1].replaceAll("\\)", " ");
+									divSche[1] = divSche[1].replaceAll(" ", "");
+									int clTime = Integer.parseInt(divSche[1]);
+									String clDay = divSche[0];
+									
+									timetable(clDay,classTitle,clTime,day,timeList,classRoom);
+								}
+							}
+						}	
+						model.addAttribute("timeList", timeList);		
 						session.setAttribute("list_takingClass", list_takingClass);
 						session.setAttribute("semester", semester);
 						session.setAttribute("openClassYear", openClassYear);
@@ -244,8 +319,6 @@ public class InfoController {
 		session.removeAttribute("list_takingClass");
 		session.removeAttribute("semester");
 		session.removeAttribute("openClassYear");
-		session.removeAttribute("classTitle");
-		session.removeAttribute("clTime");
 	
 		return "info/info";
 
