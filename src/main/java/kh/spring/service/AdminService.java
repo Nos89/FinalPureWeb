@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 import kh.spring.dao.AdminDAO;
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
+import kh.spring.dto.BuildDTO;
+import kh.spring.dto.ClassroomDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
+import kh.spring.dto.LectureDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
@@ -227,5 +230,34 @@ public class AdminService {
 		}
 		return admdao.modifyStudent2(list2);
 	}
-
+	
+	// 강의계획서 가져오기
+	public List<LectureDTO> getSyllabus() {
+		return admdao.getSyllabus();
+	}
+	
+	// 강의계획서 승인
+	public int syllabusApproved(LectureDTO dto) {
+		return admdao.syllabusApproved(dto);
+	}
+	
+	// 강의계획서 반려
+	public int syllabusRejected(LectureDTO dto) {
+		return admdao.syllabusRejected(dto);
+	}
+	
+	// 건물 정보
+	public List<BuildDTO> getBuild(){
+		return admdao.getBuild();
+	}
+	
+	// 강의실 정보
+	public List<ClassroomDTO> getClassroom(){
+		return admdao.getClassroom();
+	}
+	
+	// 강의실 정보 조회
+	public List<LectureDTO> searchClsTimetable(String classroom, String year, int semester){
+		return admdao.searchTimetable(classroom, year, semester);
+	}
 }

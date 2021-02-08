@@ -53,7 +53,7 @@ public class HomeController {
 			nr.addVariable("userType", "학생");
 		} else if ( loginID.split("-")[0].contentEquals("P")) {
 			nr.addVariable("userType", "교수");
-		}
+		} 
 		nr.addVariable("loginID", (String)session.getAttribute("loginID"));
 		return nr;
 	}

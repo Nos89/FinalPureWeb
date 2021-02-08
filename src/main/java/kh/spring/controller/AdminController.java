@@ -1,5 +1,6 @@
 package kh.spring.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,11 @@ import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
+import kh.spring.dto.BuildDTO;
+import kh.spring.dto.ClassroomDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
+import kh.spring.dto.LectureDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
@@ -67,6 +71,20 @@ public class AdminController {
 		admService.deleteNotice(list);
 		return new NexacroResult();
 	}
+	
+	// 공지사항 작성
+	
+	// 홍보게시글 작성폼
+	@RequestMapping("GoWritePromo.nex")
+	public String goWritePage() {
+		return "admin/boardWrite";
+	}
+	
+//	// 홍보게시글 작성
+//	@RequestMapping("WriteBoardPromo.nex")
+//	public String writePost() {
+//		
+//	}
 	
 	// 게시판 로드
 	@RequestMapping("BoardOnLoad.nex")
@@ -141,4 +159,47 @@ public class AdminController {
 		return new NexacroResult();
 	}
 
+	// 강의계획서 가져오기
+	@RequestMapping("SyllabusOnLoad.nex")
+	public NexacroResult getSyllabus() {
+		NexacroResult nr = new NexacroResult();
+		List<LectureDTO> list = admService.getSyllabus();
+		nr.addDataSet("out_lecture",list);
+		return nr;
+	}
+	
+	// 강의계획서 승인
+	@RequestMapping("SyllabusApproved.nex")
+	public NexacroResult syllabusApproved(@ParamDataSet(name="in_lecture")LectureDTO dto) {
+		admService.syllabusApproved(dto);
+		return new NexacroResult();
+	}
+	
+	// 강의계획서 반려
+	@RequestMapping("SyllabusRejected.nex")
+	public NexacroResult syllabusRejected(@ParamDataSet(name="in_lecture")LectureDTO dto) {
+		admService.syllabusRejected(dto);
+		return new NexacroResult();		
+	}
+	
+	// 건물 정보
+	@RequestMapping("ClassroomOnLoad.nex")
+	public NexacroResult getClassroomInfo() {
+		NexacroResult nr = new NexacroResult();
+		List<BuildDTO> list1 = admService.getBuild();
+		List<ClassroomDTO> list2 = admService.getClassroom();
+		nr.addDataSet("out_build",list1);
+		nr.addDataSet("out_classroom",list2);
+		return nr;
+	}
+	
+	// 강의장 시간표 조회
+	@RequestMapping("SearchTimetable")
+	public NexacroResult searchTimetable(@ParamVariable(name="classroom")String classroom, @ParamVariable(name="year")String year, @ParamVariable(name="semester")int semester) {
+		NexacroResult nr = new NexacroResult();
+		List<LectureDTO> list = admService.searchClsTimetable(classroom, year, semester);
+		nr.addDataSet("out_timetable",list);
+		return nr;
+	}
+	
 }
