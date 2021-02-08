@@ -8,7 +8,7 @@ public class OpenClass_LecPlan {
 	private String oc_semester;
 	private String oc_schedule;
 	private int oc_max;
-	private String oc_part;
+	private int oc_part;
 	private String oc_is_close;
 	private String oc_close_reason;
 	private String oc_pro_code;
@@ -17,9 +17,11 @@ public class OpenClass_LecPlan {
 	private String name;
 	private int reco_score;
 	private String isu;
+	private String dept_code;
+	private String col_code;
 	public OpenClass_LecPlan(String oc_code, Date oc_year, String oc_semester, String oc_schedule, int oc_max,
-			String oc_part, String oc_is_close, String oc_close_reason, String oc_pro_code, String oc_class_room,
-			String oc_targetlevel, String name, int reco_score, String isu) {
+			int oc_part, String oc_is_close, String oc_close_reason, String oc_pro_code, String oc_class_room,
+			String oc_targetlevel, String name, int reco_score, String isu, String dept_code, String col_code) {
 		super();
 		this.oc_code = oc_code;
 		this.oc_year = oc_year;
@@ -35,6 +37,8 @@ public class OpenClass_LecPlan {
 		this.name = name;
 		this.reco_score = reco_score;
 		this.isu = isu;
+		this.dept_code = dept_code;
+		this.col_code = col_code;
 	}
 	public OpenClass_LecPlan() {
 		super();
@@ -70,10 +74,10 @@ public class OpenClass_LecPlan {
 	public void setOc_max(int oc_max) {
 		this.oc_max = oc_max;
 	}
-	public String getOc_part() {
+	public int getOc_part() {
 		return oc_part;
 	}
-	public void setOc_part(String oc_part) {
+	public void setOc_part(int oc_part) {
 		this.oc_part = oc_part;
 	}
 	public String getOc_is_close() {
@@ -124,6 +128,19 @@ public class OpenClass_LecPlan {
 	public void setIsu(String isu) {
 		this.isu = isu;
 	}
+	public String getDept_code() {
+		return dept_code;
+	}
+	public void setDept_code(String dept_code) {
+		this.dept_code = dept_code;
+	}
+	public String getCol_code() {
+		return col_code;
+	}
+	public void setCol_code(String col_code) {
+		this.col_code = col_code;
+	}
+	
 	
 	
 	

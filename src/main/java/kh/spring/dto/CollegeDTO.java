@@ -7,6 +7,7 @@ public class CollegeDTO {
 	public CollegeDTO() {
 		super();
 	}
+
 	public CollegeDTO(String col_code, String col_title) {
 		super();
 		this.col_code = col_code;
@@ -25,4 +26,5 @@ public class CollegeDTO {
 	public void setCol_title(String col_title) {
 		this.col_title = col_title;
 	}
+
 }

@@ -1,5 +1,6 @@
 package kh.spring.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.ProFileDAO;
 import kh.spring.dao.ProfessorDAO;
+import kh.spring.dto.ClassRegistrationDetailDTO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.DepartmentOfficeDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.ProAttendMngDTO;
+import kh.spring.dto.ProAttendMngDTO_NEX;
 import kh.spring.dto.ProFileDTO;
 import kh.spring.dto.ProListDTO;
 import kh.spring.dto.ProScheduleDTO;
@@ -96,4 +99,53 @@ public class ProfessorService {
 		}
 		return result;
 	}
+	
+	public List<ProAttendMngDTO_NEX>selectAttendMng(String id){
+		List<ProAttendMngDTO> list = pdao.selectProAttendMngOnload(id);
+		List<ProAttendMngDTO_NEX> nList = new ArrayList<>();
+		for(ProAttendMngDTO i : list) {
+			ProAttendMngDTO_NEX dto;
+			if(i.getAtt_date()==null) {
+				dto = new ProAttendMngDTO_NEX(i.getAtt_seq(), i.getAtt_lecCode(), i.getAtt_year(), i.getAtt_targetLevel(),
+						i.getAtt_semester(), i.getAtt_lecTitle(), null,null,i.getAtt_stdId(),
+						i.getAtt_deptName(),i.getAtt_stdName(), i.getAtt_stdLevel(),i.getAtt_week());
+				
+			}else {
+			
+				dto = new ProAttendMngDTO_NEX(i.getAtt_seq(), i.getAtt_lecCode(), i.getAtt_year(), i.getAtt_targetLevel(),
+					i.getAtt_semester(), i.getAtt_lecTitle(), ConvertDate.dateToString(i.getAtt_date()),i.getAtt_attend(),i.getAtt_stdId(),
+					i.getAtt_deptName(),i.getAtt_stdName(), i.getAtt_stdLevel(),i.getAtt_week());
+			}
+			nList.add(dto);
+		}
+		return nList;
+	}
+	
+	public List<ClassRegistrationDetailDTO> selectCRDetail(String id){
+		return pdao.selectCRDetail(id);
+		
+	}
+	
+	public int insertAttend(ProAttendMngDTO_NEX dto) {
+		ProAttendMngDTO ndto = new ProAttendMngDTO(dto.getAtt_seq(), dto.getAtt_lecCode(),dto.getAtt_year().substring(0, 7), dto.getAtt_targetLevel(),
+				dto.getAtt_semester(), dto.getAtt_lecTitle(),null, dto.getAtt_attend(), dto.getAtt_stdId(),
+				dto.getAtt_deptName(), dto.getAtt_stdName(), dto.getAtt_stdLevel(), dto.getAtt_week());
+		System.out.println(ndto.getAtt_targetLevel());
+		return pdao.insertAttend(ndto);
+		
+	}
+	
+	public int saveAttend(List<ProAttendMngDTO_NEX> list) throws Exception {
+		List<ProAttendMngDTO> nList = new ArrayList<>();
+		for(ProAttendMngDTO_NEX i : list) {
+			ProAttendMngDTO dto = new ProAttendMngDTO(i.getAtt_seq(), i.getAtt_lecCode(), i.getAtt_year(), i.getAtt_targetLevel(),
+					i.getAtt_semester(),i.getAtt_lecTitle(), ConvertDate.stringToDate(i.getAtt_date()), i.getAtt_attend(), i.getAtt_stdId(),
+					i.getAtt_deptName(), i.getAtt_stdName(), i.getAtt_stdLevel(), i.getAtt_week());
+			nList.add(dto);
+			}
+		
+		return pdao.saveAttend(nList);
+		}
+		
+	
 }
