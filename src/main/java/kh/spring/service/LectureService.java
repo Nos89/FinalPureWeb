@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dao.LectureDAO;
+import kh.spring.dto.ClassRegistrationDTO;
 import kh.spring.dto.LectureDTO;
 import kh.spring.dto.OpenClass_LecPlan;
 

@@ -60,4 +60,22 @@ from military m, militarygroup g
 	<update id="updateProSchedule">
 		update pro_schedule set sche_title=#{sche_title},sche_contents=#{sche_contents},sche_date=#{sche_date},sche_type=#{sche_type} where sche_seq=#{sche_seq}
 	</update>
+	
+	<select id="selectCRDetail" resultType="kh.spring.dto.ClassRegistrationDetailDTO">
+		select  c.lec_code,sub.name as title, u.id, d.dept_title,u.name,s.std_year from users u, department d, classregistration c, students s, subject sub
+where u.deptcode=d.dept_code AND u.id=s.id AND c.id=s.id AND sub.code=c.lec_code AND c.lec_code in(select oc_code from open_class where oc_pro_code='P-1001') order by 1 asc
+	</select>
+	
+	<insert id="insertAttend">
+	insert into pro_attendmng values(pro_attendmng_seq.nextval,#{att_lecCode},#{att_year},#{att_targetLevel},#{att_semester},#{att_lecTitle},null,null,#{att_stdId},#{att_deptName},#{att_stdName},#{att_stdLevel},#{att_week})
+	</insert>
+	
+	<update id="saveAttend">
+
+		<foreach collection="list" item="i" index="index" separator=";" open="DECLARE BEGIN" close="; END;">
+		 UPDATE pro_attendmng SET att_date=#{i.att_date},att_attend=#{i.att_attend}
+		  WHERE att_seq=#{i.att_seq}  
+		  </foreach>
+
+	</update>
 </mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Common">
+
+	<select id="getSubject" resultType="kh.spring.dto.SubjectDTO">
+	select * from subject
+	</select>
+	<select id="getDepartment" resultType="kh.spring.dto.DepartmentDTO">
+	select * from department
+	</select>
+	<select id="getIsu"  resultType="kh.spring.dto.IsuDTO">
+	select * from isu
+	</select>
+	<select id="getCollege" resultType="kh.spring.dto.CollegeDTO">
+	select * from college
+	</select>
+	
+	
+	
+	
+	
+</mapper>

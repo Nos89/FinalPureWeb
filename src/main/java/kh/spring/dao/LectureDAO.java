@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.ClassRegistrationDTO;
 import kh.spring.dto.LectureDTO;
 import kh.spring.dto.OpenClass_LecPlan;
 
@@ -30,5 +31,17 @@ public class LectureDAO {
 		System.out.println("신혼신호");
 		System.out.println(dto.getLec_code()+dto.getLec_classroom());
 		return db.insert("Lecture.insertLecturePlan",dto);
+	}
+	
+	public List<OpenClass_LecPlan> selectAllOpenClass(){
+		return db.selectList("Lecture.selectAllOpenClass");
+		
+	}
+	
+	public int partPlus(ClassRegistrationDTO dto){
+		return db.update("Lecture.partPlus",dto);
+	}
+	public int partMinus(ClassRegistrationDTO dto) {
+		return db.update("Lecture.partMinus",dto);
 	}
 }
