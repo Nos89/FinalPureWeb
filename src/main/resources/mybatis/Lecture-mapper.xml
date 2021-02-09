@@ -4,8 +4,8 @@
 <mapper namespace="Lecture">
 	<select id="openClass_lecPlan" resultType="kh.spring.dto.OpenClass_LecPlan">
 		select oc_code,oc_year,oc_semester,oc_max,oc_part,oc_is_close,oc_close_reason,oc_pro_code,oc_class_room,
-		oc_targetlevel,oc_schedule,s.name,s.reco_score,s.isu
-		from subject s, open_class o where s.code=oc_code AND oc_pro_code=#{value}
+		oc_targetlevel,oc_schedule,s.name,s.reco_score,s.isu,s.dept_code,d.col_code
+		from subject s, open_class o, department d where s.code=oc_code AND s.dept_code=d.dept_code AND oc_pro_code=#{value}
 	</select>
 	
 	<select id="selectLecture"  resultType="kh.spring.dto.LectureDTO">
@@ -19,5 +19,19 @@
 	insert into lecture values(#{lec_code},#{lec_title},0,'',#{pro_name},#{lec_semester}
 		,#{lec_targetLevel},#{lec_classroom},#{lec_schedule},#{lec_score},#{lec_isu},#{lec_summary},#{lec_way},#{lec_book},#{lec_eval})
 	</insert>
+	
+	<select id="selectAllOpenClass" resultType="kh.spring.dto.OpenClass_LecPlan">
+	select oc_code,oc_year,oc_semester,oc_max,oc_part,oc_is_close,oc_close_reason,u.name as oc_pro_code,oc_class_room,
+		oc_targetlevel,oc_schedule,s.name,s.reco_score,s.isu,s.dept_code,d.col_code
+		from subject s, open_class o, department d, users u where o.oc_pro_code=u.id AND s.code=oc_code AND s.dept_code=d.dept_code
+	</select>
 
+	<update id="partPlus">
+	update open_class set oc_part=(oc_part+1) where oc_part &lt; oc_max AND oc_code=#{lec_code}
+	</update>
+	<update id="partMinus">
+	update open_class set oc_part=(oc_part-1) where oc_code=#{lec_code}
+	</update>
+	
+	
 </mapper>

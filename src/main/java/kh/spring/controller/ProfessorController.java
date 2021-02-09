@@ -3,24 +3,30 @@ package kh.spring.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
 import com.nexacro.uiadapter17.spring.core.annotation.ParamVariable;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
-import com.nexacro17.xapi.data.DataSet;
 
+import kh.spring.dto.ClassRegistrationDetailDTO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.DepartmentOfficeDTO;
 import kh.spring.dto.MilitaryDTO;
+import kh.spring.dto.OpenClass_LecPlan;
 import kh.spring.dto.ProAttendMngDTO;
+import kh.spring.dto.ProAttendMngDTO_NEX;
+import kh.spring.dto.ProFileDTO;
 import kh.spring.dto.ProListDTO;
 import kh.spring.dto.ProScheduleDTO;
 import kh.spring.dto.ProScheduleDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.ProfessorDTO_NEX;
+import kh.spring.service.LectureService;
 import kh.spring.service.ProfessorService;
 @RequestMapping("/professor")
 @Controller
@@ -28,6 +34,9 @@ public class ProfessorController {
 	
 	@Autowired
 	private ProfessorService pservice;
+	
+	@Autowired
+	private LectureService lservice;
 	
 	
 	@RequestMapping("/proInfoOnLoad.nex")
@@ -39,6 +48,11 @@ public class ProfessorController {
 		
 		List<MilitaryDTO> milList = new ArrayList<>();
 		milList = pservice.selectMil(id);
+		
+		ProFileDTO pdto = new ProFileDTO();
+		pdto = pservice.checkImg(id);
+		
+		nr.addDataSet("out_proFile", pdto);
 	    nr.addDataSet("out_proInfo", infoList);
 	    nr.addDataSet("out_proMil", milList);
 		return nr;
@@ -105,6 +119,7 @@ public class ProfessorController {
 		return nr;
 	}
 	
+	
 	@RequestMapping("/updateProSchedule")
 	public NexacroResult updateProSchedule(@ParamDataSet(name="in_ds")ProScheduleDTO_NEX dto, @ParamVariable(name="id")String id) {
 		NexacroResult nr = new NexacroResult();
@@ -119,4 +134,54 @@ public class ProfessorController {
 		return nr;
 	}
 	
+	//===============================================================
+	@RequestMapping("/attendMngOnLoad.nex")
+	public NexacroResult attendMngOnLoad(@ParamVariable(name="id")String id) {
+		NexacroResult nr = new NexacroResult();
+		System.out.println("넘어왓어용!");
+		List<OpenClass_LecPlan> oList = new ArrayList<>();
+		oList = lservice.selectOpenClass_lecPlan(id);
+		
+		List<ProAttendMngDTO_NEX> aList = new ArrayList<>();
+		aList = pservice.selectAttendMng(id);
+		
+		List<ClassRegistrationDetailDTO> cList = new ArrayList<>();
+		cList = pservice.selectCRDetail(id);
+		
+		nr.addDataSet("out_proAttendMng", aList);
+		nr.addDataSet("out_openClass",oList);
+		nr.addDataSet("out_crDetail", cList);
+		return nr;
+	}
+	@RequestMapping("/insertAttend.nex")
+	public NexacroResult inertAttend(@ParamDataSet(name="in_ds")ProAttendMngDTO_NEX dto) {
+		System.out.println("넘어왔다구!");
+		NexacroResult nr = new NexacroResult();
+		pservice.insertAttend(dto);
+	
+		return nr;
+	}
+	@RequestMapping("/reAttend")
+	public NexacroResult reAttend(@ParamVariable(name="id")String id) {
+		NexacroResult nr = new NexacroResult();
+		List<ProAttendMngDTO_NEX> aList = new ArrayList<>();
+		aList = pservice.selectAttendMng(id);
+		
+		nr.addDataSet("out_proAttendMng", aList);
+		
+		return nr;
+	}
+	
+	@RequestMapping("/saveAttend")
+	public NexacroResult saveAttend(@ParamDataSet(name="in_ds")List<ProAttendMngDTO_NEX> list) throws Exception {
+		NexacroResult nr = new NexacroResult();
+		int result = pservice.saveAttend(list);
+		return nr;
+	}
+	
+	@ExceptionHandler
+	public String Exceptionhandler(Exception e) {
+		e.printStackTrace();
+		return "error";
+	}
 }
