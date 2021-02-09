@@ -31,4 +31,35 @@
 		zipcode=#{zipcode},addr1=#{addr1},addr2=#{addr2},email=#{email},phone=#{phone},bank=#{bank},accountnum=#{accountnum}
 		where id=#{id}
 	</update>
+	
+	<insert id="majorApply">
+		insert into ClassRegistration values(ClassRegistration_seq.nextval,#{dto.id},#{dto.lec_code},'정기','신청상태',#{date})
+	</insert>
+	
+	<insert id="takeOffApply">
+		insert into takeOffApply values(takeOffapply_seq.nextval,#{dto.id},#{dto.reason},#{dto.takeOffYear},#{dto.takeOffSemester},#{dto.expectedReturnYear},#{date},'신청')
+	</insert>
+	
+	<select id="checkTakeOffApply" resultType="kh.spring.dto.TakeOffApplyDTO">
+		select * from takeOffApply where id=#{id}
+	</select>
+	
+	<select id="checkStatus" resultType="String">
+		select std_status from students where id=#{id}
+	</select>
+	
+	<insert id="changeDeptApply">
+		insert into changeDeptApply values(changeDeptApply_seq.nextval,#{dto.id},#{dto.changeYear},#{dto.changeSemester},#{dto.reason},#{dto.changeCollege},#{dto.changeDept},#{date},'신청')
+	</insert>
+	
+	<select id="checkChangeDeptApply" resultType="kh.spring.dto.ChangeDeptApplyDTO">
+		select * from changeDeptApply where id=#{id}
+	</select>
+	
+	<select id="selectAllCTS" resultType="kh.spring.dto.ClassTimeSearchDTO">
+		select DISTINCT o.oc_code,s.name oc_name,s.isu,u.name pro_name,o.oc_max,o.oc_part,o.oc_targetlevel,CONCAT(CONCAT(o.oc_class_room,CONCAT(c.room_use,':')),o.oc_schedule) oc_schedule,s.reco_score,substr(o.oc_year,0,2) oc_year,o.oc_semester,d.dept_title,c.col_title 
+		from college c,users u,professor p,open_class o,subject s,classRoomInfo c,department d 
+		where c.col_code = d.col_code and d.dept_code = s.dept_code and u.id = p.pro_id and p.pro_id = o.oc_pro_code and o.oc_code = s.code and c.build_code = substr(o.oc_class_room,1,2)
+	</select>
+	
 </mapper>
