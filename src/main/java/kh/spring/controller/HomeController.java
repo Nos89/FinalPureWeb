@@ -57,8 +57,4 @@ public class HomeController {
 		nr.addVariable("loginID", (String)session.getAttribute("loginID"));
 		return nr;
 	}
-	@RequestMapping("/mainHome")
-	public String mainHome() {
-		return "redirect:/";
-	}
 }
