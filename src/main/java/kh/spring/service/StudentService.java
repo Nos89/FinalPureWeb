@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.StudentDAO;
 import kh.spring.dto.ChangeDeptApplyDTO;
+import kh.spring.dto.ClassTimeSearchDTO;
 import kh.spring.dto.MajorApplyDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.StudentDetailDTO;
@@ -70,4 +71,8 @@ public class StudentService {
 	public int checkChangeDeptApply(String id) {
 		return sdao.checkChangeDeptApply(id);
 	}
+	
+	public List<ClassTimeSearchDTO> selectAllCTS(){		
+		return sdao.selectAllCTS();
+	} 
 }

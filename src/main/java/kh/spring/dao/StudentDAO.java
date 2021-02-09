@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.ClassTimeSearchDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.StudentDetailDTO;
 import kh.spring.dto.StudentInfoDTO;
@@ -57,4 +58,8 @@ public class StudentDAO {
 	public int checkChangeDeptApply(String id) {
 		return db.selectList("Student.checkChangeDeptApply",id).size();
 	}
+	
+	public List<ClassTimeSearchDTO> selectAllCTS(){
+		return db.selectList("Student.selectAllCTS");
+	};
 }

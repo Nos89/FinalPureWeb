@@ -15,6 +15,7 @@ import com.nexacro.uiadapter17.spring.core.annotation.ParamVariable;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 
 import kh.spring.dto.ChangeDeptApplyDTO;
+import kh.spring.dto.ClassTimeSearchDTO;
 import kh.spring.dto.MajorApplyDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.ProFileDTO;
@@ -113,6 +114,18 @@ public class StudentController {
 			sservice.changeDeptApply(cdto,s);
 			nr.setErrorCode(1);
 		}
+		return nr;
+	}
+	
+	@RequestMapping("/classTimeSearch.nex")
+	public NexacroResult classTimeSearch() {
+		NexacroResult nr = new NexacroResult();
+		
+		List<ClassTimeSearchDTO> ctsList = new ArrayList<>();
+		ctsList = sservice.selectAllCTS();
+		
+		nr.addDataSet("out_classList",ctsList);
+		
 		return nr;
 	}
 	
