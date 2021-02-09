@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpSession;
 
@@ -33,7 +32,7 @@ public class InfoController {
 			int result = iservice.login(id, pw);
 			String name = iservice.getName(id, pw);
 			String major = iservice.getMajor(id, pw);
-
+			
 			List<InfoBoardDTO> list_std = iservice.getRecentStd();
 			List<InfoBoardDTO> list_scholar = iservice.getRecentScholar();
 			List<InfoBoardDTO> list_enter = iservice.getRecentEnter();

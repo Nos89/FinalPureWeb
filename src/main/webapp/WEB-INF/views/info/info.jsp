@@ -644,10 +644,6 @@
 	</c:choose>
 
 
-<<<<<<< HEAD
-
-
-
 	<script>
 		let day;
 		let time;
@@ -729,20 +725,6 @@
 		</c:forEach>
 	</script>
 
-
-
-
-
-
-
-
-
-
-
-
-=======
-	<!--바로가기 모음  -->
->>>>>>> 01372244fb26cd2955704a4b5ad89a5e18b6e969
 	<script>
 	<!--바로가기 모음  -->
 		$(document).on('click', '.toClassSche', function() {

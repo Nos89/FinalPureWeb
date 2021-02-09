@@ -77,9 +77,6 @@
                        <div class=menuPart>도움말</div>
                   </div>
               </div>
-         
-         
-        
          </div>
  
 </body>
