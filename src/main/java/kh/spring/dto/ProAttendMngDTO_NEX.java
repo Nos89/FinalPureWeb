@@ -1,23 +1,23 @@
 package kh.spring.dto;
 
-import java.sql.Date;
+import java.util.Date;
 
-public class ProAttendMngDTO {
+public class ProAttendMngDTO_NEX {
 	private int att_seq;
 	private String att_lecCode;
 	private String att_year;
 	private String att_targetLevel;
 	private	String att_semester;
 	private String att_lecTitle;
-	private Date att_date;
+	private String att_date;
 	private String att_attend;
 	private String att_stdId;
 	private String att_deptName;
 	private String att_stdName;
 	private String att_stdLevel;
 	private int att_week;
-	public ProAttendMngDTO(int att_seq, String att_lecCode, String att_year, String att_targetLevel,
-			String att_semester, String att_lecTitle, Date att_date, String att_attend, String att_stdId,
+	public ProAttendMngDTO_NEX(int att_seq, String att_lecCode, String att_year, String att_targetLevel,
+			String att_semester, String att_lecTitle, String att_date, String att_attend, String att_stdId,
 			String att_deptName, String att_stdName, String att_stdLevel, int att_week) {
 		super();
 		this.att_seq = att_seq;
@@ -34,7 +34,7 @@ public class ProAttendMngDTO {
 		this.att_stdLevel = att_stdLevel;
 		this.att_week = att_week;
 	}
-	public ProAttendMngDTO() {
+	public ProAttendMngDTO_NEX() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -74,10 +74,10 @@ public class ProAttendMngDTO {
 	public void setAtt_lecTitle(String att_lecTitle) {
 		this.att_lecTitle = att_lecTitle;
 	}
-	public Date getAtt_date() {
+	public String getAtt_date() {
 		return att_date;
 	}
-	public void setAtt_date(Date att_date) {
+	public void setAtt_date(String att_date) {
 		this.att_date = att_date;
 	}
 	public String getAtt_attend() {
@@ -118,6 +118,5 @@ public class ProAttendMngDTO {
 	}
 	
 	
-	
-	
+
 }
