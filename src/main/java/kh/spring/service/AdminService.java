@@ -276,4 +276,9 @@ public class AdminService {
 	public int updateColSchedule (ColScheduleDTO dto) {
 		return admdao.updateColSchedule(dto);
 	}
+	
+	// 학사일정 삭제
+	public int delColSchedule (int seq) {
+		return admdao.delColSchedule(seq);
+	}
 }

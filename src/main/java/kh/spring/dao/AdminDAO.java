@@ -149,4 +149,9 @@ public class AdminDAO {
 	public int updateColSchedule(ColScheduleDTO dto) {
 		return db.update("Admin.updateColSchedule",dto);
 	}
+	
+	// 학사일정 삭제
+	public int delColSchedule(int seq) {
+		return db.delete("Admin.delColSchedule",seq);
+	}
 }

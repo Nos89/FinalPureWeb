@@ -1,6 +1,6 @@
 package kh.spring.controller;
 
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -210,35 +210,48 @@ public class AdminController {
 	public NexacroResult getColSchedule() {
 		NexacroResult nr = new NexacroResult();
 		List<ColScheduleDTO> list = admService.getColSchedule();
-		nr.addDataSet("out_colSchedule",list);
+		List<ColScheduleDTO_NEX> list2 = new ArrayList<>();
+		
+		for(ColScheduleDTO dto:list) {
+			ColScheduleDTO_NEX dto2 = new ColScheduleDTO_NEX();
+			dto2.setSeq(dto.getSeq());
+			dto2.setTitle(dto.getTitle());
+			dto2.setContents(dto.getContents());
+			dto2.setSche_startDate(ConvertDate.dateToString(dto.getSche_startDate()));
+			dto2.setSche_endDate(ConvertDate.dateToString(dto.getSche_endDate()));
+			dto2.setType(dto.getType());
+			list2.add(dto2);
+		}
+		nr.addDataSet("out_colSchedule",list2);
 		return nr;
 	}
 	
-	// 학사일정 추가
-	@RequestMapping("ColScheduler.nex")
-	public NexacroResult colScheduler(@ParamDataSet(name="in_colScheduler")ColScheduleDTO_NEX dto, @ParamVariable(name="code")String code) throws Exception {
-		
+	// 학사일정 추가/수정
+	@RequestMapping("UpdateColSchedule.nex")
+	public NexacroResult updColSchedule(@ParamDataSet(name="in_colScheduler")ColScheduleDTO_NEX dto, @ParamVariable(name="code")String code) throws Exception {
+		// 날짜 변환
 		ColScheduleDTO dto2 = new ColScheduleDTO();
 		dto2.setSeq(dto.getSeq());
 		dto2.setTitle(dto.getTitle());
 		dto2.setContents(dto.getContents());
 		dto2.setSche_startDate(ConvertDate.stringToDate(dto.getSche_startDate()));
 		dto2.setSche_endDate(ConvertDate.stringToDate(dto.getSche_endDate()));
+		dto2.setType(dto.getType());
 		
 		if(code.contentEquals("new")) {
-			System.out.println("일정 추가 요청");
-			int result = admService.addColSchedule(dto2);
-			System.out.println("일정 추가: "+result);
+			admService.addColSchedule(dto2);
 		}else if(code.contentEquals("modify")) {
-			System.out.println("일정 수정 요청");
-			int result = admService.updateColSchedule(dto2);
-			System.out.println("일정 수정: "+result);
-		}else if(code.contentEquals("delete")) {
-			
+			admService.updateColSchedule(dto2);
 		}else {
 			System.out.println("코드 에러");
 		}
 		return new NexacroResult();
 	}
 	
+	// 학사일정 삭제
+	@RequestMapping("DeleteColSchedule.nex")
+	public NexacroResult delColSchedule(@ParamVariable(name="seq")int seq) {
+		admService.delColSchedule(seq);
+		return new NexacroResult();
+	}
 }
