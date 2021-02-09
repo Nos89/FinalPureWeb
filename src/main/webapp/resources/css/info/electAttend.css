@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.title {
+	height: 50px;
+}
+.row {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.row{margin-left:0px; margin-right:0px;}

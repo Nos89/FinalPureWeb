@@ -17,7 +17,75 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="/resources/css/info/login.css?ver=1">
 <link rel="stylesheet" href="/resources/css/info/userPage.css?ver=1">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
+	var date = new Date();//today의 Date를 세어주는 역할
+
+	function prevCalendar() {//이전 달
+		today = new Date(today.getFullYear(), today.getMonth() - 1, today
+				.getDate());
+		buildCalendar();
+	}
+	function nextCalendar() {//다음 달
+		today = new Date(today.getFullYear(), today.getMonth() + 1, today
+				.getDate());
+		buildCalendar();
+	}
+	function buildCalendar() {//현재 달 달력 만들기
+		var doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+		var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+		var tbCalendar = document.getElementById("calendar");//날짜를 찍을 테이블 변수 만듬, 일 까지 다 찍힘
+		var tbCalendarYM = document.getElementById("tbCalendarYM");//테이블에 정확한 날짜 찍는 변수
+		tbCalendarYM.innerHTML = today.getFullYear() + "년 "
+				+ (today.getMonth() + 1) + "월";
+
+		/*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
+		while (tbCalendar.rows.length > 2) {
+			//열을 지워줌
+			//기본 열 크기는 body 부분에서 2로 고정되어 있다.
+			tbCalendar.deleteRow(tbCalendar.rows.length - 1);
+			//테이블의 tr 갯수 만큼의 열 묶음은 -1칸 해줘야지 
+			//30일 이후로 담을달에 순서대로 열이 계속 이어진다.
+		}
+		var row = null;
+		row = tbCalendar.insertRow();
+		//테이블에 새로운 열 삽입//즉, 초기화
+		var cnt = 0;// count, 셀의 갯수를 세어주는 역할
+		// 1일이 시작되는 칸을 맞추어 줌
+		for (i = 0; i < doMonth.getDay(); i++) {
+			/*이번달의 day만큼 돌림*/
+			cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
+			cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
+		}
+		/*달력 출력*/
+		for (i = 1; i <= lastDate.getDate(); i++) {
+			//1일부터 마지막 일까지 돌림
+			cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
+			cell.innerHTML = i;//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
+			cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
+			if (cnt % 7 == 1) {/*일요일 계산*/
+				cell.innerHTML = "<font color=red>" + i
+			}
+			if (cnt % 7 == 0) {/*토요일 구하기*/
+				cell.innerHTML = "<font color=blue>" + i
+				row = calendar.insertRow();//토요일 다음에 올 셀을 추가
+			}
+			/*오늘의 날짜에 노란색 칠하기*/
+			if (today.getFullYear() == date.getFullYear()
+					&& today.getMonth() == date.getMonth()
+					&& i == date.getDate()) {
+				cell.bgColor = "#FAF58C";
+			}
+		}
+	}
+</script>
+<script>
+    buildCalendar();
+</script>
+ 
 </head>
 <body>
 	<c:choose>
@@ -158,11 +226,11 @@
 									</button>
 									<div class="collapse navbar-collapse" id="navbarText">
 										<div class="container">
-											<ul class="navbar-nav mr-auto">
+											<ul class="navbar-nav mr-auto" id=topMenuInfo>
 												<li class="nav-item active"><a class="nav-link"
 													href="/home.nex">종합정보시스템</a></li>
 												<li class="nav-item active"><a class="nav-link"
-													href="#">전자출결</a></li>
+													id="electAttend" href="/elec/toElectAttend" target="_blank">전자출결</a></li>
 												<li class="nav-item active"><a class="nav-link"
 													href="/">대표홈페이지</a></li>
 											</ul>
@@ -191,7 +259,7 @@
 												<li class="nav-item active"><a class="nav-link"
 													href="/home.nex">종합정보시스템</a></li>
 												<li class="nav-item active"><a class="nav-link"
-													href="#">전자출결</a></li>
+													href="#">대표홈페이지</a></li>
 											</ul>
 										</div>
 
@@ -304,7 +372,8 @@
 											<div class="col-7">
 												<nav class="nav justify-content-end">
 													<a class="nav-link disabled" href="#" aria-disabled="true"
-														style="color: black; font-size: 12px;">${openClassYear }년도 ${semester }학기</a>
+														style="color: black; font-size: 12px;">${openClassYear }년도
+														${semester }학기</a>
 												</nav>
 											</div>
 										</div>
@@ -330,7 +399,8 @@
 											<div class="col-7">
 												<nav class="nav justify-content-end">
 													<a class="nav-link disabled" href="#" aria-disabled="true"
-														style="color: black; font-size: 12px;">${openClassYear }년도 ${semester }학기</a>
+														style="color: black; font-size: 12px;">${openClassYear }년도
+														${semester }학기</a>
 												</nav>
 											</div>
 										</div>
@@ -350,7 +420,24 @@
 							<div class="col-12 col-sm-8 schedule">
 								<div class="row">
 
-									<div class="col-12 col-sm-6 calendar">달력</div>
+									<div class="col-12 col-sm-6 calendar">
+										<table id="calendar" border="1" align="center">
+											<tr>
+												<td id="tbCalendarYM" colspan="5">yyyy년 m월</td>
+												<td><label onclick="prevCalendar()">◀</label></td>
+												<td><label onclick="nextCalendar()">▶</label></td>
+											</tr>
+											<tr id=weeks>
+												<td align="center"><font color="red">일</font></td>
+												<td align="center"><font color="white">월</font></td>
+												<td align="center"><font color="white">화</font></td>
+												<td align="center"><font color="white">수</font></td>
+												<td align="center"><font color="white">목</font></td>
+												<td align="center"><font color="white">금</font></td>
+												<td align="center"><font color="blue">토</font></td>
+											</tr>
+										</table>
+									</div>
 									<div class="col-12 col-sm-6 sche">
 										<div class="row ">
 											<div class="col-6 ">
@@ -383,22 +470,55 @@
 										<div class="col-6 ">
 											<nav class="nav">
 												<a class="nav-link disabled" href="#" aria-disabled="true"
-													style="color: black; font-weight: bold; font-size: 14px;">강의시간표</a>
+													style="color: black; font-weight: bold; font-size: 14px;">수강시간표</a>
 											</nav>
 										</div>
 										<div class="col-6">
 											<nav class="nav justify-content-end">
 												<a class="nav-link disabled" href="#" aria-disabled="true"
-													style="color: black; font-size: 11.3px;">${openClassYear }년도 ${semester }학기</a>
+													style="color: black; font-size: 11.3px;">${openClassYear }년도
+													${semester }학기</a>
 											</nav>
 										</div>
 									</div>
 									<div class="realtimetable">
-									
-												<c:forEach var="i" items="${timeList}" varStatus="status">
-												<div class="subject_isu">${i}</div>
-											</c:forEach>
-											
+										<table class="timeTable" border=1>
+											<tr>
+												<th style="font-size: 10px;">요일/교시</th>
+												<th>월</th>
+												<th>화</th>
+												<th>수</th>
+												<th>목</th>
+												<th>금</th>
+											</tr>
+											<tr class="time">
+												<td>1</td>
+											</tr>
+											<tr class="time">
+												<td>2</td>
+											</tr>
+											<tr class="time">
+												<td>3</td>
+											</tr>
+											<tr class="time">
+												<td>4</td>
+											</tr>
+											<tr class="time">
+												<td>5</td>
+											</tr>
+											<tr class="time">
+												<td>6</td>
+											</tr>
+											<tr class="time">
+												<td>7</td>
+											</tr>
+											<tr class="time">
+												<td>8</td>
+											</tr>
+											<tr class="time">
+												<td>9</td>
+											</tr>
+										</table>
 									</div>
 								</div>
 
@@ -409,20 +529,55 @@
 										<div class="col-6 ">
 											<nav class="nav">
 												<a class="nav-link disabled" href="#" aria-disabled="true"
-													style="color: black; font-weight: bold; font-size: 14px;">수강시간표</a>
+													style="color: black; font-weight: bold; font-size: 14px;">강의시간표</a>
 											</nav>
 										</div>
 										<div class="col-6">
 											<nav class="nav justify-content-end">
 												<a class="nav-link disabled" href="#" aria-disabled="true"
-													style="color: black; font-size: 11.3px;">${openClassYear }년도 ${semester }학기</a>
+													style="color: black; font-size: 11.3px;">${openClassYear }년도
+													${semester }학기</a>
 											</nav>
 										</div>
 									</div>
 									<div class="realtimetable">
-										<c:forEach var="i" items="${timeList}" varStatus="status">
-												<div class="subject_isu">${i}</div>
-										</c:forEach>
+										<table class="timeTable" border=1>
+											<tr>
+												<th style="font-size: 10px;">요일/교시</th>
+												<th style="width: 15%;">월</th>
+												<th style="width: 15%;">화</th>
+												<th style="width: 15%;">수</th>
+												<th style="width: 15%;">목</th>
+												<th style="width: 15%;">금</th>
+											</tr>
+											<tr class="time">
+												<td>1</td>
+											</tr>
+											<tr class="time">
+												<td>2</td>
+											</tr>
+											<tr class="time">
+												<td>3</td>
+											</tr>
+											<tr class="time">
+												<td>4</td>
+											</tr>
+											<tr class="time">
+												<td>5</td>
+											</tr>
+											<tr class="time">
+												<td>6</td>
+											</tr>
+											<tr class="time">
+												<td>7</td>
+											</tr>
+											<tr class="time">
+												<td>8</td>
+											</tr>
+											<tr class="time">
+												<td>9</td>
+											</tr>
+										</table>
 
 									</div>
 								</div>
@@ -489,8 +644,107 @@
 	</c:choose>
 
 
-	<!--바로가기 모음  -->
+<<<<<<< HEAD
+
+
+
 	<script>
+		let day;
+		let time;
+		let title;
+		let classroom;
+
+		<c:forEach var="i" items="${timeList}" varStatus="status">
+		//가*/월/2/강의명/강의실
+		day = "${i}".split("/")[0];
+		day = day.split("*");
+		day = day[1];
+		time = "${i}".split("/")[1];
+		title = "${i}".split("/")[2];
+		classroom = "${i}".split("/")[3];
+
+		if (day == "월") {
+			let lecture = $("<td></td>");
+			// lecture.attr("rowspan", time[1] - time[0] );
+			lecture.html(title);
+			$(".time").eq(time[0] - 1).append(lecture);
+		}
+		if (day == "화") {
+			for (let j = 0; j < 9; j++) {
+				if ($(".time").eq(j).children().length == 1) {
+					let empty = $("<td></td>");
+					$(".time").eq(j).append(empty);
+				}
+			}
+			let lecture = $("<td></td>");
+			//lecture.attr("rowspan", time[1] - time[0] );
+			lecture.html(title);
+			$(".time").eq(time[0] - 1).append(lecture);
+		}
+		if (day == "수") {
+			for (let j = 0; j < 9; j++) {
+				if ($(".time").eq(j).children().length <= 2) {
+					let empty = $("<td></td>");
+					$(".time").eq(j).append(empty);
+				}
+			}
+			let lecture = $("<td></td>");
+			//lecture.attr("rowspan", time[1] - time[0] );
+			lecture.html(title);
+			$(".time").eq(time[0] - 1).append(lecture);
+		}
+		if (day == "목") {
+			for (let j = 0; j < 9; j++) {
+				if ($(".time").eq(j).children().length <= 3) {
+					let empty = $("<td></td>");
+					$(".time").eq(j).append(empty);
+				}
+			}
+			let lecture = $("<td></td>");
+			//lecture.attr("rowspan", time[1] - time[0] );
+			lecture.html(title);
+			$(".time").eq(time[0] - 1).append(lecture);
+		}
+		if (day == "금") {
+			for (let j = 0; j < 9; j++) {
+				if ($(".time").eq(j).children().length <= 4) {
+					let empty = $("<td></td>");
+					$(".time").eq(j).append(empty);
+				}
+			}
+			let lecture = $("<td></td>");
+			//lecture.attr("rowspan", time[1] - time[0] );
+			lecture.html(title);
+			$(".time").eq(time[0] - 1).append(lecture);
+		}
+		if (day == "토") {
+			for (let j = 0; j < 9; j++) {
+				if ($(".time").eq(j).children().length <= 5) {
+					let empty = $("<td></td>");
+					$(".time").eq(j).append(empty);
+				}
+			}
+		}
+
+		</c:forEach>
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+=======
+	<!--바로가기 모음  -->
+>>>>>>> 01372244fb26cd2955704a4b5ad89a5e18b6e969
+	<script>
+	<!--바로가기 모음  -->
 		$(document).on('click', '.toClassSche', function() {
 			location.href = "";
 		});
@@ -506,6 +760,10 @@
 		$(document).on('click', '.toExAuth', function() {
 			location.href = "";
 		});
+
+		//$(document).on('click', '#electAttend', function() {
+		//	window.open("/info/electAttend");
+		//});
 	</script>
 
 

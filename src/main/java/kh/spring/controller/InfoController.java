@@ -2,6 +2,7 @@ package kh.spring.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kh.spring.dto.InfoBoardDTO;
 import kh.spring.dto.TakingClassDTO;
-import kh.spring.dto.TimetableDTO;
 import kh.spring.service.InfoService;
 
 @Controller
@@ -27,36 +27,6 @@ public class InfoController {
 	@Autowired
 	private InfoService iservice;
 	
-	
-	
-	
-	public void timetable(String clDay,String classTitle,int clTime, String day,List<String> timeList, String classRoom ) {
-		
-		if(clDay.contentEquals(day)) {	
-			String time_class = null;
-				if(clTime ==1) {time_class = "09:00 ~ 09:50";}
-				if(clTime ==2) {time_class = "10:00 ~ 10:50";}
-				if(clTime ==3) {time_class = "11:00 ~ 11:50";}
-				if(clTime ==4) {time_class = "12:00 ~ 12:50";}
-				if(clTime ==5) {time_class = "13:00 ~ 13:50";}
-				if(clTime ==6) {time_class = "14:00 ~ 14:50";}
-				if(clTime ==7) {time_class = "15:00 ~ 15:50";}
-				if(clTime ==8) {time_class = "16:00 ~ 16:50";}
-				if(clTime ==9) {time_class = "17:00 ~ 17:50";}
-				
-				String todayClassInfo = classTitle + " : " + time_class + " : " + classRoom;
-				//dto.setTitle(classTitle);
-				//dto.setTime(time_class);
-				//dto.setClassroom(classRoom);
-				//timeList.add(dto);
-				timeList.add(todayClassInfo);
-				//timeList.add(todayClassInfo);
-				System.out.println(todayClassInfo);	
-			}
-		
-
-	}
-
 	@RequestMapping("/login")
 	public String login(String id, String pw, Model model) {
 		try {
@@ -107,7 +77,6 @@ public class InfoController {
 
 						//List<TimetableDTO> timeList = new ArrayList<>();
 						List<String> timeList = new ArrayList<>();
-						TimetableDTO dto = new TimetableDTO();
 						for (int j = 0; j < list_classSche.size(); j++) {
 							schedule = list_classSche.get(j).getLec_schedule();
 							classTitle = list_classSche.get(j).getLec_title();
@@ -125,6 +94,12 @@ public class InfoController {
 									// System.out.println(divSche[0]); // 월 *****
 									// System.out.println(divSche[1]); // 1,4)
 									divSche[1] = divSche[1].replaceAll("\\)", " "); // )지우기 => 1,4 *****
+									
+									if(divSche[0].contentEquals("월")) {divSche[0] = "가*"+divSche[0];}
+									if(divSche[0].contentEquals("화")) {divSche[0] = "나*"+divSche[0];}
+									if(divSche[0].contentEquals("수")) {divSche[0] = "다*"+divSche[0];}
+									if(divSche[0].contentEquals("목")) {divSche[0] = "라*"+divSche[0];}
+									if(divSche[0].contentEquals("금")) {divSche[0] = "마*"+divSche[0];}
 
 									if (divSche[1].contains(",")) { // divSche[1]==1,4
 										String divTime[] = divSche[1].split(","); // 1 4
@@ -134,7 +109,11 @@ public class InfoController {
 											int clTime = Integer.parseInt(divTime[j1]);
 											String clDay = divSche[0];
 											
-											timetable(clDay,classTitle,clTime,day,timeList,classRoom);	
+											
+											//timetable(clDay,classTitle,clTime,day,timeList,classRoom);	
+											String todayClassInfo = clDay+"/"+ divTime[j1] + "/" +classTitle + "/"+ classRoom;
+											timeList.add(todayClassInfo);
+											//System.out.println(todayClassInfo);
 							
 										}										
 										
@@ -143,7 +122,10 @@ public class InfoController {
 										int clTime = Integer.parseInt(divSche[1]);
 										String clDay = divSche[0];
 										
-										timetable(clDay,classTitle,clTime,day,timeList,classRoom);
+										String todayClassInfo = clDay+"/"+ divSche[1] + "/" +classTitle + "/"+ classRoom;
+										//System.out.println(todayClassInfo);
+										timeList.add(todayClassInfo);
+										//timetable(clDay,classTitle,clTime,day,timeList,classRoom);
 									}
 								}
 
@@ -153,6 +135,11 @@ public class InfoController {
 								// System.out.println(divSche[1]); // 6,7)
 								divSche[1] = divSche[1].replaceAll("\\)", " "); // )지우기
 								// System.out.println(a[1]); //6,7
+								if(divSche[0].contentEquals("월")) {divSche[0] = "가*"+divSche[0];}
+								if(divSche[0].contentEquals("화")) {divSche[0] = "나*"+divSche[0];}
+								if(divSche[0].contentEquals("수")) {divSche[0] = "다*"+divSche[0];}
+								if(divSche[0].contentEquals("목")) {divSche[0] = "라*"+divSche[0];}
+								if(divSche[0].contentEquals("금")) {divSche[0] = "마*"+divSche[0];}
 
 								if (divSche[1].contains(",")) {
 									String divTime[] = divSche[1].split(",");
@@ -161,7 +148,11 @@ public class InfoController {
 										int clTime = Integer.parseInt(divTime[j1]);
 										String clDay = divSche[0];
 										
-										timetable(clDay,classTitle,clTime,day,timeList,classRoom);
+										String todayClassInfo = clDay+"/"+ divTime[j1] + "/" +classTitle + "/"+ classRoom;
+										//System.out.println(todayClassInfo);
+										timeList.add(todayClassInfo);
+										
+										//timetable(clDay,classTitle,clTime,day,timeList,classRoom);
 									}
 								} else if (!divSche[1].contains(",")) { // 금(8)
 									String divTime[] = schedule.split("\\("); // 금 8)
@@ -170,9 +161,17 @@ public class InfoController {
 									int clTime = Integer.parseInt(divSche[1]);
 									String clDay = divSche[0];
 									
-									timetable(clDay,classTitle,clTime,day,timeList,classRoom);
+									String todayClassInfo = clDay+"/"+ divSche[1] + "/" +classTitle + "/"+ classRoom;
+									//System.out.println(todayClassInfo);
+									timeList.add(todayClassInfo);			
 								}
 							}
+						}
+
+						timeList.add("바*토/");
+						Collections.sort(timeList);
+						for(String i : timeList) {
+							System.out.println(i);
 						}
 						model.addAttribute("timeList", timeList);
 						session.setAttribute("list_takingClass", list_takingClass);
@@ -228,25 +227,26 @@ public class InfoController {
 									// System.out.println(divSche[0]); // 월 *****
 									// System.out.println(divSche[1]); // 1,4)
 									divSche[1] = divSche[1].replaceAll("\\)", " "); // )지우기 => 1,4 *****
-
+									if(divSche[0].contentEquals("월")) {divSche[0] = "가*"+divSche[0];}
+									if(divSche[0].contentEquals("화")) {divSche[0] = "나*"+divSche[0];}
+									if(divSche[0].contentEquals("수")) {divSche[0] = "다*"+divSche[0];}
+									if(divSche[0].contentEquals("목")) {divSche[0] = "라*"+divSche[0];}
+									if(divSche[0].contentEquals("금")) {divSche[0] = "마*"+divSche[0];}
+									
+									
 									if (divSche[1].contains(",")) { // divSche[1]==1,4
 										String divTime[] = divSche[1].split(","); // 1 4
 										
 										for (int j1 = 0; j1 < divTime.length; j1++) {
-											divTime[j1] = divTime[j1].replaceAll(" ", "");
-											int clTime = Integer.parseInt(divTime[j1]);
-											String clDay = divSche[0];
-											
-											timetable(clDay,classTitle,clTime,day,timeList,classRoom);	
-							
+											divTime[j1] = divTime[j1].replaceAll(" ", "");											
+											String todayClassInfo = divSche[0]+"/"+ divTime[j1] + "/" +classTitle + "/"+ classRoom;
+											timeList.add(todayClassInfo);								
 										}										
 										
 									} else if (!divSche[1].contains(",")) {
-										divSche[1] = divSche[1].replaceAll(" ", "");
-										int clTime = Integer.parseInt(divSche[1]);
-										String clDay = divSche[0];
-										
-										timetable(clDay,classTitle,clTime,day,timeList,classRoom);
+										divSche[1] = divSche[1].replaceAll(" ", "");										
+										String todayClassInfo = divSche[0]+"/"+ divSche[1] + "/" +classTitle + "/"+ classRoom;
+										timeList.add(todayClassInfo);
 									}
 								}
 
@@ -256,28 +256,36 @@ public class InfoController {
 								// System.out.println(divSche[1]); // 6,7)
 								divSche[1] = divSche[1].replaceAll("\\)", " "); // )지우기
 								// System.out.println(a[1]); //6,7
+								if(divSche[0].contentEquals("월")) {divSche[0] = "가*"+divSche[0];}
+								if(divSche[0].contentEquals("화")) {divSche[0] = "나*"+divSche[0];}
+								if(divSche[0].contentEquals("수")) {divSche[0] = "다*"+divSche[0];}
+								if(divSche[0].contentEquals("목")) {divSche[0] = "라*"+divSche[0];}
+								if(divSche[0].contentEquals("금")) {divSche[0] = "마*"+divSche[0];}
 
 								if (divSche[1].contains(",")) {
 									String divTime[] = divSche[1].split(",");
 									for (int j1 = 0; j1 < divTime.length; j1++) {
 										divTime[j1] = divTime[j1].replaceAll(" ", "");
-										int clTime = Integer.parseInt(divTime[j1]);
-										String clDay = divSche[0];
-										
-										timetable(clDay,classTitle,clTime,day,timeList,classRoom);
+										String todayClassInfo = divSche[0]+"/"+ divTime[j1] + "/" +classTitle + "/"+ classRoom;
+										timeList.add(todayClassInfo);				
 									}
 								} else if (!divSche[1].contains(",")) { // 금(8)
 									String divTime[] = schedule.split("\\("); // 금 8)
 									divTime[1] = divTime[1].replaceAll("\\)", " ");
 									divSche[1] = divSche[1].replaceAll(" ", "");
-									int clTime = Integer.parseInt(divSche[1]);
-									String clDay = divSche[0];
+									String todayClassInfo = divSche[0]+"/"+ divSche[1] + "/" +classTitle + "/"+ classRoom;
+									timeList.add(todayClassInfo);
 									
-									timetable(clDay,classTitle,clTime,day,timeList,classRoom);
+									//timetable(clDay,classTitle,clTime,day,timeList,classRoom);
 								}
 							}
 						}	
-						model.addAttribute("timeList", timeList);		
+						timeList.add("바*토/");
+						Collections.sort(timeList);
+						for(String i : timeList) {
+							System.out.println(i);
+						}
+						model.addAttribute("timeList", timeList);	
 						session.setAttribute("list_takingClass", list_takingClass);
 						session.setAttribute("semester", semester);
 						session.setAttribute("openClassYear", openClassYear);
