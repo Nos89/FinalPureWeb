@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Elec">	
+	
+	<select id="getClassList" resultType="kh.spring.dto.ElecSelectClassDTO">
+		select lec_code, lec_title from lecture 
+		where lec_code IN (select lec_code from classregistration 
+							where id=#{id, jdbcType=VARCHAR} and cr_date=#{regDate} and 
+							cr_divide='정기' and cr_completeDiv='완료상태')
+	</select>
+	
+	<select id="getClassInfo" resultType="kh.spring.dto.TakingClassDTO">
+	select lec_title, lec_score, lec_schedule, lec_classroom, pro_name, lec_code from lecture 
+		where lec_code IN (select lec_code from classregistration 
+							where id=#{id, jdbcType=VARCHAR} and cr_date=#{regDate} and lec_title=#{className, jdbcType=VARCHAR} and
+							cr_divide='정기' and cr_completeDiv='완료상태')
+	</select> 
+	
+	<select id="lecAttList" resultType="kh.spring.dto.ProAttendMngDTO">
+	select * from Pro_AttendMng where att_leccode=#{lecCode} and att_stdid=#{id} order by att_date
+	</select> 
+	
+	
+	
+	
+	
+</mapper>

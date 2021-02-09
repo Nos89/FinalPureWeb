@@ -6,6 +6,8 @@
 } .container{padding: none;}
            
             .topMenu,.my,.board,.subject,.timetable,.schedule,.footer{padding: 0px;border: 1px solid black;}
+            
+            #electAttend:hover{background-color:white; color:black;}
         
           	.row>.my{ height: 220px;float: left;}
             .row>.my>.name{width: 100px; margin-top: 15px; margin-left: 5px; font-weight: bold;}
@@ -18,9 +20,9 @@
              .consultReqPart>.consultReqNum{width: 45%; float: left;  text-align: end;}
             
              .row>.board{height: 220px;float: left; }
-            .tab_title{float: left; width: 80%; border: 1px solid black; cursor:pointer}
+            .tab_title{float: left; width: 80%;  cursor:pointer}
             .tab_title:hover{color:blue;}
-            .tab_date{border: 1px solid black; text-align: end; color:gray;}
+            .tab_date{ text-align: end; color:gray;}
             
               	.row>.subject{height: 220px;overflow:scroll}
             .row>.subject>.subject_list>.subject_isu{float:left; width:40%;}
@@ -29,8 +31,12 @@
             
             .row>.timetable{height:440px;;overflow:scroll}
             .realtimetable{height:380px;}
-            .row>.classtimetable>table>tr{}
+            .realtimetable>.timeTable{width:100%; text-align:center; height:100%;}
+            th{width:16%;}
             
+            
+            #calendar{width:100%; height:100%;}
+            #weeks>td{background-color: dimgray; border-radius: 0px; cursor: pointer;}
             .schedule>.row{margin:0px;}
             .row>.calendar,.sche{border:1px solid black;height:220px;}
             
