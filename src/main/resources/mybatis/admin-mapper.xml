@@ -168,4 +168,19 @@
 			AND TO_CHAR(EXTRACT(YEAR FROM OC_YEAR))=#{year}
 			AND LEC_SEMESTER=#{semester}
 </select>
+
+<!-- 학사일정 불러오기 -->
+<select id="getColSchedule" resultType="kh.spring.dto.ColScheduleDTO">
+	SELECT * FROM COL_SCHEDULE
+</select>
+
+<!-- 학사일정 작성 -->
+<insert id="addColSchedule">
+	INSERT INTO COL_SCHEDULE VALUES(COL_SCHEDULE_SEQ.NEXTVAL,#{title},#{contents},#{sche_startDate},#{sche_endDate})
+</insert>
+
+<!-- 학사일정 수정 -->
+<update id="updateColSchedule">
+	UPDATE COL_SCHEDULE SET TITLE=#{title}, CONTENTS=#{contents}, SCHE_STARTDATE=#{sche_startDate}, SCHE_ENDDATE=#{sche_endDate} WHERE SEQ=#{seq}
+</update>
 </mapper>

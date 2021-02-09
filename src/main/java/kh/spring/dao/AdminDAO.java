@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BuildDTO;
 import kh.spring.dto.ClassroomDTO;
+import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.LectureDTO;
@@ -132,5 +133,20 @@ public class AdminDAO {
 		map.put("year",year);
 		map.put("semester",semester);
 		return db.selectList("Admin.searchClsTimetable", map);
+	}
+	
+	// 학사일정 조회
+	public List<ColScheduleDTO> getColSchedule(){
+		return db.selectList("Admin.getColSchedule");
+	}
+	
+	// 학사일정 추가
+	public int addColSchedule(ColScheduleDTO dto){
+		return db.insert("Admin.addColSchedule", dto);
+	}
+	
+	//학사일정 수정
+	public int updateColSchedule(ColScheduleDTO dto) {
+		return db.update("Admin.updateColSchedule",dto);
 	}
 }

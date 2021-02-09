@@ -12,6 +12,7 @@ import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.BuildDTO;
 import kh.spring.dto.ClassroomDTO;
+import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.LectureDTO;
@@ -259,5 +260,20 @@ public class AdminService {
 	// 강의실 정보 조회
 	public List<LectureDTO> searchClsTimetable(String classroom, String year, int semester){
 		return admdao.searchTimetable(classroom, year, semester);
+	}
+	
+	// 학사일정 조회
+	public List<ColScheduleDTO> getColSchedule(){
+		return admdao.getColSchedule();
+	}
+	
+	// 학사일정 추가
+	public int addColSchedule (ColScheduleDTO dto) {
+		return admdao.addColSchedule(dto);
+	}
+	
+	// 학사일정 수정
+	public int updateColSchedule (ColScheduleDTO dto) {
+		return admdao.updateColSchedule(dto);
 	}
 }

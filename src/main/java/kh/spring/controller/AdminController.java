@@ -15,6 +15,8 @@ import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.BuildDTO;
 import kh.spring.dto.ClassroomDTO;
+import kh.spring.dto.ColScheduleDTO;
+import kh.spring.dto.ColScheduleDTO_NEX;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.LectureDTO;
@@ -25,6 +27,7 @@ import kh.spring.dto.ProfessorDTO_NEX;
 import kh.spring.dto.StudentDTO;
 import kh.spring.dto.StudentDTO_NEX;
 import kh.spring.service.AdminService;
+import kh.spring.utils.ConvertDate;
 
 @Controller
 public class AdminController {
@@ -200,6 +203,42 @@ public class AdminController {
 		List<LectureDTO> list = admService.searchClsTimetable(classroom, year, semester);
 		nr.addDataSet("out_timetable",list);
 		return nr;
+	}
+	
+	// 학사일정 불러오기
+	@RequestMapping("getColSchedule.nex")
+	public NexacroResult getColSchedule() {
+		NexacroResult nr = new NexacroResult();
+		List<ColScheduleDTO> list = admService.getColSchedule();
+		nr.addDataSet("out_colSchedule",list);
+		return nr;
+	}
+	
+	// 학사일정 추가
+	@RequestMapping("ColScheduler.nex")
+	public NexacroResult colScheduler(@ParamDataSet(name="in_colScheduler")ColScheduleDTO_NEX dto, @ParamVariable(name="code")String code) throws Exception {
+		
+		ColScheduleDTO dto2 = new ColScheduleDTO();
+		dto2.setSeq(dto.getSeq());
+		dto2.setTitle(dto.getTitle());
+		dto2.setContents(dto.getContents());
+		dto2.setSche_startDate(ConvertDate.stringToDate(dto.getSche_startDate()));
+		dto2.setSche_endDate(ConvertDate.stringToDate(dto.getSche_endDate()));
+		
+		if(code.contentEquals("new")) {
+			System.out.println("일정 추가 요청");
+			int result = admService.addColSchedule(dto2);
+			System.out.println("일정 추가: "+result);
+		}else if(code.contentEquals("modify")) {
+			System.out.println("일정 수정 요청");
+			int result = admService.updateColSchedule(dto2);
+			System.out.println("일정 수정: "+result);
+		}else if(code.contentEquals("delete")) {
+			
+		}else {
+			System.out.println("코드 에러");
+		}
+		return new NexacroResult();
 	}
 	
 }
