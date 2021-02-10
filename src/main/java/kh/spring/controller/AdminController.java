@@ -132,11 +132,11 @@ public class AdminController {
 		return nr;
 	}
 	
-	// 교수 등록
+	// 교수 정보 수정
 	@RequestMapping("ProfessorUpdate.nex")
 	public NexacroResult updateProfessor(@ParamDataSet(name="in_pro")List<ProfessorDTO_NEX> list) throws Exception {
-		admService.updateProfessor1(list);
-		admService.updateProfessor2(list);
+		admService.updateProfessor1(list); // user 테이블
+		admService.updateProfessor2(list); // professor 테이블
 		return new NexacroResult();
 	}
 	

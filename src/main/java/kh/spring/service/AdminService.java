@@ -111,7 +111,11 @@ public class AdminService {
 			dto.setGender(list.get(i).getGender());
 			dto.setCountry(list.get(i).getCountry());
 			dto.setInDate(ConvertDate.utilToSql(list.get(i).getInDate()));
-			dto.setOutDate(ConvertDate.utilToSql(list.get(i).getOutDate()));
+			if(list.get(i).getOutDate()==null) {
+				dto.setOutDate(null);
+			}else {
+				dto.setOutDate(ConvertDate.utilToSql(list.get(i).getOutDate()));
+			}
 			dto.setColcode(list.get(i).getColcode());
 			dto.setDeptcode(list.get(i).getDeptcode());
 			dto.setCol_title(list.get(i).getCol_title());
@@ -140,7 +144,11 @@ public class AdminService {
 			dto.setGender(list.get(i).getGender());
 			dto.setCountry(list.get(i).getCountry());
 			dto.setInDate(ConvertDate.utilToSql(list.get(i).getInDate()));
-			dto.setOutDate(ConvertDate.utilToSql(list.get(i).getOutDate()));
+			if(list.get(i).getOutDate()==null) {
+				dto.setOutDate(null);
+			}else {
+				dto.setOutDate(ConvertDate.utilToSql(list.get(i).getOutDate()));
+			}
 			dto.setColcode(list.get(i).getColcode());
 			dto.setDeptcode(list.get(i).getDeptcode());
 			dto.setCol_title(list.get(i).getCol_title());
