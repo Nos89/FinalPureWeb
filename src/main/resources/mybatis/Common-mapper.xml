@@ -14,6 +14,9 @@
 	<select id="getCollege" resultType="kh.spring.dto.CollegeDTO">
 	select * from college
 	</select>
+	<select id="getGradeCard" resultType="kh.spring.dto.GradeCardDTO">
+	select * from gradecard
+	</select>
 	
 	
 	
