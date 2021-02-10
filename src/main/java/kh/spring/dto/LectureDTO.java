@@ -16,6 +16,8 @@ public class LectureDTO {
 	private String lec_way;
 	private String lec_book;
 	private String lec_eval;
+	private String oc_year;
+
 	public LectureDTO(String lec_code, String lec_title, int lec_approval, String lec_deny_reason, String pro_name,
 			int lec_semester, String lec_targetLevel, String lec_classroom, String lec_schedule, int lec_score,
 			String lec_isu, String lec_summary, String lec_way, String lec_book, String lec_eval) {
@@ -35,6 +37,28 @@ public class LectureDTO {
 		this.lec_way = lec_way;
 		this.lec_book = lec_book;
 		this.lec_eval = lec_eval;
+	}
+	// 년도 추가
+	public LectureDTO(String lec_code, String lec_title, int lec_approval, String lec_deny_reason, String pro_name,
+			int lec_semester, String lec_targetLevel, String lec_classroom, String lec_schedule, int lec_score,
+			String lec_isu, String lec_summary, String lec_way, String lec_book, String lec_eval, String oc_year) {
+		super();
+		this.lec_code = lec_code;
+		this.lec_title = lec_title;
+		this.lec_approval = lec_approval;
+		this.lec_deny_reason = lec_deny_reason;
+		this.pro_name = pro_name;
+		this.lec_semester = lec_semester;
+		this.lec_targetLevel = lec_targetLevel;
+		this.lec_classroom = lec_classroom;
+		this.lec_schedule = lec_schedule;
+		this.lec_score = lec_score;
+		this.lec_isu = lec_isu;
+		this.lec_summary = lec_summary;
+		this.lec_way = lec_way;
+		this.lec_book = lec_book;
+		this.lec_eval = lec_eval;
+		this.oc_year = oc_year;
 	}
 	public LectureDTO() {
 		super();
@@ -129,8 +153,12 @@ public class LectureDTO {
 	public void setLec_eval(String lec_eval) {
 		this.lec_eval = lec_eval;
 	}
-	
-	
+	public String getOc_year() {
+		return oc_year;
+	}
+	public void setOc_year(String oc_year) {
+		this.oc_year = oc_year;
+	}
 	
 	
 }

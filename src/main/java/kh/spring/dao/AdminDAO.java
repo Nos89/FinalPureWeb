@@ -9,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.BuildDTO;
+import kh.spring.dto.ClassroomDTO;
+import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
+import kh.spring.dto.LectureDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.StudentDTO;
@@ -96,5 +100,53 @@ public class AdminDAO {
 	public int modifyStudent2(List<StudentDTO> list) throws Exception {
 		return db.update("Admin.modifyStudent2", list);
 	}
+	
+	// 강의계획서 가져오기
+	public List<LectureDTO> getSyllabus() {
+		return db.selectList("Admin.getSyllabus");
+	}
 
+	// 강의계획서 승인
+	public int syllabusApproved(LectureDTO dto) {
+		return db.update("Admin.syllabusApproved", dto);
+	}
+	
+	// 강의계획서 반려
+	public int syllabusRejected(LectureDTO dto) {
+		return db.update("Admin.syllabusRejected",dto);
+	}
+	
+	// 건물 정보
+	public List<BuildDTO> getBuild(){
+		return db.selectList("Admin.getBuildInfo");
+	}
+	
+	// 강의실 정보
+	public List<ClassroomDTO> getClassroom(){
+		return db.selectList("Admin.getClassroomInfo");
+	}
+	
+	// 강의실 시간표 조회
+	public List<LectureDTO> searchTimetable(String classroom, String year, int semester){
+		Map<String,Object> map = new HashMap<>();
+		map.put("classroom", classroom);
+		map.put("year",year);
+		map.put("semester",semester);
+		return db.selectList("Admin.searchClsTimetable", map);
+	}
+	
+	// 학사일정 조회
+	public List<ColScheduleDTO> getColSchedule(){
+		return db.selectList("Admin.getColSchedule");
+	}
+	
+	// 학사일정 추가
+	public int addColSchedule(ColScheduleDTO dto){
+		return db.insert("Admin.addColSchedule", dto);
+	}
+	
+	//학사일정 수정
+	public int updateColSchedule(ColScheduleDTO dto) {
+		return db.update("Admin.updateColSchedule",dto);
+	}
 }

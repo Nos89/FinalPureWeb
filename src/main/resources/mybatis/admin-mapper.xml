@@ -7,9 +7,7 @@
 	SELECT *
 		FROM (SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_SEQ DESC) AS RANK
 				FROM BOARD_NOTICE
-				<if test='value!="전체"'>
-					WHERE CATEGORY=#{category}
-				</if>
+				WHERE CATEGORY=#{category}
 			)
 </select>
 
@@ -27,9 +25,7 @@
 					(NOTI_TITLE LIKE '%'||#{search_keyword}||'%' OR NOTI_CONTENTS LIKE '%'||#{search_keyword}||'%')
 				</if>
 			</trim>
-			<if test='!"category".equals("전체")'>
 				AND CATEGORY=#{category}
-			</if>
 			)
 </select>
 
@@ -137,4 +133,54 @@
     </foreach>
 </update>
 
+<!-- 강의계획서 가져오기 -->
+<select id="getSyllabus" resultType="kh.spring.dto.LectureDTO">
+	SELECT LECTURE.*, EXTRACT(YEAR FROM OC_YEAR) AS OC_YEAR FROM LECTURE,OPEN_CLASS WHERE LEC_CODE=OC_CODE
+</select>
+
+<!-- 강의계획서 승인 -->
+<update id="syllabusApproved">
+	UPDATE LECTURE SET LEC_APPROVAL=#{lec_approval} WHERE LEC_CODE=#{lec_code}
+</update>
+
+<!-- 강의계획서 반려 -->
+<update id="syllabusRejected">
+	UPDATE LECTURE SET LEC_DENY_REASON=#{lec_deny_reason}, LEC_APPROVAL='-1' WHERE LEC_CODE=#{lec_code}
+</update>
+
+<!-- 건물 정보 -->
+<select id="getBuildInfo" resultType="kh.spring.dto.BuildDTO">
+	SELECT * FROM BUILDINFO
+</select>
+
+<!-- 강의실 정보 -->
+<select id="getClassroomInfo" resultType="kh.spring.dto.ClassroomDTO">
+	SELECT * FROM CLASSROOMINFO
+</select>
+
+<!-- 강의장 시간표 조회 -->
+<select id="searchClsTimetable" resultType="kh.spring.dto.LectureDTO">
+	SELECT LEC_CODE, LEC_TITLE, PRO_NAME, LEC_SCHEDULE, LEC_CLASSROOM, LEC_SEMESTER, EXTRACT(YEAR FROM OC_YEAR) AS OC_YEAR
+		FROM LECTURE, OPEN_CLASS
+		WHERE LEC_CODE=OC_CODE
+			AND LEC_CLASSROOM=#{classroom}
+			AND LEC_APPROVAL='1'
+			AND TO_CHAR(EXTRACT(YEAR FROM OC_YEAR))=#{year}
+			AND LEC_SEMESTER=#{semester}
+</select>
+
+<!-- 학사일정 불러오기 -->
+<select id="getColSchedule" resultType="kh.spring.dto.ColScheduleDTO">
+	SELECT * FROM COL_SCHEDULE
+</select>
+
+<!-- 학사일정 작성 -->
+<insert id="addColSchedule">
+	INSERT INTO COL_SCHEDULE VALUES(COL_SCHEDULE_SEQ.NEXTVAL,#{title},#{contents},#{sche_startDate},#{sche_endDate})
+</insert>
+
+<!-- 학사일정 수정 -->
+<update id="updateColSchedule">
+	UPDATE COL_SCHEDULE SET TITLE=#{title}, CONTENTS=#{contents}, SCHE_STARTDATE=#{sche_startDate}, SCHE_ENDDATE=#{sche_endDate} WHERE SEQ=#{seq}
+</update>
 </mapper>

@@ -17,24 +17,18 @@
 	
 	<!-- 학사게시글 최근 6개 -->
 	<select id="recentStd" resultType="kh.spring.dto.InfoBoardDTO">
-		SELECT *
-			FROM (SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_WRITEDATE DESC) N
-					FROM BOARD_NOTICE)
-			WHERE (N BETWEEN 1 AND 6) AND CATEGORY='학사'
+ 		SELECT * FROM (SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_WRITEDATE DESC) N
+					FROM BOARD_NOTICE  where category='학사') WHERE (N BETWEEN 1 AND 6)
 	</select>
 	<!-- 장학게시글 최근 6개 -->
 	<select id="recentScholar" resultType="kh.spring.dto.InfoBoardDTO">
-		SELECT *
-			FROM (SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_WRITEDATE DESC) N
-					FROM BOARD_NOTICE)
-			WHERE (N BETWEEN 1 AND 6) AND CATEGORY='장학'
+		SELECT * FROM (SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_WRITEDATE DESC) N
+					FROM BOARD_NOTICE  where category='장학') WHERE (N BETWEEN 1 AND 6)
 	</select>
 	<!-- 입학게시글 최근 6개 -->
 	<select id="recentEnter" resultType="kh.spring.dto.InfoBoardDTO">
-		SELECT *
-			FROM (SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_WRITEDATE DESC) N
-					FROM BOARD_NOTICE)
-			WHERE (N BETWEEN 1 AND 6) AND CATEGORY='입학'
+		SELECT * FROM (SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_WRITEDATE DESC) N
+					FROM BOARD_NOTICE  where category='입학') WHERE (N BETWEEN 1 AND 6)
 	</select>
 	
 	<!-- 수강과목 (학생)-->
