@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kh.spring.dao.CommonDAO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
+import kh.spring.dto.GradeCardDTO;
 import kh.spring.dto.IsuDTO;
 import kh.spring.dto.SubjectDTO;
 
@@ -29,5 +30,8 @@ public class CommonService {
 	}
 	public List<CollegeDTO> getCollege(){
 		return comdao.getCollege();
+	}
+	public List<GradeCardDTO> getGradeCard(){
+		return comdao.getGradeCard();
 	}
 }

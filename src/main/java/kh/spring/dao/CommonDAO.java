@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
+import kh.spring.dto.GradeCardDTO;
 import kh.spring.dto.IsuDTO;
 import kh.spring.dto.SubjectDTO;
 
@@ -27,5 +28,8 @@ public class CommonDAO {
 	}
 	public List<CollegeDTO> getCollege(){
 		return db.selectList("Common.getCollege");
+	}
+	public List<GradeCardDTO>getGradeCard(){
+		return db.selectList("Common.getGradeCard");
 	}
 }
