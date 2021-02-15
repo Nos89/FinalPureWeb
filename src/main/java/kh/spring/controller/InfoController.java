@@ -43,9 +43,9 @@ public class InfoController {
 				session.setAttribute("userName", name);
 				session.setAttribute("userMajor", major);
 
-				session.setAttribute("list_std", list_std);
-				session.setAttribute("list_scholar", list_scholar);
-				session.setAttribute("list_enter", list_enter);
+				//session.setAttribute("list_std", list_std);
+				//session.setAttribute("list_scholar", list_scholar);
+				//session.setAttribute("list_enter", list_enter);
 
 				SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd");
 				//
@@ -176,6 +176,9 @@ public class InfoController {
 						session.setAttribute("list_takingClass", list_takingClass);
 						session.setAttribute("openClassYear", openClassYear);
 						session.setAttribute("semester", semester);
+						
+						// test
+						model.addAttribute("errMsg", 1);
 						return "info/info";
 					} else if (currentRegMonth == 7 || currentRegMonth == 8 || currentRegMonth == 9
 							|| currentRegMonth == 10 || currentRegMonth == 11 || currentRegMonth == 12) {
@@ -186,6 +189,9 @@ public class InfoController {
 						session.setAttribute("list_takingClass", list_takingClass);
 						session.setAttribute("openClassYear", openClassYear);
 						session.setAttribute("semester", semester);
+
+						// test
+						model.addAttribute("errMsg", 2);
 						return "info/info";
 					}
 
@@ -288,6 +294,9 @@ public class InfoController {
 						session.setAttribute("list_takingClass", list_takingClass);
 						session.setAttribute("semester", semester);
 						session.setAttribute("openClassYear", openClassYear);
+
+						// test
+						model.addAttribute("errMsg", 3);
 						return "info/info";
 					} else if (currentRegMonth == 7 || currentRegMonth == 8 || currentRegMonth == 9
 							|| currentRegMonth == 10 || currentRegMonth == 11 || currentRegMonth == 12) {
@@ -298,18 +307,27 @@ public class InfoController {
 						session.setAttribute("list_takingClass", list_takingClass); // 강의항목
 						session.setAttribute("semester", semester); // 학기
 						session.setAttribute("openClassYear", openClassYear); // 개강년도(현재년도)
+
+						// test
+						model.addAttribute("errMsg", 4);
 						return "info/info";
 					}
 
+					// test
+					model.addAttribute("errMsg", 5);
 					return "info/info";
 				}
 			} else if (result == 0) {
+				model.addAttribute("errMsg", "아이디와 비밀번호 확인");
 				return "info/info";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			model.addAttribute("errMsg", "try 안쪽 Err");
+			return "info/info";
 		}
-		return null;
+		model.addAttribute("errMsg", "try-catch 못탐");
+		return "info/info";
 	}
 
 	@RequestMapping("/logout")
