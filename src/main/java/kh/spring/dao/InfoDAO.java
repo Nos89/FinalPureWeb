@@ -55,6 +55,10 @@ public class InfoDAO {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id",id);
 		param.put("classRegDate",classRegDate);
+		List<TakingClassDTO> list = db.selectList("Info.takingClass_std", param);
+		for( TakingClassDTO d : list ) {
+			System.out.println(d.getLec_title());
+		}
 		return db.selectList("Info.takingClass_std", param);
 	}
 

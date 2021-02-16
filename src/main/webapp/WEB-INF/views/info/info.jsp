@@ -25,9 +25,9 @@
 <!-- 테스트 -->
 <script>
 	console.log("info.jsp 로딩 : ${loginID}");
-	console.log("${errMsg}");
-	console.log("userName : ${ususerName}");
+	console.log("userName : ${userName}");
 	console.log("userMajor : ${userMajor}");
+	console.log("${msg} : ${errMsg}");
 </script>	
 	<c:choose>
 		<c:when test="${loginID==null}">

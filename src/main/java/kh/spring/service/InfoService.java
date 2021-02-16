@@ -17,7 +17,7 @@ public class InfoService {
 	@Autowired
 	private InfoDAO idao;
 
-	public int login(String id, String pw) throws Exception {
+	public int login(String id, String pw) {
 		return idao.login(id,pw);
 	}
 
