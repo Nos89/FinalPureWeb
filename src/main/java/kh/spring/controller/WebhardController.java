@@ -111,6 +111,7 @@ public class WebhardController {
 			nr.setErrorMsg("Success");
 			nr.addDataSet("outds_dirList", wservice.getList(loginID));
 			nr.addDataSet("out_indir", wservice.getInDir(loginID, parentID));
+			nr.addVariable("parentID", parentID);
 			System.out.println("Success");
 		} else {
 			nr.setErrorCode(-1);
