@@ -118,6 +118,7 @@ public class WebhardService {
 			InDirDTO i = new InDirDTO();
 			i.setName(d.getDirectoryName());
 			i.setIsFolder("true");
+			i.setSavedName(d.getDirectoryName());
 			indirList.add(i);
 		}
 		for( CloudDTO c : fileList ) {
@@ -126,8 +127,17 @@ public class WebhardService {
 			i.setIsFolder("false");
 			i.setSize(c.getFile_size());
 			i.setDate(c.getFile_date());
+			i.setSavedName(c.getFile_savedName());
 			indirList.add(i);
 		}
 		return indirList;
+	}
+	
+	// 파일 삭제
+	public int delFile(String name, int location ) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", name);
+		map.put("location", location);
+		return wdao.delFile(map);
 	}
 }

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -111,6 +112,7 @@ public class WebhardController {
 			nr.setErrorMsg("Success");
 			nr.addDataSet("outds_dirList", wservice.getList(loginID));
 			nr.addDataSet("out_indir", wservice.getInDir(loginID, parentID));
+			nr.addVariable("parentID", parentID);
 			System.out.println("Success");
 		} else {
 			nr.setErrorCode(-1);
@@ -128,15 +130,41 @@ public class WebhardController {
 		nr.addDataSet("out_files", wservice.getFiles(id, parentID));
 		return nr;
 	}
-	
+
 	@RequestMapping("/getIndir")
-	public NexacroResult getIndir(@ParamVariable(name="parentID") int parentID) {
-		String id = (String)session.getAttribute("loginID");
+	public NexacroResult getIndir(@ParamVariable(name = "parentID") int parentID) {
+		String id = (String) session.getAttribute("loginID");
 		NexacroResult nr = new NexacroResult();
 		List<InDirDTO> list = wservice.getInDir(id, parentID);
-		if( list.size() != 0 ) {
+		if (list.size() != 0) {
 			nr.addDataSet("out_indir", wservice.getInDir(id, parentID));
 		}
 		return nr;
+	}
+
+	// 파일 및 폴더 삭제
+	@RequestMapping("/delete")
+	@Transactional
+	public NexacroResult delIndir(@ParamVariable(name = "name") String name, 
+			@ParamVariable(name = "location") int location,
+			@ParamVariable(name = "isFolder") String isFolder, 
+			HttpServletRequest request) {
+		System.out.println(name + " : " + location + " : " + isFolder);
+		if( isFolder.contentEquals("true") ) {
+			System.out.println("Folder 삭제");
+		} else {
+			System.out.println("File 삭제");
+			String filePath = request.getSession().getServletContext().getRealPath("/resources/webhard/");
+			this.delFile(name, location, filePath);
+		}
+		return new NexacroResult();
+	}
+	
+	// 파일 삭제
+	private void delFile(String name, int location, String filePath) {
+		File delFile = new File(filePath + "/" + name);
+		if( delFile.exists() ) {
+			System.out.println("파일 존재");
+		}
 	}
 }

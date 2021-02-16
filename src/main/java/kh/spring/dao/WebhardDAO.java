@@ -40,4 +40,9 @@ public class WebhardDAO {
 	public List<DirectoryDTO> getFolder(Map<String, Object> map){
 		return session.selectList("Webhard.getFolder", map);
 	}
+	
+	// 파일 삭제
+	public int delFile(Map<String, Object> map ) {
+		return session.delete("Webhard.delFile", map);
+	}
 }

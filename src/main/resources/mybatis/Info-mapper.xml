@@ -59,11 +59,4 @@
 		where lec_code IN 
 			(select oc_code from open_class where oc_semester=#{semester} and oc_is_close='N' and oc_year=#{classOpenDate} AND oc_pro_code=#{id} )
 	</select>
-	
-	
-	
-	
-	
-	
-	
 </mapper>

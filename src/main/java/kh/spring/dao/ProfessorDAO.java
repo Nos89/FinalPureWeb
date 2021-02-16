@@ -6,9 +6,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.AttendanceStatusDTO;
 import kh.spring.dto.ClassRegistrationDetailDTO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.DepartmentOfficeDTO;
+import kh.spring.dto.GradeDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.ProAttendMngDTO;
 import kh.spring.dto.ProListDTO;
@@ -70,5 +72,23 @@ public class ProfessorDAO {
 	public int saveAttend(List<ProAttendMngDTO> list) {
 		
 		return db.update("Professor.saveAttend", list);
+	}
+	
+	public List<AttendanceStatusDTO> attendCheckAll(String code){
+		System.out.println(code);
+		return db.selectList("Professor.selectAttCheckAll", code);
+		
+	}
+	public List<GradeDTO> selectGrade(String id){
+		return db.selectList("Professor.selectGrade", id);
+	}
+	public int addGrade(GradeDTO dto) {
+		return db.insert("Professor.addGrade", dto);
+	}
+	public int deleteGrade(GradeDTO dto) {
+		return db.delete("Professor.deleteGrade", dto);
+	}
+	public int updateGrade(List<GradeDTO> list) {
+		return db.update("Professor.updateGrade",list);
 	}
 }
