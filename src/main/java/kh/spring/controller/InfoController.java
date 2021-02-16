@@ -69,7 +69,7 @@ public class InfoController {
 					
 					semester = "1";
 					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, tempDate);
-					List<TakingClassDTO> list_classSche = iservice.classSche(id, classRegDate);
+					List<TakingClassDTO> list_classSche = iservice.classSche(id, tempDate);
 
 					String schedule;
 					String classTitle;
