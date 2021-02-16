@@ -53,8 +53,8 @@ public class InfoService {
 	}
 
 	//강의시간표(학생)
-	public List<TakingClassDTO> classSche(String id, String classRegDate) {
-		return idao.classSche(id,classRegDate);
+	public List<TakingClassDTO> classSche(String id, Date tempDate) {
+		return idao.classSche(id,tempDate);
 	}
 
 	//강의시간표(교수)
