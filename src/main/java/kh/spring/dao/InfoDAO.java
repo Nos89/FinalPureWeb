@@ -51,22 +51,18 @@ public class InfoDAO {
 		return db.selectList("Info.recentEnter");
 	}
 
-	public List<TakingClassDTO> takingClass(String id, String classRegDate) {
+	public List<TakingClassDTO> takingClass(String id, Date tempDate) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id",id);
-		param.put("classRegDate",classRegDate);
-		List<TakingClassDTO> list = db.selectList("Info.takingClass_std", param);
-		for( TakingClassDTO d : list ) {
-			System.out.println(d.getLec_title());
-		}
+		param.put("classRegDate",tempDate);
 		return db.selectList("Info.takingClass_std", param);
 	}
 
-	public List<TakingClassDTO> takingClass(String id, String semester, String classOpenDate) {
+	public List<TakingClassDTO> takingClass(String id, String semester, Date tempDate) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id",id);
 		param.put("semester",semester);
-		param.put("classOpenDate",classOpenDate);
+		param.put("classOpenDate",tempDate);
 		return db.selectList("Info.takingClass_pro", param);
 	}
 
@@ -77,11 +73,11 @@ public class InfoDAO {
 		return db.selectList("Info.takingClass_std", param);
 	}
 
-	public List<TakingClassDTO> classSche(String id, String semester, String classOpenDate) {
+	public List<TakingClassDTO> classSche(String id, String semester, Date tempDate) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id",id);
 		param.put("semester",semester);
-		param.put("classOpenDate",classOpenDate);
+		param.put("classOpenDate",tempDate);
 		return db.selectList("Info.takingClass_pro", param);
 	}
 

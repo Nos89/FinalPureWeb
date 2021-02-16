@@ -1,5 +1,6 @@
 package kh.spring.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +28,7 @@ public class InfoController {
 	private InfoService iservice;
 
 	@RequestMapping("/login")
-	public String login(String id, String pw, Model model) {
+	public String login(String id, String pw, Model model) throws ParseException {
 		int result = iservice.login(id, pw);
 		String name = iservice.getName(id, pw);
 		String major = iservice.getMajor(id, pw);
@@ -63,15 +64,17 @@ public class InfoController {
 				if (currentRegMonth >= 1 && currentRegMonth <= 6) {
 					// 1학기
 					classRegDate = currentRegYear + "-02-22";
+					SimpleDateFormat fm = new SimpleDateFormat("yy-MM-dd");
+					Date tempDate = fm.parse(classRegDate);
+					
 					semester = "1";
-					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, classRegDate);
+					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, tempDate);
 					List<TakingClassDTO> list_classSche = iservice.classSche(id, classRegDate);
 
 					String schedule;
 					String classTitle;
 					String classRoom;
 
-					// List<TimetableDTO> timeList = new ArrayList<>();
 					List<String> timeList = new ArrayList<>();
 					for (int j = 0; j < list_classSche.size(); j++) {
 						schedule = list_classSche.get(j).getLec_schedule();
@@ -104,12 +107,8 @@ public class InfoController {
 										divTime[j1] = divTime[j1].replaceAll(" ", "");
 										int clTime = Integer.parseInt(divTime[j1]);
 										String clDay = divSche[0];
-
-										// timetable(clDay,classTitle,clTime,day,timeList,classRoom);
 										String todayClassInfo = clDay + "/" + divTime[j1] + "/" + classTitle + "/" + classRoom;
 										timeList.add(todayClassInfo);
-										// System.out.println(todayClassInfo);
-
 									}
 
 								} else if (!divSche[1].contains(",")) {
@@ -118,9 +117,7 @@ public class InfoController {
 									String clDay = divSche[0];
 
 									String todayClassInfo = clDay + "/" + divSche[1] + "/" + classTitle + "/" + classRoom;
-									// System.out.println(todayClassInfo);
 									timeList.add(todayClassInfo);
-									// timetable(clDay,classTitle,clTime,day,timeList,classRoom);
 								}
 							}
 
@@ -144,10 +141,8 @@ public class InfoController {
 									String clDay = divSche[0];
 
 									String todayClassInfo = clDay + "/" + divTime[j1] + "/" + classTitle + "/" + classRoom;
-									// System.out.println(todayClassInfo);
 									timeList.add(todayClassInfo);
 
-									// timetable(clDay,classTitle,clTime,day,timeList,classRoom);
 								}
 							} else if (!divSche[1].contains(",")) { // 금(8)
 								String divTime[] = schedule.split("\\("); // 금 8)
@@ -180,7 +175,10 @@ public class InfoController {
 					// 2학기
 					classRegDate = currentRegYear + "-08-22";
 					semester = "2";
-					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, classRegDate);
+					SimpleDateFormat fm = new SimpleDateFormat("yy-MM-dd");
+					Date tempDate = fm.parse(classRegDate);
+					
+					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, tempDate);
 					session.setAttribute("list_takingClass", list_takingClass);
 					session.setAttribute("openClassYear", openClassYear);
 					session.setAttribute("semester", semester);
@@ -196,19 +194,19 @@ public class InfoController {
 				String semester;
 				if (currentRegMonth >= 1 && currentRegMonth <= 6) {
 					// 1학기
-					System.out.println("교수 1학기 강의목록 보여주기");
 					semester = "1";
 					classOpenDate = currentRegYear + "-01-25";
-					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, semester, classOpenDate);
-					List<TakingClassDTO> list_classSche = iservice.classSche(id, semester, classOpenDate);
+					SimpleDateFormat fm = new SimpleDateFormat("yy-MM-dd");
+					Date tempDate = fm.parse(classOpenDate);
+					
+					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, semester, tempDate);
+					List<TakingClassDTO> list_classSche = iservice.classSche(id, semester, tempDate);
 
 					String schedule;
 					String classTitle;
 					String classRoom;
 
-					// List<TimetableDTO> timeList = new ArrayList<>();
 					List<String> timeList = new ArrayList<>();
-					// TimetableDTO dto = new TimetableDTO();
 					for (int j = 0; j < list_classSche.size(); j++) {
 						schedule = list_classSche.get(j).getLec_schedule();
 						classTitle = list_classSche.get(j).getLec_title();
@@ -275,7 +273,6 @@ public class InfoController {
 								String todayClassInfo = divSche[0] + "/" + divSche[1] + "/" + classTitle + "/" + classRoom;
 								timeList.add(todayClassInfo);
 
-								// timetable(clDay,classTitle,clTime,day,timeList,classRoom);
 							}
 						}
 					}
@@ -296,7 +293,10 @@ public class InfoController {
 					// 2학기
 					classOpenDate = currentRegYear + "-08-22";
 					semester = "2";
-					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, semester, classOpenDate);
+					SimpleDateFormat fm = new SimpleDateFormat("yy-MM-dd");
+					Date tempDate = fm.parse(classOpenDate);
+					
+					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, semester, tempDate);
 					session.setAttribute("list_takingClass", list_takingClass); // 강의항목
 					session.setAttribute("semester", semester); // 학기
 					session.setAttribute("openClassYear", openClassYear); // 개강년도(현재년도)
