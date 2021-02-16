@@ -178,7 +178,7 @@ public class InfoController {
 						session.setAttribute("semester", semester);
 						
 						// test
-						model.addAttribute("errMsg", 1);
+						model.addAttribute("msg", 1);
 						return "info/info";
 					} else if (currentRegMonth == 7 || currentRegMonth == 8 || currentRegMonth == 9
 							|| currentRegMonth == 10 || currentRegMonth == 11 || currentRegMonth == 12) {
@@ -191,7 +191,7 @@ public class InfoController {
 						session.setAttribute("semester", semester);
 
 						// test
-						model.addAttribute("errMsg", 2);
+						model.addAttribute("msg", 2);
 						return "info/info";
 					}
 
@@ -296,7 +296,7 @@ public class InfoController {
 						session.setAttribute("openClassYear", openClassYear);
 
 						// test
-						model.addAttribute("errMsg", 3);
+						model.addAttribute("msg", 3);
 						return "info/info";
 					} else if (currentRegMonth == 7 || currentRegMonth == 8 || currentRegMonth == 9
 							|| currentRegMonth == 10 || currentRegMonth == 11 || currentRegMonth == 12) {
@@ -309,12 +309,12 @@ public class InfoController {
 						session.setAttribute("openClassYear", openClassYear); // 개강년도(현재년도)
 
 						// test
-						model.addAttribute("errMsg", 4);
+						model.addAttribute("msg", 4);
 						return "info/info";
 					}
 
 					// test
-					model.addAttribute("errMsg", 5);
+					model.addAttribute("msg", 5);
 					return "info/info";
 				}
 			} else if (result == 0) {
