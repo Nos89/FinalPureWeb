@@ -10,9 +10,18 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.StudentDAO;
 import kh.spring.dto.ChangeDeptApplyDTO;
+import kh.spring.dto.ClassTimeDTO;
 import kh.spring.dto.ClassTimeSearchDTO;
+import kh.spring.dto.ConditionForMyClassDTO;
+import kh.spring.dto.ConditionForRoomInfoDTO;
+import kh.spring.dto.GradeListDTO;
 import kh.spring.dto.MajorApplyDTO;
 import kh.spring.dto.MilitaryDTO;
+import kh.spring.dto.MyClassDTO;
+import kh.spring.dto.MyClassListDTO;
+import kh.spring.dto.MyClassTimeDTO;
+import kh.spring.dto.MyGradeDTO;
+import kh.spring.dto.RoomInfoDTO;
 import kh.spring.dto.StudentDetailDTO;
 import kh.spring.dto.StudentInfoDTO;
 import kh.spring.dto.TakeOffApplyDTO;
@@ -75,4 +84,81 @@ public class StudentService {
 	public List<ClassTimeSearchDTO> selectAllCTS(){		
 		return sdao.selectAllCTS();
 	} 
+	
+	public List<RoomInfoDTO> roomInfo(){
+		return sdao.roomInfo();
+	}
+	
+	public List<ClassTimeDTO> getClassTime(ConditionForRoomInfoDTO dto){
+		return sdao.getClassTime(dto);
+	}
+	
+	public List<MyClassTimeDTO> getMyClassTime(ConditionForMyClassDTO dto,String id){
+		Map<String, Object> myClass = new HashMap<>();
+		myClass.put("dto", dto);
+		myClass.put("id",id);
+		return sdao.getMyClassTime(myClass);
+	}
+	
+	public List<MyClassDTO> getMyClass(ConditionForMyClassDTO dto,String id){
+		Map<String, Object> myClass = new HashMap<>();
+		myClass.put("dto", dto);
+		myClass.put("id",id);
+		return sdao.getMyClass(myClass);
+	}
+	
+	public List<MyClassListDTO> getMyClassList(ConditionForMyClassDTO dto,String id){
+		Map<String, Object> myClass = new HashMap<>();
+		myClass.put("dto", dto);
+		myClass.put("id",id);
+		return sdao.getMyClassList(myClass);
+	}
+	
+	public int withdrawMyClass(ConditionForMyClassDTO dto,String id,String oc_code) {
+		Map<String, Object> myClass = new HashMap<>();
+		myClass.put("dto", dto);
+		myClass.put("id",id);
+		myClass.put("oc_code", oc_code);
+		return sdao.withdrawMyClass(myClass);
+	}
+	
+	public int countDown(String oc_code) {
+		return sdao.countDown(oc_code);
+	}
+	
+	public List<MyGradeDTO> getMyGrade(ConditionForMyClassDTO dto,String id){
+		Map<String, Object> myGrade = new HashMap<>();
+		myGrade.put("dto", dto);
+		myGrade.put("id",id);
+		return sdao.getMyGrade(myGrade);
+	}
+	
+	public List<GradeListDTO> getGradeList(ConditionForMyClassDTO dto,String id){
+		Map<String, Object> myGrade = new HashMap<>();
+		myGrade.put("dto", dto);
+		myGrade.put("id",id);
+		return sdao.getGradeList(myGrade);
+	}
+	
+	public int creditRenounceApply(String id, String code) {
+		Map<String, Object> apply = new HashMap<>();
+		apply.put("code", code);
+		apply.put("id",id);
+		return sdao.creditRenounceApply(apply);
+	}
+	
+	public int checkCreditRenounceApply(String id, String code) {
+		Map<String, Object> check = new HashMap<>();
+		check.put("code", code);
+		check.put("id",id);
+		return sdao.checkCreditRenounceApply(check);
+	}
+	
+	public int creditRenounceCancel(String id, String code) {
+		Map<String, Object> cancel = new HashMap<>();
+		cancel.put("code", code);
+		cancel.put("id",id);
+		return sdao.creditRenounceCancel(cancel);
+	}
+	
 }
