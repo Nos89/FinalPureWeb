@@ -36,6 +36,13 @@ public class ProAttendMngDTO {
 		this.att_week = att_week;
 	}
 	
+	
+	public ProAttendMngDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public int getAtt_seq() {
 		return att_seq;
 	}

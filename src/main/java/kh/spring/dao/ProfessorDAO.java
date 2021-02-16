@@ -13,6 +13,7 @@ import kh.spring.dto.DepartmentOfficeDTO;
 import kh.spring.dto.GradeDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.ProAttendMngDTO;
+import kh.spring.dto.ProBusinessLog;
 import kh.spring.dto.ProListDTO;
 import kh.spring.dto.ProScheduleDTO;
 import kh.spring.dto.ProfessorDTO;
@@ -90,5 +91,19 @@ public class ProfessorDAO {
 	}
 	public int updateGrade(List<GradeDTO> list) {
 		return db.update("Professor.updateGrade",list);
+	}
+	public List<ProBusinessLog> getMyDiary(String id){
+		return db.selectList("Professor.getMyDiary", id);
+	}
+	
+	public int insertDiary(ProBusinessLog dto) {
+		return db.insert("Professor.isnertDiary", dto);
+	}
+	public int updateDiary(ProBusinessLog dto) {
+		return db.update("Professor.updateDiary", dto);
+				
+	}
+	public int deleteDiary(List<ProBusinessLog> list) {
+		return db.delete("Professor.deleteDiary", list);
 	}
 }
