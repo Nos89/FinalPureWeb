@@ -66,10 +66,10 @@ public class InfoDAO {
 		return db.selectList("Info.takingClass_pro", param);
 	}
 
-	public List<TakingClassDTO> classSche(String id, String classRegDate) {
+	public List<TakingClassDTO> classSche(String id, Date tempDate) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id",id);
-		param.put("classRegDate",classRegDate);
+		param.put("classRegDate",tempDate);
 		return db.selectList("Info.takingClass_std", param);
 	}
 
