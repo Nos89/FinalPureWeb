@@ -16,11 +16,6 @@ public class ProAttendMngDTO {
 	private String att_stdName;
 	private String att_stdLevel;
 	private int att_week;
-
-	public ProAttendMngDTO() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 	
 	public ProAttendMngDTO(int att_seq, String att_lecCode, String att_year, String att_targetLevel,
 			String att_semester, String att_lecTitle, Date att_date, String att_attend, String att_stdId,
