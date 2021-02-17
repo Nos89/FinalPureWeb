@@ -10,14 +10,16 @@ public class BoardDTO_NEX {
 	private String writer;
 	private String writeDate;
 	private String boardType;
-	
+	private String division_code;
+
+
 	public BoardDTO_NEX() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public BoardDTO_NEX(int chk, int rank, int seq, String title, String contents, String writer, String writeDate,
-			String boardType) {
+			String boardType, String division_code) {
 		super();
 		this.chk = chk;
 		this.rank = rank;
@@ -27,6 +29,7 @@ public class BoardDTO_NEX {
 		this.writer = writer;
 		this.writeDate = writeDate;
 		this.boardType = boardType;
+		this.division_code = division_code;
 	}
 
 	public int getChk() {
@@ -93,4 +96,11 @@ public class BoardDTO_NEX {
 		this.boardType = boardType;
 	}
 	
+	public String getDivision_code() {
+		return division_code;
+	}
+
+	public void setDivision_code(String division_code) {
+		this.division_code = division_code;
+	}
 }
