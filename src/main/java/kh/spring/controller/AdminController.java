@@ -1,6 +1,5 @@
 package kh.spring.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.ColScheduleDTO_NEX;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
+import kh.spring.dto.FilesDTO;
 import kh.spring.dto.LectureDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
@@ -27,6 +27,7 @@ import kh.spring.dto.ProfessorDTO_NEX;
 import kh.spring.dto.StudentDTO;
 import kh.spring.dto.StudentDTO_NEX;
 import kh.spring.service.AdminService;
+import kh.spring.service.BoardService;
 import kh.spring.utils.ConvertDate;
 
 @Controller
@@ -34,6 +35,10 @@ public class AdminController {
 
 	@Autowired
 	private AdminService admService;
+	
+	
+	@Autowired
+	private BoardService bService;
 	
 	// 공지사항 로드
 	@RequestMapping("NoticeOnLoad.nex")
@@ -83,6 +88,23 @@ public class AdminController {
 		return "admin/boardWrite";
 	}
 	
+	//자료게시판 등록폼
+	@RequestMapping("GoWriteArchives.nex")
+	public String GoWriteArchives() {
+		return "admin/boardWrite2";
+		
+	}
+	//게시판 등록
+	@RequestMapping("boardWrite.nex")
+	public NexacroResult boardWrite(@ParamDataSet(name="in_ds")BoardDTO_NEX dto) {
+		NexacroResult nr = new NexacroResult();
+		int result =bService.writeArticle_NEX(dto);
+		
+		nr.addVariable("param", result);
+		
+		return nr;
+	}
+	
 //	// 홍보게시글 작성
 //	@RequestMapping("WriteBoardPromo.nex")
 //	public String writePost() {
@@ -94,6 +116,7 @@ public class AdminController {
 	public NexacroResult getBoard(@ParamVariable(name="bdDiv")String bdDiv) throws Exception {
 		NexacroResult nr = new NexacroResult();
 		List<BoardDTO> list = admService.getBoard(bdDiv);
+
 		int rowCount = list.size();
 		nr.addDataSet("out_board",list);
 		nr.addVariable("totalRowCount",rowCount);
@@ -117,6 +140,40 @@ public class AdminController {
 	public NexacroResult deleteBoard(@ParamDataSet(name="in_board")List<BoardDTO_NEX> list) throws Exception {
 		admService.deleteBoard(list);
 		return new NexacroResult();
+	}
+	
+	
+	//게시판 수정시 글에 첨부된 파일목록 불러오기
+	@RequestMapping("getFileList.nex")
+	public NexacroResult getFileList(@ParamVariable(name="seq")int seq) {
+		System.out.println(seq);
+		NexacroResult nr = new NexacroResult();
+		List<FilesDTO> list = bService.getFiles(seq);
+		nr.addDataSet("out_ds", list);
+		return nr;
+	}
+	//게시판 수정시 파일 삭제
+	@RequestMapping("delFile.nex")
+	public NexacroResult delFile(@ParamVariable(name="fileSeq")int fileSeq,@ParamVariable(name="parent_code")int parent_code, @ParamVariable(name="name")String name) {
+		System.out.println(fileSeq+parent_code+name);
+		NexacroResult nr = new NexacroResult();
+		List<FilesDTO> list =admService.delSpecFile(name,fileSeq,parent_code);
+		nr.addDataSet("out_ds", list);
+		return nr;
+	}
+	
+	//게시판 수정하기
+	@RequestMapping("updateBoard.nex")
+	public NexacroResult updateBoard(@ParamDataSet(name="in_board")BoardDTO_NEX dto){
+		NexacroResult nr = new NexacroResult();
+		int result = admService.updateBoard(dto);
+		if(result >0) {
+			nr.setErrorCode(1);
+			nr.addVariable("param", dto.getSeq());
+		}else {
+			nr.setErrorCode(0);	
+		}
+		return nr;
 	}
 	
 	// 교수 목록 로드

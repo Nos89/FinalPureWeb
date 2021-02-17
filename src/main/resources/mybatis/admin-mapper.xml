@@ -73,6 +73,12 @@
 	</foreach>
 </delete>
 
+
+<!-- 게시판 수정하기 -->
+<update id="updateBoard">
+	update board set title=#{title},contents=#{contents} where seq=#{seq}
+</update>
+
 <!-- 단과대 목록 -->
 <select id="getCollege" resultType="kh.spring.dto.CollegeDTO">
 	SELECT * FROM COLLEGE

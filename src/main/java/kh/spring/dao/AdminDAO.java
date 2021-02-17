@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.BuildDTO;
 import kh.spring.dto.ClassroomDTO;
 import kh.spring.dto.ColScheduleDTO;
@@ -63,6 +64,11 @@ public class AdminDAO {
 	// 게시판 삭제
 	public int deleteBoard(List<BoardDTO> list) throws Exception {
 		return db.delete("Admin.deleteBoard", list);
+	}
+	
+	//게시판 수정하기
+	public int updateBoard(BoardDTO_NEX dto) {
+		return db.update("Admin.updateBoard", dto);
 	}
 	
 	// 단과대 목록

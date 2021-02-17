@@ -1,6 +1,5 @@
 package kh.spring.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.BoardDAO;
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.FilesDTO;
 import kh.spring.statics.PagingConfigurator;
 
@@ -22,6 +22,12 @@ public class BoardService {
 	// 게시글 작성
 	public int writeArticle(BoardDTO bdto) {
 		int result =bdao.writeArticle(convertType(bdto)); 
+		return result;
+	}
+	// 게시글 작성 넥사크로
+	public int writeArticle_NEX(BoardDTO_NEX bdto) {
+		BoardDTO dto = new BoardDTO(0, 0, 0, bdto.getTitle(), bdto.getContents(), bdto.getWriter(), null, bdto.getBoardType());
+		int result = bdao.writeArticle(convertType(dto));
 		return result;
 	}
 	
