@@ -20,15 +20,9 @@
 <script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
 
 <style>
-	input.title
-	{
-		width: 100%;
-		height: 30px;
-	}
-	#summernote
-	{
-		width: 100%;
-	}
+	#summernote{width: 100%;}
+	select{width:10%;}
+	input.title{width: 89%; height: 30px;}
 </style>
 
 </head>
@@ -38,26 +32,43 @@
 		<div class="row writerWrapper">
 			<form action="/main/board.write?pageGroup=community&type=${type}" method="post" enctype="multipart/form-data">
 				<div class="col-12">
-					<input type="text" placeholder="제목을 입력하세요" name="title" class="title">
+					<select name="category" class="category">
+						<option value="학사">학사</option>
+						<option value="장학">장학</option>
+						<option value="입학">입학</option>
+						<option value="채용">채용</option>
+						<option value="입찰">입찰</option>
+						<option value="일반">일반</option>
+					</select>
+					<input type="text" placeholder="제목을 입력하세요" name="noti_title" class="title" value="${article.noti_title}">
 				</div>
 				<div class="col-12">
-					<textarea id="summernote" name="contents"></textarea>
+					<textarea id="summernote" name="noti_contents">${article.noti_contents}</textarea>
 				</div>
 				<div class="col-12">
 					<div class="row mt-3">
-						<div class="col-9">
+							<div class="col-9">
+					<div class="row">
+						<div class="col-3">
+							<button type="button" class="btnFile">파일 추가</button>
+						</div>
+						<div class="col-10"></div>
+						<div class="col-12 inputFileWrapper">
+							<c:forEach var="i" items="${files}">
 							<div class="row">
-								<div class="col-2">
-									<button type="button" class="btnFile">파일 추가</button>
-								</div>
-								<div class="col-10"></div>
-								<div class="col-12 inputFileWrapper">
-							
+								<div class="col-12">
+									<a href="/boardFiles/${i.savedName}" target="_blank">${i.oriName}</a>
+									<input type="file" name="inputFile" value="/boardFiles/${i.savedName}" style="display:none">
+									<button type="button" class="delFile">X</button>
+									<input type="hidden" value="${i.seq}">
 								</div>
 							</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
 			</form>
 		</div>
 	</div>
@@ -164,13 +175,18 @@
 				$(this).parent().find('input[type=text]').val($(this).val());
 			})
 		});
-	
+	$(".category").val('${article.category}');
+
 	function getTitle(){
 		return $('.title').val();
 	}
 	
 	function getContents(){
 		return $('#summernote').summernote('code');
+	}
+	
+	function getCategory(){
+		return $(".category option:selected").text();
 	}
 	</script>
 </body>
