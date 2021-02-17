@@ -90,7 +90,7 @@ public class AdminController {
 	
 	// 공지사항 수정
 	@RequestMapping("modifyNotice.nex")
-	public NexacroResult modifyNotice(@ParamDataSet(name="in_notice")NoticeDTO dto) {
+	public NexacroResult modifyNotice(@ParamDataSet(name="in_notice")NoticeDTO_NEX dto) throws Exception {
 		admService.modifyNotice(dto);
 		return new NexacroResult();
 	}
