@@ -14,6 +14,7 @@ import kh.spring.dto.ClassroomDTO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
+import kh.spring.dto.FilesDTO;
 import kh.spring.dto.LectureDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.ProfessorDTO;
@@ -25,9 +26,9 @@ public class AdminDAO {
 	@Autowired
 	private SqlSession db;
 	
-	// 공지사항 가져오기
-	public List<NoticeDTO> getNotice(String category) throws Exception {
-		return db.selectList("Admin.getNotice",category);
+	// 공지사항 목록 가져오기
+	public List<NoticeDTO> getBoardNotice(String category) throws Exception {
+		return db.selectList("Admin.getBoardNotice",category);
 	}
 	
 	// 공지사항 검색
@@ -44,25 +45,60 @@ public class AdminDAO {
 		return db.delete("deleteNotice",list);
 	}
 	
+	// 공지사항 가져오기
+	public NoticeDTO getNotice(int noti_seq) {
+		return db.selectOne("Admin.getNotice",noti_seq);
+	}
+	
+	// 공지사항 작성
+	public int writeNotice(NoticeDTO dto) {
+		return db.insert("Admin.writeNotice",dto);
+	}
+	
+	// 공지사항 수정
+	public int modifyNotice(NoticeDTO dto) {
+		return db.update("Admin.modifyNotice",dto);
+	}
+	
 	// 게시판 온로드
-	public List<BoardDTO> getBoard(String bdDiv) throws Exception {
-		return db.selectList("Admin.getBoard", bdDiv);
+	public List<BoardDTO> getBoard(String boardType) throws Exception {
+		return db.selectList("Admin.getBoard", boardType);
 	}
 	
 	// 게시판 검색
-	public List<BoardDTO> searchBoard(String target, String keyword, String bdDiv) throws Exception {
+	public List<BoardDTO> searchBoard(String target, String keyword, String boardType) throws Exception {
 		Map<String, String> map = new HashMap<>();
 		if(target.contentEquals("title")) {target = "b.title";}
 		map.put("search_target", target);
 		map.put("search_keyword", keyword);
-		map.put("bdDiv", bdDiv);
-		System.out.println(map.get("search_target")+" / "+map.get("search_keyword")+" / "+map.get("bdDiv"));
+		map.put("boardType", boardType);
 		return db.selectList("Admin.searchBoard", map);
 	}
 	
-	// 게시판 삭제
-	public int deleteBoard(List<BoardDTO> list) throws Exception {
-		return db.delete("Admin.deleteBoard", list);
+	// 게시글 가져오기
+	public BoardDTO getPost(int seq) {
+		return db.selectOne("Admin.getPost",seq);
+	}
+	
+	// 게시글 첨부파일 가져오기
+	public List<FilesDTO> getFiles(int parent_code) {
+		return db.selectList("Board.getFiles", parent_code);
+	}
+	
+	// 글쓰기
+	public int writePost(BoardDTO dto) {
+		db.insert("Board.insert", dto);
+		return dto.getSeq();
+	}
+	
+	// 게시글 수정
+	public int modifyPost(BoardDTO dto) {
+		return db.update("Admin.modifyPost",dto);
+	}
+	
+	// 게시글 삭제
+	public int deleteBoard(Map<String, Object> map) throws Exception {
+		return db.delete("Admin.deletePosts", map);
 	}
 	
 	// 단과대 목록

@@ -3,8 +3,11 @@ package kh.spring.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
@@ -27,6 +30,7 @@ import kh.spring.dto.ProfessorDTO_NEX;
 import kh.spring.dto.StudentDTO;
 import kh.spring.dto.StudentDTO_NEX;
 import kh.spring.service.AdminService;
+import kh.spring.service.CommentService;
 import kh.spring.utils.ConvertDate;
 
 @Controller
@@ -34,12 +38,14 @@ public class AdminController {
 
 	@Autowired
 	private AdminService admService;
+	@Autowired
+	CommentService cservice;
 	
 	// 공지사항 로드
-	@RequestMapping("NoticeOnLoad.nex")
-	public NexacroResult noticeOnLoad(@ParamVariable(name="category")String category) throws Exception{
+	@RequestMapping("getBoardNotice.nex")
+	public NexacroResult getBoardNotice(@ParamVariable(name="category")String category) throws Exception{
 		NexacroResult nr = new NexacroResult();
-		List<NoticeDTO> list = admService.getNotice(category);
+		List<NoticeDTO> list = admService.getBoardNotice(category);
 		int rowCount = list.size();
 		nr.addDataSet("out_notice", list);
 		nr.addVariable("totalRowCount",rowCount);
@@ -47,10 +53,10 @@ public class AdminController {
 	}
 	
 	// 공지사항 탭 변경
-	@RequestMapping("NoticeTabChanged.nex")
+	@RequestMapping("noticeTabChanged.nex")
 	public NexacroResult notiTabChanged(@ParamVariable(name="category")String category) throws Exception {
 		NexacroResult nr = new NexacroResult();
-		List<NoticeDTO> list = admService.getNotice(category);
+		List<NoticeDTO> list = admService.getBoardNotice(category);
 		int rowCount = list.size();
 		nr.addDataSet("out_notice",list);
 		nr.addVariable("totalRowCount",rowCount);
@@ -58,7 +64,7 @@ public class AdminController {
 	}
 	
 	// 공지사항 검색
-	@RequestMapping("SearchNotice.nex")
+	@RequestMapping("searchNotice.nex")
 	public NexacroResult searchNotice(@ParamVariable(name="sTarget")String target, @ParamVariable(name="sKeyword")String keyword, @ParamVariable(name="category")String category) throws Exception {
 		NexacroResult nr = new NexacroResult();
 		List<NoticeDTO> list = admService.searchNotice(target, keyword, category);
@@ -69,54 +75,135 @@ public class AdminController {
 	}
 	
 	// 공지사항 삭제
-	@RequestMapping("DeleteNotice.nex")
+	@RequestMapping("deleteNotice.nex")
 	public NexacroResult deleteNotice(@ParamDataSet(name="in_notice")List<NoticeDTO_NEX> list) throws Exception {
 		admService.deleteNotice(list);
 		return new NexacroResult();
 	}
 	
 	// 공지사항 작성
-	
-	// 홍보게시글 작성폼
-	@RequestMapping("GoWritePromo.nex")
-	public String goWritePage() {
-		return "admin/boardWrite";
+	@RequestMapping("writeNotice")
+	public NexacroResult writeNotice(@ParamDataSet(name="in_notice")NoticeDTO dto){
+		admService.writeNotice(dto);
+		return new NexacroResult();
 	}
 	
-//	// 홍보게시글 작성
-//	@RequestMapping("WriteBoardPromo.nex")
-//	public String writePost() {
-//		
-//	}
+	// 공지사항 수정
+	@RequestMapping("modifyNotice.nex")
+	public NexacroResult modifyNotice(@ParamDataSet(name="in_notice")NoticeDTO dto) {
+		admService.modifyNotice(dto);
+		return new NexacroResult();
+	}
+	
+	
+	// 게시글 보기
+	@RequestMapping("viewPost")
+	public String goPost(int seq, String commentPage, Model model, String type) {
+		model.addAttribute("files", admService.getFiles(seq));
+		model.addAttribute("commentPage", this.convertPage(commentPage));
+		model.addAttribute("comments", cservice.getComments(seq, this.convertPage(commentPage)));
+		if(type.contentEquals("notice")){
+			model.addAttribute("article",admService.getNotice(seq));
+			return "admin/noticeBoardView";
+		}else {
+			model.addAttribute("article",admService.getPost(seq));
+			return "admin/boardView";
+		}
+	}
+	
+	// 게시글 가져오기
+	@RequestMapping("getPost.nex")
+	public NexacroResult getPost(@ParamVariable(name="seq")int seq, @ParamVariable(name="boardType")String boardType) {
+		NexacroResult nr = new NexacroResult();
+		System.out.println("게시판 타입: "+boardType);
+		if(boardType.contentEquals("notice")) {
+			NoticeDTO dto = admService.getNotice(seq);
+			nr.addDataSet("out_notice",dto);
+		}else {
+			BoardDTO dto = admService.getPost(seq);
+			nr.addDataSet("out_board",dto);
+		}
+		return nr;
+	}
+	
+	// 게시글 작성폼
+	@RequestMapping("goWrite.nex")
+	public String goWritePage(String type) {
+		if(type.contentEquals("notice")) {
+			return "admin/noticeBoardWrite";
+		} else {
+			return "admin/boardWrite";
+		}
+	}
+	
+	// 게시글 작성
+	@RequestMapping("writeBoard.nex")
+	public NexacroResult writePost(@ParamDataSet(name="in_board")BoardDTO dto) {
+		int seq = admService.writePost(dto);
+		return new NexacroResult();
+	}
+	
+	// 게시글 수정폼
+	@RequestMapping("goModify")
+	public String goModifyPage(int seq, String commentPage, Model model, String type) {
+		System.out.println("type: "+type);
+		model.addAttribute("files", admService.getFiles(seq));
+		model.addAttribute("commentPage", this.convertPage(commentPage));
+		model.addAttribute("comments", cservice.getComments(seq, this.convertPage(commentPage)));
+		if(type.contentEquals("notice")){
+			model.addAttribute("article",admService.getNotice(seq));
+			return "admin/noticeBoardModify";
+		}else {
+			model.addAttribute("article",admService.getPost(seq));
+			return "admin/boardModify";
+		}
+	}
+	
+	// 게시글 수정
+	@RequestMapping("modifyBoard.nex")
+	public NexacroResult modifyPost(@ParamDataSet(name="in_board")BoardDTO_NEX dto) throws Exception {
+		admService.modifyPost(dto);
+		return new NexacroResult();
+	}
 	
 	// 게시판 로드
 	@RequestMapping("BoardOnLoad.nex")
-	public NexacroResult getBoard(@ParamVariable(name="bdDiv")String bdDiv) throws Exception {
+	public NexacroResult getBoard(@ParamVariable(name="boardType")String boardType) throws Exception {
 		NexacroResult nr = new NexacroResult();
-		List<BoardDTO> list = admService.getBoard(bdDiv);
+		List<BoardDTO> list = admService.getBoard(boardType);
 		int rowCount = list.size();
 		nr.addDataSet("out_board",list);
 		nr.addVariable("totalRowCount",rowCount);
 		return nr;
 	}
 	
-	// 게시판 검색
+	// 게시글 검색
 	@RequestMapping("SearchBoard.nex")
-	public NexacroResult searchBoard(@ParamVariable(name="sTarget")String target, @ParamVariable(name="sKeyword")String keyword, @ParamVariable(name="bdDiv")String bdDiv) throws Exception {
+	public NexacroResult searchBoard(@ParamVariable(name="sTarget")String target, @ParamVariable(name="sKeyword")String keyword, @ParamVariable(name="boardType")String boardType) throws Exception {
 		NexacroResult nr = new NexacroResult();
-		System.out.println("target: "+target+" | keyword: "+keyword+" | bdDiv: "+bdDiv);
-		List<BoardDTO> list = admService.searchBoard(target, keyword, bdDiv);
+		List<BoardDTO> list = admService.searchBoard(target, keyword, boardType);
 		int rowCount = list.size();
 		nr.addDataSet("out_board",list);
 		nr.addVariable("totalRowCount", rowCount);
 		return nr;
 	}
 	
-	// 게시판 삭제
+	// 게시글 삭제
 	@RequestMapping("DeleteBoard.nex")
-	public NexacroResult deleteBoard(@ParamDataSet(name="in_board")List<BoardDTO_NEX> list) throws Exception {
-		admService.deleteBoard(list);
+	public NexacroResult deleteBoard(@ParamDataSet(name="in_board")List<BoardDTO_NEX> list, @ParamVariable(name="boardType")String boardType) throws Exception {
+		admService.deleteBoard(list, boardType);
 		return new NexacroResult();
+	}
+	
+	// 페이지 유효성
+	private int convertPage(String page) {
+		int currentPage = 1;
+		try {
+			currentPage = Integer.parseInt(page);
+		} catch (Exception e) {
+			currentPage = 1;
+		}
+		return currentPage;
 	}
 	
 	// 교수 목록 로드

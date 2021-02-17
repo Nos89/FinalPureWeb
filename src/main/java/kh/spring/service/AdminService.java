@@ -2,7 +2,9 @@ package kh.spring.service;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import kh.spring.dto.ClassroomDTO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
+import kh.spring.dto.FilesDTO;
 import kh.spring.dto.LectureDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
@@ -31,9 +34,9 @@ public class AdminService {
 	private AdminDAO admdao;
 	
 	
-	// 공지사항 가져오기
-	public List<NoticeDTO> getNotice(String category) throws Exception {
-		return admdao.getNotice(category);
+	// 공지 목록 가져오기
+	public List<NoticeDTO> getBoardNotice(String category) throws Exception {
+		return admdao.getBoardNotice(category);
 	}
 	
 	// 공지사항 검색
@@ -57,31 +60,68 @@ public class AdminService {
 		return admdao.deleteNotice(list2);
 	}
 	
+	// 공지사항 가져오기
+	public NoticeDTO getNotice(int noti_seq) {
+		return admdao.getNotice(noti_seq);
+	}
+	
+	// 공지사항 작성
+	public int writeNotice(NoticeDTO dto) {		
+		return admdao.writeNotice(dto);
+	}
+	
+	// 공지사항 수정
+	public int modifyNotice(NoticeDTO dto) {
+		return admdao.modifyNotice(dto);
+	}
+	
 	// 게시판 온로드
-	public List<BoardDTO> getBoard(String bdDiv) throws Exception {
-		return admdao.getBoard(bdDiv);
+	public List<BoardDTO> getBoard(String boardType) throws Exception {
+		return admdao.getBoard(boardType);
 	}
 	
 	// 게시판 검색
-	public List<BoardDTO> searchBoard(String target, String keyword, String bdDiv) throws Exception {
-		return admdao.searchBoard(target, keyword, bdDiv);
+	public List<BoardDTO> searchBoard(String target, String keyword, String boardType) throws Exception {
+		return admdao.searchBoard(target, keyword, boardType);
+	}
+	
+	// 게시글 작성
+	public int writePost(BoardDTO dto) {
+		int seq =  admdao.writePost(dto);
+		return seq;
+	}
+	
+	// 게시글 보기
+	public BoardDTO getPost(int seq) {
+		return admdao.getPost(seq);
+	}
+	
+	// 게시글 첨부파일
+	public List<FilesDTO> getFiles(int parent_code){
+		return admdao.getFiles(parent_code);
+	}
+	
+	// 게시글 수정
+	public int modifyPost(BoardDTO_NEX dto) throws Exception {
+		BoardDTO dto2 = new BoardDTO();
+		dto2.setSeq(dto.getSeq());
+		dto2.setTitle(dto.getTitle());
+		dto2.setContents(dto.getContents());
+		dto2.setDivision_code(dto.getDivision_code());
+		if(dto.getWriteDate()==null) {
+			dto.setWriteDate(null);
+		}else {
+			dto2.setWriteDate(ConvertDate.stringToDate(dto.getWriteDate()));
+		}
+		return admdao.modifyPost(dto2);
 	}
 	
 	// 게시판 삭제
-	public int deleteBoard(List<BoardDTO_NEX> list) throws Exception {
-		List<BoardDTO> list2 = new ArrayList<>();
-		for(int i=0;i<list.size();i++) {
-			BoardDTO dto = new BoardDTO();
-			dto.setChk(list.get(i).getChk());
-			dto.setSeq(list.get(i).getSeq());
-			dto.setTitle(list.get(i).getTitle());
-			dto.setContents(list.get(i).getContents());
-			dto.setWriter(list.get(i).getWriter());
-			dto.setWriteDate(ConvertDate.stringToDate(list.get(i).getWriteDate()));
-			dto.setBoardType(list.get(i).getBoardType());
-			list2.add(dto);
-		}
-		return admdao.deleteBoard(list2);
+	public int deleteBoard(List<BoardDTO_NEX> list, String boardType) throws Exception {
+		Map<String,Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("boardType", boardType);
+		return admdao.deleteBoard(map);
 	}
 	
 	// 단과대 목록
