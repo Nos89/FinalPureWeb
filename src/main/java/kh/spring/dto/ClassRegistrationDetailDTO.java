@@ -7,8 +7,9 @@ public class ClassRegistrationDetailDTO {
 	private String dept_title;
 	private String name;
 	private int std_year;
+	private String check;
 	public ClassRegistrationDetailDTO(String lec_code, String title, String id, String dept_title, String name,
-			int std_year) {
+			int std_year, String check) {
 		super();
 		this.lec_code = lec_code;
 		this.title = title;
@@ -16,6 +17,7 @@ public class ClassRegistrationDetailDTO {
 		this.dept_title = dept_title;
 		this.name = name;
 		this.std_year = std_year;
+		this.check = check;
 	}
 	public ClassRegistrationDetailDTO() {
 		super();
@@ -57,6 +59,14 @@ public class ClassRegistrationDetailDTO {
 	public void setStd_year(int std_year) {
 		this.std_year = std_year;
 	}
+	public String getCheck() {
+		return check;
+	}
+	public void setCheck(String check) {
+		this.check = check;
+	}
+	
+	
 	
 
 }

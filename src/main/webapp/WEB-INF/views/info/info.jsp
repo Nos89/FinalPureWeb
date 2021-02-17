@@ -20,74 +20,15 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<script>
-	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
-	var date = new Date();//today의 Date를 세어주는 역할
-
-	function prevCalendar() {//이전 달
-		today = new Date(today.getFullYear(), today.getMonth() - 1, today
-				.getDate());
-		buildCalendar();
-	}
-	function nextCalendar() {//다음 달
-		today = new Date(today.getFullYear(), today.getMonth() + 1, today
-				.getDate());
-		buildCalendar();
-	}
-	function buildCalendar() {//현재 달 달력 만들기
-		var doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-		var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-		var tbCalendar = document.getElementById("calendar");//날짜를 찍을 테이블 변수 만듬, 일 까지 다 찍힘
-		var tbCalendarYM = document.getElementById("tbCalendarYM");//테이블에 정확한 날짜 찍는 변수
-		tbCalendarYM.innerHTML = today.getFullYear() + "년 "
-				+ (today.getMonth() + 1) + "월";
-
-		/*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
-		while (tbCalendar.rows.length > 2) {
-			//열을 지워줌
-			//기본 열 크기는 body 부분에서 2로 고정되어 있다.
-			tbCalendar.deleteRow(tbCalendar.rows.length - 1);
-			//테이블의 tr 갯수 만큼의 열 묶음은 -1칸 해줘야지 
-			//30일 이후로 담을달에 순서대로 열이 계속 이어진다.
-		}
-		var row = null;
-		row = tbCalendar.insertRow();
-		//테이블에 새로운 열 삽입//즉, 초기화
-		var cnt = 0;// count, 셀의 갯수를 세어주는 역할
-		// 1일이 시작되는 칸을 맞추어 줌
-		for (i = 0; i < doMonth.getDay(); i++) {
-			/*이번달의 day만큼 돌림*/
-			cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
-			cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
-		}
-		/*달력 출력*/
-		for (i = 1; i <= lastDate.getDate(); i++) {
-			//1일부터 마지막 일까지 돌림
-			cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
-			cell.innerHTML = i;//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
-			cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
-			if (cnt % 7 == 1) {/*일요일 계산*/
-				cell.innerHTML = "<font color=red>" + i
-			}
-			if (cnt % 7 == 0) {/*토요일 구하기*/
-				cell.innerHTML = "<font color=blue>" + i
-				row = calendar.insertRow();//토요일 다음에 올 셀을 추가
-			}
-			/*오늘의 날짜에 노란색 칠하기*/
-			if (today.getFullYear() == date.getFullYear()
-					&& today.getMonth() == date.getMonth()
-					&& i == date.getDate()) {
-				cell.bgColor = "#FAF58C";
-			}
-		}
-	}
-</script>
-<script>
-    buildCalendar();
-</script>
- 
 </head>
 <body>
+<!-- 테스트 -->
+<script>
+	console.log("info.jsp 로딩 : ${loginID}");
+	console.log("userName : ${userName}");
+	console.log("userMajor : ${userMajor}");
+	console.log("${msg} : ${errMsg}");
+</script>	
 	<c:choose>
 		<c:when test="${loginID==null}">
 			<div class="container-fluid title">
@@ -116,7 +57,7 @@
 							</div>
 							<div id=loginPW>
 								<div id=pwTitle>PW</div>
-								<input type=text name=pw id=pwText placeholder="pw placeholder"
+								<input type=password name=pw id=pwText placeholder="pw placeholder"
 									required>
 							</div>
 							<div id=rmbId>
@@ -637,14 +578,70 @@
 
 			</div>
 
+		<script>
+	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
+	var date = new Date();//today의 Date를 세어주는 역할
 
+	function prevCalendar() {//이전 달
+		today = new Date(today.getFullYear(), today.getMonth() - 1, today
+				.getDate());
+		buildCalendar();
+	}
+	function nextCalendar() {//다음 달
+		today = new Date(today.getFullYear(), today.getMonth() + 1, today
+				.getDate());
+		buildCalendar();
+	}
+	function buildCalendar() {//현재 달 달력 만들기
+		var doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+		var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+		var tbCalendar = document.getElementById("calendar");//날짜를 찍을 테이블 변수 만듬, 일 까지 다 찍힘
+		var tbCalendarYM = document.getElementById("tbCalendarYM");//테이블에 정확한 날짜 찍는 변수
+		tbCalendarYM.innerHTML = today.getFullYear() + "년 "
+				+ (today.getMonth() + 1) + "월";
 
-
-		</c:otherwise>
-	</c:choose>
-
-
-	<script>
+		/*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
+		while (tbCalendar.rows.length > 2) {
+			//열을 지워줌
+			//기본 열 크기는 body 부분에서 2로 고정되어 있다.
+			tbCalendar.deleteRow(tbCalendar.rows.length - 1);
+			//테이블의 tr 갯수 만큼의 열 묶음은 -1칸 해줘야지 
+			//30일 이후로 담을달에 순서대로 열이 계속 이어진다.
+		}
+		var row = null;
+		row = tbCalendar.insertRow();
+		//테이블에 새로운 열 삽입//즉, 초기화
+		var cnt = 0;// count, 셀의 갯수를 세어주는 역할
+		// 1일이 시작되는 칸을 맞추어 줌
+		for (i = 0; i < doMonth.getDay(); i++) {
+			/*이번달의 day만큼 돌림*/
+			cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
+			cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
+		}
+		/*달력 출력*/
+		for (i = 1; i <= lastDate.getDate(); i++) {
+			//1일부터 마지막 일까지 돌림
+			cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
+			cell.innerHTML = i;//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
+			cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
+			if (cnt % 7 == 1) {/*일요일 계산*/
+				cell.innerHTML = "<font color=red>" + i
+			}
+			if (cnt % 7 == 0) {/*토요일 구하기*/
+				cell.innerHTML = "<font color=blue>" + i
+				row = calendar.insertRow();//토요일 다음에 올 셀을 추가
+			}
+			/*오늘의 날짜에 노란색 칠하기*/
+			if (today.getFullYear() == date.getFullYear()
+					&& today.getMonth() == date.getMonth()
+					&& i == date.getDate()) {
+				cell.bgColor = "#FAF58C";
+			}
+		}
+	}
+    buildCalendar();
+</script>
+<script>
 		let day;
 		let time;
 		let title;
@@ -747,6 +744,9 @@
 		//	window.open("/info/electAttend");
 		//});
 	</script>
+
+		</c:otherwise>
+	</c:choose>
 
 
 </body>

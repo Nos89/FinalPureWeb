@@ -63,7 +63,7 @@ from military m, militarygroup g
 	
 	<select id="selectCRDetail" resultType="kh.spring.dto.ClassRegistrationDetailDTO">
 		select  c.lec_code,sub.name as title, u.id, d.dept_title,u.name,s.std_year from users u, department d, classregistration c, students s, subject sub
-where u.deptcode=d.dept_code AND u.id=s.id AND c.id=s.id AND sub.code=c.lec_code AND c.lec_code in(select oc_code from open_class where oc_pro_code='P-1001') order by 1 asc
+where u.deptcode=d.dept_code AND u.id=s.id AND c.id=s.id AND sub.code=c.lec_code AND c.lec_code in(select oc_code from open_class where oc_pro_code=#{value}) order by 1 asc
 	</select>
 	
 	<insert id="insertAttend">
@@ -77,5 +77,32 @@ where u.deptcode=d.dept_code AND u.id=s.id AND c.id=s.id AND sub.code=c.lec_code
 		  WHERE att_seq=#{i.att_seq}  
 		  </foreach>
 
+	</update>
+	
+	<select id="selectAttCheckAll" resultType="kh.spring.dto.AttendanceStatusDTO">
+	select att_leccode,att_deptname, att_stdid, att_stdlevel, att_stdname,count(case when att_attend='O' then 1 end)as attend,
+count(case when att_attend='/' then 1 end)as late,
+count(case when att_attend='X' then 1 end)as absent
+from pro_attendmng where att_leccode=#{value} group by att_deptname, att_stdid, att_stdname, att_stdlevel,att_leccode
+	</select>
+	
+	<select id="selectGrade" resultType="kh.spring.dto.GradeDTO">
+	select * from grade where lec_code in (select lec_code from lecture where lec_code in (select oc_code from open_class where oc_pro_code=#{value}))
+	</select>
+	
+	<insert id="addGrade">
+	insert into grade values(grade_seq.nextval,#{std_id},#{lec_code},#{grade_code},#{grade_attend},#{grade_repo},#{grade_mid},#{grade_pre},#{grade_final},#{grade_atti},#{grade_quiz},#{grade_etc},#{grade_total})
+	</insert>
+	
+	<delete id="deleteGrade">
+	delete from grade where grade_seq=#{grade_seq}
+	</delete>
+	
+	<update id="updateGrade">
+	<foreach collection="list" item="i" index="index" separator=";" open="DECLARE BEGIN" close="; END;">
+		 UPDATE grade SET grade_code=#{i.grade_code},grade_attend=#{i.grade_attend},grade_repo=#{i.grade_repo},grade_mid=#{i.grade_mid},
+		 grade_pre=#{i.grade_pre},grade_final=#{i.grade_final},grade_atti=#{i.grade_atti},grade_quiz=#{i.grade_quiz},grade_etc=#{i.grade_etc},grade_total=#{i.grade_total}
+		  WHERE grade_seq=#{i.grade_seq}  
+		  </foreach>
 	</update>
 </mapper>

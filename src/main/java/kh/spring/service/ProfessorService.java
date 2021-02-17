@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.ProFileDAO;
 import kh.spring.dao.ProfessorDAO;
+import kh.spring.dto.AttendanceStatusDTO;
 import kh.spring.dto.ClassRegistrationDetailDTO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.DepartmentOfficeDTO;
+import kh.spring.dto.GradeDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.ProAttendMngDTO;
 import kh.spring.dto.ProAttendMngDTO_NEX;
@@ -130,7 +132,6 @@ public class ProfessorService {
 		ProAttendMngDTO ndto = new ProAttendMngDTO(dto.getAtt_seq(), dto.getAtt_lecCode(),dto.getAtt_year().substring(0, 7), dto.getAtt_targetLevel(),
 				dto.getAtt_semester(), dto.getAtt_lecTitle(),null, dto.getAtt_attend(), dto.getAtt_stdId(),
 				dto.getAtt_deptName(), dto.getAtt_stdName(), dto.getAtt_stdLevel(), dto.getAtt_week());
-		System.out.println(ndto.getAtt_targetLevel());
 		return pdao.insertAttend(ndto);
 		
 	}
@@ -147,5 +148,27 @@ public class ProfessorService {
 		return pdao.saveAttend(nList);
 		}
 		
+	public List<AttendanceStatusDTO> attendCheckAll(String code){
+		return pdao.attendCheckAll(code);
+		
+	}
 	
+	public List<GradeDTO>selectGrade(String id){
+		return pdao.selectGrade(id);
+	}
+	
+	public int addGrade(GradeDTO dto) {
+		return pdao.addGrade(dto);
+	}
+	public int deleteGrade(GradeDTO dto) {
+		return pdao.deleteGrade(dto);
+	}
+	public int updateGrade(List<GradeDTO> list) {
+		if(list.size()==0) {
+			
+			return 1;
+		}
+		
+		return pdao.updateGrade(list);
+	}
 }

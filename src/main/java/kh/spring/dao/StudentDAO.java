@@ -7,8 +7,16 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.ClassTimeDTO;
 import kh.spring.dto.ClassTimeSearchDTO;
+import kh.spring.dto.ConditionForRoomInfoDTO;
+import kh.spring.dto.GradeListDTO;
 import kh.spring.dto.MilitaryDTO;
+import kh.spring.dto.MyClassDTO;
+import kh.spring.dto.MyClassListDTO;
+import kh.spring.dto.MyClassTimeDTO;
+import kh.spring.dto.MyGradeDTO;
+import kh.spring.dto.RoomInfoDTO;
 import kh.spring.dto.StudentDetailDTO;
 import kh.spring.dto.StudentInfoDTO;
 
@@ -62,4 +70,52 @@ public class StudentDAO {
 	public List<ClassTimeSearchDTO> selectAllCTS(){
 		return db.selectList("Student.selectAllCTS");
 	};
+	
+	public List<RoomInfoDTO> roomInfo(){
+		return db.selectList("Student.roomInfo");
+	}
+	
+	public List<ClassTimeDTO> getClassTime(ConditionForRoomInfoDTO dto){
+		return db.selectList("Student.getClassTime",dto);
+	}
+	
+	public List<MyClassTimeDTO> getMyClassTime(Map myClass){
+		return db.selectList("Student.getMyClassTime",myClass);
+	}
+	
+	public List<MyClassDTO> getMyClass(Map myClass){
+		return db.selectList("Student.getMyClass",myClass);
+	}
+	
+	public List<MyClassListDTO> getMyClassList(Map myClass){
+		return db.selectList("Student.getMyClassList",myClass);
+	}
+	
+	public int withdrawMyClass(Map myClass) {
+		return db.delete("Student.checkTakeOffApply",myClass);
+	}
+	
+	public int countDown(String oc_code) {
+		return db.update("Student.countDown",oc_code);
+	}
+	
+	public List<MyGradeDTO> getMyGrade(Map myGrade){
+		return db.selectList("Student.getMyGrade",myGrade);
+	}
+	
+	public List<GradeListDTO> getGradeList(Map myGrade){
+		return db.selectList("Student.getGradeList",myGrade);
+	}
+	
+	public int creditRenounceApply(Map apply) {
+		return db.insert("Student.creditRenounceApply",apply);
+	}
+	
+	public int checkCreditRenounceApply(Map check) {
+		return db.selectList("Student.checkCreditRenounceApply",check).size();
+	}
+	
+	public int creditRenounceCancel(Map cancel) {
+		return db.delete("Student.creditRenounceCancel",cancel);
+	}
 }
