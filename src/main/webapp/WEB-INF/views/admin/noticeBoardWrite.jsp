@@ -22,7 +22,9 @@
 <style>
 	#summernote{width: 100%;}
 	select{width:10%;}
+	.divTitle {margin: 5px 0px;}
 	input.title{width: 89%; height: 30px;}
+	.divFile{display:none;}
 </style>
 
 </head>
@@ -31,7 +33,7 @@
 		<!-- 게시물 작성 페이지 -->
 		<div class="row writerWrapper">
 			<form action="/main/board.write?pageGroup=community&type=${type}" method="post" enctype="multipart/form-data">
-				<div class="col-12">
+				<div class="col-12 divTitle">
 					<select name="category" class="category">
 						<option value="학사">학사</option>
 						<option value="장학">장학</option>
@@ -45,7 +47,7 @@
 				<div class="col-12">
 					<textarea id="summernote" name="noti_contents"></textarea>
 				</div>
-				<div class="col-12">
+				<div class="col-12 divFile">
 					<div class="row mt-3">
 						<div class="col-9">
 							<div class="row">
@@ -67,8 +69,8 @@
 	$(document).ready(function() {
 		//여기 아래 부분
 		$('#summernote').summernote({
-			  height: 350,                			// 에디터 높이
-			  minHeight: null,             			// 최소 높이
+			  height: 300,                			// 에디터 높이
+			  minHeight: 300,             			// 최소 높이
 			  maxHeight: null,             			// 최대 높이
 			  focus: true,                			// 에디터 로딩후 포커스를 맞출지 여부
 			  lang: "ko-KR",						// 한글 설정

@@ -71,8 +71,14 @@ public class AdminService {
 	}
 	
 	// 공지사항 수정
-	public int modifyNotice(NoticeDTO dto) {
-		return admdao.modifyNotice(dto);
+	public int modifyNotice(NoticeDTO_NEX dto) throws Exception{
+		NoticeDTO dto2 = new NoticeDTO();
+		dto2.setNoti_seq(dto.getNoti_seq());
+		dto2.setCategory(dto.getCategory());
+		dto2.setNoti_title(dto.getNoti_title());
+		dto2.setNoti_contents(dto.getNoti_contents());
+		dto2.setNoti_writeDate(ConvertDate.stringToDate(dto.getNoti_writeDate()));
+		return admdao.modifyNotice(dto2);
 	}
 	
 	// 게시판 온로드
@@ -107,7 +113,10 @@ public class AdminService {
 		dto2.setSeq(dto.getSeq());
 		dto2.setTitle(dto.getTitle());
 		dto2.setContents(dto.getContents());
-		dto2.setDivision_code(dto.getDivision_code());
+		System.out.println("division_code 변환전:"+dto.getBoardType());
+		dto2.setBoardType(dto.getBoardType());
+		String div2 = dto2.getBoardType();
+		System.out.println("division_code 변환후:"+div2);
 		if(dto.getWriteDate()==null) {
 			dto.setWriteDate(null);
 		}else {

@@ -27,6 +27,7 @@
 	.articleTitle, .articleCategory, .articleWriteDate{
 		border-bottom: 1px solid #6c757d;
 	}
+	div[class^="article"]{padding:5px 0px;}
 </style>
 
 </head>
@@ -35,9 +36,7 @@
 		<div class="col-2 mb-4 articleCategory"><b>${article.category}</b></div>
 		<div class="col-8 mb-4 articleTitle">${article.noti_title}</div>
 		<div class="col-2 mb-4 articleWriteDate">${article.noti_writeDate}</div>
-		<div class="col-12 summernote">
-			${article.noti_contents}
-		</div>
+		<div class="col-12 summernote">${article.noti_contents}</div>
 		<div class="col-12">
 			<div class="row mt-3">
 				<div class="col-8">
