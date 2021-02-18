@@ -20,9 +20,10 @@
 <script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
 
 <style>
+	#summernote{width: 100%;}
+	select{width:10%;}
 	.divTitle {margin: 5px 0px;}
-	input.title {width: 100%; height: 30px;}
-	#summernote {width: 100%;}
+	input.title{width: 89%; height: 30px;}
 	.divFile{display:none;}
 </style>
 
@@ -33,10 +34,18 @@
 		<div class="row writerWrapper">
 			<form action="/main/board.write?pageGroup=community&type=${type}" method="post" enctype="multipart/form-data">
 				<div class="col-12 divTitle">
-					<input type="text" placeholder="제목을 입력하세요" name="title" class="title">
+					<select name="category" class="category">
+						<option value="학사">학사</option>
+						<option value="장학">장학</option>
+						<option value="입학">입학</option>
+						<option value="채용">채용</option>
+						<option value="입찰">입찰</option>
+						<option value="일반">일반</option>
+					</select>
+					<input type="text" placeholder="제목을 입력하세요" name="noti_title" class="title">
 				</div>
 				<div class="col-12">
-					<textarea id="summernote" name="contents"></textarea>
+					<textarea id="summernote" name="noti_contents"></textarea>
 				</div>
 				<div class="col-12 divFile">
 					<div class="row mt-3">
@@ -61,7 +70,7 @@
 		//여기 아래 부분
 		$('#summernote').summernote({
 			  height: 300,                			// 에디터 높이
-			  minHeight: null,             			// 최소 높이
+			  minHeight: 300,             			// 최소 높이
 			  maxHeight: null,             			// 최대 높이
 			  focus: true,                			// 에디터 로딩후 포커스를 맞출지 여부
 			  lang: "ko-KR",						// 한글 설정
@@ -166,6 +175,10 @@
 	
 	function getContents(){
 		return $('#summernote').summernote('code');
+	}
+	
+	function getCategory(){
+		return $(".category option:selected").text();
 	}
 	</script>
 </body>

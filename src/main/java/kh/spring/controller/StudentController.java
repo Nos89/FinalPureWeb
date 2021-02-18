@@ -15,10 +15,19 @@ import com.nexacro.uiadapter17.spring.core.annotation.ParamVariable;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 
 import kh.spring.dto.ChangeDeptApplyDTO;
+import kh.spring.dto.ClassTimeDTO;
 import kh.spring.dto.ClassTimeSearchDTO;
+import kh.spring.dto.ConditionForMyClassDTO;
+import kh.spring.dto.ConditionForRoomInfoDTO;
+import kh.spring.dto.GradeListDTO;
 import kh.spring.dto.MajorApplyDTO;
 import kh.spring.dto.MilitaryDTO;
+import kh.spring.dto.MyClassDTO;
+import kh.spring.dto.MyClassListDTO;
+import kh.spring.dto.MyClassTimeDTO;
+import kh.spring.dto.MyGradeDTO;
 import kh.spring.dto.ProFileDTO;
+import kh.spring.dto.RoomInfoDTO;
 import kh.spring.dto.StudentDetailDTO;
 import kh.spring.dto.StudentInfoDTO;
 import kh.spring.dto.TakeOffApplyDTO;
@@ -47,7 +56,7 @@ public class StudentController {
 		List<MilitaryDTO> armyInfoList = new ArrayList<>();
 		armyInfoList = sservice.selectArmy(id);
 		
-		ProFileDTO dto = pservice.checkImg("S-1001");
+		ProFileDTO dto = pservice.checkImg(id);
 		
 		List<StudentDetailDTO> stuDetailList = new ArrayList<>();
 		stuDetailList = sservice.selectStuDetail(id);
@@ -91,7 +100,6 @@ public class StudentController {
 	public NexacroResult checkStatus() {
 		NexacroResult nr = new NexacroResult();
 		String id = (String)session.getAttribute("loginID");
-		id = "S-1001";
 		if(sservice.checkStatus(id).contentEquals("휴학")) {
 			nr.setErrorCode(1);
 		}else {
@@ -126,6 +134,115 @@ public class StudentController {
 		
 		nr.addDataSet("out_classList",ctsList);
 		
+		return nr;
+	}
+	
+	@RequestMapping("/roomInfoOnload.nex")
+	public NexacroResult roomInfoOnload() {
+		NexacroResult nr = new NexacroResult();
+
+		List<RoomInfoDTO> riList = new ArrayList<>();
+		riList = sservice.roomInfo();
+		
+		nr.addDataSet("out_room",riList);
+		
+		return nr;
+	}
+	
+	@RequestMapping("/getClassTime.nex")
+	public NexacroResult getClassTime(@ParamDataSet(name="in_condition") ConditionForRoomInfoDTO cdto) {
+		NexacroResult nr = new NexacroResult();
+
+		List<ClassTimeDTO> ctList = new ArrayList<>();
+		ctList = sservice.getClassTime(cdto);
+		
+		nr.addDataSet("out_classTime",ctList);
+		
+		return nr;
+	}
+	
+	@RequestMapping("/getMyClassTime.nex")
+	public NexacroResult getMyClassTime(@ParamDataSet(name="in_condition") ConditionForMyClassDTO cdto) {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		
+		List<MyClassTimeDTO> ctList = new ArrayList<>();
+		ctList = sservice.getMyClassTime(cdto,id);
+		
+		nr.addDataSet("out_classTime",ctList);
+		
+		return nr;
+	}
+	
+	@RequestMapping("/getMyClass.nex")
+	public NexacroResult getMyClass(@ParamDataSet(name="in_condition") ConditionForMyClassDTO cdto) {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		
+		List<MyClassDTO> classList = new ArrayList<>();
+		classList = sservice.getMyClass(cdto,id);
+		
+		List<MyClassListDTO> myClassList = new ArrayList<>();
+		myClassList = sservice.getMyClassList(cdto,id);
+		
+		nr.addDataSet("out_myClassList",myClassList);
+		nr.addDataSet("out_classList",classList);
+		
+		return nr;
+	}
+	
+	@RequestMapping("/withdrawMyClass.nex")
+	public NexacroResult withdrawMyClass(@ParamDataSet(name="in_condition") ConditionForMyClassDTO cdto,@ParamVariable(name="oc_code") String oc_code) {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		int result = sservice.withdrawMyClass(cdto,id,oc_code);
+		if(result == 1) {
+			sservice.countDown(oc_code);
+		}
+		
+		return nr;
+	}
+	
+	@RequestMapping("/getMyGrade.nex")
+	public NexacroResult getMyGrade(@ParamDataSet(name="in_condition") ConditionForMyClassDTO cdto) {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		
+		List<MyGradeDTO> mgList = new ArrayList<>();
+		mgList = sservice.getMyGrade(cdto,id);
+		
+		List<GradeListDTO> glList = new ArrayList<>();
+		glList = sservice.getGradeList(cdto,id);
+		
+		nr.addDataSet("out_myGrade",mgList);
+		nr.addDataSet("out_gradeList",glList);
+		return nr;
+	}
+	
+	@RequestMapping("/creditRenounceApply.nex")
+	public NexacroResult creditRenounceApply(@ParamVariable(name="code") String code) {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		
+		if(sservice.checkCreditRenounceApply(id,code) == 1) {
+			nr.setErrorCode(0);
+		}else {
+			sservice.creditRenounceApply(id,code);
+			nr.setErrorCode(1);
+		}
+		return nr;
+	}
+	
+	@RequestMapping("/creditRenounceCancel.nex")
+	public NexacroResult creditRenounceCancel(@ParamVariable(name="code") String code) {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		
+			int result = sservice.creditRenounceCancel(id,code);
+			if(result == 1) {
+				nr.setErrorCode(1);
+			}
+
 		return nr;
 	}
 	

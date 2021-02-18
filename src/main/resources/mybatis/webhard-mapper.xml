@@ -24,4 +24,9 @@
 	<select id="getFolder" resultType="kh.spring.dto.DirectoryDTO">
 		select * from directory where userID = #{id} and  parentID = #{parentID}
 	</select>
+	
+	<!-- 파일 정보 삭제 -->
+	<delete id="delFile">
+		delete from cloud where file_location = #{location} and file_savedname = #{name}
+	</delete>
 </mapper>

@@ -17,7 +17,7 @@ public class InfoService {
 	@Autowired
 	private InfoDAO idao;
 
-	public int login(String id, String pw) throws Exception {
+	public int login(String id, String pw) {
 		return idao.login(id,pw);
 	}
 
@@ -43,25 +43,26 @@ public class InfoService {
 	}
 
 	//수강과목(학생)
-	public List<TakingClassDTO> takingClass(String id, String classRegDate) {
-		return idao.takingClass(id,classRegDate);
+	public List<TakingClassDTO> takingClass(String id, Date tempDate) {
+		return idao.takingClass(id,tempDate);
 	}
 	
 	//강의과목(교수)
-	public List<TakingClassDTO> takingClass(String id, String semester, String classOpenDate) {
-		return idao.takingClass(id,semester,classOpenDate);
+	public List<TakingClassDTO> takingClass(String id, String semester, Date tempDate) {
+		return idao.takingClass(id,semester,tempDate);
 	}
 
 	//강의시간표(학생)
-	public List<TakingClassDTO> classSche(String id, String classRegDate) {
-		return idao.classSche(id,classRegDate);
+	public List<TakingClassDTO> classSche(String id, Date tempDate) {
+		return idao.classSche(id,tempDate);
 	}
 
 	//강의시간표(교수)
-	public List<TakingClassDTO> classSche(String id, String semester, String classOpenDate) {
-		return idao.classSche(id,semester,classOpenDate);
+	public List<TakingClassDTO> classSche(String id, String semester, Date tempDate) {
+		return idao.classSche(id,semester,tempDate);
 	}
 
+	
 
 	
 	

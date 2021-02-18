@@ -7,16 +7,18 @@ public class InDirDTO {
 	private String isFolder;
 	private long size;
 	private Date date;
+	private String savedName;
 	public InDirDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public InDirDTO(String name, String isFolder, long size, Date date) {
+	public InDirDTO(String name, String isFolder, long size, Date date, String savedName) {
 		super();
 		this.name = name;
 		this.isFolder = isFolder;
 		this.size = size;
 		this.date = date;
+		this.savedName = savedName;
 	}
 	public String getName() {
 		return name;
@@ -41,6 +43,12 @@ public class InDirDTO {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public String getSavedName() {
+		return savedName;
+	}
+	public void setSavedName(String savedName) {
+		this.savedName = savedName;
 	}
 	
 }

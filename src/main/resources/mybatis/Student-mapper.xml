@@ -19,11 +19,11 @@
 			select
 		m.std_code,m.mil_indate,m.mil_outdate,g.mil_title,m.mil_rank,m.mil_code
 			from military m, militarygroup g
-	    where m.mil_groupcode=g.mil_groupcode AND m.std_code= 'S-1001'
+	    where m.mil_groupcode=g.mil_groupcode AND m.std_code= #{id}
 	</select>
 	
 	<select id="selectStuDetail" resultType="kh.spring.dto.StudentDetailDTO">
-		select * from students where id = 'S-1001'
+		select * from students where id = #{id}
 	</select>
 	
 	<update id="stuInfoUpdate">
@@ -58,8 +58,59 @@
 	
 	<select id="selectAllCTS" resultType="kh.spring.dto.ClassTimeSearchDTO">
 		select DISTINCT o.oc_code,s.name oc_name,s.isu,u.name pro_name,o.oc_max,o.oc_part,o.oc_targetlevel,CONCAT(CONCAT(o.oc_class_room,CONCAT(c.room_use,':')),o.oc_schedule) oc_schedule,s.reco_score,substr(o.oc_year,0,2) oc_year,o.oc_semester,d.dept_title,c.col_title 
-		from college c,users u,professor p,open_class o,subject s,classRoomInfo c,department d 
+			from college c,users u,professor p,open_class o,subject s,classRoomInfo c,department d 
 		where c.col_code = d.col_code and d.dept_code = s.dept_code and u.id = p.pro_id and p.pro_id = o.oc_pro_code and o.oc_code = s.code and c.build_code = substr(o.oc_class_room,1,2)
 	</select>
 	
+	<select id="roomInfo" resultType="kh.spring.dto.RoomInfoDTO">
+		select b.build_name,CONCAT(CONCAT(c.build_code,'-'),c.room_num) room_num,c.room_use,c.room_max from buildinfo b,classroominfo c where b.build_code = c.build_code
+	</select>
+	
+	<select id="getClassTime" resultType="kh.spring.dto.ClassTimeDTO">
+		select o.oc_schedule,s.name s_name,u.name p_name from users u,open_class o,subject s where s.code = o.oc_code and o.oc_pro_code = u.id and o.oc_class_room = #{classroom} and substr(o.oc_year,0,2) = #{year} and o.oc_semester = #{semester}
+	</select>
+	
+	<select id="getMyClassTime" resultType="kh.spring.dto.MyClassTimeDTO">
+		select o.oc_schedule,s.name s_name,u.name p_name,o.oc_class_room from users u,ClassRegistration c,open_class o,subject s where c.lec_code = o.oc_code and s.code = o.oc_code and o.oc_pro_code = u.id and substr(o.oc_year,0,2) = #{dto.year} and o.oc_semester = #{dto.semester} and c.id = #{id} and c.cr_completeDiv = '완료상태'
+	</select>
+	
+	<select id="getMyClass" resultType="kh.spring.dto.MyClassDTO">
+		select DISTINCT o.oc_code,s.name oc_name,s.isu,u.name pro_name,u.phone pro_number,o.oc_schedule,s.reco_score
+			from users u,professor p,open_class o,subject s,ClassRegistration c
+		where c.lec_code = o.oc_code and u.id = p.pro_id and p.pro_id = o.oc_pro_code and o.oc_code = s.code and c.id=#{id} and substr(o.oc_year,0,2) = #{dto.year} and o.oc_semester = #{dto.semester} and c.cr_completeDiv = '완료상태'
+	</select>
+	
+	<select id="getMyClassList" resultType="kh.spring.dto.MyClassListDTO">
+		select DISTINCT c.cr_completeDiv,s.isu,o.oc_code,s.name oc_name,o.oc_targetlevel,u.name pro_name,o.oc_schedule,s.reco_score,o.oc_part
+			from users u,professor p,open_class o,subject s,ClassRegistration c
+		where c.lec_code = o.oc_code and u.id = p.pro_id and p.pro_id = o.oc_pro_code and o.oc_code = s.code and c.id=#{id} and substr(o.oc_year,0,2) = #{dto.year} and o.oc_semester = #{dto.semester} and c.cr_completeDiv = '완료상태'
+	</select>
+	
+	<update id="countDown">
+		update open_class set oc_part = oc_part -1 where oc_code = #{oc_code}
+	</update>
+	
+	<select id="getMyGrade" resultType="kh.spring.dto.MyGradeDTO">
+		select DISTINCT o.oc_code,s.name oc_name,s.reco_score,s.isu,g.grade_total grade_avg,g.grade_code,u.name pro_name,u.phone pro_number 
+ 		   from users u,professor p,open_class o,subject s,grade g 
+		where u.id = p.pro_id and p.pro_id = o.oc_pro_code and o.oc_code = s.code and g.lec_code = o.oc_code and g.std_id = #{id} and substr(o.oc_year,0,2) = #{dto.year} and o.oc_semester = #{dto.semester}	
+	</select>
+	
+	<select id="getGradeList" resultType="kh.spring.dto.GradeListDTO">
+		select DISTINCT s.code oc_code,s.name oc_name,o.oc_targetlevel,s.isu,s.reco_score,g.grade_code 
+    		from subject s,grade g,open_class o
+		where s.code = o.oc_code and g.lec_code = o.oc_code and g.std_id = #{id} and substr(o.oc_year,0,2) = #{dto.year} and o.oc_semester = #{dto.semester}
+	</select>
+	
+	<insert id="creditRenounceApply">
+		insert into CreditRenounce values(CreditRenounce_seq.nextval,#{id},#{code},sysdate,'신청')
+	</insert>
+	
+	<select id="checkCreditRenounceApply" resultType="kh.spring.dto.ChangeDeptApplyDTO">
+		select * from CreditRenounce where id=#{id} and renounceSubject=#{code}
+	</select>
+	
+	<delete id="creditRenounceCancel">
+		delete from CreditRenounce where id=#{id} and renounceSubject=#{code}
+	</delete>
 </mapper>
