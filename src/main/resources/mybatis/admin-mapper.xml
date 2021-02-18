@@ -221,4 +221,5 @@
 <delete id="delColSchedule">
 	DELETE FROM COL_SCHEDULE WHERE SEQ=#{seq}
 </delete>
+
 </mapper>
