@@ -14,7 +14,9 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" href="/resources/css/info/elctAttend.css?ver=1">
+<link rel="stylesheet" href="/resources/css/info/elecAttend.css?ver=1">
+<link rel="stylesheet"
+	href="/resources/css/info/elecRegisterInfo.css?ver=1">
 
 </head>
 <body>
@@ -25,11 +27,7 @@
 					style="border: 1px solid black;">title</div>
 				<div class="col-sm-8 order-2 order-sm-1"
 					style="border: 1px solid black;">전자출결</div>
-				<div class="col-sm-1 order-1 order-sm-2"
-					style="border: 1px solid black;">
-					<a href="">로그아웃</a>
-				</div>
-				<div class="col-sm-1 order-1 order-sm-2"
+				<div class="col-sm-2 order-1 order-sm-2"
 					style="border: 1px solid black;">${userName }</div>
 			</div>
 		</div>
@@ -66,7 +64,7 @@
 							</select>
 						</form>
 						-기타
-						<button>전자출결 등록정보</button>
+						<button id=btnRegisterInfo>전자출결 등록정보</button>
 					</div>
 				</div>
 			</div>
@@ -75,8 +73,8 @@
 
 					<c:when test="${selClassInfoList != null }">
 
-						<div class="title" style="border: 1px solid black;">2020학년도
-							1학기 출석부</div>
+						<div class="title" style="border: 1px solid black;">${yearSemester }
+							출석부</div>
 
 						<c:forEach var="i" items="${selClassInfoList}" varStatus="status">
 							<div class="row">
@@ -146,65 +144,31 @@
 							</div>
 						</c:forEach>
 					</c:when>
+					<c:when test="${regInfoBtn=='등록정보' }">
+						<div class=wrapper>
+							<div>
+								<h2>| 전자출결 시스템 등록정보</h2>
+							</div>
+							<div style="border: 1px solid black; margin-top: 30px">-
+								전자출결 시스템 등록정보 입니다.</div>
 
-					<c:otherwise>
-						<div class="title" style="border: 1px solid black;">2020학년도
-							1학기 출석부</div>
-						<div class="row">
-							<div class="col-12 col-sm-3" style="border: 1px solid black;">
-								<div class="row">
-									<div class="col-sm-6" style="border: 1px solid black;">교과목코드/분반</div>
-									<div class="col-sm-6" style="border: 1px solid black;"></div>
-								</div>
-							</div>
-							<div class="col-12 col-sm-6" style="border: 1px solid black;">
-								<div class="row" style="height: 100%;">
-									<div class="col-sm-6" style="border: 1px solid black;">교과목명</div>
-									<div class="col-sm-6" style="border: 1px solid black;"></div>
-								</div>
-							</div>
-							<div class="col-12 col-sm-3" style="border: 1px solid black;">
-								<div class="row" style="height: 100%;">
-									<div class="col-sm-6" style="border: 1px solid black;">담당교수</div>
-									<div class="col-sm-6" style="border: 1px solid black;"></div>
-								</div>
-							</div>
 						</div>
+						<div class=wrapper2>
+							<div class=photo>사진</div>
+							<div class="info">
+								<div class=fixed>학번</div>
+								<div class="moreInfo">${id }</div>
+								<div class=fixed>이름</div>
+								<div class="moreInfo">${name }</div>
+								<div class=fixed>신분</div>
+								<div class="moreInfo">학부생</div>
+								<div class=fixed>학과</div>
+								<div class="moreInfo">${major }</div>
 
-						<div class="row">
-							<div class="col-12 col-sm-3" style="border: 1px solid black;">
-								<div class="row">
-									<div class="col-sm-6" style="border: 1px solid black;">강의실</div>
-									<div class="col-sm-6" style="border: 1px solid black;"></div>
-								</div>
 							</div>
-							<div class="col-12 col-sm-6" style="border: 1px solid black;">
-								<div class="row" style="height: 100%;">
-									<div class="col-sm-6" style="border: 1px solid black;">수업시간</div>
-									<div class="col-sm-6" style="border: 1px solid black;"></div>
-								</div>
-							</div>
-							<div class="col-12 col-sm-3" style="border: 1px solid black;">
-								<div class="row" style="height: 100%;">
-									<div class="col-sm-6" style="border: 1px solid black;">학점</div>
-									<div class="col-sm-6" style="border: 1px solid black;"></div>
-								</div>
-							</div>
+
 						</div>
-						<div class="row my-2">
-							<div class="col-12 col-sm-3" style="border: 1px solid black;">
-								인쇄/엑셀다운</div>
-							<div class="col-12 col-sm-9" style="border: 1px solid black;">
-								정상출석/지각/결석처리</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-1" style="border: 1px solid black;">주차</div>
-							<div class="col-sm-2" style="border: 1px solid black;">수업순서</div>
-							<div class="col-sm-3" style="border: 1px solid black;">수업일자</div>
-							<div class="col-sm-3" style="border: 1px solid black;">출석결과</div>
-							<div class="col-sm-3" style="border: 1px solid black;">출석내용</div>
-						</div>
-					</c:otherwise>
+					</c:when>
 
 				</c:choose>
 
@@ -219,16 +183,18 @@
 		function chageSemesterSelect() {
 			let semesterSelect = document.getElementById("semesterSelect");
 			let seme_selectValue = semesterSelect.options[semesterSelect.selectedIndex].text;
-			location.href = "comboChange?semester=" + seme_selectValue;
-			//$("#semesterSelect").val("abc").prop("selected", true);
+			location.href = "/elec/comboChange?semester=" + seme_selectValue;
 
 		}
 		function chageClassSelect() {
 			let classSelect = document.getElementById("classSelect");
 			let class_selectValue = classSelect.options[classSelect.selectedIndex].value;
-			location.href = "comboChange?semester=" + semester + "&className="
-					+ class_selectValue;
-			//$("#classSelect").val(class_selectValue).prop("selected", true);
+			location.href = "/elec/comboChange?semester=" + semester
+					+ "&className=" + class_selectValue;
+		}
+
+		document.getElementById("btnRegisterInfo").onclick = function() {
+			location.href = "/elec/idRegisterInfo";
 		}
 	</script>
 </body>

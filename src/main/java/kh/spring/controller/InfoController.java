@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.InfoBoardDTO;
 import kh.spring.dto.TakingClassDTO;
 import kh.spring.service.InfoService;
@@ -36,6 +37,13 @@ public class InfoController {
 		List<InfoBoardDTO> list_std = iservice.getRecentStd();
 		List<InfoBoardDTO> list_scholar = iservice.getRecentScholar();
 		List<InfoBoardDTO> list_enter = iservice.getRecentEnter();
+		
+		SimpleDateFormat format2 = new SimpleDateFormat("yy/MM/dd"); // 오늘날짜 요일 가져오기
+		Date time2 = new Date();
+		String day2 = format2.format(time2); //21/02/18
+		String dayArr[] = day2.split("/");
+		String yearMonth = dayArr[0]+"/"+dayArr[1];
+		List<ColScheduleDTO> list_colSche = iservice.getColSchedule(yearMonth);
 
 		if (result > 0) {
 			session.setAttribute("loginID", id);
@@ -45,6 +53,7 @@ public class InfoController {
 			session.setAttribute("list_std", list_std);
 			session.setAttribute("list_scholar", list_scholar);
 			session.setAttribute("list_enter", list_enter);
+			session.setAttribute("list_colSche", list_colSche);
 
 			SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd");
 			//
@@ -152,7 +161,6 @@ public class InfoController {
 								String clDay = divSche[0];
 
 								String todayClassInfo = clDay + "/" + divSche[1] + "/" + classTitle + "/" + classRoom;
-								// System.out.println(todayClassInfo);
 								timeList.add(todayClassInfo);
 							}
 						}
@@ -318,20 +326,7 @@ public class InfoController {
 	
 	@RequestMapping("/logout")
 	public String logout() {
-//		session.removeAttribute("loginID");
-//		session.removeAttribute("loginPW");
-//		session.removeAttribute("loginID");
-//		session.removeAttribute("userName");
-//		session.removeAttribute("userMajor");
-//		session.removeAttribute("userPart");
-//		session.removeAttribute("list_std");
-//		session.removeAttribute("list_scholar");
-//		session.removeAttribute("list_enter");
-//		session.removeAttribute("list_takingClass");
-//		session.removeAttribute("semester");
-//		session.removeAttribute("openClassYear");
 		session.invalidate();
-
 		return "info/info";
 
 	}

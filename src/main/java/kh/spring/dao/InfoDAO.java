@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.InfoBoardDTO;
 import kh.spring.dto.TakingClassDTO;
 
@@ -79,6 +80,14 @@ public class InfoDAO {
 		param.put("semester",semester);
 		param.put("classOpenDate",tempDate);
 		return db.selectList("Info.takingClass_pro", param);
+	}
+
+	public List<ColScheduleDTO> getColSchedule(String yearMonth) {
+		return db.selectList("Info.getColSchedule",yearMonth);
+	}
+
+	public List<ColScheduleDTO> get4ColSchedule(String yearMonth) {
+		return db.selectList("Info.get4ColSchedule",yearMonth);
 	}
 
 
