@@ -27,8 +27,7 @@
 	</select>
 	
 	<update id="stuInfoUpdate">
-		update users set name=#{name},gender=#{gender},country=#{country},birth=#{birth},indate=#{inDate},outdate=#{outDate},
-		zipcode=#{zipcode},addr1=#{addr1},addr2=#{addr2},email=#{email},phone=#{phone},bank=#{bank},accountnum=#{accountnum}
+		update users set zipcode=#{dto.zipcode},addr1=#{dto.addr1},addr2=#{dto.addr2},email=#{dto.email},phone=#{dto.phone},bank=#{dto.bank},accountnum=#{dto.accountnum}
 		where id=#{id}
 	</update>
 	
@@ -102,6 +101,12 @@
 		where s.code = o.oc_code and g.lec_code = o.oc_code and g.std_id = #{id} and substr(o.oc_year,0,2) = #{dto.year} and o.oc_semester = #{dto.semester}
 	</select>
 	
+	<select id="getMyElectivesGrade" resultType="kh.spring.dto.GradeListDTO">
+		select DISTINCT s.code oc_code,s.name oc_name,o.oc_targetlevel,s.isu,s.reco_score,g.grade_code 
+    		from subject s,grade g,open_class o
+		where s.code = o.oc_code and g.lec_code = o.oc_code and g.std_id = #{id} and s.isu ='교양필수'
+	</select>
+	
 	<insert id="creditRenounceApply">
 		insert into CreditRenounce values(CreditRenounce_seq.nextval,#{id},#{code},sysdate,'신청')
 	</insert>
@@ -113,4 +118,45 @@
 	<delete id="creditRenounceCancel">
 		delete from CreditRenounce where id=#{id} and renounceSubject=#{code}
 	</delete>
+	
+	<insert id="gotCertification">
+		insert into Certification values(Certification_seq.nextval,#{id},#{name},sysdate)
+	</insert>
+	
+	<select id="gotMyCertification" resultType="kh.spring.dto.GotMyCertificationDTO">
+		select CONCAT(CONCAT(to_char(cer_date,'yyyy'),'-'),seq) cer_seq,cer_name,to_char(cer_date,'""YYYY"년"MM"월"DD"일" hh24"시"mi"분"ss"초"') cer_date  from Certification where id=#{id} order by seq desc
+	</select>
+	
+	<select id="majorGotCredit" resultType="Integer">
+		select NVL(sum(s.reco_score),0) from subject s,grade g where g.lec_code = s.code and g.std_id=#{id} and s.isu = '전공필수'
+	</select>
+	
+	<select id="majorGetCredit" resultType="Integer">
+		select NVL(sum(s.reco_score),0) from subject s,open_class o,ClassRegistration c where o.oc_code = s.code and c.lec_code = o.oc_code and c.id=#{id} and s.isu = '전공필수'
+	</select>
+	
+	<select id="totalGotCredit" resultType="Integer">
+		select NVL(sum(s.reco_score),0) from subject s,grade g where g.lec_code = s.code and g.std_id=#{id}
+	</select>
+	
+	<select id="totalGetCredit" resultType="Integer">
+		select NVL(sum(s.reco_score),0) from subject s,open_class o,ClassRegistration c where o.oc_code = s.code and c.lec_code = o.oc_code and c.id=#{id}
+	</select>
+	
+	<select id="electivesGotCredit" resultType="Integer">
+		select NVL(sum(s.reco_score),0) from subject s,grade g where g.lec_code = s.code and g.std_id=#{id} and s.isu = '교양필수'
+	</select>
+	
+	<select id="electivesGetCredit" resultType="Integer">
+		select NVL(sum(s.reco_score),0) from subject s,open_class o,ClassRegistration c where o.oc_code = s.code and c.lec_code = o.oc_code and c.id=#{id} and s.isu = '교양필수'
+	</select>
+	
+	<select id="choiceGotCredit" resultType="Integer">
+		select NVL(sum(s.reco_score),0) from subject s,grade g where g.lec_code = s.code and g.std_id=#{id} and s.isu in('전공선택','교양선택')
+	</select>
+	
+	<select id="choiceGetCredit" resultType="Integer">
+		select NVL(sum(s.reco_score),0) from subject s,open_class o,ClassRegistration c where o.oc_code = s.code and c.lec_code = o.oc_code and c.id=#{id} and s.isu in('전공선택','교양선택')
+	</select>
+	
 </mapper>
