@@ -47,9 +47,9 @@
 							</div>
 							<div id=loginTitle_eng>Login</div>
 							<div id=part>
-								<div id="loginStd"
-									style="background-color: #272727; color: ivory;">학부생용</div>
+								<div id="loginStd" style="background-color: #272727; color: ivory;">학부생용</div>
 								<div id="loginPro">교수용</div>
+								<div id="loginAdmin">관리자용</div>
 							</div>
 							<div id=loginID>
 								<div id=idTitle>ID</div>
@@ -111,18 +111,31 @@
 			<script>
 				let loginPro = document.getElementById("loginPro");
 				let loginStd = document.getElementById("loginStd");
+				let loginAdmin = document.getElementById("loginAdmin");
 
 				loginStd.onclick = function() {
-					loginPro.style.backgroundColor = "transparent";
-					loginPro.style.color = "black";
 					loginStd.style.backgroundColor = "#272727";
 					loginStd.style.color = "ivory";
+					loginPro.style.backgroundColor = "transparent";
+					loginPro.style.color = "black";
+					loginAdmin.style.backgroundColor = "transparent";
+					loginAdmin.style.color = "black";
 				}
 				loginPro.onclick = function() {
 					loginStd.style.backgroundColor = "transparent";
 					loginStd.style.color = "black";
 					loginPro.style.backgroundColor = "#272727";
 					loginPro.style.color = "ivory";
+					loginAdmin.style.backgroundColor = "transparent";
+					loginAdmin.style.color = "black";
+				}
+				loginAdmin.onclick = function() {
+					loginStd.style.backgroundColor = "transparent";
+					loginStd.style.color = "black";
+					loginPro.style.backgroundColor = "transparent";
+					loginPro.style.color = "black";
+					loginAdmin.style.backgroundColor = "#272727";
+					loginAdmin.style.color = "ivory";
 				}
 			</script>
 		</c:when>

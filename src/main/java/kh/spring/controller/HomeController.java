@@ -70,7 +70,9 @@ public class HomeController {
 			nr.addVariable("userType", "학생");
 		} else if ( loginID.split("-")[0].contentEquals("P")) {
 			nr.addVariable("userType", "교수");
-		} 
+		} else if ( loginID.split("-")[0].contentEquals("A")) {
+			nr.addVariable("userType", "관리자");
+		}
 		nr.addVariable("loginID", (String)session.getAttribute("loginID"));
 		nr.addVariable("userName",(String)session.getAttribute("userName"));
 		return nr;
