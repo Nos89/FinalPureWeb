@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import kh.spring.dto.ClassTimeDTO;
 import kh.spring.dto.ClassTimeSearchDTO;
 import kh.spring.dto.ConditionForRoomInfoDTO;
+import kh.spring.dto.GotMyCertificationDTO;
 import kh.spring.dto.GradeListDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.MyClassDTO;
@@ -26,8 +27,12 @@ public class StudentDAO {
 	@Autowired
 	private SqlSession db;
 	
-	public List<StudentInfoDTO> selectStuInfo(String id){
+	public List<StudentInfoDTO> selectAllInfo(String id){
 		return db.selectList("Student.selectAllInfo",id);
+	};
+	
+	public StudentInfoDTO selectStuInfo(String id){
+		return db.selectOne("Student.selectAllInfo",id);
 	};
 	
 	public List<MilitaryDTO> selectArmy(String id){
@@ -38,9 +43,8 @@ public class StudentDAO {
 		return db.selectList("Student.selectStuDetail",id);
 	};
 	
-	public int updateStuInfo(StudentInfoDTO dto) {
-		int result = db.update("Student.stuInfoUpdate",dto);
-		return result;
+	public int updateStuInfo(Map info) {
+		return db.update("Student.stuInfoUpdate",info);
 	}
 	
 	public int majorApply(Map major){
@@ -107,6 +111,10 @@ public class StudentDAO {
 		return db.selectList("Student.getGradeList",myGrade);
 	}
 	
+	public List<GradeListDTO> getMyElectivesGrade(String id){
+		return db.selectList("Student.getMyElectivesGrade",id);
+	}
+	
 	public int creditRenounceApply(Map apply) {
 		return db.insert("Student.creditRenounceApply",apply);
 	}
@@ -117,5 +125,45 @@ public class StudentDAO {
 	
 	public int creditRenounceCancel(Map cancel) {
 		return db.delete("Student.creditRenounceCancel",cancel);
+	}
+	
+	public int gotCertification(Map docu) {
+		return db.insert("Student.gotCertification",docu);
+	}
+	
+	public List<GotMyCertificationDTO> gotMyCertification(String id){
+		return db.selectList("Student.gotMyCertification",id);
+	}
+	
+	public int majorGotCredit(String id) {
+		return db.selectOne("Student.majorGotCredit",id);
+	}
+	
+	public int majorGetCredit(String id) {
+		return db.selectOne("Student.majorGetCredit",id);
+	}
+	
+	public int totalGotCredit(String id) {
+		return db.selectOne("Student.totalGotCredit",id);
+	}
+	
+	public int totalGetCredit(String id) {
+		return db.selectOne("Student.totalGetCredit",id);
+	}
+	
+	public int electivesGotCredit(String id) {
+		return db.selectOne("Student.electivesGotCredit",id);
+	}
+	
+	public int electivesGetCredit(String id) {
+		return db.selectOne("Student.electivesGetCredit",id);
+	}
+	
+	public int choiceGotCredit(String id) {
+		return db.selectOne("Student.choiceGotCredit",id);
+	}
+	
+	public int choiceGetCredit(String id) {
+		return db.selectOne("Student.choiceGetCredit",id);
 	}
 }
