@@ -39,7 +39,7 @@
 			${article.contents}
 		</div>
 		<div class="col-12">
-			<div class="row mt-3">
+			<!-- <div class="row mt-3">
 				<c:if test="${loginID != article.writer}">
 				<div class="col-10"></div>
 				</c:if>
@@ -58,6 +58,21 @@
 					</div>
 				</div>
 				</c:if>
+			</div>-->
+			<div class="row mt-3">
+				<div class="col-8">
+					<div class="row">
+						<div class="col-12 inputFileWrapper">
+							<c:forEach var="i" items="${files}">
+							<div class="row">
+								<div class="col-12">
+									<a href="/boardFiles/${i.savedName}" target="_blank">${i.oriName}</a>
+								</div>
+							</div>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="row mt-3 commentWrapper">

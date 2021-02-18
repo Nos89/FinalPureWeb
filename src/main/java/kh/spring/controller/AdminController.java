@@ -1,5 +1,6 @@
 package kh.spring.controller;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.ColScheduleDTO_NEX;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
+import kh.spring.dto.FilesDTO;
 import kh.spring.dto.LectureDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
@@ -30,6 +32,7 @@ import kh.spring.dto.ProfessorDTO_NEX;
 import kh.spring.dto.StudentDTO;
 import kh.spring.dto.StudentDTO_NEX;
 import kh.spring.service.AdminService;
+import kh.spring.service.BoardService;
 import kh.spring.service.CommentService;
 import kh.spring.utils.ConvertDate;
 
@@ -40,6 +43,10 @@ public class AdminController {
 	private AdminService admService;
 	@Autowired
 	CommentService cservice;
+	
+	
+	@Autowired
+	private BoardService bService;
 	
 	// 공지사항 로드
 	@RequestMapping("getBoardNotice.nex")
@@ -84,8 +91,11 @@ public class AdminController {
 	// 공지사항 작성
 	@RequestMapping("writeNotice")
 	public NexacroResult writeNotice(@ParamDataSet(name="in_notice")NoticeDTO dto){
-		admService.writeNotice(dto);
-		return new NexacroResult();
+		NexacroResult nr = new NexacroResult();
+		int seq = admService.writeNotice(dto);
+		
+		nr.addVariable("param", seq);
+		return nr;
 	}
 	
 	// 공지사항 수정
@@ -99,6 +109,13 @@ public class AdminController {
 	// 게시글 보기
 	@RequestMapping("viewPost")
 	public String goPost(int seq, String commentPage, Model model, String type) {
+		System.out.println(seq);
+		List<FilesDTO> list =admService.getFiles(seq);
+		for(FilesDTO m : list) {
+			System.out.println(m.getOriName());
+			System.out.println(m.getParent_code());
+			System.out.println(m.getSavedName());
+		}
 		model.addAttribute("files", admService.getFiles(seq));
 		model.addAttribute("commentPage", this.convertPage(commentPage));
 		model.addAttribute("comments", cservice.getComments(seq, this.convertPage(commentPage)));
@@ -123,6 +140,8 @@ public class AdminController {
 			BoardDTO dto = admService.getPost(seq);
 			nr.addDataSet("out_board",dto);
 		}
+		List<FilesDTO> list = bService.getFiles(seq);
+		nr.addDataSet("out_files", list);
 		return nr;
 	}
 	
@@ -135,12 +154,14 @@ public class AdminController {
 			return "admin/boardWrite";
 		}
 	}
-	
+		
 	// 게시글 작성
 	@RequestMapping("writeBoard.nex")
 	public NexacroResult writePost(@ParamDataSet(name="in_board")BoardDTO dto) {
+		NexacroResult nr = new NexacroResult();
 		int seq = admService.writePost(dto);
-		return new NexacroResult();
+		nr.addVariable("param",seq);
+		return nr;
 	}
 	
 	// 게시글 수정폼
@@ -165,11 +186,13 @@ public class AdminController {
 		admService.modifyPost(dto);
 		return new NexacroResult();
 	}
+
 	
 	// 게시판 로드
 	@RequestMapping("BoardOnLoad.nex")
 	public NexacroResult getBoard(@ParamVariable(name="boardType")String boardType) throws Exception {
 		NexacroResult nr = new NexacroResult();
+
 		List<BoardDTO> list = admService.getBoard(boardType);
 		int rowCount = list.size();
 		nr.addDataSet("out_board",list);
@@ -195,6 +218,28 @@ public class AdminController {
 		return new NexacroResult();
 	}
 	
+	
+	//게시판 수정시 글에 첨부된 파일목록 불러오기
+	@RequestMapping("getFileList.nex")
+	public NexacroResult getFileList(@ParamVariable(name="seq")int seq) {
+		System.out.println(seq);
+		NexacroResult nr = new NexacroResult();
+		List<FilesDTO> list = bService.getFiles(seq);
+		nr.addDataSet("out_ds", list);
+		return nr;
+	}
+	//게시판 수정시 파일 삭제
+	@RequestMapping("delFile.nex")
+	public NexacroResult delFile(@ParamVariable(name="fileSeq")int fileSeq,@ParamVariable(name="parent_code")int parent_code, @ParamVariable(name="name")String name) {
+		System.out.println(fileSeq+parent_code+name);
+		NexacroResult nr = new NexacroResult();
+		List<FilesDTO> list =admService.delSpecFile(name,fileSeq,parent_code);
+		nr.addDataSet("out_ds", list);
+		return nr;
+	}
+	
+
+
 	// 페이지 유효성
 	private int convertPage(String page) {
 		int currentPage = 1;

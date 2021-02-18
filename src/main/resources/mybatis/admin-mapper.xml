@@ -38,13 +38,16 @@
 <delete id="deleteNotice">
 	DELETE FROM BOARD_NOTICE WHERE NOTI_SEQ IN 
  	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
- 		#{item.seq}
+ 		#{item.noti_seq}
  	</foreach>
 </delete>
 
 <!-- 공지사항 작성 -->
 <insert id="writeNotice">
 	INSERT INTO BOARD_NOTICE VALUES(board_noti_seq.nextval,#{noti_title},#{noti_contents},sysdate,#{category})
+	<selectKey keyProperty="noti_seq" resultType="Integer">
+			select board_noti_seq.currval as noti_seq from dual
+	</selectKey>
 </insert>
 
 <!-- 공지사항 수정 -->
@@ -76,7 +79,7 @@
 					B.TITLE LIKE '%'||#{search_keyword}||'%' OR CONTENTS LIKE '%'||#{search_keyword}||'%'
 				</if>
 			</trim>
-			AND CODE=DIVISION_CODE AND D.TITLE=#{bdDiv}
+			AND CODE=DIVISION_CODE AND D.TITLE=#{boardType}
 			)
 </select>
 
@@ -87,6 +90,11 @@
 		#{item.seq}
 	</foreach>
 </delete>
+
+<!-- 게시판 수정하기 -->
+<update id="updateBoard">
+	update board set title=#{title},contents=#{contents} where seq=#{seq}
+</update>
 
 <!-- 게시글 가져오기 -->
 <select id="getPost" resultType="kh.spring.dto.BoardDTO">
@@ -106,14 +114,8 @@
 	UPDATE BOARD SET TITLE=#{title}, CONTENTS=#{contents} WHERE SEQ=#{seq} AND DIVISION_CODE=(SELECT CODE FROM BOARD_DIVISION WHERE TITLE=#{boardType})
 </update>
 
-<!-- 파일 추가 -->
-<insert id="addFiles">
-	INSERT INTO FILES_BOARD 
-</insert>
 
-
-
-
+<!-- 단과대 목록 -->
 <select id="getCollege" resultType="kh.spring.dto.CollegeDTO">
 	SELECT * FROM COLLEGE
 </select>
@@ -219,4 +221,5 @@
 <delete id="delColSchedule">
 	DELETE FROM COL_SCHEDULE WHERE SEQ=#{seq}
 </delete>
+
 </mapper>

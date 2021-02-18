@@ -17,6 +17,8 @@ import kh.spring.dto.GradeDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.ProAttendMngDTO;
 import kh.spring.dto.ProAttendMngDTO_NEX;
+import kh.spring.dto.ProBusinessLog;
+import kh.spring.dto.ProBusinessLog_NEX;
 import kh.spring.dto.ProFileDTO;
 import kh.spring.dto.ProListDTO;
 import kh.spring.dto.ProScheduleDTO;
@@ -171,4 +173,35 @@ public class ProfessorService {
 		
 		return pdao.updateGrade(list);
 	}
+	public List<ProBusinessLog> getMyDiary(String id){
+		return pdao.getMyDiary(id);
+	}
+	public int updateDiary(ProBusinessLog_NEX dto, String id) throws Exception {
+		ProBusinessLog sDto = new ProBusinessLog(dto.getCheck(), dto.getBusi_seq(), dto.getBusi_proId(),
+				dto.getBusi_proName(), dto.getBusi_contents(),ConvertDate.stringToDate(dto.getBusi_date()));
+		int result = 0;
+		if(id.contentEquals("insert")) {
+			result = pdao.insertDiary(sDto);
+		}else if(id.contentEquals("update")) {
+			result = pdao.updateDiary(sDto);
+		}
+		return result;
+		
+	}
+	public int delProDiary(List<ProBusinessLog_NEX> list) throws Exception {
+		List<ProBusinessLog> plist = new ArrayList<>();
+		for(ProBusinessLog_NEX i : list) {
+			ProBusinessLog dto = new ProBusinessLog();
+			dto.setCheck(i.getCheck());
+			dto.setBusi_seq(i.getBusi_seq());
+			dto.setBusi_proId(i.getBusi_proId());
+			dto.setBusi_proName(i.getBusi_proName());
+			dto.setBusi_contents(i.getBusi_contents());
+			dto.setBusi_date(ConvertDate.stringToDate(i.getBusi_date()));
+			plist.add(dto);
+		}
+		return pdao.deleteDiary(plist);
+		
+	}
+	
 }
