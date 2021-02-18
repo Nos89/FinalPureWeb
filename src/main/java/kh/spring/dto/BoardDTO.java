@@ -11,13 +11,13 @@ public class BoardDTO {
 	private String writer;
 	private Date writeDate;
 	private String boardType;
-	private String category;
+	private String division_code;
 	public BoardDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public BoardDTO(int seq, String title, String contents, String writer, Date writeDate, String boardType, String category) {
+	public BoardDTO(int seq, String title, String contents, String writer, Date writeDate, String boardType, String division_code) {
 		super();
 		this.seq = seq;
 		this.title = title;
@@ -25,7 +25,7 @@ public class BoardDTO {
 		this.writer = writer;
 		this.writeDate = writeDate;
 		this.boardType = boardType;
-		this.category = category;
+		this.division_code = division_code;
 	}
 	public BoardDTO(int chk, int rank, int seq, String title, String contents, String writer, Date writeDate, String boardType) {
 		super();
@@ -86,12 +86,12 @@ public class BoardDTO {
 	public void setBoardType(String boardType) {
 		this.boardType = boardType;
 	}
-	public String getCategory() {
-		return category;
+
+	public String getDivision_code() {
+		return division_code;
 	}
-	public void setCategory(String category) {
-		this.category = category;
+
+	public void setDivision_code(String division_code) {
+		this.division_code = division_code;
 	}
-	
-	
 }

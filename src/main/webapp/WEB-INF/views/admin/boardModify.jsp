@@ -33,26 +33,35 @@
 		<div class="row writerWrapper">
 			<form action="/main/board.write?pageGroup=community&type=${type}" method="post" enctype="multipart/form-data">
 				<div class="col-12 divTitle">
-					<input type="text" placeholder="제목을 입력하세요" name="title" class="title">
+					<input type="text" placeholder="제목을 입력하세요" name="title" class="title" value="${article.title}">
 				</div>
 				<div class="col-12">
-					<textarea id="summernote" name="contents"></textarea>
+					<textarea id="summernote" name="contents">${article.contents}</textarea>
 				</div>
 				<div class="col-12 divFile">
 					<div class="row mt-3">
-						<div class="col-9">
+							<div class="col-9">
+					<div class="row">
+						<div class="col-3">
+							<button type="button" class="btnFile">파일 추가</button>
+						</div>
+						<div class="col-10"></div>
+						<div class="col-12 inputFileWrapper">
+							<c:forEach var="i" items="${files}">
 							<div class="row">
-								<div class="col-2">
-									<button type="button" class="btnFile">파일 추가</button>
-								</div>
-								<div class="col-10"></div>
-								<div class="col-12 inputFileWrapper">
-							
+								<div class="col-12">
+									<a href="/boardFiles/${i.savedName}" target="_blank">${i.oriName}</a>
+									<input type="file" name="inputFile" value="/boardFiles/${i.savedName}" style="display:none">
+									<button type="button" class="delFile">X</button>
+									<input type="hidden" value="${i.seq}">
 								</div>
 							</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
 			</form>
 		</div>
 	</div>
@@ -61,7 +70,7 @@
 		//여기 아래 부분
 		$('#summernote').summernote({
 			  height: 300,                			// 에디터 높이
-			  minHeight: null,             			// 최소 높이
+			  minHeight: 300,             			// 최소 높이
 			  maxHeight: null,             			// 최대 높이
 			  focus: true,                			// 에디터 로딩후 포커스를 맞출지 여부
 			  lang: "ko-KR",						// 한글 설정
@@ -160,6 +169,7 @@
 			})
 		});
 	
+	
 	function getTitle(){
 		return $('.title').val();
 	}
@@ -167,6 +177,8 @@
 	function getContents(){
 		return $('#summernote').summernote('code');
 	}
+	
+	
 	</script>
 </body>
 </html>

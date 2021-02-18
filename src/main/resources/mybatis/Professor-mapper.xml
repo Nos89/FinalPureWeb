@@ -105,4 +105,23 @@ from pro_attendmng where att_leccode=#{value} group by att_deptname, att_stdid, 
 		  WHERE grade_seq=#{i.grade_seq}  
 		  </foreach>
 	</update>
+	
+	<select id="getMyDiary" resultType="kh.spring.dto.ProBusinessLog">
+	select * from pro_businesslog where busi_proid=#{value}
+	</select>
+	
+	<insert id="isnertDiary">
+	insert into pro_businesslog values(pro_businesslog_seq.nextval,#{busi_proId},#{busi_proName},#{busi_contents},#{busi_date})	
+	</insert>
+	
+	<update id="updateDiary">
+	update pro_businesslog set busi_contents=#{busi_contents},busi_date=#{busi_date} where busi_seq=#{busi_seq}
+	</update>
+	
+	<delete id="deleteDiary">
+	delete from pro_businesslog where busi_seq in
+		<foreach collection="list" item="i" open="(" separator="," close=")">
+			#{i.busi_seq}
+		</foreach>
+	</delete>
 </mapper>

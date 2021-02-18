@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Webhard">
+	<!-- 디렉토리 가져오기 -->
 	<select id="directories" resultType="kh.spring.dto.DirectoryDTO">
 		select * from directory where userID = #{value} order by lv
 	</select>
 	
+	<select id="storage" resultType="Integer">
+		select nvl(sum(file_size), 0) from cloud where cloud_id = #{value}
+	</select>
+	
+	<!-- 폴더 사이즈 -->
+	<select id="folderStorage" resultType="Integer">
+		select nvl(sum(file_size), 0) from cloud where file_location = #{value}
+	</select>
+	
+	<!-- 폴더 생성 -->
 	<insert id="createFolder">
 		insert into directory values( dir_seq.nextval, #{id}, #{dirName}, #{parentID},
 		(select lv+1 from directory where dirID=#{parentID}) )
@@ -24,4 +35,40 @@
 	<select id="getFolder" resultType="kh.spring.dto.DirectoryDTO">
 		select * from directory where userID = #{id} and  parentID = #{parentID}
 	</select>
+	
+	<!-- 파일 정보 삭제 -->
+	<delete id="delFile">
+		delete from cloud where file_location = #{location} and file_savedname = #{name}
+	</delete>
+	
+	<!-- 폴더 정보 삭제 -->
+	<delete id="delFolder">
+		delete from directory where dirid in
+		<foreach collection="list" item="i" open="(" close=")" separator=",">
+			#{i.dirID}
+		</foreach>
+	</delete>
+	
+	<!-- 폴더 내 파일 다중 삭제 -->
+	<delete id="delFileByFolder">
+		delete from cloud where file_location in
+		<foreach collection="list" item="i" open="(" close=")" separator=",">
+			#{i.file_location}
+		</foreach>
+	</delete>
+	
+	<!-- 폴더 이동 -->
+	<update id="moveFolder">
+		update directory
+		set 
+			parentid = #{moveLocation}, 
+			lv = (select lv+1 from directory where dirid = #{moveLocation})
+		where userid = #{id} and parentid = #{location} and directoryname = #{name}
+	</update>
+	<!-- 파일 이동 -->
+	<update id="moveFile">
+		update cloud
+		set file_location = #{moveLocation}
+		where file_savedName = #{name}
+	</update>
 </mapper>

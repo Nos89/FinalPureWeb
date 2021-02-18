@@ -3,6 +3,7 @@ package kh.spring.dto;
 import java.sql.Date;
 
 public class InDirDTO {
+	private int chk;
 	private String name;
 	private String isFolder;
 	private long size;
@@ -12,13 +13,20 @@ public class InDirDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public InDirDTO(String name, String isFolder, long size, Date date, String savedName) {
+	public InDirDTO(int chk, String name, String isFolder, long size, Date date, String savedName) {
 		super();
+		this.chk = chk;
 		this.name = name;
 		this.isFolder = isFolder;
 		this.size = size;
 		this.date = date;
 		this.savedName = savedName;
+	}
+	public int getChk() {
+		return chk;
+	}
+	public void setChk(int chk) {
+		this.chk = chk;
 	}
 	public String getName() {
 		return name;
