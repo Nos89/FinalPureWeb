@@ -20,15 +20,10 @@
 <script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
 
 <style>
-	input.title
-	{
-		width: 100%;
-		height: 30px;
-	}
-	#summernote
-	{
-		width: 100%;
-	}
+	.divTitle {margin: 5px 0px;}
+	input.title {width: 100%; height: 30px;}
+	#summernote {width: 100%;}
+	.divFile{display:none;}
 </style>
 
 </head>
@@ -37,13 +32,13 @@
 		<!-- 게시물 작성 페이지 -->
 		<div class="row writerWrapper">
 			<form action="/main/board.write?pageGroup=community&type=${type}" method="post" enctype="multipart/form-data">
-				<div class="col-12">
+				<div class="col-12 divTitle">
 					<input type="text" placeholder="제목을 입력하세요" name="title" class="title" value="${article.title}">
 				</div>
 				<div class="col-12">
 					<textarea id="summernote" name="contents">${article.contents}</textarea>
 				</div>
-				<div class="col-12">
+				<div class="col-12 divFile">
 					<div class="row mt-3">
 							<div class="col-9">
 					<div class="row">
@@ -74,8 +69,8 @@
 	$(document).ready(function() {
 		//여기 아래 부분
 		$('#summernote').summernote({
-			  height: 350,                			// 에디터 높이
-			  minHeight: null,             			// 최소 높이
+			  height: 300,                			// 에디터 높이
+			  minHeight: 300,             			// 최소 높이
 			  maxHeight: null,             			// 최대 높이
 			  focus: true,                			// 에디터 로딩후 포커스를 맞출지 여부
 			  lang: "ko-KR",						// 한글 설정

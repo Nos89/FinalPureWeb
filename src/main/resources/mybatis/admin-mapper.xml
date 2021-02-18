@@ -49,7 +49,7 @@
 
 <!-- 공지사항 수정 -->
 <update id="modifyNotice">
-	UPDATE BOARD_NOTICE SET NOTI_TITLE=#{noti_title}, NOTI_CONTENTS=#{noti_contents}
+	UPDATE BOARD_NOTICE SET NOTI_TITLE=#{noti_title}, NOTI_CONTENTS=#{noti_contents} WHERE NOTI_SEQ=#{noti_seq}
 </update>
 
 <!-- 게시판 가져오기 -->
@@ -103,7 +103,7 @@
 
 <!-- 게시글 수정 -->
 <update id="modifyPost">
-	UPDATE BOARD SET TITLE=#{title}, CONTENTS=#{contents} WHERE SEQ=#{seq} AND DIVISION_CODE=#{division_code}
+	UPDATE BOARD SET TITLE=#{title}, CONTENTS=#{contents} WHERE SEQ=#{seq} AND DIVISION_CODE=(SELECT CODE FROM BOARD_DIVISION WHERE TITLE=#{boardType})
 </update>
 
 <!-- 파일 추가 -->
