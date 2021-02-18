@@ -16,13 +16,15 @@ import kh.spring.dto.AttendanceStatusDTO;
 import kh.spring.dto.ClassRegistrationDetailDTO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.DepartmentOfficeDTO;
-import kh.spring.dto.GradeDTO;
 import kh.spring.dto.GradeCardDTO;
+import kh.spring.dto.GradeDTO;
 import kh.spring.dto.LectureDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.OpenClass_LecPlan;
 import kh.spring.dto.ProAttendMngDTO;
 import kh.spring.dto.ProAttendMngDTO_NEX;
+import kh.spring.dto.ProBusinessLog;
+import kh.spring.dto.ProBusinessLog_NEX;
 import kh.spring.dto.ProFileDTO;
 import kh.spring.dto.ProListDTO;
 import kh.spring.dto.ProScheduleDTO;
@@ -96,13 +98,16 @@ public class ProfessorController {
 	@RequestMapping("/proStudentInfo.nex")
 	public NexacroResult proAttendMngOnLoad(@ParamVariable(name="id")String id){
 		NexacroResult nr = new NexacroResult();
-		List<ProAttendMngDTO> list = new ArrayList<>();
-		list = pservice.proAttendMngOnload(id);
-		
-		nr.addDataSet("out_proAttendMng", list);
+		List<OpenClass_LecPlan> oList = new ArrayList<>();
+		oList = lservice.selectOpenClass_lecPlan(id);
+	
+		List<ClassRegistrationDetailDTO> cList = new ArrayList<>();
+		cList = pservice.selectCRDetail(id);
+		nr.addDataSet("out_openClass", oList);
+		nr.addDataSet("out_crDetail", cList);
 		return nr;
 	}
-	
+	//===================================================개인일정관리
 	@RequestMapping("/proScheduleOnload.nex")
 	public NexacroResult proScheduleOnload(@ParamVariable(name="id")String id) {
 		NexacroResult nr = new NexacroResult();
@@ -141,11 +146,11 @@ public class ProfessorController {
 		return nr;
 	}
 	
-	//===============================================================
+	//===============================================================출결관리
 	@RequestMapping("/attendMngOnLoad.nex")
 	public NexacroResult attendMngOnLoad(@ParamVariable(name="id")String id) {
 		NexacroResult nr = new NexacroResult();
-		System.out.println("넘어왓어용!");
+		System.out.println(id);
 		List<OpenClass_LecPlan> oList = new ArrayList<>();
 		oList = lservice.selectOpenClass_lecPlan(id);
 		
@@ -271,7 +276,46 @@ public class ProfessorController {
 		System.out.println(result);
 		return nr;
 	}
+	//===================================업무일지
+	@RequestMapping("/diaryOnLoad.nex")
+	public NexacroResult diaryOnLoad(@ParamVariable(name="id")String id) {
+		NexacroResult nr = new NexacroResult();
+		List<ProBusinessLog> list  = pservice.getMyDiary(id);
+		
+		nr.addDataSet("out_diary", list);
+		return nr;
+	}
 	
+	
+	@RequestMapping("/updateDiary.nex")
+	public NexacroResult updateDiary(@ParamDataSet(name="in_ds")ProBusinessLog_NEX dto, @ParamVariable(name="id")String id) throws Exception {
+		NexacroResult nr = new NexacroResult();
+		System.out.println(dto.getBusi_date()+dto.getBusi_proId()+dto.getBusi_proName()+id);
+		int result = pservice.updateDiary(dto,id);
+		if(result >=1) {
+			nr.setErrorCode(1);
+		}else {
+			
+			nr.setErrorCode(0);
+		}
+		
+		return nr;
+		
+	}
+	@RequestMapping("/delProDiary.nex")
+	public NexacroResult delProDiary(@ParamDataSet(name="in_ds")List<ProBusinessLog_NEX> list) throws Exception{
+		NexacroResult nr = new NexacroResult();
+		int result = pservice.delProDiary(list);
+		if(result != -1) {
+			nr.setErrorMsg("삭제완료");
+			nr.setErrorCode(1);
+		}else {
+			nr.setErrorMsg("실패");
+			nr.setErrorCode(0);
+		}
+		
+		return nr;	
+	}
 	
 	@ExceptionHandler
 	public String Exceptionhandler(Exception e) {

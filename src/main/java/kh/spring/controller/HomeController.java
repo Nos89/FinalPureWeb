@@ -72,6 +72,7 @@ public class HomeController {
 			nr.addVariable("userType", "교수");
 		} 
 		nr.addVariable("loginID", (String)session.getAttribute("loginID"));
+		nr.addVariable("userName",(String)session.getAttribute("userName"));
 		return nr;
 	}
 	@RequestMapping("/mainHome")
@@ -80,7 +81,6 @@ public class HomeController {
 	}
 	@RequestMapping("/classRegistration.nex")
 	public String viewClassRegistration() {
-		System.out.println("Sdfsf");
 		return "redirect:/nex/index.html?name=sugang";
 	}
 }

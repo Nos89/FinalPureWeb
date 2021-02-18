@@ -37,7 +37,7 @@
 							<textarea name="inputComment" class="inputComment p-2" placeholder="댓글을 입력해주세요."></textarea>
 						</div>
 						<div class="col-2 text-center p-0">
-							<button type="button" class="btn btn-outline-success rounded-pill btnInputComment">댓글입력</button>
+							<button type="button" class="btn btn-outline-success rounded-pill btnInputComment">입력</button>
 						</div>
 					</div>
 					<div class="row border border-secondary rounded px-3 pt-3 mt-3 commentsList">
@@ -90,6 +90,101 @@
 </div>
 <script>
 $(document).ready(function(){
+	if( "${loginID}" == "" ){
+		$(".btnInputComment").attr("disabled", true);
+		$(".inputComment").attr("placeholder", "로그인을 해주세요.");
+		$(".inputComment").attr("disabled", true);
+	} else {
+		$(".btnInputComment").attr("disabled", false);
+		
+		$(".inputComment").summernote({
+			height: 80,                 // 에디터 높이
+			minHeight: 80,             // 최소 높이
+			maxHeight: 80,             // 최대 높이
+			focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+			lang: "ko-KR",					// 한글 설정
+			placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
+			toolbar: [
+			    // 글꼴 설정
+			    ['fontname', ['fontname']],
+			    // 글자 크기 설정
+			    ['fontsize', ['fontsize']],
+			    // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    // 글자색
+			    ['color', ['forecolor','color']],
+			    // 표만들기
+			    ['table', ['table']],
+			    // 글머리 기호, 번호매기기, 문단정렬
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    // 코드보기
+			    ['view', ['codeview']]
+			  ],
+			  // 추가한 글꼴
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+			 // 추가한 폰트사이즈
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+			  callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+					onImageUpload : function(files) {
+						console.log(files[0]);
+						uploadSummernoteImageFile(files[0],this);
+					},
+					onPaste: function (e) {
+						var clipboardData = e.originalEvent.clipboardData;
+						if (clipboardData && clipboardData.items && clipboardData.items.length) {
+							var item = clipboardData.items[0];
+							if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+								e.preventDefault();
+							}
+						}
+					}
+				}
+		});
+		
+		function uploadSummernoteImageFile(file, editor) {
+			data = new FormData();
+			data.append("file", file);
+			$.ajax({
+				data : data,
+				type : "POST",
+				url : "/main/uploadSummernoteImageFile",
+				contentType : false,
+				processData : false,
+				success : function(data) {
+					data = data;
+					console.log(data.url)
+	            	//항상 업로드된 파일의 url이 있어야 한다.
+					$(editor).summernote('insertImage', data.url);
+				}
+			});
+		}
+		
+		$(".btnInputComment").click(function(){
+			$.ajax({
+				url: "/main/insert.comments",
+				type: "post",
+				data: {
+					parent_code : "${seq}",
+					writer : "${loginID}",
+					contents : $(".inputComment").val()
+				},
+				success: function(data){
+					ajaxComments(data);
+				}
+			}).done(function(){
+				alert("댓글 입력 완료!!");
+				showComDel();
+				eventComDel();
+				if( "${commentPage}" != 1 ){
+					location.href="/main/board.view?pageGroup=${pageGroup}&type=${type}&seq=${seq}&page=${page}&purp=view&commentPage=1";
+				}
+				if( "${comments.list[0].seq}" != "" ){
+					$(".commentNaviWrapper").addClass("border border-secondary");
+				}
+			})
+		})
+	}
+	
 	$(".btnList").click(function(){
 		location.href="/main/board.list?pageGroup=${pageGroup}&type=${type}&page=${page}${ search != null ? '&search=' : '' }${search!=null?search:''}";
 	})
@@ -111,92 +206,7 @@ $(document).ready(function(){
 		$(".commentNaviWrapper").addClass("border border-secondary");
 	}
 	
-	$(".inputComment").summernote({
-		height: 80,                 // 에디터 높이
-		minHeight: 80,             // 최소 높이
-		maxHeight: 80,             // 최대 높이
-		focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-		lang: "ko-KR",					// 한글 설정
-		placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
-		toolbar: [
-		    // 글꼴 설정
-		    ['fontname', ['fontname']],
-		    // 글자 크기 설정
-		    ['fontsize', ['fontsize']],
-		    // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
-		    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-		    // 글자색
-		    ['color', ['forecolor','color']],
-		    // 표만들기
-		    ['table', ['table']],
-		    // 글머리 기호, 번호매기기, 문단정렬
-		    ['para', ['ul', 'ol', 'paragraph']],
-		    // 코드보기
-		    ['view', ['codeview']]
-		  ],
-		  // 추가한 글꼴
-		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
-		 // 추가한 폰트사이즈
-		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
-		  callbacks: {	//여기 부분이 이미지를 첨부하는 부분
-				onImageUpload : function(files) {
-					console.log(files[0]);
-					uploadSummernoteImageFile(files[0],this);
-				},
-				onPaste: function (e) {
-					var clipboardData = e.originalEvent.clipboardData;
-					if (clipboardData && clipboardData.items && clipboardData.items.length) {
-						var item = clipboardData.items[0];
-						if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
-							e.preventDefault();
-						}
-					}
-				}
-			}
-	});
 	
-	function uploadSummernoteImageFile(file, editor) {
-		data = new FormData();
-		data.append("file", file);
-		$.ajax({
-			data : data,
-			type : "POST",
-			url : "/main/uploadSummernoteImageFile",
-			contentType : false,
-			processData : false,
-			success : function(data) {
-				data = data;
-				console.log(data.url)
-            	//항상 업로드된 파일의 url이 있어야 한다.
-				$(editor).summernote('insertImage', data.url);
-			}
-		});
-	}
-	
-	$(".btnInputComment").click(function(){
-		$.ajax({
-			url: "/main/insert.comments",
-			type: "post",
-			data: {
-				parent_code : "${seq}",
-				writer : "${loginID}",
-				contents : $(".inputComment").val()
-			},
-			success: function(data){
-				ajaxComments(data);
-			}
-		}).done(function(){
-			alert("댓글 입력 완료!!");
-			showComDel();
-			eventComDel();
-			if( "${commentPage}" != 1 ){
-				location.href="/main/board.view?pageGroup=${pageGroup}&type=${type}&seq=${seq}&page=${page}&purp=view&commentPage=1";
-			}
-			if( "${comments.list[0].seq}" != "" ){
-				$(".commentNaviWrapper").addClass("border border-secondary");
-			}
-		})
-	})
 	
 	// 댓글 삭제 버튼 보이기
 	showComDel();

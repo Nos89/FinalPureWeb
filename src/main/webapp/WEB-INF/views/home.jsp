@@ -13,16 +13,56 @@
 			<div class="col-1"></div>
 			<div class="col-10 advSliderWrapper">
 				<div class="advSlider">
-					<div class="advItemWrapper"><img src="/resources/img/home/adv01.jpg">1</div>
-					<div class="advItemWrapper"><img src="/resources/img/home/adv02.jpg">2</div>
-					<div class="advItemWrapper"><img src="/resources/img/home/adv03.jpg">3</div>
-					<div class="advItemWrapper"><img src="/resources/img/home/adv04.png">4</div>
-					<div class="advItemWrapper"><img src="/resources/img/home/adv05.jpg">5</div>
-					<div class="advItemWrapper"><img src="/resources/img/home/adv06.jpg">6</div>
-					<div class="advItemWrapper"><img src="/resources/img/home/adv07.jpg">7</div>
-					<div class="advItemWrapper"><img src="/resources/img/home/adv08.jpg">8</div>
-					<div class="advItemWrapper"><img src="/resources/img/home/adv09.jpg">9</div>
-					<div class="advItemWrapper"><img src="/resources/img/home/adv10.jpg">10</div>
+					<div class="advItemWrapper">
+						<img src="/resources/img/home/adv01.jpg">
+						<p>행사1</p>
+						<p>2020-04-10</p>
+					</div>
+					<div class="advItemWrapper">
+						<img src="/resources/img/home/adv02.jpg">
+						<p>행사2</p>
+						<p>2020-04-10</p>
+					</div>
+					<div class="advItemWrapper">
+						<img src="/resources/img/home/adv03.jpg">
+						<p>행사3</p>
+						<p>2020-04-10</p>
+					</div>
+					<div class="advItemWrapper">
+						<img src="/resources/img/home/adv04.png">
+						<p>행사4</p>
+						<p>2020-04-10</p>
+					</div>
+					<div class="advItemWrapper">
+						<img src="/resources/img/home/adv05.jpg">
+						<p>행사5</p>
+						<p>2020-04-10</p>
+					</div>
+					<div class="advItemWrapper">
+						<img src="/resources/img/home/adv06.jpg">
+						<p>행사6</p>
+						<p>2020-04-10</p>
+					</div>
+					<div class="advItemWrapper">
+						<img src="/resources/img/home/adv07.jpg">
+						<p>행사7</p>
+						<p>2020-04-10</p>
+					</div>
+					<div class="advItemWrapper">
+						<img src="/resources/img/home/adv08.jpg">
+						<p>행사8</p>
+						<p>2020-04-10</p>
+					</div>
+					<div class="advItemWrapper">
+						<img src="/resources/img/home/adv09.jpg">
+						<p>행사9</p>
+						<p>2020-04-10</p>
+					</div>
+					<div class="advItemWrapper">
+						<img src="/resources/img/home/adv10.jpg">
+						<p>행사10</p>
+						<p>2020-04-10</p>
+					</div>
 				</div>
 			</div>
 			<div class="col-1"></div>
@@ -110,6 +150,7 @@
 						minSlides: 4,
 						maxSlides: 4,
 						slideWidth: 200,
+						slideHeight: 300,
 						moveSlides: 1,
 						captions: true,
 						pager: false,

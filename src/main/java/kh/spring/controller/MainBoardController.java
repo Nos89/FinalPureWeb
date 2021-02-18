@@ -48,7 +48,6 @@ public class MainBoardController {
 	@RequestMapping("/board.list")
 	public String boardList(String pageGroup, String type, String page, Model model) {
 		int currentPage = this.convertPage(page);
-		session.setAttribute("loginID", "test");
 		model.addAttribute("pageGroup", pageGroup);
 		model.addAttribute("type", type);
 		model.addAttribute("cont", bservice.getArticles(type, currentPage));

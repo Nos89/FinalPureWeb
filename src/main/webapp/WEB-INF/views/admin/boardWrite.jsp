@@ -20,15 +20,10 @@
 <script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
 
 <style>
-	input.title
-	{
-		width: 100%;
-		height: 30px;
-	}
-	#summernote
-	{
-		width: 100%;
-	}
+	.divTitle {margin: 5px 0px;}
+	input.title {width: 100%; height: 30px;}
+	#summernote {width: 100%;}
+	.divFile{display:none;}
 </style>
 
 </head>
@@ -37,28 +32,24 @@
 		<!-- 게시물 작성 페이지 -->
 		<div class="row writerWrapper">
 			<form action="/main/board.write?pageGroup=community&type=${type}" method="post" enctype="multipart/form-data">
-				<div class="col-12">
+				<div class="col-12 divTitle">
 					<input type="text" placeholder="제목을 입력하세요" name="title" class="title">
 				</div>
 				<div class="col-12">
 					<textarea id="summernote" name="contents"></textarea>
 				</div>
-				<div class="col-12">
-					<div class="row mt-3 text-center">
+				<div class="col-12 divFile">
+					<div class="row mt-3">
 						<div class="col-9">
 							<div class="row">
 								<div class="col-2">
 									<button type="button" class="btnFile">파일 추가</button>
 								</div>
 								<div class="col-10"></div>
-								<div class="col-12 inputFileWrapper"></div>
+								<div class="col-12 inputFileWrapper">
+							
+								</div>
 							</div>
-						</div>
-						<div class="col-1">
-							<input type="submit" value="작성하기">
-						</div>
-						<div class="col-2">
-							<button class="btnList" type="button">목록으로</button>
 						</div>
 					</div>
 				</div>
@@ -134,24 +125,6 @@
 				});
 			}
 
-			$("input[type=submit]").click(function() {
-				let title = $(".title").val();
-				let contents = $("#summernote").val();
-				if (title == null|| title.length <= 0) {
-					alert("제목을 입력 해주세요.");
-					return false;
-				} else if (contents == null|| contents.length <= 0) {
-					alert("내용을 입력 해주세요.");
-					return false;
-				} else {
-					alert("게시글 작성!!")
-				}
-			})
-
-			$(".btnList").click(function() {
-				location.href = "/main/board.list?pageGroup=${pageGroup}&type=${type}&page=${page}";
-			})
-
 			$(".btnFile").click(function() {
 				let inputFile = $("input[type=file]");
 				if (inputFile.length <= 5) {
@@ -186,6 +159,14 @@
 				$(this).parent().find('input[type=text]').val($(this).val());
 			})
 		});
+	
+	function getTitle(){
+		return $('.title').val();
+	}
+	
+	function getContents(){
+		return $('#summernote').summernote('code');
+	}
 	</script>
 </body>
 </html>

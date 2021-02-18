@@ -2,8 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Admin">
-<!-- 공지사항 가져오기 -->
+<!-- 공지글 가져오기 -->
 <select id="getNotice" resultType="kh.spring.dto.NoticeDTO">
+	SELECT * FROM BOARD_NOTICE WHERE NOTI_SEQ=#{noti_seq}
+</select>
+
+<!-- 공지게시판 목록 가져오기 -->
+<select id="getBoardNotice" resultType="kh.spring.dto.NoticeDTO">
 	SELECT *
 		FROM (SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_SEQ DESC) AS RANK
 				FROM BOARD_NOTICE
@@ -31,23 +36,36 @@
 
 <!-- 공지사항 삭제 -->
 <delete id="deleteNotice">
- DELETE FROM BOARD_NOTICE WHERE NOTI_SEQ IN 
+	DELETE FROM BOARD_NOTICE WHERE NOTI_SEQ IN 
  	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
- 		#{item.seq}
+ 		#{item.noti_seq}
  	</foreach>
 </delete>
 
-<!-- 게시판 목록 -->
+<!-- 공지사항 작성 -->
+<insert id="writeNotice">
+	INSERT INTO BOARD_NOTICE VALUES(board_noti_seq.nextval,#{noti_title},#{noti_contents},sysdate,#{category})
+	<selectKey keyProperty="noti_seq" resultType="Integer">
+			select board_noti_seq.currval as noti_seq from dual
+	</selectKey>
+</insert>
+
+<!-- 공지사항 수정 -->
+<update id="modifyNotice">
+	UPDATE BOARD_NOTICE SET NOTI_TITLE=#{noti_title}, NOTI_CONTENTS=#{noti_contents} WHERE NOTI_SEQ=#{noti_seq}
+</update>
+
+<!-- 게시판 가져오기 -->
 <select id="getBoard" resultType="kh.spring.dto.BoardDTO">
 	SELECT *
     	FROM (
-    		SELECT SEQ, B.TITLE, CONTENTS, WRITER, WRITEDATE, D.TITLE DIV, ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RANK
+    		SELECT SEQ, B.TITLE, CONTENTS, WRITER, WRITEDATE, D.TITLE BOARDTYPE, ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RANK
     			FROM BOARD B, BOARD_DIVISION D
     			WHERE CODE=DIVISION_CODE AND D.TITLE=#{bdDiv}
     		)
 </select>
 
-<!-- 게시판 검색 -->
+<!-- 게시글 검색 -->
 <select id="searchBoard" resultType="kh.spring.dto.BoardDTO" parameterType="java.util.Map">
 	SELECT *
 		FROM (
@@ -61,29 +79,51 @@
 					B.TITLE LIKE '%'||#{search_keyword}||'%' OR CONTENTS LIKE '%'||#{search_keyword}||'%'
 				</if>
 			</trim>
-			AND CODE=DIVISION_CODE AND D.TITLE=#{bdDiv}
+			AND CODE=DIVISION_CODE AND D.TITLE=#{boardType}
 			)
 </select>
 
-<!-- 게시판 삭제 -->
-<delete id="deleteBoard">
-	DELETE FROM BOARD WHERE SEQ IN
+<!-- 게시글 삭제 -->
+<delete id="deletePosts">
+	DELETE FROM BOARD WHERE DIVISION_CODE=(SELECT CODE FROM BOARD_DIVISION WHERE TITLE=#{boardType}) AND SEQ IN
 	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
 		#{item.seq}
 	</foreach>
 </delete>
+
+<!-- 게시판 수정하기 -->
+<update id="updateBoard">
+	update board set title=#{title},contents=#{contents} where seq=#{seq}
+</update>
+
+<!-- 게시글 가져오기 -->
+<select id="getPost" resultType="kh.spring.dto.BoardDTO">
+	SELECT
+		SEQ, DIVISION_CODE AS CATEGORY, D.TITLE AS BOARDTYPE, B.TITLE, CONTENTS, WRITER, WRITEDATE
+		FROM BOARD B, BOARD_DIVISION D
+		WHERE DIVISION_CODE = CODE AND SEQ=#{seq}
+</select>
+
+<!-- 게시글 작성 -->
+<insert id="writePost">
+	INSERT INTO BOARD VALUES(board_seq.nextval,#{division_code},#{title},#{contents},#{writer},sysdate)
+</insert>
+
+<!-- 게시글 수정 -->
+<update id="modifyPost">
+	UPDATE BOARD SET TITLE=#{title}, CONTENTS=#{contents} WHERE SEQ=#{seq} AND DIVISION_CODE=(SELECT CODE FROM BOARD_DIVISION WHERE TITLE=#{boardType})
+</update>
+
 
 <!-- 단과대 목록 -->
 <select id="getCollege" resultType="kh.spring.dto.CollegeDTO">
 	SELECT * FROM COLLEGE
 </select>
 
-<!-- 학과 목록 -->
 <select id="getDepartment" resultType="kh.spring.dto.DepartmentDTO">
 	SELECT * FROM DEPARTMENT
 </select>
 
-<!-- 교수 목록 가져오기 -->
 <select id="getProfessor" resultType="kh.spring.dto.ProfessorDTO">
 	SELECT
 	    U.ID, PW, NAME, BIRTH, GENDER, COUNTRY,
@@ -95,10 +135,9 @@
 	ORDER BY U.ID
 </select>
 
-<!-- 교수 수정 -->
 <update id="updateProfessor1" parameterType="java.util.List">
    <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
-		UPDATE USERS SET OUTDATE=#{item.outDate} WHERE ID=#{item.id}
+		UPDATE USERS SET OUTDATE=#{item.outDate, jdbcType=DATE} WHERE ID=#{item.id}
 	</foreach>
 </update>
 <update id="updateProfessor2" parameterType="java.util.List">
@@ -108,7 +147,6 @@
 	</foreach>
 </update>
 
-<!-- 학생 목록 가져오기 -->
 <select id="getStudent" resultType="kh.spring.dto.StudentDTO">
 	SELECT
     	U.ID, PW, NAME, BIRTH, GENDER, COUNTRY,
@@ -121,7 +159,6 @@
 	ORDER BY U.ID
 </select>
 
-<!-- 학생 수정 -->
 <update id="modifyStudent1" parameterType="java.util.List">
     <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
     	UPDATE USERS SET COLCODE=#{item.colcode}, DEPTCODE=#{item.deptcode}, OUTDATE=#{item.outDate}, COUNTRY=#{item.country} WHERE ID=#{item.id}
@@ -133,32 +170,26 @@
     </foreach>
 </update>
 
-<!-- 강의계획서 가져오기 -->
 <select id="getSyllabus" resultType="kh.spring.dto.LectureDTO">
 	SELECT LECTURE.*, EXTRACT(YEAR FROM OC_YEAR) AS OC_YEAR FROM LECTURE,OPEN_CLASS WHERE LEC_CODE=OC_CODE
 </select>
 
-<!-- 강의계획서 승인 -->
 <update id="syllabusApproved">
 	UPDATE LECTURE SET LEC_APPROVAL=#{lec_approval} WHERE LEC_CODE=#{lec_code}
 </update>
 
-<!-- 강의계획서 반려 -->
 <update id="syllabusRejected">
 	UPDATE LECTURE SET LEC_DENY_REASON=#{lec_deny_reason}, LEC_APPROVAL='-1' WHERE LEC_CODE=#{lec_code}
 </update>
 
-<!-- 건물 정보 -->
 <select id="getBuildInfo" resultType="kh.spring.dto.BuildDTO">
 	SELECT * FROM BUILDINFO
 </select>
 
-<!-- 강의실 정보 -->
 <select id="getClassroomInfo" resultType="kh.spring.dto.ClassroomDTO">
 	SELECT * FROM CLASSROOMINFO
 </select>
 
-<!-- 강의장 시간표 조회 -->
 <select id="searchClsTimetable" resultType="kh.spring.dto.LectureDTO">
 	SELECT LEC_CODE, LEC_TITLE, PRO_NAME, LEC_SCHEDULE, LEC_CLASSROOM, LEC_SEMESTER, EXTRACT(YEAR FROM OC_YEAR) AS OC_YEAR
 		FROM LECTURE, OPEN_CLASS
@@ -169,18 +200,26 @@
 			AND LEC_SEMESTER=#{semester}
 </select>
 
-<!-- 학사일정 불러오기 -->
 <select id="getColSchedule" resultType="kh.spring.dto.ColScheduleDTO">
 	SELECT * FROM COL_SCHEDULE
 </select>
 
-<!-- 학사일정 작성 -->
 <insert id="addColSchedule">
-	INSERT INTO COL_SCHEDULE VALUES(COL_SCHEDULE_SEQ.NEXTVAL,#{title},#{contents},#{sche_startDate},#{sche_endDate})
+	INSERT INTO COL_SCHEDULE VALUES(COL_SCHEDULE_SEQ.NEXTVAL,#{title},#{contents},#{sche_startDate},#{sche_endDate},#{type})
 </insert>
 
-<!-- 학사일정 수정 -->
 <update id="updateColSchedule">
-	UPDATE COL_SCHEDULE SET TITLE=#{title}, CONTENTS=#{contents}, SCHE_STARTDATE=#{sche_startDate}, SCHE_ENDDATE=#{sche_endDate} WHERE SEQ=#{seq}
+	UPDATE COL_SCHEDULE
+		SET TITLE=#{title},
+			CONTENTS=#{contents},
+			SCHE_STARTDATE=#{sche_startDate},
+			SCHE_ENDDATE=#{sche_endDate},
+			TYPE=#{type}
+		WHERE SEQ=#{seq}
 </update>
+
+<delete id="delColSchedule">
+	DELETE FROM COL_SCHEDULE WHERE SEQ=#{seq}
+</delete>
+
 </mapper>

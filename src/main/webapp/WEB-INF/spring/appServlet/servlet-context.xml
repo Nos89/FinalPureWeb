@@ -20,9 +20,11 @@
 	<resources mapping="/files/**" location="/resources/files/" />
 	<resources mapping="/boardFiles/**" location="/resources/files/board/" />
 	<resources mapping="/nex/**" location="/nex/" />
+	<resources mapping="/export/**" location="/export/" />
 	<resources mapping="/css/**" location="/css/**" />
 	<resources mapping="/images/**" location="/resources/img/"/>
 	<resources mapping="/boardImg/**" location="/resources/img/board/"/>
+	<resources mapping="/webhard/**" location="/resources/webhard/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -65,7 +67,6 @@
 	</beans:bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/> 
-
 
 
 
