@@ -59,4 +59,15 @@
 		where lec_code IN 
 			(select oc_code from open_class where oc_semester=#{semester} and oc_is_close='N' and oc_year=#{classOpenDate} AND oc_pro_code=#{id} )
 	</select>
+	
+	<!--학사일정 -->
+	<select id="getColSchedule" resultType="kh.spring.dto.ColScheduleDTO">
+ 		 select * from Col_schedule  where sche_startdate like '%'||#{value}||'%' or sche_enddate like '%'||#{value}||'%' order by sche_startdate
+	</select>
+	
+	<!--최근 4개 학사일정 -->
+	<select id="get4ColSchedule" resultType="kh.spring.dto.ColScheduleDTO">
+ 		SELECT * FROM (SELECT Col_schedule.*, ROW_NUMBER() OVER(ORDER BY sche_startdate DESC) N
+					FROM Col_schedule  where sche_startdate like '%'||#{value}||'%' or sche_enddate like '%'||#{value}||'%') WHERE (N BETWEEN 1 AND 4)
+	</select>
 </mapper>
