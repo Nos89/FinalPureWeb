@@ -1,15 +1,20 @@
 package kh.spring.service;
 
+import java.io.File;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
 
 import kh.spring.dao.AdminDAO;
+import kh.spring.dao.BoardDAO;
 import kh.spring.dto.ApplicationDTO;
 import kh.spring.dto.ApplicationDTO_NEX;
 import kh.spring.dto.BoardDTO;
@@ -35,6 +40,15 @@ public class AdminService {
 	
 	@Autowired
 	private AdminDAO admdao;
+	
+	@Autowired
+	private BoardService bService;
+	
+	@Autowired
+	private BoardDAO bdao;
+	
+	@Autowired
+	private WebApplicationContext appContext;
 	
 	
 	// 공지 목록 가져오기
@@ -128,14 +142,58 @@ public class AdminService {
 		return admdao.modifyPost(dto2);
 	}
 	
+	
+	
+	
+//	public int updateBoard(BoardDTO_NEX dto) {
+//		return admdao.updateBoard(dto);
+//	}
+
+	//파일 개별삭제
+	public List<FilesDTO> delSpecFile(String name, int fileseq,int parent_code) {
+		List<FilesDTO> list = new ArrayList<>();
+		deleteFileInBoard(name,fileseq);
+		return bdao.getFiles(parent_code);
+	}
+	//파일삭제
+	private boolean deleteFileInBoard(String name, int files_seq) {
+		ServletContext sc = appContext.getServletContext();
+		String realPath = sc.getRealPath("/");
+		String filePath = realPath + "resources/files/board/";
+	    File deleteFile = new File(filePath+name); 
+        // 파일이 존재하는지 체크 존재할경우 true, 존재하지않을경우 false
+        if(deleteFile.exists()) {
+            deleteFile.delete();     
+            System.out.println("파일을 삭제하였습니다.");
+            bService.delSpecFile(files_seq);
+            return true;
+        } else {
+            System.out.println("파일이 존재하지 않습니다.");
+            return false;
+        }
+		
+	}
 	// 게시판 삭제
 	public int deleteBoard(List<BoardDTO_NEX> list, String boardType) throws Exception {
 		Map<String,Object> map = new HashMap<>();
 		map.put("list", list);
 		map.put("boardType", boardType);
-		return admdao.deleteBoard(map);
+		int result =  admdao.deleteBoard(map);
+		if(result >0) {
+			for(int i=0; i<list.size(); i++) {
+				int f_seq = list.get(i).getSeq();
+				List<FilesDTO> fList = bService.getFiles(f_seq);
+				if(!fList.isEmpty()) {
+					for(FilesDTO m : fList) {
+						System.out.println(m.getSavedName());
+						deleteFileInBoard(m.getSavedName(), m.getSeq());				
+					}
+				}
+			}
+		}
+		return result;
+
 	}
-	
 	// 단과대 목록
 	public List<CollegeDTO> getCollege() throws Exception {
 		return admdao.getCollege();

@@ -91,7 +91,7 @@ VariableList varList = reqdata.getVariableList();
 String currentPage  = varList.getString("currentPage");
 String countPerPage  = varList.getString("countPerPage");
 String keyword  = varList.getString("keyword");
-String confmKey  = "devU01TX0FVVEgyMDIxMDEyMjE2MjEzNTExMDczMzA=";
+String confmKey  = "devU01TX0FVVEgyMDIxMDIxODE1NDUyNDExMDgyNzI=";
 
 int nErrorCode = 0;
 String strErrorMsg = "START";

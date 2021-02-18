@@ -27,6 +27,10 @@ public class BoardDAO {
 		return session.insert("Board.insertFile", map);
 	}
 
+	//파일 첨부 넥사크로
+	public int insertFile(FilesDTO dto) {
+		return session.insert("Board.insertFile",dto);
+	}
 	// 전체 게시물 수
 	public int getArticleCount(String type) {
 		return session.selectOne("Board.articleCount", type);

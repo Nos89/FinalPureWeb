@@ -1,5 +1,6 @@
 package kh.spring.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,7 @@ import kh.spring.dto.ClassTimeDTO;
 import kh.spring.dto.ClassTimeSearchDTO;
 import kh.spring.dto.ConditionForMyClassDTO;
 import kh.spring.dto.ConditionForRoomInfoDTO;
+import kh.spring.dto.GotMyCertificationDTO;
 import kh.spring.dto.GradeListDTO;
 import kh.spring.dto.MajorApplyDTO;
 import kh.spring.dto.MilitaryDTO;
@@ -28,6 +30,7 @@ import kh.spring.dto.MyClassTimeDTO;
 import kh.spring.dto.MyGradeDTO;
 import kh.spring.dto.ProFileDTO;
 import kh.spring.dto.RoomInfoDTO;
+import kh.spring.dto.StuUpdateDTO;
 import kh.spring.dto.StudentDetailDTO;
 import kh.spring.dto.StudentInfoDTO;
 import kh.spring.dto.TakeOffApplyDTO;
@@ -50,8 +53,8 @@ public class StudentController {
 	public NexacroResult stuInfoOnLoad() {
 		NexacroResult nr = new NexacroResult();
 		String id = (String)session.getAttribute("loginID");
-		List<StudentInfoDTO> infoList = new ArrayList<>();
-		infoList = sservice.selectAllInfo(id);
+		StudentInfoDTO infoList = new StudentInfoDTO();
+		infoList = sservice.selectStuInfo(id);
 		
 		List<MilitaryDTO> armyInfoList = new ArrayList<>();
 		armyInfoList = sservice.selectArmy(id);
@@ -69,9 +72,16 @@ public class StudentController {
 	}
 	
 	@RequestMapping("/stuInfoSave.nex")
-	public NexacroResult stuInfoSave(@ParamDataSet(name="in_stuInfo") StudentInfoDTO sdto){
-		sservice.updateStuInfo(sdto);
-		return new NexacroResult();
+	public NexacroResult stuInfoSave(@ParamDataSet(name="in_update") StuUpdateDTO sdto){
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		int result = sservice.updateStuInfo(sdto,id);
+		if(result == 1) {
+			nr.setErrorCode(1);
+		}else {
+			nr.setErrorCode(5);
+		}
+		return nr;
 	}
 	
 	@RequestMapping("/stuMajorApply.nex")
@@ -219,6 +229,20 @@ public class StudentController {
 		return nr;
 	}
 	
+	@RequestMapping("/getMyElectivesGrade.nex")
+	public NexacroResult getMyElectivesGrade() {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		
+		List<GradeListDTO> glList = new ArrayList<>();
+		glList = sservice.getMyElectivesGrade(id);
+		
+		System.out.println(id);
+		
+		nr.addDataSet("out_gradeList",glList);
+		return nr;
+	}
+	
 	@RequestMapping("/creditRenounceApply.nex")
 	public NexacroResult creditRenounceApply(@ParamVariable(name="code") String code) {
 		NexacroResult nr = new NexacroResult();
@@ -242,6 +266,106 @@ public class StudentController {
 			if(result == 1) {
 				nr.setErrorCode(1);
 			}
+
+		return nr;
+	}
+	
+	@RequestMapping("/whichCertification.nex")
+	public NexacroResult whichCertification(@ParamVariable(name="name") String name) {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		sservice.gotCertification(id,name);
+		
+		session.setAttribute("cName", name);
+
+		return nr;
+	}
+	
+	@RequestMapping("/getCertification.nex")
+	public String goCertification() {
+		String id = (String)session.getAttribute("loginID");
+		StudentInfoDTO dto = sservice.selectStuInfo(id);
+		List<StudentDetailDTO> stdDetail = sservice.selectStuDetail(id);
+		StudentDetailDTO dto2 = stdDetail.get(0);
+		int std_year = dto2.getStd_year();
+		
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+		String myName = dto.getName();
+		String inDate = sdf.format(dto.getInDate());
+		String dept = dto.getDept_title();
+		String col = dto.getCol_title();
+		String birthday = sdf.format(dto.getBirth());
+		List<GotMyCertificationDTO> list = sservice.gotMyCertification(id);
+		GotMyCertificationDTO gmc = list.get(0);
+		String number = gmc.getCer_seq();
+		String today = sdf.format(d);
+		
+		session.setAttribute("inDate", inDate);
+		session.setAttribute("number", number);
+		session.setAttribute("today", today);
+		session.setAttribute("name", myName);
+		session.setAttribute("dept", dept);
+		session.setAttribute("col", col);
+		session.setAttribute("birthday", birthday);
+		session.setAttribute("std_year", std_year);
+		String cName = (String)session.getAttribute("cName");
+	
+		if(cName.contentEquals("졸업증명서")) {
+			return "certification/graduate";
+		}else if(cName.contentEquals("재학증명서")) {
+			return "certification/beingInSchool";
+		}else if(cName.contentEquals("재적증명서")) {
+			return "certification/enrollment";
+		}else if(cName.contentEquals("수료증명서")) {
+			return "certification/complete";
+		}else if(cName.contentEquals("교육비납입증명서")) {
+			return "certification/tuition";
+		}else if(cName.contentEquals("추천서")) {
+			return "certification/reference";
+		}else if(cName.contentEquals("성적증명서")) {
+			return "certification/grade";
+		}else if(cName.contentEquals("학적부")) {
+			return "certification/schoolRegister";
+		}
+		
+		return "redirect:/error";
+	}
+	
+	@RequestMapping("/gotMyCertification.nex")
+	public NexacroResult gotMyCertification() {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		List<GotMyCertificationDTO> list = new ArrayList<>(); 
+		list = sservice.gotMyCertification(id);
+		
+		nr.addDataSet("out_specificList",list);
+
+		return nr;
+	}
+	
+	@RequestMapping("/stuMyCredit.nex")
+	public NexacroResult stuMyCredit() {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		
+		int majorGotCredit = sservice.majorGotCredit(id);
+		int majorGetCredit = sservice.majorGetCredit(id);
+		int totalGotCredit = sservice.totalGotCredit(id);
+		int totalGetCredit = sservice.totalGetCredit(id);
+		int electivesGotCredit = sservice.electivesGotCredit(id);
+		int electivesGetCredit = sservice.electivesGetCredit(id);
+		int choiceGotCredit = sservice.choiceGotCredit(id);
+		int choiceGetCredit = sservice.choiceGetCredit(id);
+		
+		nr.addVariable("majorGotCredit", majorGotCredit);
+		nr.addVariable("majorGetCredit", majorGetCredit);
+		nr.addVariable("totalGotCredit", totalGotCredit);
+		nr.addVariable("totalGetCredit", totalGetCredit);
+		nr.addVariable("electivesGotCredit", electivesGotCredit);
+		nr.addVariable("electivesGetCredit", electivesGetCredit);
+		nr.addVariable("choiceGotCredit", choiceGotCredit);
+		nr.addVariable("choiceGetCredit", choiceGetCredit);
 
 		return nr;
 	}

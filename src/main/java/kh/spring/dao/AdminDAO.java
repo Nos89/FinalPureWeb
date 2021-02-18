@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.ApplicationDTO;
 import kh.spring.dto.BoardDTO;
+import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.BuildDTO;
 import kh.spring.dto.ClassroomDTO;
 import kh.spring.dto.ColScheduleDTO;
@@ -44,7 +45,7 @@ public class AdminDAO {
 	
 	// 공지사항 식제
 	public int deleteNotice(List<NoticeDTO> list) throws Exception {
-		return db.delete("deleteNotice",list);
+		return db.delete("Admin.deleteNotice",list);
 	}
 	
 	// 공지사항 가져오기
@@ -54,7 +55,8 @@ public class AdminDAO {
 	
 	// 공지사항 작성
 	public int writeNotice(NoticeDTO dto) {
-		return db.insert("Admin.writeNotice",dto);
+		 db.insert("Admin.writeNotice",dto);
+		return dto.getNoti_seq();
 	}
 	
 	// 공지사항 수정

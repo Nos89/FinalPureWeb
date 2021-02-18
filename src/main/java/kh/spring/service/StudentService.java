@@ -14,6 +14,7 @@ import kh.spring.dto.ClassTimeDTO;
 import kh.spring.dto.ClassTimeSearchDTO;
 import kh.spring.dto.ConditionForMyClassDTO;
 import kh.spring.dto.ConditionForRoomInfoDTO;
+import kh.spring.dto.GotMyCertificationDTO;
 import kh.spring.dto.GradeListDTO;
 import kh.spring.dto.MajorApplyDTO;
 import kh.spring.dto.MilitaryDTO;
@@ -22,6 +23,7 @@ import kh.spring.dto.MyClassListDTO;
 import kh.spring.dto.MyClassTimeDTO;
 import kh.spring.dto.MyGradeDTO;
 import kh.spring.dto.RoomInfoDTO;
+import kh.spring.dto.StuUpdateDTO;
 import kh.spring.dto.StudentDetailDTO;
 import kh.spring.dto.StudentInfoDTO;
 import kh.spring.dto.TakeOffApplyDTO;
@@ -33,6 +35,10 @@ public class StudentService {
 	private StudentDAO sdao;
 	
 	public List<StudentInfoDTO> selectAllInfo(String id){		
+		return sdao.selectAllInfo(id);
+	}
+	
+	public StudentInfoDTO selectStuInfo(String id){		
 		return sdao.selectStuInfo(id);
 	}
 	
@@ -44,8 +50,11 @@ public class StudentService {
 		return sdao.selectStuDetail(id);		
 	}
 	
-	public int updateStuInfo(StudentInfoDTO dto) {
-		return sdao.updateStuInfo(dto);
+	public int updateStuInfo(StuUpdateDTO dto,String id) {
+		Map<String, Object> info = new HashMap<>();
+		info.put("dto", dto);
+		info.put("id", id);
+		return sdao.updateStuInfo(info);
 	}
 	
 	public int majorApply(MajorApplyDTO dto,Date date){
@@ -140,6 +149,10 @@ public class StudentService {
 		return sdao.getGradeList(myGrade);
 	}
 	
+	public List<GradeListDTO> getMyElectivesGrade(String id){
+		return sdao.getMyElectivesGrade(id);
+	}
+	
 	public int creditRenounceApply(String id, String code) {
 		Map<String, Object> apply = new HashMap<>();
 		apply.put("code", code);
@@ -161,4 +174,39 @@ public class StudentService {
 		return sdao.creditRenounceCancel(cancel);
 	}
 	
+	public int gotCertification(String id,String name) {
+		Map<String, Object> docu = new HashMap<>();
+		docu.put("name", name);
+		docu.put("id",id);
+		return sdao.gotCertification(docu);
+	}
+	
+	public List<GotMyCertificationDTO> gotMyCertification(String id){
+		return sdao.gotMyCertification(id);
+	}
+	
+	public int majorGotCredit(String id) {
+		return sdao.majorGotCredit(id);
+	}
+	public int majorGetCredit(String id) {
+		return sdao.majorGetCredit(id);
+	}
+	public int totalGotCredit(String id) {
+		return sdao.totalGotCredit(id);
+	}
+	public int totalGetCredit(String id) {
+		return sdao.totalGetCredit(id);
+	}
+	public int electivesGotCredit(String id) {
+		return sdao.electivesGotCredit(id);
+	}
+	public int electivesGetCredit(String id) {
+		return sdao.electivesGetCredit(id);
+	}
+	public int choiceGotCredit(String id) {
+		return sdao.choiceGotCredit(id);
+	}
+	public int choiceGetCredit(String id) {
+		return sdao.choiceGetCredit(id);
+	}
 }
