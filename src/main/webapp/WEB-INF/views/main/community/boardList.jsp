@@ -52,7 +52,12 @@
 <script>
 	$(document).ready(function(){
 		$(".btnFreeWrite").click(function(){
-			location.href = "/main/board?pageGroup=${pageGroup}&type=${type}";
+			if( "${loginID}" == "" ){
+				alert("로그인을 해주세요.");
+				location.href = "/info";
+			} else {
+				location.href = "/main/board?pageGroup=${pageGroup}&type=${type}";
+			}
 		})
 		
 		$(".btnSearch").click(function(){
