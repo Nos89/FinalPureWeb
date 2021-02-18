@@ -14,6 +14,8 @@ import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
 import com.nexacro.uiadapter17.spring.core.annotation.ParamVariable;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 
+import kh.spring.dto.ApplicationDTO;
+import kh.spring.dto.ApplicationDTO_NEX;
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.BuildDTO;
@@ -23,6 +25,7 @@ import kh.spring.dto.ColScheduleDTO_NEX;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.LectureDTO;
+import kh.spring.dto.MailDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
@@ -115,7 +118,6 @@ public class AdminController {
 	@RequestMapping("getPost.nex")
 	public NexacroResult getPost(@ParamVariable(name="seq")int seq, @ParamVariable(name="boardType")String boardType) {
 		NexacroResult nr = new NexacroResult();
-		System.out.println("게시판 타입: "+boardType);
 		if(boardType.contentEquals("notice")) {
 			NoticeDTO dto = admService.getNotice(seq);
 			nr.addDataSet("out_notice",dto);
@@ -341,4 +343,33 @@ public class AdminController {
 		admService.delColSchedule(seq);
 		return new NexacroResult();
 	}
+	
+	
+	// 신청사항 목록 가져오기
+	@RequestMapping("getApplication.nex")
+	public NexacroResult getApplication() {
+		NexacroResult nr = new NexacroResult();
+		List<ApplicationDTO> list = admService.getApplication();
+		nr.addDataSet("out_apply",list);
+		return nr;
+	}
+	
+	// 신청사항 처리
+	@RequestMapping("appApproved.nex")
+	public NexacroResult appApproved(@ParamDataSet(name="in_apply")ApplicationDTO_NEX adto, @ParamDataSet(name="in_mail")MailDTO mdto) throws Exception {
+		admService.appApproved(adto);
+		admService.sendAppResult(mdto);
+		return new NexacroResult();
+	}
+	
+	// 신청사항 반려
+	@RequestMapping("appRejected.nex")
+	public NexacroResult appRejected(@ParamDataSet(name="in_apply")ApplicationDTO_NEX adto, @ParamDataSet(name="in_mail")MailDTO mdto) throws Exception {
+		admService.appRejected(adto);
+		admService.sendAppResult(mdto);
+		return new NexacroResult();
+	}
+	
+	
+	
 }

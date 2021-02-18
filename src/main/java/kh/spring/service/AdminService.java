@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dao.AdminDAO;
+import kh.spring.dto.ApplicationDTO;
+import kh.spring.dto.ApplicationDTO_NEX;
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.BuildDTO;
@@ -19,6 +21,7 @@ import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.FilesDTO;
 import kh.spring.dto.LectureDTO;
+import kh.spring.dto.MailDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
@@ -81,7 +84,7 @@ public class AdminService {
 		return admdao.modifyNotice(dto2);
 	}
 	
-	// 게시판 온로드
+	// 게시판 목록
 	public List<BoardDTO> getBoard(String boardType) throws Exception {
 		return admdao.getBoard(boardType);
 	}
@@ -337,5 +340,41 @@ public class AdminService {
 	// 학사일정 삭제
 	public int delColSchedule (int seq) {
 		return admdao.delColSchedule(seq);
+	}
+	
+	// 신청사항 목록
+	public List<ApplicationDTO> getApplication(){
+		return admdao.getApplication();
+	}
+	
+	// 신청사항 처리
+	public int appApproved(ApplicationDTO_NEX dto) throws Exception {
+		ApplicationDTO dto2 = new ApplicationDTO();
+		dto2.setSeq(dto.getSeq());
+		dto2.setTitle(dto.getTitle());
+		dto2.setContents(dto.getContents());
+		dto2.setApplicant(dto.getApplicant());
+		dto2.setName(dto.getName());
+		dto2.setApproval(dto.getApproval());
+		dto2.setApply_date(ConvertDate.stringToDate(dto.getApply_date()));
+		return admdao.appApproved(dto2);
+	}
+	
+	// 신청사항 반려
+	public int appRejected(ApplicationDTO_NEX dto) throws Exception {
+		ApplicationDTO dto2 = new ApplicationDTO();
+		dto2.setSeq(dto.getSeq());
+		dto2.setTitle(dto.getTitle());
+		dto2.setContents(dto.getContents());
+		dto2.setApplicant(dto.getApplicant());
+		dto2.setName(dto.getName());
+		dto2.setApproval(dto.getApproval());
+		dto2.setApply_date(ConvertDate.stringToDate(dto.getApply_date()));
+		return admdao.appRejected(dto2);
+	}
+	
+	// 메일 전송
+	public int sendAppResult(MailDTO dto) {
+		return admdao.sendAppResult(dto);
 	}
 }

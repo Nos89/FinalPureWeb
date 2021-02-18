@@ -219,4 +219,16 @@
 <delete id="delColSchedule">
 	DELETE FROM COL_SCHEDULE WHERE SEQ=#{seq}
 </delete>
+
+<select id="getApplication" resultType="kh.spring.dto.ApplicationDTO">
+	SELECT SEQ, TITLE, CONTENTS, APPLICANT, NAME, APPLY_DATE, APPROVAL FROM APPLY, USERS WHERE APPLICANT=ID ORDER BY SEQ
+</select>
+
+<update id="appApproval">
+	UPDATE APPLY SET APPROVAL=#{approval} WHERE SEQ=#{seq}
+</update>
+
+<insert id="sendAppResult">
+	INSERT INTO MAIL VALUES(MAIL_SEQ.NEXTVAL,#{receiver},#{title},#{contents},SYSDATE)
+</insert>
 </mapper>
