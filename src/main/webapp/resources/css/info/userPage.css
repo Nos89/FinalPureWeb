@@ -1,12 +1,11 @@
 @charset "UTF-8";
-
+*{margine:none; padding:none;}
 .row>* {
     padding-right: none;
     padding-left: none;
 } .container{padding: none;}
            
             .topMenu,.my,.board,.subject,.timetable,.schedule,.footer{padding: 0px;border: 1px solid black;}
-            
             #electAttend:hover{background-color:white; color:black;}
         
           	.row>.my{ height: 220px;float: left;}
@@ -24,22 +23,23 @@
             .tab_title:hover{color:blue;}
             .tab_date{ text-align: end; color:gray;}
             
-              	.row>.subject{height: 220px;overflow:scroll}
+            .row>.subject{height: 220px;overflow:scroll}
             .row>.subject>.subject_list>.subject_isu{float:left; width:40%;}
             .row>.subject>.subject_list>.subject_title{float:left; width:60%; }
             .row>.subject>.subject_list>.subject_score{font-size: 13px; color: gray;}
             
-            .row>.timetable{height:440px;;overflow:scroll}
+            .row>.timetable{height:440px;overflow:scroll;}
             .realtimetable{height:380px;}
             .realtimetable>.timeTable{width:100%; text-align:center; height:100%;}
             th{width:16%;}
-            
-            
+                       
             .schedule>.row{margin:0px;}
             .row>.calendar,.sche{border:1px solid black;height:220px;}
-            
+            .schedule>.row>.calendar>table{}
+           .col-sm-6{padding-left:0px; padding-right:0px;}       
+           #calendar{}
+           .row>.sche{}
            
-            
             .shortcutPart{border: 1px solid black; margin-top:10px; }
             .shortcut{height: 50px;}
             .toClassSche,.toBus,.toDomi,.toReportBoard,.toExAuth{border: 1px solid black;height:100px;}

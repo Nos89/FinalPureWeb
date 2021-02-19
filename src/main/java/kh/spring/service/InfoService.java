@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dao.InfoDAO;
+import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.InfoBoardDTO;
 import kh.spring.dto.TakingClassDTO;
 import kh.spring.utils.EncryptUtils;
@@ -60,6 +61,15 @@ public class InfoService {
 	//강의시간표(교수)
 	public List<TakingClassDTO> classSche(String id, String semester, Date tempDate) {
 		return idao.classSche(id,semester,tempDate);
+	}
+
+	//학사일정
+	public List<ColScheduleDTO> getColSchedule(String yearMonth) {
+		return idao.getColSchedule(yearMonth);
+	}
+
+	public List<ColScheduleDTO> get4ColSchedule(String yearMonth) {
+		return idao.get4ColSchedule(yearMonth);
 	}
 
 	

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.InfoBoardDTO;
 import kh.spring.dto.TakingClassDTO;
 import kh.spring.service.InfoService;
@@ -37,6 +38,13 @@ public class InfoController {
 		List<InfoBoardDTO> list_scholar = iservice.getRecentScholar();
 		List<InfoBoardDTO> list_enter = iservice.getRecentEnter();
 
+		SimpleDateFormat format2 = new SimpleDateFormat("yy/MM/dd"); // 오늘날짜 요일 가져오기
+		Date time2 = new Date();
+		String day2 = format2.format(time2); // 21/02/18
+		String dayArr[] = day2.split("/");
+		String yearMonth = dayArr[0] + "/" + dayArr[1];
+		List<ColScheduleDTO> list_colSche = iservice.getColSchedule(yearMonth);
+
 		if (result > 0) {
 			session.setAttribute("loginID", id);
 			session.setAttribute("userName", name);
@@ -45,6 +53,7 @@ public class InfoController {
 			session.setAttribute("list_std", list_std);
 			session.setAttribute("list_scholar", list_scholar);
 			session.setAttribute("list_enter", list_enter);
+			session.setAttribute("list_colSche", list_colSche);
 
 			SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd");
 			//
@@ -66,7 +75,7 @@ public class InfoController {
 					classRegDate = currentRegYear + "-02-22";
 					SimpleDateFormat fm = new SimpleDateFormat("yy-MM-dd");
 					Date tempDate = fm.parse(classRegDate);
-					
+
 					semester = "1";
 					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, tempDate);
 					List<TakingClassDTO> list_classSche = iservice.classSche(id, tempDate);
@@ -94,11 +103,21 @@ public class InfoController {
 								// System.out.println(divSche[1]); // 1,4)
 								divSche[1] = divSche[1].replaceAll("\\)", " "); // )지우기 => 1,4 *****
 
-								if (divSche[0].contentEquals("월")) {divSche[0] = "가*" + divSche[0];}
-								if (divSche[0].contentEquals("화")) {divSche[0] = "나*" + divSche[0];}
-								if (divSche[0].contentEquals("수")) {divSche[0] = "다*" + divSche[0];}
-								if (divSche[0].contentEquals("목")) {divSche[0] = "라*" + divSche[0];}
-								if (divSche[0].contentEquals("금")) {divSche[0] = "마*" + divSche[0];}
+								if (divSche[0].contentEquals("월")) {
+									divSche[0] = "가*" + divSche[0];
+								}
+								if (divSche[0].contentEquals("화")) {
+									divSche[0] = "나*" + divSche[0];
+								}
+								if (divSche[0].contentEquals("수")) {
+									divSche[0] = "다*" + divSche[0];
+								}
+								if (divSche[0].contentEquals("목")) {
+									divSche[0] = "라*" + divSche[0];
+								}
+								if (divSche[0].contentEquals("금")) {
+									divSche[0] = "마*" + divSche[0];
+								}
 
 								if (divSche[1].contains(",")) { // divSche[1]==1,4
 									String divTime[] = divSche[1].split(","); // 1 4
@@ -107,7 +126,8 @@ public class InfoController {
 										divTime[j1] = divTime[j1].replaceAll(" ", "");
 										int clTime = Integer.parseInt(divTime[j1]);
 										String clDay = divSche[0];
-										String todayClassInfo = clDay + "/" + divTime[j1] + "/" + classTitle + "/" + classRoom;
+										String todayClassInfo = clDay + "/" + divTime[j1] + "/" + classTitle + "/"
+												+ classRoom;
 										timeList.add(todayClassInfo);
 									}
 
@@ -116,7 +136,8 @@ public class InfoController {
 									int clTime = Integer.parseInt(divSche[1]);
 									String clDay = divSche[0];
 
-									String todayClassInfo = clDay + "/" + divSche[1] + "/" + classTitle + "/" + classRoom;
+									String todayClassInfo = clDay + "/" + divSche[1] + "/" + classTitle + "/"
+											+ classRoom;
 									timeList.add(todayClassInfo);
 								}
 							}
@@ -127,11 +148,21 @@ public class InfoController {
 							// System.out.println(divSche[1]); // 6,7)
 							divSche[1] = divSche[1].replaceAll("\\)", " "); // )지우기
 							// System.out.println(a[1]); //6,7
-							if (divSche[0].contentEquals("월")) {divSche[0] = "가*" + divSche[0];	}
-							if (divSche[0].contentEquals("화")) {divSche[0] = "나*" + divSche[0];	}
-							if (divSche[0].contentEquals("수")) {divSche[0] = "다*" + divSche[0];	}
-							if (divSche[0].contentEquals("목")) {divSche[0] = "라*" + divSche[0];	}
-							if (divSche[0].contentEquals("금")) {divSche[0] = "마*" + divSche[0];}
+							if (divSche[0].contentEquals("월")) {
+								divSche[0] = "가*" + divSche[0];
+							}
+							if (divSche[0].contentEquals("화")) {
+								divSche[0] = "나*" + divSche[0];
+							}
+							if (divSche[0].contentEquals("수")) {
+								divSche[0] = "다*" + divSche[0];
+							}
+							if (divSche[0].contentEquals("목")) {
+								divSche[0] = "라*" + divSche[0];
+							}
+							if (divSche[0].contentEquals("금")) {
+								divSche[0] = "마*" + divSche[0];
+							}
 
 							if (divSche[1].contains(",")) {
 								String divTime[] = divSche[1].split(",");
@@ -140,7 +171,8 @@ public class InfoController {
 									int clTime = Integer.parseInt(divTime[j1]);
 									String clDay = divSche[0];
 
-									String todayClassInfo = clDay + "/" + divTime[j1] + "/" + classTitle + "/" + classRoom;
+									String todayClassInfo = clDay + "/" + divTime[j1] + "/" + classTitle + "/"
+											+ classRoom;
 									timeList.add(todayClassInfo);
 
 								}
@@ -152,7 +184,6 @@ public class InfoController {
 								String clDay = divSche[0];
 
 								String todayClassInfo = clDay + "/" + divSche[1] + "/" + classTitle + "/" + classRoom;
-								// System.out.println(todayClassInfo);
 								timeList.add(todayClassInfo);
 							}
 						}
@@ -171,13 +202,13 @@ public class InfoController {
 					// test
 					model.addAttribute("msg", 1);
 					return "info/info";
-				} else if ( currentRegMonth >= 7 && currentRegMonth <= 12 ) {
+				} else if (currentRegMonth >= 7 && currentRegMonth <= 12) {
 					// 2학기
 					classRegDate = currentRegYear + "-08-22";
 					semester = "2";
 					SimpleDateFormat fm = new SimpleDateFormat("yy-MM-dd");
 					Date tempDate = fm.parse(classRegDate);
-					
+
 					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, tempDate);
 					session.setAttribute("list_takingClass", list_takingClass);
 					session.setAttribute("openClassYear", openClassYear);
@@ -198,7 +229,7 @@ public class InfoController {
 					classOpenDate = currentRegYear + "-01-25";
 					SimpleDateFormat fm = new SimpleDateFormat("yy-MM-dd");
 					Date tempDate = fm.parse(classOpenDate);
-					
+
 					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, semester, tempDate);
 					List<TakingClassDTO> list_classSche = iservice.classSche(id, semester, tempDate);
 
@@ -224,11 +255,21 @@ public class InfoController {
 								// System.out.println(divSche[0]); // 월 *****
 								// System.out.println(divSche[1]); // 1,4)
 								divSche[1] = divSche[1].replaceAll("\\)", " "); // )지우기 => 1,4 *****
-								if (divSche[0].contentEquals("월")) {divSche[0] = "가*" + divSche[0];}
-								if (divSche[0].contentEquals("화")) {divSche[0] = "나*" + divSche[0];}
-								if (divSche[0].contentEquals("수")) {divSche[0] = "다*" + divSche[0];}
-								if (divSche[0].contentEquals("목")) {divSche[0] = "라*" + divSche[0];}
-								if (divSche[0].contentEquals("금")) {divSche[0] = "마*" + divSche[0];}
+								if (divSche[0].contentEquals("월")) {
+									divSche[0] = "가*" + divSche[0];
+								}
+								if (divSche[0].contentEquals("화")) {
+									divSche[0] = "나*" + divSche[0];
+								}
+								if (divSche[0].contentEquals("수")) {
+									divSche[0] = "다*" + divSche[0];
+								}
+								if (divSche[0].contentEquals("목")) {
+									divSche[0] = "라*" + divSche[0];
+								}
+								if (divSche[0].contentEquals("금")) {
+									divSche[0] = "마*" + divSche[0];
+								}
 
 								if (divSche[1].contains(",")) { // divSche[1]==1,4
 									String divTime[] = divSche[1].split(","); // 1 4
@@ -242,7 +283,8 @@ public class InfoController {
 
 								} else if (!divSche[1].contains(",")) {
 									divSche[1] = divSche[1].replaceAll(" ", "");
-									String todayClassInfo = divSche[0] + "/" + divSche[1] + "/" + classTitle + "/" + classRoom;
+									String todayClassInfo = divSche[0] + "/" + divSche[1] + "/" + classTitle + "/"
+											+ classRoom;
 									timeList.add(todayClassInfo);
 								}
 							}
@@ -253,24 +295,36 @@ public class InfoController {
 							// System.out.println(divSche[1]); // 6,7)
 							divSche[1] = divSche[1].replaceAll("\\)", " "); // )지우기
 							// System.out.println(a[1]); //6,7
-							if (divSche[0].contentEquals("월")) {divSche[0] = "가*" + divSche[0];}
-							if (divSche[0].contentEquals("화")) {divSche[0] = "나*" + divSche[0];}
-							if (divSche[0].contentEquals("수")) {divSche[0] = "다*" + divSche[0];}
-							if (divSche[0].contentEquals("목")) {divSche[0] = "라*" + divSche[0];}
-							if (divSche[0].contentEquals("금")) {divSche[0] = "마*" + divSche[0];}
+							if (divSche[0].contentEquals("월")) {
+								divSche[0] = "가*" + divSche[0];
+							}
+							if (divSche[0].contentEquals("화")) {
+								divSche[0] = "나*" + divSche[0];
+							}
+							if (divSche[0].contentEquals("수")) {
+								divSche[0] = "다*" + divSche[0];
+							}
+							if (divSche[0].contentEquals("목")) {
+								divSche[0] = "라*" + divSche[0];
+							}
+							if (divSche[0].contentEquals("금")) {
+								divSche[0] = "마*" + divSche[0];
+							}
 
 							if (divSche[1].contains(",")) {
 								String divTime[] = divSche[1].split(",");
 								for (int j1 = 0; j1 < divTime.length; j1++) {
 									divTime[j1] = divTime[j1].replaceAll(" ", "");
-									String todayClassInfo = divSche[0] + "/" + divTime[j1] + "/" + classTitle + "/" + classRoom;
+									String todayClassInfo = divSche[0] + "/" + divTime[j1] + "/" + classTitle + "/"
+											+ classRoom;
 									timeList.add(todayClassInfo);
 								}
 							} else if (!divSche[1].contains(",")) { // 금(8)
 								String divTime[] = schedule.split("\\("); // 금 8)
 								divTime[1] = divTime[1].replaceAll("\\)", " ");
 								divSche[1] = divSche[1].replaceAll(" ", "");
-								String todayClassInfo = divSche[0] + "/" + divSche[1] + "/" + classTitle + "/" + classRoom;
+								String todayClassInfo = divSche[0] + "/" + divSche[1] + "/" + classTitle + "/"
+										+ classRoom;
 								timeList.add(todayClassInfo);
 
 							}
@@ -289,13 +343,13 @@ public class InfoController {
 					// test
 					model.addAttribute("msg", 3);
 					return "info/info";
-				} else if ( currentRegMonth >= 7 && currentRegMonth <= 12 ) {
+				} else if (currentRegMonth >= 7 && currentRegMonth <= 12) {
 					// 2학기
 					classOpenDate = currentRegYear + "-08-22";
 					semester = "2";
 					SimpleDateFormat fm = new SimpleDateFormat("yy-MM-dd");
 					Date tempDate = fm.parse(classOpenDate);
-					
+
 					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, semester, tempDate);
 					session.setAttribute("list_takingClass", list_takingClass); // 강의항목
 					session.setAttribute("semester", semester); // 학기
@@ -307,6 +361,8 @@ public class InfoController {
 				}
 
 				return "info/info";
+			} else if (arrId[0].contentEquals("A")) { // 관리자 넥사크로 페이지로 이동
+				return "info/temp";
 			}
 		} else if (result == 0) {
 			model.addAttribute("errMsg", "아이디와 비밀번호 확인");
@@ -315,23 +371,9 @@ public class InfoController {
 		return "info/info";
 	}
 
-	
 	@RequestMapping("/logout")
 	public String logout() {
-//		session.removeAttribute("loginID");
-//		session.removeAttribute("loginPW");
-//		session.removeAttribute("loginID");
-//		session.removeAttribute("userName");
-//		session.removeAttribute("userMajor");
-//		session.removeAttribute("userPart");
-//		session.removeAttribute("list_std");
-//		session.removeAttribute("list_scholar");
-//		session.removeAttribute("list_enter");
-//		session.removeAttribute("list_takingClass");
-//		session.removeAttribute("semester");
-//		session.removeAttribute("openClassYear");
 		session.invalidate();
-
 		return "info/info";
 
 	}

@@ -17,6 +17,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="/resources/css/info/login.css?ver=1">
 <link rel="stylesheet" href="/resources/css/info/userPage.css?ver=1">
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -46,9 +47,9 @@
 							</div>
 							<div id=loginTitle_eng>Login</div>
 							<div id=part>
-								<div id="loginStd"
-									style="background-color: #272727; color: ivory;">학부생용</div>
+								<div id="loginStd" style="background-color: #272727; color: ivory;">학부생용</div>
 								<div id="loginPro">교수용</div>
+								<div id="loginAdmin">관리자용</div>
 							</div>
 							<div id=loginID>
 								<div id=idTitle>ID</div>
@@ -84,22 +85,12 @@
 									<img src="/resources/img/info/학사일정아이콘.png">
 								</div>
 								<div id=acmdCalContents>
+									<c:forEach var="i" items="${list4_colSche}" varStatus="status">
 									<div id=acmdCalPart>
-										<div id=acmdCalTitle>[학사일정] 계절학기수업</div>
-										<div id=acmdCalDate>2021-01-04 ~ 2021-01-22</div>
+										<div id=acmdCalTitle>${i.title }</div>
+										<div id=acmdCalDate>${i.sche_startDate } ~ ${i.sche_endDate }</div>
 									</div>
-									<div id=acmdCalPart>
-										<div id=acmdCalTitle>[학사일정] 계절학기수업</div>
-										<div id=acmdCalDate>2021-01-04 ~ 2021-01-22</div>
-									</div>
-									<div id=acmdCalPart>
-										<div id=acmdCalTitle>[학사일정] 계절학기수업</div>
-										<div id=acmdCalDate>2021-01-04 ~ 2021-01-22</div>
-									</div>
-									<div id=acmdCalPart>
-										<div id=acmdCalTitle>[학사일정] 계절학기수업</div>
-										<div id=acmdCalDate>2021-01-04 ~ 2021-01-22</div>
-									</div>
+									</c:forEach>
 								</div>
 
 							</div>
@@ -120,18 +111,31 @@
 			<script>
 				let loginPro = document.getElementById("loginPro");
 				let loginStd = document.getElementById("loginStd");
+				let loginAdmin = document.getElementById("loginAdmin");
 
 				loginStd.onclick = function() {
-					loginPro.style.backgroundColor = "transparent";
-					loginPro.style.color = "black";
 					loginStd.style.backgroundColor = "#272727";
 					loginStd.style.color = "ivory";
+					loginPro.style.backgroundColor = "transparent";
+					loginPro.style.color = "black";
+					loginAdmin.style.backgroundColor = "transparent";
+					loginAdmin.style.color = "black";
 				}
 				loginPro.onclick = function() {
 					loginStd.style.backgroundColor = "transparent";
 					loginStd.style.color = "black";
 					loginPro.style.backgroundColor = "#272727";
 					loginPro.style.color = "ivory";
+					loginAdmin.style.backgroundColor = "transparent";
+					loginAdmin.style.color = "black";
+				}
+				loginAdmin.onclick = function() {
+					loginStd.style.backgroundColor = "transparent";
+					loginStd.style.color = "black";
+					loginPro.style.backgroundColor = "transparent";
+					loginPro.style.color = "black";
+					loginAdmin.style.backgroundColor = "#272727";
+					loginAdmin.style.color = "ivory";
 				}
 			</script>
 		</c:when>
@@ -361,25 +365,25 @@
 							<div class="col-12 col-sm-8 schedule">
 								<div class="row">
 
-									<div class="col-12 col-sm-6 calendar">
-										<table id="calendar" border="1" align="center">
+									<div class="col-12 col-sm-6 calendar" style="padding-left:0px; padding-right:0px;">
+										<table id="calendar" border="1" style="width:100%; height:100%; text-align:center">
 											<tr>
-												<td id="tbCalendarYM" colspan="5">yyyy년 m월</td>
-												<td><label onclick="prevCalendar()">◀</label></td>
-												<td><label onclick="nextCalendar()">▶</label></td>
+												<td id="tbCalendarYM" colspan="5" id=currentDay>yyyy년 m월</td>
+												<td><label onclick="prevCalendar()" style="cursor:pointer">◀</label></td>
+												<td><label onclick="nextCalendar()" style="cursor:pointer;">▶</label></td>
 											</tr>
 											<tr id=weeks>
-												<td align="center"><font color="red">일</font></td>
-												<td align="center"><font color="white">월</font></td>
-												<td align="center"><font color="white">화</font></td>
-												<td align="center"><font color="white">수</font></td>
-												<td align="center"><font color="white">목</font></td>
-												<td align="center"><font color="white">금</font></td>
-												<td align="center"><font color="blue">토</font></td>
+												<td align="center" style="background-color:darkgray"><font color="red">일</font></td>
+												<td align="center" style="background-color:darkgray"><font color="white">월</font></td>
+												<td align="center" style="background-color:darkgray"><font color="white">화</font></td>
+												<td align="center" style="background-color:darkgray"><font color="white">수</font></td>
+												<td align="center" style="background-color:darkgray"><font color="white">목</font></td>
+												<td align="center" style="background-color:darkgray"><font color="white">금</font></td>
+												<td align="center" style="background-color:darkgray"><font color="blue">토</font></td>
 											</tr>
 										</table>
 									</div>
-									<div class="col-12 col-sm-6 sche">
+									<div class="col-12 col-sm-6 sche" style="overflow:scroll;">
 										<div class="row ">
 											<div class="col-6 ">
 												<nav class="nav">
@@ -394,6 +398,14 @@
 												</nav>
 											</div>
 										</div>
+										<div class="colSche_list">
+											<c:forEach var="i" items="${list_colSche}"
+												varStatus="status">
+												<div class="subject_isu">${i.sche_startDate } ~ ${i.sche_endDate }</div>
+												<div class="subject_score">${i.title }</div>
+											</c:forEach>
+										</div>
+										
 
 									</div>
 
@@ -740,9 +752,6 @@
 			location.href = "";
 		});
 
-		//$(document).on('click', '#electAttend', function() {
-		//	window.open("/info/electAttend");
-		//});
 	</script>
 
 		</c:otherwise>
