@@ -8,7 +8,7 @@
 </head>
 <body>
 <script>
-location.href="/whichUser.nex";
+location.href="/home.nex";
 </script>
 </body>
 </html>
