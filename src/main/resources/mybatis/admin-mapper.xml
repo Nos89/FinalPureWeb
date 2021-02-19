@@ -222,12 +222,34 @@
 	DELETE FROM COL_SCHEDULE WHERE SEQ=#{seq}
 </delete>
 
-<select id="getApplication" resultType="kh.spring.dto.ApplicationDTO">
-	SELECT SEQ, TITLE, CONTENTS, APPLICANT, NAME, APPLY_DATE, APPROVAL FROM APPLY, USERS WHERE APPLICANT=ID ORDER BY SEQ
+<select id="getChangeDeptApply" resultType="kh.spring.dto.ChangeDeptApplyDTO">
+	SELECT
+		A.SEQ, A.ID, NAME, CHANGEYEAR, CHANGESEMESTER, REASON, CHANGECOLLEGE, CHANGEDEPT, APPLY_DATE, APPLY_APPROVE
+		FROM CHANGEDEPTAPPLY A, USERS U
+		WEHRE A.ID=U.ID AND DEPARTMENT 
 </select>
 
+
+<!-- 
+<select id="getTakeOffApply" resultType="kh.spring.dto.TakeOffApplyDTO">
+	
+</select>
+
+
+<select id="getReturn" resultType="kh.spring.dto.ReturnApplyDTO">
+	SELECT SEQ, 
+</select>
+
+<select id="getCreditRenounce" resultType="kh.spring.dto.getCreditRenounceDTO">
+	SELECT C.SEQ, C.ID, U.NAME, RENOUNCESUBJECT, LEC_TITLE, APPLY_DATE, APPLY_APPROVE
+		FROM CREDITRENOUNCE C, USERS U, LECTURE
+		WHERE C.ID=U.ID AND RENOUNCESUBJECT=LEC_CODE
+</select>
+-->
+
 <update id="appApproval">
-	UPDATE APPLY SET APPROVAL=#{approval} WHERE SEQ=#{seq}
+	
+	UPDATE CHANGEDEPTAPPLY SET APPLY_APPROVE=#{apply_approve} WHERE SEQ=#{seq}
 </update>
 
 <insert id="sendAppResult">

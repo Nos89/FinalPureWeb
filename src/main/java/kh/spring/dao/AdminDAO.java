@@ -12,6 +12,7 @@ import kh.spring.dto.ApplicationDTO;
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.BuildDTO;
+import kh.spring.dto.ChangeDeptApplyDTO;
 import kh.spring.dto.ClassroomDTO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
@@ -195,13 +196,24 @@ public class AdminDAO {
 		return db.delete("Admin.delColSchedule",seq);
 	}
 	
-	// 신청사항 관리
+	
+	// 메일 전송
+	public int sendAppResult(MailDTO dto) {
+		return db.insert("Admin.sendAppResult",dto);
+	}
+	
+	// 전과신청 목록
+	public List<ChangeDeptApplyDTO> getChangeDeptApplyDTO(){
+		return db.selectList("Admin.getChangeDeptApplyDTO");
+	}
+	
+	// 
 	public List<ApplicationDTO> getApplication(){
 		return db.selectList("Admin.getApplication");
 	}
 	
 	// 신청사항 처리
-	public int appApproved(ApplicationDTO dto) {
+	public int appApproval(ChangeDeptApplyDTO dto) {
 		return db.update("Admin.appApproval",dto);
 	}
 	
@@ -209,9 +221,5 @@ public class AdminDAO {
 	public int appRejected(ApplicationDTO dto) {
 		return db.update("Admin.appApproval",dto);
 	}
-	
-	// 메일 전송
-	public int sendAppResult(MailDTO dto) {
-		return db.insert("Admin.sendAppResult",dto);
-	}
+
 }

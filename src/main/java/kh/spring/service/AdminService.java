@@ -20,6 +20,8 @@ import kh.spring.dto.ApplicationDTO_NEX;
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.BuildDTO;
+import kh.spring.dto.ChangeDeptApplyDTO;
+import kh.spring.dto.ChangeDeptApplyDTO_NEX;
 import kh.spring.dto.ClassroomDTO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
@@ -400,22 +402,26 @@ public class AdminService {
 		return admdao.delColSchedule(seq);
 	}
 	
+	
 	// 신청사항 목록
-	public List<ApplicationDTO> getApplication(){
-		return admdao.getApplication();
+	public List<ChangeDeptApplyDTO> getChangeDeptApplyDTO(){
+		return admdao.getChangeDeptApplyDTO();
 	}
 	
 	// 신청사항 처리
-	public int appApproved(ApplicationDTO_NEX dto) throws Exception {
-		ApplicationDTO dto2 = new ApplicationDTO();
+	public int appApproval(ChangeDeptApplyDTO_NEX dto) throws Exception {
+		ChangeDeptApplyDTO dto2 = new ChangeDeptApplyDTO();
 		dto2.setSeq(dto.getSeq());
-		dto2.setTitle(dto.getTitle());
-		dto2.setContents(dto.getContents());
-		dto2.setApplicant(dto.getApplicant());
+		dto2.setId(dto.getId());
 		dto2.setName(dto.getName());
-		dto2.setApproval(dto.getApproval());
+		dto2.setReason(dto.getReason());
+		dto2.setChangeYear(dto.getChangeYear());
+		dto2.setChangeSemester(dto.getChangeSemester());
+		dto2.setChangeCollege(dto.getChangeCollege());
+		dto2.setChangeDept(dto.getChangeDept());
 		dto2.setApply_date(ConvertDate.stringToDate(dto.getApply_date()));
-		return admdao.appApproved(dto2);
+		dto2.setApply_approve(dto.getApply_approve());
+		return admdao.appApproval(dto2);
 	}
 	
 	// 신청사항 반려
@@ -435,4 +441,6 @@ public class AdminService {
 	public int sendAppResult(MailDTO dto) {
 		return admdao.sendAppResult(dto);
 	}
+	
+	
 }

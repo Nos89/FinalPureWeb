@@ -20,6 +20,8 @@ import kh.spring.dto.ApplicationDTO_NEX;
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.BuildDTO;
+import kh.spring.dto.ChangeDeptApplyDTO;
+import kh.spring.dto.ChangeDeptApplyDTO_NEX;
 import kh.spring.dto.ClassroomDTO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.ColScheduleDTO_NEX;
@@ -389,31 +391,41 @@ public class AdminController {
 		return new NexacroResult();
 	}
 	
-	
 	// 신청사항 목록 가져오기
 	@RequestMapping("getApplication.nex")
-	public NexacroResult getApplication() {
+	public NexacroResult getApplication(@ParamVariable(name="applyFor")String applyFor) {
 		NexacroResult nr = new NexacroResult();
-		List<ApplicationDTO> list = admService.getApplication();
-		nr.addDataSet("out_apply",list);
+		if(applyFor.contentEquals("전과")) {
+			List<ChangeDeptApplyDTO> list = admService.getChangeDeptApplyDTO();
+			nr.addDataSet("out_changeDeptApply",list);
+		}else if(applyFor.contentEquals("휴학")) {
+			
+			
+		}else if(applyFor.contentEquals("복학")) {
+			
+			
+		}else if(applyFor.contentEquals("학점포기")) {
+			
+			
+		}
 		return nr;
 	}
 	
-	// 신청사항 처리
-	@RequestMapping("appApproved.nex")
-	public NexacroResult appApproved(@ParamDataSet(name="in_apply")ApplicationDTO_NEX adto, @ParamDataSet(name="in_mail")MailDTO mdto) throws Exception {
-		admService.appApproved(adto);
+	// 전과 처리
+	@RequestMapping("changeDeptApproval.nex")
+	public NexacroResult appApproval(@ParamDataSet(name="in_changeDeptApply")ChangeDeptApplyDTO_NEX adto, @ParamDataSet(name="in_mail")MailDTO mdto) throws Exception {
+		admService.appApproval(adto);
 		admService.sendAppResult(mdto);
 		return new NexacroResult();
 	}
 	
-	// 신청사항 반려
-	@RequestMapping("appRejected.nex")
-	public NexacroResult appRejected(@ParamDataSet(name="in_apply")ApplicationDTO_NEX adto, @ParamDataSet(name="in_mail")MailDTO mdto) throws Exception {
-		admService.appRejected(adto);
-		admService.sendAppResult(mdto);
-		return new NexacroResult();
-	}
+//	@RequestMapping("appApproval.nex")
+//	public NexacroResult appApproved(@ParamDataSet(name="in_takeOffApply")TakeOffApplyDTO_NEX adto, @ParamDataSet(name="in_mail")MailDTO mdto) throws Exception {
+//		admService.appApproved(adto);
+//		admService.sendAppResult(mdto);
+//		return new NexacroResult();
+//	}
+
 	
 	
 	
