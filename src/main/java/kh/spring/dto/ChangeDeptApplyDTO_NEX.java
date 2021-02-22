@@ -1,8 +1,7 @@
 package kh.spring.dto;
 
-import java.sql.Date;
 
-public class ChangeDeptApplyDTO {
+public class ChangeDeptApplyDTO_NEX {
 	private int seq;
 	private String id;
 	private String name;
@@ -11,25 +10,14 @@ public class ChangeDeptApplyDTO {
 	private String reason;
 	private String changeCollege;
 	private String changeDept;
-	private Date apply_date;
+	private String apply_date;
 	private String apply_approve;
-	
-	public ChangeDeptApplyDTO() {}
 
-	public ChangeDeptApplyDTO(String id, int changeYear, String changeSemester, String reason, String changeCollege,
-			String changeDept) {
-		super();
-		this.id = id;
-		this.changeYear = changeYear;
-		this.changeSemester = changeSemester;
-		this.reason = reason;
-		this.changeCollege = changeCollege;
-		this.changeDept = changeDept;
-	}
+	public ChangeDeptApplyDTO_NEX() {}
 
 	// 신청 수리용
-	public ChangeDeptApplyDTO(int seq, String id, String name, int changeYear, String changeSemester, String reason,
-			String changeCollege, String changeDept, Date apply_date, String apply_approve) {
+	public ChangeDeptApplyDTO_NEX(int seq, String id, String name, int changeYear, String changeSemester, String reason,
+			String changeCollege, String changeDept, String apply_date, String apply_approve) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -100,11 +88,11 @@ public class ChangeDeptApplyDTO {
 		this.changeDept = changeDept;
 	}
 
-	public Date getApply_date() {
+	public String getApply_date() {
 		return apply_date;
 	}
 
-	public void setApply_date(Date apply_date) {
+	public void setApply_date(String apply_date) {
 		this.apply_date = apply_date;
 	}
 
@@ -123,5 +111,4 @@ public class ChangeDeptApplyDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 }
