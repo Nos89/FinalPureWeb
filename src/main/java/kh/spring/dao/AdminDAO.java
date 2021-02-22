@@ -8,15 +8,18 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.ApplicationDTO;
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.BuildDTO;
+import kh.spring.dto.ChangeDeptApplyDTO;
 import kh.spring.dto.ClassroomDTO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.FilesDTO;
 import kh.spring.dto.LectureDTO;
+import kh.spring.dto.MailDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.StudentDTO;
@@ -62,7 +65,7 @@ public class AdminDAO {
 		return db.update("Admin.modifyNotice",dto);
 	}
 	
-	// 게시판 온로드
+	// 게시판 목록
 	public List<BoardDTO> getBoard(String boardType) throws Exception {
 		return db.selectList("Admin.getBoard", boardType);
 	}
@@ -192,4 +195,31 @@ public class AdminDAO {
 	public int delColSchedule(int seq) {
 		return db.delete("Admin.delColSchedule",seq);
 	}
+	
+	
+	// 메일 전송
+	public int sendAppResult(MailDTO dto) {
+		return db.insert("Admin.sendAppResult",dto);
+	}
+	
+	// 전과신청 목록
+	public List<ChangeDeptApplyDTO> getChangeDeptApplyDTO(){
+		return db.selectList("Admin.getChangeDeptApplyDTO");
+	}
+	
+	// 
+	public List<ApplicationDTO> getApplication(){
+		return db.selectList("Admin.getApplication");
+	}
+	
+	// 신청사항 처리
+	public int appApproval(ChangeDeptApplyDTO dto) {
+		return db.update("Admin.appApproval",dto);
+	}
+	
+	// 신청사항 반려
+	public int appRejected(ApplicationDTO dto) {
+		return db.update("Admin.appApproval",dto);
+	}
+
 }
