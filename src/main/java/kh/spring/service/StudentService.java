@@ -22,6 +22,7 @@ import kh.spring.dto.MyClassDTO;
 import kh.spring.dto.MyClassListDTO;
 import kh.spring.dto.MyClassTimeDTO;
 import kh.spring.dto.MyGradeDTO;
+import kh.spring.dto.MyMenuDTO;
 import kh.spring.dto.RoomInfoDTO;
 import kh.spring.dto.StuUpdateDTO;
 import kh.spring.dto.StudentDetailDTO;
@@ -208,5 +209,35 @@ public class StudentService {
 	}
 	public int choiceGetCredit(String id) {
 		return sdao.choiceGetCredit(id);
+	}
+	
+	public List<MyMenuDTO> getMyMenu(String id){
+		return sdao.getMyMenu(id);
+	}
+	
+	public int myMenuAdd(String id,String menu_cd,String up_menu_cd,String menu_nm,String menu_lvl,String pgm_path,String pgm_id) {
+		Map<String, Object> menu = new HashMap<>();
+		menu.put("MENU_CD", menu_cd);
+		menu.put("UP_MENU_CD", up_menu_cd);
+		menu.put("MENU_NM", menu_nm);
+		menu.put("MENU_LVL", menu_lvl);
+		menu.put("PGM_PATH", pgm_path);
+		menu.put("PGM_ID", pgm_id);
+		menu.put("id",id);
+		return sdao.myMenuAdd(menu);
+	}
+	
+	public int myMenuDel(String menu_nm,String id) {
+		Map<String, Object> menu = new HashMap<>();
+		menu.put("MENU_NM", menu_nm);
+		menu.put("id",id);
+		return sdao.myMenuDel(menu);
+	}
+	
+	public int checkMyMenu(String id,String menu_nm) {
+		Map<String, Object> menu = new HashMap<>();
+		menu.put("id", id);
+		menu.put("MENU_NM", menu_nm);
+		return sdao.checkMyMenu(menu);
 	}
 }

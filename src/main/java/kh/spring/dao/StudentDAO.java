@@ -17,6 +17,7 @@ import kh.spring.dto.MyClassDTO;
 import kh.spring.dto.MyClassListDTO;
 import kh.spring.dto.MyClassTimeDTO;
 import kh.spring.dto.MyGradeDTO;
+import kh.spring.dto.MyMenuDTO;
 import kh.spring.dto.RoomInfoDTO;
 import kh.spring.dto.StudentDetailDTO;
 import kh.spring.dto.StudentInfoDTO;
@@ -165,5 +166,21 @@ public class StudentDAO {
 	
 	public int choiceGetCredit(String id) {
 		return db.selectOne("Student.choiceGetCredit",id);
+	}
+	
+	public List<MyMenuDTO> getMyMenu(String id){
+		return db.selectList("Student.getMyMenu",id);
+	};
+	
+	public int myMenuAdd(Map menu) {
+		return db.insert("Student.myMenuAdd",menu);
+	}
+	
+	public int myMenuDel(Map menu) {
+		return db.delete("Student.myMenuDel",menu);
+	}
+	
+	public int checkMyMenu(Map menu) {
+		return db.selectList("Student.checkMyMenu",menu).size();
 	}
 }
