@@ -28,6 +28,8 @@ import kh.spring.dto.MyClassDTO;
 import kh.spring.dto.MyClassListDTO;
 import kh.spring.dto.MyClassTimeDTO;
 import kh.spring.dto.MyGradeDTO;
+import kh.spring.dto.MyMenuDTO;
+import kh.spring.dto.MyMenuDTO2;
 import kh.spring.dto.ProFileDTO;
 import kh.spring.dto.RoomInfoDTO;
 import kh.spring.dto.StuUpdateDTO;
@@ -370,8 +372,57 @@ public class StudentController {
 		return nr;
 	}
 	
+	
+	
 	@RequestMapping("/jusoSearch.nex")
-	public String TojusoSearch() {
+	public String toJusoSearch() {
 		return "jusoopenapisearch";
+	}
+	
+	@RequestMapping("/getMyMenu.nex")
+	public NexacroResult getMyMenu() {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		
+		List<MyMenuDTO> myMenuList = new ArrayList<>();
+		myMenuList = sservice.getMyMenu(id);
+		System.out.println(myMenuList.size());
+		List<MyMenuDTO2> myMenuList2 = new ArrayList<>();
+		for(int i=0; i<myMenuList.size();i++) {
+			MyMenuDTO2 mdto = new MyMenuDTO2();
+			mdto.setMENU_CD(myMenuList.get(i).getMenu_cd());
+			mdto.setUP_MENU_CD(myMenuList.get(i).getUp_menu_cd());
+			mdto.setMENU_NM(myMenuList.get(i).getMenu_nm());
+			mdto.setMENU_LVL(myMenuList.get(i).getMenu_lvl());
+			mdto.setPGM_PATH(myMenuList.get(i).getPgm_path());
+			mdto.setPGM_ID(myMenuList.get(i).getPgm_id());
+			myMenuList2.add(mdto);
+		}
+		nr.addDataSet("out_myMenu",myMenuList2);
+		
+		return nr;
+	}
+	
+	@RequestMapping("/myMenuDel.nex")
+	public NexacroResult myMenuDel(@ParamVariable(name="menu_nm") String menu_nm) {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		System.out.println(menu_nm);
+		sservice.myMenuDel(menu_nm,id);
+		
+		return nr;
+	}
+	
+	@RequestMapping("/myMenuAdd.nex")
+	public NexacroResult myMenuAdd(@ParamVariable(name="menu_cd") String menu_cd,@ParamVariable(name="up_menu_cd") String up_menu_cd,@ParamVariable(name="menu_nm") String menu_nm,@ParamVariable(name="menu_lvl") String menu_lvl,@ParamVariable(name="pgm_path") String pgm_path,@ParamVariable(name="pgm_id") String pgm_id) {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		if(sservice.checkMyMenu(id,menu_nm) == 1) {
+			nr.setErrorCode(0);
+		}else {
+			int result = sservice.myMenuAdd(id,menu_cd,up_menu_cd,menu_nm,menu_lvl,pgm_path,pgm_id);
+			nr.setErrorCode(1);
+		}
+		return nr;
 	}
 }
