@@ -25,6 +25,8 @@ import kh.spring.dto.ChangeDeptApplyDTO_NEX;
 import kh.spring.dto.ClassroomDTO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
+import kh.spring.dto.CreditRenounceDTO;
+import kh.spring.dto.CreditRenounceDTO_NEX;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.FilesDTO;
 import kh.spring.dto.LectureDTO;
@@ -33,8 +35,12 @@ import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.ProfessorDTO_NEX;
+import kh.spring.dto.ReturnApplyDTO;
+import kh.spring.dto.ReturnApplyDTO_NEX;
 import kh.spring.dto.StudentDTO;
 import kh.spring.dto.StudentDTO_NEX;
+import kh.spring.dto.TakeOffApplyDTO;
+import kh.spring.dto.TakeOffApplyDTO_NEX;
 import kh.spring.utils.ConvertDate;
 
 @Service
@@ -403,13 +409,13 @@ public class AdminService {
 	}
 	
 	
-	// 신청사항 목록
-	public List<ChangeDeptApplyDTO> getChangeDeptApplyDTO(){
-		return admdao.getChangeDeptApplyDTO();
+	// 전과신청 목록
+	public List<ChangeDeptApplyDTO> getChangeDeptApply(){
+		return admdao.getChangeDeptApply();
 	}
 	
-	// 신청사항 처리
-	public int appApproval(ChangeDeptApplyDTO_NEX dto) throws Exception {
+	// 전과신청 처리
+	public int changeDeptApproval(ChangeDeptApplyDTO_NEX dto) throws Exception {
 		ChangeDeptApplyDTO dto2 = new ChangeDeptApplyDTO();
 		dto2.setSeq(dto.getSeq());
 		dto2.setId(dto.getId());
@@ -421,22 +427,48 @@ public class AdminService {
 		dto2.setChangeDept(dto.getChangeDept());
 		dto2.setApply_date(ConvertDate.stringToDate(dto.getApply_date()));
 		dto2.setApply_approve(dto.getApply_approve());
-		return admdao.appApproval(dto2);
+		return admdao.changeDeptApproval(dto2);
 	}
 	
-	// 신청사항 반려
-	public int appRejected(ApplicationDTO_NEX dto) throws Exception {
-		ApplicationDTO dto2 = new ApplicationDTO();
-		dto2.setSeq(dto.getSeq());
-		dto2.setTitle(dto.getTitle());
-		dto2.setContents(dto.getContents());
-		dto2.setApplicant(dto.getApplicant());
-		dto2.setName(dto.getName());
-		dto2.setApproval(dto.getApproval());
-		dto2.setApply_date(ConvertDate.stringToDate(dto.getApply_date()));
-		return admdao.appRejected(dto2);
+	// 휴학신청 목록
+	public List<TakeOffApplyDTO> getTakeOffApply(){
+		return admdao.getTakeOffApply();
 	}
 	
+	// 휴학신청 처리
+	public int takeOffApproval(TakeOffApplyDTO_NEX dto) throws Exception {
+		TakeOffApplyDTO dto2 = new TakeOffApplyDTO(dto.getSeq(), dto.getId(), dto.getName(), dto.getCol_title(), dto.getDept_title(),
+													dto.getReason(), dto.getTakeOff_Year(), dto.getTakeOff_Semester(), dto.getExpectedReturnYear(),
+													ConvertDate.stringToDate(dto.getApply_date()), dto.getApply_approve());
+		return admdao.takeOffApproval(dto2);
+	}
+	
+	// 복학신청 목록
+	public List<ReturnApplyDTO> getReturnApply(){
+		return admdao.getReturnApply();
+	}
+	
+	// 복학신청 처리
+	public int returnApproval(ReturnApplyDTO_NEX dto) throws Exception {
+		ReturnApplyDTO dto2 = new ReturnApplyDTO(dto.getSeq(), dto.getId(), dto.getName(), dto.getCol_title(), dto.getDept_title(),
+													dto.getReason(), dto.getReturn_year(), dto.getReturn_semester(), 
+													ConvertDate.stringToDate(dto.getApply_date()), dto.getApply_approve());
+		return admdao.returnApproval(dto2);
+	}
+	
+	// 학점포기신청 목록
+	public List<CreditRenounceDTO> getCreditRenounceApply(){
+		return admdao.getCreditRenounceApply();
+	}
+	
+	// 학점포기 처리
+	public int creditRenounceApproval(CreditRenounceDTO_NEX dto) throws Exception {
+		CreditRenounceDTO dto2 = new CreditRenounceDTO(dto.getSeq(),dto.getId(),dto.getName(),dto.getCol_title(),dto.getDept_title(),
+														dto.getLec_title(),dto.getGrade_code(),dto.getReco_score(),
+														ConvertDate.stringToDate(dto.getApply_date()),dto.getApply_approve());
+		return admdao.creditRenounceApproval(dto2);
+	}
+
 	// 메일 전송
 	public int sendAppResult(MailDTO dto) {
 		return admdao.sendAppResult(dto);

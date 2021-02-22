@@ -222,38 +222,54 @@
 	DELETE FROM COL_SCHEDULE WHERE SEQ=#{seq}
 </delete>
 
+
 <select id="getChangeDeptApply" resultType="kh.spring.dto.ChangeDeptApplyDTO">
 	SELECT
 		A.SEQ, A.ID, NAME, CHANGEYEAR, CHANGESEMESTER, REASON, CHANGECOLLEGE, CHANGEDEPT, APPLY_DATE, APPLY_APPROVE
 		FROM CHANGEDEPTAPPLY A, USERS U
-		WEHRE A.ID=U.ID AND DEPARTMENT 
+		WHERE A.ID=U.ID
 </select>
 
-
-<!-- 
-<select id="getTakeOffApply" resultType="kh.spring.dto.TakeOffApplyDTO">
-	
-</select>
-
-
-<select id="getReturn" resultType="kh.spring.dto.ReturnApplyDTO">
-	SELECT SEQ, 
-</select>
-
-<select id="getCreditRenounce" resultType="kh.spring.dto.getCreditRenounceDTO">
-	SELECT C.SEQ, C.ID, U.NAME, RENOUNCESUBJECT, LEC_TITLE, APPLY_DATE, APPLY_APPROVE
-		FROM CREDITRENOUNCE C, USERS U, LECTURE
-		WHERE C.ID=U.ID AND RENOUNCESUBJECT=LEC_CODE
-</select>
--->
-
-<update id="appApproval">
-	
+<update id="changeDeptApproval">
 	UPDATE CHANGEDEPTAPPLY SET APPLY_APPROVE=#{apply_approve} WHERE SEQ=#{seq}
 </update>
 
+<select id="getTakeOffApply" resultType="kh.spring.dto.TakeOffApplyDTO">
+	SELECT
+	    A.SEQ, A.ID, NAME, C.COL_TITLE, D.DEPT_TITLE, REASON, TAKEOFF_YEAR, TAKEOFF_SEMESTER, EXPECTEDRETURNYEAR, APPLY_DATE, APPLY_APPROVE
+	    FROM TAKEOFFAPPLY A, USERS U, DEPARTMENT D, COLLEGE C
+	    WHERE A.ID=U.ID AND U.DEPTCODE=D.DEPT_CODE AND C.COL_CODE=U.COLCODE
+</select>
+
+<update id="takeOffApproval">
+	UPDATE TAKEOFFAPPLY SET APPLY_APPROVE=#{apply_approve} WHERE SEQ=#{seq}
+</update>
+
+<select id="getReturnApply" resultType="kh.spring.dto.ReturnApplyDTO">
+	SELECT
+    	SEQ, A.ID, NAME, COL_TITLE, DEPT_TITLE, REASON, RETURN_YEAR, RETURN_SEMESTER, APPLY_DATE, APPLY_APPROVE    
+    	FROM RETURNAPPLY A, USERS U, COLLEGE C, DEPARTMENT D
+    	WHERE A.ID=U.ID AND U.COLCODE=C.COL_CODE AND U.DEPTCODE=D.DEPT_CODE
+</select>
+
+<update id="returnApproval">
+	UPDATE RETURNAPPLY SET APPLY_APPROVE=#{apply_approve} WHERE SEQ=#{seq}
+</update>
+
+<select id="getCreditRenounce" resultType="kh.spring.dto.CreditRenounceDTO">
+	SELECT
+		SEQ, A.ID, U.NAME, COL_TITLE, DEPT_TITLE, S.NAME AS LEC_TITLE, GRADE_CODE, RECO_SCORE, APPLY_DATE, APPLY_APPROVE
+	    FROM CREDITRENOUNCE A, USERS U, GRADE, SUBJECT S, COLLEGE C, DEPARTMENT D
+	    WHERE A.ID=STD_ID AND A.ID=U.ID AND U.COLCODE=C.COL_CODE AND U.DEPTCODE=D.DEPT_CODE AND RENOUNCESUBJECT=LEC_CODE AND RENOUNCESUBJECT=CODE
+</select>
+
+<update id="creditRenounceApproval">
+	UPDATE CREDITRENOUNCE SET APPLY_APPROVE=#{apply_approve} WHERE SEQ=#{seq}
+</update>
+
+
 <insert id="sendAppResult">
-	INSERT INTO MAIL VALUES(MAIL_SEQ.NEXTVAL,#{receiver},#{title},#{contents},SYSDATE)
+	INSERT INTO MAIL VALUES(MAIL_SEQ.NEXTVAL,#{receiver},#{title},#{contents},SYSDATE, 0)
 </insert>
 
 </mapper>

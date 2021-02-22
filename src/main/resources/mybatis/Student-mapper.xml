@@ -36,7 +36,7 @@
 	</insert>
 	
 	<insert id="takeOffApply">
-		insert into takeOffApply values(takeOffapply_seq.nextval,#{dto.id},#{dto.reason},#{dto.takeOffYear},#{dto.takeOffSemester},#{dto.expectedReturnYear},#{date},'신청')
+		insert into takeOffApply values(takeOffapply_seq.nextval,#{dto.id},#{dto.reason},#{dto.takeOff_Year},#{dto.takeOff_Semester},#{dto.expectedReturnYear},#{date},'신청')
 	</insert>
 	
 	<select id="checkTakeOffApply" resultType="kh.spring.dto.TakeOffApplyDTO">
@@ -158,5 +158,6 @@
 	<select id="choiceGetCredit" resultType="Integer">
 		select NVL(sum(s.reco_score),0) from subject s,open_class o,ClassRegistration c where o.oc_code = s.code and c.lec_code = o.oc_code and c.id=#{id} and s.isu in('전공선택','교양선택')
 	</select>
+	
 	
 </mapper>

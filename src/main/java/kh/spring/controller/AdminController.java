@@ -26,6 +26,8 @@ import kh.spring.dto.ClassroomDTO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.ColScheduleDTO_NEX;
 import kh.spring.dto.CollegeDTO;
+import kh.spring.dto.CreditRenounceDTO;
+import kh.spring.dto.CreditRenounceDTO_NEX;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.FilesDTO;
 import kh.spring.dto.LectureDTO;
@@ -34,8 +36,12 @@ import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.ProfessorDTO_NEX;
+import kh.spring.dto.ReturnApplyDTO;
+import kh.spring.dto.ReturnApplyDTO_NEX;
 import kh.spring.dto.StudentDTO;
 import kh.spring.dto.StudentDTO_NEX;
+import kh.spring.dto.TakeOffApplyDTO;
+import kh.spring.dto.TakeOffApplyDTO_NEX;
 import kh.spring.service.AdminService;
 import kh.spring.service.BoardService;
 import kh.spring.service.CommentService;
@@ -396,37 +402,54 @@ public class AdminController {
 	public NexacroResult getApplication(@ParamVariable(name="applyFor")String applyFor) {
 		NexacroResult nr = new NexacroResult();
 		if(applyFor.contentEquals("전과")) {
-			List<ChangeDeptApplyDTO> list = admService.getChangeDeptApplyDTO();
+			List<ChangeDeptApplyDTO> list = admService.getChangeDeptApply();
 			nr.addDataSet("out_changeDeptApply",list);
 		}else if(applyFor.contentEquals("휴학")) {
-			
-			
+			List<TakeOffApplyDTO> list = admService.getTakeOffApply();
+			nr.addDataSet("out_takeOffApply",list);
 		}else if(applyFor.contentEquals("복학")) {
-			
-			
+			List<ReturnApplyDTO> list = admService.getReturnApply();
+			nr.addDataSet("out_returnApply",list);			
 		}else if(applyFor.contentEquals("학점포기")) {
-			
-			
+			List<CreditRenounceDTO> list = admService.getCreditRenounceApply();
+			nr.addDataSet("out_creditRenounce",list);
 		}
 		return nr;
 	}
 	
 	// 전과 처리
 	@RequestMapping("changeDeptApproval.nex")
-	public NexacroResult appApproval(@ParamDataSet(name="in_changeDeptApply")ChangeDeptApplyDTO_NEX adto, @ParamDataSet(name="in_mail")MailDTO mdto) throws Exception {
-		admService.appApproval(adto);
-		admService.sendAppResult(mdto);
+	public NexacroResult changeDeptApproval(@ParamDataSet(name="in_changeDeptApply")ChangeDeptApplyDTO_NEX dto) throws Exception {
+		admService.changeDeptApproval(dto);
 		return new NexacroResult();
 	}
 	
-//	@RequestMapping("appApproval.nex")
-//	public NexacroResult appApproved(@ParamDataSet(name="in_takeOffApply")TakeOffApplyDTO_NEX adto, @ParamDataSet(name="in_mail")MailDTO mdto) throws Exception {
-//		admService.appApproved(adto);
-//		admService.sendAppResult(mdto);
-//		return new NexacroResult();
-//	}
+	// 휴학 처리
+	@RequestMapping("takeOffApproval.nex")
+	public NexacroResult takeOffApproval(@ParamDataSet(name="in_takeOffApply")TakeOffApplyDTO_NEX dto) throws Exception {
+		admService.takeOffApproval(dto);
+		return new NexacroResult();
+	}
+	
+	// 복학 처리
+	@RequestMapping("returnApproval.nex")
+	public NexacroResult returnApproval(@ParamDataSet(name="in_returnApply")ReturnApplyDTO_NEX dto) throws Exception {
+		admService.returnApproval(dto);
+		return new NexacroResult();
+	}
+	
+	// 학첨포기 처리
+	@RequestMapping("creditRenounceApproval.nex")
+	public NexacroResult creditRenounceApproval(@ParamDataSet(name="in_creditRenounce")CreditRenounceDTO_NEX dto) throws Exception {
+		admService.creditRenounceApproval(dto);
+		return new NexacroResult();		
+	}
+		
+	// 메일 전송
+	@RequestMapping("sendAppResult.nex")
+	public NexacroResult sendAppResult(@ParamDataSet(name="in_mail")MailDTO dto) {
+		admService.sendAppResult(dto);
+		return new NexacroResult();
+	}
 
-	
-	
-	
 }
