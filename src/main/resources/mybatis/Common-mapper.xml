@@ -18,7 +18,14 @@
 	select * from gradecard
 	</select>
 	
-	
+	<select id="getColSche" resultType="kh.spring.dto.ColScheduleDTO">
+		select * from
+		(
+			select col_schedule.*, row_number() over( order by sche_startdate asc ) rn
+			from col_schedule
+		)
+		where rn between 1 and 10
+	</select>
 	
 	
 	

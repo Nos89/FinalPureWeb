@@ -29,6 +29,7 @@ import com.nexacro.uiadapter17.spring.core.annotation.ParamVariable;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 
 import kh.spring.dto.CloudDTO;
+import kh.spring.dto.DirectoryDTO;
 import kh.spring.dto.InDirDTO;
 import kh.spring.service.WebhardService;
 
@@ -42,13 +43,20 @@ public class WebhardController {
 	WebhardService wservice;
 
 	@RequestMapping("/onload")
+	@Transactional
 	public NexacroResult onload() {
 		NexacroResult nr = new NexacroResult();
 		String loginID = (String) session.getAttribute("loginID");
-		System.out.println(wservice.getList(loginID).size());
-		nr.addDataSet("outds_dirList", wservice.getList(loginID));
-		nr.addVariable("storage", wservice.getStorage(loginID));
-		return nr;
+		if( loginID.contentEquals("") || loginID.contentEquals(null) ) {
+			nr.setErrorCode(-1);
+			nr.setErrorMsg("로그인 정보를 확인해주세요.");
+			return nr;
+		} else {
+			nr.addDataSet("outds_dirList", wservice.getList(loginID));
+			nr.addVariable("storage", wservice.getStorage(loginID));
+			nr.setErrorCode(1);
+			return nr;
+		}
 	}
 
 	@RequestMapping("/upload")
@@ -144,11 +152,18 @@ public class WebhardController {
 
 	@RequestMapping("/getIndir")
 	public NexacroResult getIndir(@ParamVariable(name = "parentID") int parentID) {
-		String id = (String) session.getAttribute("loginID");
 		NexacroResult nr = new NexacroResult();
-		List<InDirDTO> list = wservice.getInDir(id, parentID);
-		nr.addDataSet("out_indir", wservice.getInDir(id, parentID));
-		return nr;
+		String loginID = (String) session.getAttribute("loginID");
+		if( loginID.contentEquals("") || loginID.contentEquals(null) ) {
+			nr.setErrorCode(-1);
+			nr.setErrorMsg("로그인 정보를 확인해주세요.");
+			return nr;
+		} else {
+			List<InDirDTO> list = wservice.getInDir(loginID, parentID);
+			nr.addDataSet("out_indir", wservice.getInDir(loginID, parentID));
+			nr.setErrorCode(1);
+			return nr;
+		}
 	}
 
 	// 파일 및 폴더 삭제
@@ -227,6 +242,7 @@ public class WebhardController {
 		} else {
 			System.out.println("fileDownload filename==>" + oriname + ", 파일없음.");
 			nr.setErrorCode(-1);
+			nr.setErrorMsg("파일이 존재하지 않습니다.");
 		}
 		return nr;
 	}
@@ -315,9 +331,17 @@ public class WebhardController {
 	// 디렉토리 목록 다시 가져오기
 	@RequestMapping("/getDirectory")
 	public NexacroResult getDirectory() {
-		String loginID = (String)session.getAttribute("loginID");
 		NexacroResult nr = new NexacroResult();
-		nr.addDataSet("out_directory", wservice.getList(loginID));
-		return nr;
+		
+		String loginID = (String)session.getAttribute("loginID");
+		if( loginID.contentEquals("") || loginID.contentEquals(null) ) {
+			nr.setErrorCode(-1);
+			nr.setErrorMsg("로그인 정보를 확인해주세요.");
+			return nr;
+		} else {
+			nr.addDataSet("out_directory", wservice.getList(loginID));
+			nr.setErrorCode(1);
+			return nr;
+		}
 	}
 }
