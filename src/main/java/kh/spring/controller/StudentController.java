@@ -22,6 +22,8 @@ import kh.spring.dto.ConditionForMyClassDTO;
 import kh.spring.dto.ConditionForRoomInfoDTO;
 import kh.spring.dto.GotMyCertificationDTO;
 import kh.spring.dto.GradeListDTO;
+import kh.spring.dto.MailDTO;
+import kh.spring.dto.MailDTO_NEX;
 import kh.spring.dto.MajorApplyDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.MyClassDTO;
@@ -424,5 +426,20 @@ public class StudentController {
 			nr.setErrorCode(1);
 		}
 		return nr;
+	}
+	
+	@RequestMapping("getInBox.nex")
+	public NexacroResult getMailBox() {
+		String id = (String)session.getAttribute("loginID");
+		NexacroResult nr = new NexacroResult();
+		List<MailDTO> list = sservice.getMailBox(id);
+		nr.addDataSet("out_mail",list);
+		return nr;
+	}
+	
+	@RequestMapping("updateReadStatus.nex")
+	public NexacroResult updateReadStatus(@ParamDataSet(name="in_mail")MailDTO_NEX dto) throws Exception {
+		sservice.updateReadStatus(dto);
+		return new NexacroResult();
 	}
 }

@@ -36,7 +36,7 @@
 	</insert>
 	
 	<insert id="takeOffApply">
-		insert into takeOffApply values(takeOffapply_seq.nextval,#{dto.id},#{dto.reason},#{dto.takeOffYear},#{dto.takeOffSemester},#{dto.expectedReturnYear},#{date},'신청')
+		insert into takeOffApply values(takeOffapply_seq.nextval,#{dto.id},#{dto.reason},#{dto.takeOff_Year},#{dto.takeOff_Semester},#{dto.expectedReturnYear},#{date},'신청')
 	</insert>
 	
 	<select id="checkTakeOffApply" resultType="kh.spring.dto.TakeOffApplyDTO">
@@ -174,4 +174,12 @@
 	<select id="checkMyMenu" resultType="kh.spring.dto.MyMenuDTO">
 		select * from mymenu where id=#{id} and MENU_NM=#{MENU_NM}
 	</select>
+	
+	<select id="getMailBox" resultType="kh.spring.dto.MailDTO">
+		SELECT * FROM MAIL WHERE RECEIVER=#{id} ORDER BY RECEIVED_DATE DESC
+	</select>
+	
+	<update id="updateReadStatus">
+		UPDATE MAIL SET READ=1 WHERE MAIL_SEQ=#{mail_seq}
+	</update>
 </mapper>

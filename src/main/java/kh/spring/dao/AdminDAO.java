@@ -8,7 +8,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kh.spring.dto.ApplicationDTO;
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.BuildDTO;
@@ -16,13 +15,16 @@ import kh.spring.dto.ChangeDeptApplyDTO;
 import kh.spring.dto.ClassroomDTO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
+import kh.spring.dto.CreditRenounceDTO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.FilesDTO;
 import kh.spring.dto.LectureDTO;
 import kh.spring.dto.MailDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.ProfessorDTO;
+import kh.spring.dto.ReturnApplyDTO;
 import kh.spring.dto.StudentDTO;
+import kh.spring.dto.TakeOffApplyDTO;
 
 @Repository
 public class AdminDAO {
@@ -197,29 +199,54 @@ public class AdminDAO {
 	}
 	
 	
-	// 메일 전송
-	public int sendAppResult(MailDTO dto) {
-		return db.insert("Admin.sendAppResult",dto);
-	}
 	
 	// 전과신청 목록
-	public List<ChangeDeptApplyDTO> getChangeDeptApplyDTO(){
-		return db.selectList("Admin.getChangeDeptApplyDTO");
+	public List<ChangeDeptApplyDTO> getChangeDeptApply(){
+		return db.selectList("Admin.getChangeDeptApply");
 	}
 	
-	// 
-	public List<ApplicationDTO> getApplication(){
-		return db.selectList("Admin.getApplication");
+	// 전과신청 처리
+	public int changeDeptApproval(ChangeDeptApplyDTO dto) {
+		return db.update("Admin.changeDeptApproval",dto);
 	}
 	
-	// 신청사항 처리
-	public int appApproval(ChangeDeptApplyDTO dto) {
-		return db.update("Admin.appApproval",dto);
+	// 휴학신청 목록
+	public List<TakeOffApplyDTO> getTakeOffApply(){
+		return db.selectList("Admin.getTakeOffApply");
 	}
 	
-	// 신청사항 반려
-	public int appRejected(ApplicationDTO dto) {
-		return db.update("Admin.appApproval",dto);
+	// 휴학신청 처리
+	public int takeOffApproval(TakeOffApplyDTO dto) {
+		return db.update("Admin.takeOffApproval",dto);
 	}
-
+	
+	// 복학신청 목록
+	public List<ReturnApplyDTO> getReturnApply(){
+		return db.selectList("Admin.getReturnApply");
+	}
+	
+	// 복학신청 처리
+	public int returnApproval(ReturnApplyDTO dto){
+		return db.update("Admin.returnApproval",dto);
+	}
+	
+	// 학점포기신청 목록
+	public List<CreditRenounceDTO> getCreditRenounceApply(){
+		return db.selectList("Admin.getCreditRenounce");
+	}
+	
+	// 학점포기신청 처리
+	public int creditRenounceApproval(CreditRenounceDTO dto) {
+		return db.update("Admin.creditRenounce",dto);
+	}
+	
+	// 신청결과 메일 통지
+	public int sendMail(MailDTO dto) {
+		return db.insert("Admin.sendMail",dto);
+	}
+	
+	// 발신메일함 목록
+	public List<MailDTO> getOutBox(){
+		return db.selectList("Admin.getOutBox");
+	}
 }

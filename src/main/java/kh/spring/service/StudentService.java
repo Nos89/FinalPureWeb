@@ -16,6 +16,8 @@ import kh.spring.dto.ConditionForMyClassDTO;
 import kh.spring.dto.ConditionForRoomInfoDTO;
 import kh.spring.dto.GotMyCertificationDTO;
 import kh.spring.dto.GradeListDTO;
+import kh.spring.dto.MailDTO;
+import kh.spring.dto.MailDTO_NEX;
 import kh.spring.dto.MajorApplyDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.MyClassDTO;
@@ -28,6 +30,7 @@ import kh.spring.dto.StuUpdateDTO;
 import kh.spring.dto.StudentDetailDTO;
 import kh.spring.dto.StudentInfoDTO;
 import kh.spring.dto.TakeOffApplyDTO;
+import kh.spring.utils.ConvertDate;
 
 @Service
 public class StudentService {
@@ -239,5 +242,15 @@ public class StudentService {
 		menu.put("id", id);
 		menu.put("MENU_NM", menu_nm);
 		return sdao.checkMyMenu(menu);
+	}
+	
+	public List<MailDTO> getMailBox(String id) {
+		return sdao.getMailBox(id);
+	}
+	
+	public int updateReadStatus(MailDTO_NEX dto) throws Exception {
+		MailDTO dto2 = new MailDTO(dto.getMail_seq(),dto.getReceiver(),dto.getTitle(),dto.getContents(),
+									ConvertDate.stringToDate(dto.getReceived_date()),dto.getRead());
+		return sdao.updateReadStatus(dto2);
 	}
 }
