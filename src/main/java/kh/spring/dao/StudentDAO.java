@@ -12,6 +12,7 @@ import kh.spring.dto.ClassTimeSearchDTO;
 import kh.spring.dto.ConditionForRoomInfoDTO;
 import kh.spring.dto.GotMyCertificationDTO;
 import kh.spring.dto.GradeListDTO;
+import kh.spring.dto.MailDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.MyClassDTO;
 import kh.spring.dto.MyClassListDTO;
@@ -182,5 +183,13 @@ public class StudentDAO {
 	
 	public int checkMyMenu(Map menu) {
 		return db.selectList("Student.checkMyMenu",menu).size();
+	}
+	
+	public List<MailDTO> getMailBox(String id){
+		return db.selectList("Student.getMailBox",id);
+	}
+	
+	public int updateReadStatus(MailDTO dto) {
+		return db.update("Student.updateReadStatus", dto);
 	}
 }
