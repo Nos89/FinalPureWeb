@@ -89,6 +89,10 @@ public class InfoDAO {
 	public List<ColScheduleDTO> get4ColSchedule(String yearMonth) {
 		return db.selectList("Info.get4ColSchedule",yearMonth);
 	}
+	
+	public List<ColScheduleDTO> getMainSchedule(String month_click2) {
+		return db.selectList("Info.getColSchedule",month_click2);
+	}
 
 
 

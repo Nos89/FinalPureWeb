@@ -37,6 +37,7 @@ public class ElecAttendController {
 		String id = (String) session.getAttribute("loginID");
 		//semester 나오는 모양=> 2021년 1학기
 		String semTitle = semester;
+		//System.out.println(semester);
 		String temp[] = semTitle.split(" ");
 		String temp2[] = temp[0].split("년");
 		temp2[0] = temp2[0]+"학년도"; 
@@ -47,7 +48,7 @@ public class ElecAttendController {
 		String sem = arr[1];
 
 		if (sem.contentEquals("1학기")) {
-			String regDate = arr[0] + "/02/22";
+			String regDate = arr[0] + "/02/19";
 			List<ElecSelectClassDTO> classList = eservice.getClassList(id, regDate);
 			
 			if (className != null) {
