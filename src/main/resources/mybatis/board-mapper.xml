@@ -103,18 +103,26 @@
 	<select id="articleSearchCount" resultType="Integer">
 		select count(*) from 
 		<choose>
-			<when test="boardType == notice">
+			<when test="boardType == 'notice'">
 				board_notice where
-				
+				<if test="category != null">
+					category = #{category} and 
+				</if>
 			</when>
 			<otherwise>
 				board where
 				division_code = (select code from board_division where title = #{boardType}) and
 			</otherwise>
 		</choose>
-		
 		<if test="searchType == 'title'">
-			(title like
+			<choose>
+				<when test="boardType == 'notice'">
+				(noti_title like
+				</when>
+				<otherwise>
+				(title like
+				</otherwise>
+			</choose>
 			<foreach collection="searchText" item="i" open="(" close=")" separator="or">
 				'%'||#{i}||'%'
 			</foreach>
@@ -124,6 +132,7 @@
 			writer like '%'||#{searchText[0]}||'%' 
 		</if>
 	</select>
+	
 	<select id="boardSearch" resultType="kh.spring.dto.BoardDTO">
 		select * 
 		from (select board.*, row_number() over(order by writeDate desc) rn from board where 
@@ -142,6 +151,22 @@
 		) where rn between #{startNumByPage} and #{endNumByPage}
 	</select>
 	
+	<select id="noticeSearch" resultType="kh.spring.dto.NoticeDTO">
+		select *
+		from 
+			(
+				select board_notice.*, row_number() over(order by noti_writeDate desc) rn
+				from board_notice
+				where 
+				<if test="category != null">category = #{category} and </if>
+				(noti_title like 
+				<foreach collection="searchText" item="i" open="(" close=")" separator="or">
+					'%'||#{i}||'%'
+				</foreach>
+				)
+			)
+		where rn between #{startNumByPage} and #{endNumByPage}
+	</select>
 	
 	<!-- 메인 홈페이지 홍보 게시글 10개 가져오기 -->
 	<select id="mainPromote" resultType="kh.spring.dto.BoardDTO">

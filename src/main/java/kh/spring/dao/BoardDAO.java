@@ -89,6 +89,10 @@ public class BoardDAO {
 		return session.selectList("Board.boardSearch", map);
 	}
 	
+	public List<NoticeDTO> noticeSearch(Map map){
+		return session.selectList("Board.noticeSearch", map);
+	}
+	
 	// 메인 홈페이지 홍보 게시글 10개
 	public List<BoardDTO> getPromote(){
 		return session.selectList("Board.mainPromote");

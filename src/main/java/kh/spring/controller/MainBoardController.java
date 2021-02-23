@@ -271,13 +271,14 @@ public class MainBoardController {
 
 	// 게시판 검색
 	@RequestMapping("/board.search")
-	public String boardSearch(String pageGroup, String type, String search, String page, Model model) {
+	public String boardSearch(String pageGroup, String type, String search, String category, String page, Model model) {
 		int currentPage = this.convertPage(page);
 		model.addAttribute("pageGroup", pageGroup);
 		model.addAttribute("type", type);
 		model.addAttribute("search", search);
 		model.addAttribute("page", currentPage);
-		model.addAttribute("cont", bservice.boardSearch(type, search, currentPage));
+		model.addAttribute("category", category);
+		model.addAttribute("cont", bservice.boardSearch(type, search, category, currentPage));
 		model.addAttribute("page", currentPage);
 		model.addAttribute("list", true);
 		return "main/" + pageGroup + "/board";

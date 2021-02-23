@@ -49,11 +49,14 @@ public class BoardService {
 		return bdao.getArticleCount(temp);
 	}
 
-	private int getSearchCount(String type, String searchType, String[] searchText) {
+	private int getSearchCount(String type, String searchType, String[] searchText, String category) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("boardType", type);
 		map.put("searchType", searchType);
 		map.put("searchText", searchText);
+		if( type.contentEquals("notice") ) {
+			map.put("category", category);
+		}
 		return bdao.getSearchCount(map);
 	}
 
@@ -130,20 +133,30 @@ public class BoardService {
 	}
 
 	// 게시판 검색
-	public Map<String, Object> boardSearch(String type, String search, int page) {
+	public Map<String, Object> boardSearch(String type, String search, String category, int page) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("boardType", type);
 		String searchType = search.split("-")[0];
 		String[] searchText = (search.split("-")[1]).split(" ");
 		map.put("searchType", searchType);
 		map.put("searchText", searchText);
-		Map<String, Object> navi = this.getNavigator(this.getSearchCount(type, searchType, searchText), page);
-		System.out.println(navi.get("startNumByPage") + " : " + navi.get("endNumByPage"));
+		int searchCount = this.getSearchCount(type, searchType, searchText, category); 
+		System.out.println(searchCount);
+		Map<String, Object> navi = this.getNavigator(searchCount, page);
+		
 		map.put("startNumByPage", navi.get("startNumByPage"));
 		map.put("endNumByPage", navi.get("endNumByPage"));
 
-		List<BoardDTO> list = bdao.boardSearch(map);
-
+		List<BoardDTO> list = new ArrayList<>();
+		if( type.contentEquals("notice") ) {
+			List<NoticeDTO> nlist = bdao.noticeSearch(map);
+			for( NoticeDTO n : nlist ) {
+				list.add(this.convertNoti(n));
+			}
+		} else {
+			list = bdao.boardSearch(map);
+		}
+		System.out.println(list.size());
 		Map<String, Object> result = new HashMap<>();
 		result.put("list", list);
 		result.put("navi", navi);
@@ -159,14 +172,6 @@ public class BoardService {
 			// bdto.setBoardType(bdto.getBoardType().substring(0, bdto.getBoardType().indexOf("Board")));
 		}
 		return bdto;
-	}
-
-	private String convertType(String type) {
-		if (type.contentEquals("notice")) {
-			type = "board_notice";
-		} else { // type = type.substring(0, type.indexOf("Board"));
-		}
-		return type;
 	}
 
 	// paging

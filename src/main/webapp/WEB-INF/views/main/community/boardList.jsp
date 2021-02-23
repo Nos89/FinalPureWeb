@@ -32,6 +32,11 @@
 				</div>
 			</div>
 			<div class="col-12 bodyWrapper">
+				<c:if test="${cont.list[0].seq == null}">
+					<div class="row">
+						<div class="col-12">검색 결과가 없습니다.</div>
+					</div>
+				</c:if>				
 				<c:forEach var="i" items="${cont.list}">
 				<div class="row">
 					<div class="col-1 boardSeq text-center">${i.seq}</div>
@@ -86,6 +91,8 @@
 </div>
 <script>
 	$(document).ready(function(){
+		let arrNotice = ['학사', '일반', '장학', '입학', '채용'];
+		
 		$(".btnFreeWrite").click(function(){
 			if( "${loginID}" == "" ){
 				alert("로그인을 해주세요.");
@@ -96,11 +103,30 @@
 		})
 		
 		$(".btnSearch").click(function(){
+			fnSearch();
+		})
+		
+		$(".searchText").keydown(function(e){
+			if( e.keyCode == 13 ){
+				fnSearch();
+			}
+		})
+		
+		let fnSearch = function(){
 			let searchType = $("select[name=searchType]").val();
 			let search = $(".searchText").val();
-			search = searchType+"-"+search;
-			location.href ="/main/board.search?pageGroup=${pageGroup}&type=${type}&search="+search;
-		})
+			if( search == "" ){
+				alert("검색어를 입력해주세요.");
+				return;
+			} else {
+				search = searchType+"-"+search;
+				href="/main/board.search?pageGroup=${pageGroup}&type=${type}&search="+search;
+				if( "${category}" != "" ){
+					href = href + "&category=${category}";
+				}
+				location.href = href;
+			}
+		}
 		
 		<c:if test="${type == 'notice'}">
 		
@@ -114,8 +140,8 @@
 			}
 		})
 		
-		let arrNotice = ['학사', '일반', '장학', '입학', '채용'];
 		
+		console.log("${category}");
 		if( "${category}" != "" ){
 			let cat = $(".boardTitleWrapper").children("div").eq(arrNotice.indexOf("${category}"));
 			cat.removeClass("btn-light");
