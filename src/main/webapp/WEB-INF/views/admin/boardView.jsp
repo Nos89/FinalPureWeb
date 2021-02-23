@@ -66,7 +66,7 @@
 							<c:forEach var="i" items="${files}">
 							<div class="row">
 								<div class="col-12">
-									<a href="/boardFiles/${i.savedName}" target="_blank">${i.oriName}</a>
+									<a href="/main/board.download?fileName=${i.savedName}&oriName=${i.oriName}" target="_blank">${i.oriName}</a>
 								</div>
 							</div>
 							</c:forEach>

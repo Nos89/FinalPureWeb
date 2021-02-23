@@ -89,12 +89,28 @@ $(document).ready(function() {
 			processData : false,
 			success : function(data) {
 				data = data;
-				console.log(data.url)
+				console.log(data.url);
             	//항상 업로드된 파일의 url이 있어야 한다.
-				$(editor).summernote('insertImage', data.url);
+            	
+            	/* let div = $("<div></div>");
+            	div.append("<p>이미지 불러오는중입니다.</p>");
+            	div.addClass("savingImg");
+            	$("#summernote").append(div);
+            	
+            	console.log(div); */
+            	
+            	setTimeout(function(){
+					$(editor).summernote('insertImage', data.url);
+					$(".savingImg").remove();
+            	}, 1000);
 			}
 		});
 	}
+	
+	/* setTimeout(function() {
+		$(".spinner-border").css("display","none");
+		$(el).summernote('editor.insertImage', img_name);
+	}, 4000); */
 	
 	$("input[type=submit]").click(function(){
 		let title = $(".title").val();

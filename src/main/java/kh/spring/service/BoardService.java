@@ -1,5 +1,6 @@
 package kh.spring.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import kh.spring.dao.BoardDAO;
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.FilesDTO;
+import kh.spring.dto.NoticeDTO;
 import kh.spring.statics.PagingConfigurator;
 
 @Service
@@ -18,135 +20,160 @@ public class BoardService {
 
 	@Autowired
 	BoardDAO bdao;
-	
+
 	// 게시글 작성
 	public int writeArticle(BoardDTO bdto) {
-		int result =bdao.writeArticle(convertType(bdto)); 
+		int result = bdao.writeArticle(bdto);
 		return result;
 	}
+
 	// 게시글 작성 넥사크로
 	public int writeArticle_NEX(BoardDTO_NEX bdto) {
 		BoardDTO dto = new BoardDTO(0, 0, 0, bdto.getTitle(), bdto.getContents(), bdto.getWriter(), null, bdto.getBoardType());
 		int result = bdao.writeArticle(convertType(dto));
 		return result;
 	}
-	
+
 	// 파일 업로드 로직
 	public void uploadFile(Map<String, Object> map) {
 		bdao.insertFile(map);
 	}
-	
+
 	// 전체 게시글 수
-	private int getArticleCount( String type ) {
-		return bdao.getArticleCount(type);
+	private int getArticleCount(String type, String category) {
+		Map<String, String> temp = new HashMap<>();
+		temp.put("type", type);
+		if( type.contentEquals("notice") ) {
+			temp.put("category", category);
+		}
+		return bdao.getArticleCount(temp);
 	}
-	
-	private int getArticleCount( String type, String searchType, String[] searchText ) {
+
+	private int getSearchCount(String type, String searchType, String[] searchText, String category) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("boardType", type);
 		map.put("searchType", searchType);
 		map.put("searchText", searchText);
-		return bdao.getArticleCount( map );
+		if( type.contentEquals("notice") ) {
+			map.put("category", category);
+		}
+		return bdao.getSearchCount(map);
 	}
-	
+
 	// 페이징 적용된 게시글
-	public Map<String, Object> getArticles( String type, int currentPage ){
-		type = this.convertType(type);
-		Map<String, Object> temp = new HashMap<>();
-		int recordTotalCount = this.getArticleCount(type);
+	public Map<String, Object> getArticles(String type, String category, int currentPage) {
+		int recordTotalCount = this.getArticleCount(type, category);
+		
 		Map<String, Object> navi = this.getNavigator(recordTotalCount, currentPage);
 		Map<String, Object> map = new HashMap<>();
 		map.put("boardType", type);
 		map.put("startNumByPage", navi.get("startNumByPage"));
 		map.put("endNumByPage", navi.get("endNumByPage"));
-		List<BoardDTO> list = bdao.getArticleByPage(map);
+		
+		Map<String, Object> temp = new HashMap<>();
 		temp.put("navi", navi);
-		temp.put("list", list);
+		if( type.contentEquals("notice") ) {
+			map.put("category", category);
+			List<NoticeDTO> list = bdao.getNoticesByPage(map);
+			List<BoardDTO> clist = new ArrayList<>();
+			for( NoticeDTO n : list ) {
+				clist.add(this.convertNoti(n));
+			}
+			temp.put("list", clist);
+		} else {
+			List<BoardDTO> list = bdao.getArticleByPage(map);
+			System.out.println(list.size());
+			temp.put("list", list);
+		}
 		return temp;
 	}
 	
 	// 게시글 보기
-	public BoardDTO viewArticle( String type, int seq ) {
+	public BoardDTO viewArticle(String type, int seq) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("boardType", this.convertType(type));
+		map.put("boardType", type);
 		map.put("seq", seq);
-		return bdao.getArticle(map);
+		
+		if( type.contentEquals("notice") ) {
+			return this.convertNoti(bdao.getNotice(map));
+		} else {
+			return bdao.getArticle(map);
+		}
 	}
-	
+
 	// 게시글 첨부파일
-	public List<FilesDTO> getFiles(int parent_code){
+	public List<FilesDTO> getFiles(int parent_code) {
 		return bdao.getFiles(parent_code);
 	}
-	
+
 	// 게시글 첨부파일 삭제
-	public int delSpecFile(int seq ) {
+	public int delSpecFile(int seq) {
 		return bdao.delSpecFile(seq);
 	}
+
 	// 특정 첨부파일 가져오기
-	public List<FilesDTO> getSpecFile( List<Integer> seq ) {
+	public List<FilesDTO> getSpecFile(List<Integer> seq) {
 		return bdao.getSpecFile(seq);
 	}
-	
+
 	// 게시물 수정
-	public int modifyArticle( BoardDTO bdto, String type ) {
+	public int modifyArticle(BoardDTO bdto, String type) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("boardType", this.convertType(type));
+		map.put("boardType", type);
 		map.put("bdto", bdto);
 		return bdao.modifyArticle(map);
 	}
-	
+
 	// 게시글 삭제
-	public int deleteArticle( String type, int seq ) {
+	public int deleteArticle(String type, int seq) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("boardType", this.convertType(type));
+		map.put("boardType", type);
 		map.put("seq", seq);
 		return bdao.deleteArticle(map);
 	}
-	
+
 	// 게시판 검색
-	public Map<String, Object> boardSearch( String type, String search, int page ){
+	public Map<String, Object> boardSearch(String type, String search, String category, int page) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("boardType", this.convertType(type));
+		map.put("boardType", type);
 		String searchType = search.split("-")[0];
 		String[] searchText = (search.split("-")[1]).split(" ");
 		map.put("searchType", searchType);
 		map.put("searchText", searchText);
-		Map<String, Object> navi = this.getNavigator( this.getArticleCount(type, searchType, searchText), page);
-		System.out.println(navi.get("startNumByPage") + " : " + navi.get("endNumByPage"));
+		int searchCount = this.getSearchCount(type, searchType, searchText, category); 
+		System.out.println(searchCount);
+		Map<String, Object> navi = this.getNavigator(searchCount, page);
+		
 		map.put("startNumByPage", navi.get("startNumByPage"));
 		map.put("endNumByPage", navi.get("endNumByPage"));
-		
-		List<BoardDTO> list = bdao.boardSearch(map);
-		
+
+		List<BoardDTO> list = new ArrayList<>();
+		if( type.contentEquals("notice") ) {
+			List<NoticeDTO> nlist = bdao.noticeSearch(map);
+			for( NoticeDTO n : nlist ) {
+				list.add(this.convertNoti(n));
+			}
+		} else {
+			list = bdao.boardSearch(map);
+		}
+		System.out.println(list.size());
 		Map<String, Object> result = new HashMap<>();
 		result.put("list", list);
 		result.put("navi", navi);
 		return result;
 	}
-	
-	
+
 	// 게시판 타입 변경
-	private BoardDTO convertType( BoardDTO bdto ) {
-		if( bdto.getBoardType().contentEquals("notice") ) {
+
+	private BoardDTO convertType(BoardDTO bdto) {
+		if (bdto.getBoardType().contentEquals("notice")) {
 			bdto.setBoardType("board_notice");
 		} else {
-			//bdto.setBoardType(bdto.getBoardType().substring(0, bdto.getBoardType().indexOf("Board")));
+			// bdto.setBoardType(bdto.getBoardType().substring(0, bdto.getBoardType().indexOf("Board")));
 		}
 		return bdto;
 	}
-	
-	private String convertType( String type ) {
-		if( type.contentEquals("notice") ) {
-			type = "board_notice";
-		} else {
-			//type = type.substring(0, type.indexOf("Board"));
-		}
-		return type;
-	}
-	
-	
 
-	
 	// paging
 	private Map<String, Object> getNavigator(int recordTotalCount, int currentPage) {
 		int totalPageCount = (recordTotalCount / PagingConfigurator.recordCountPerPage);
@@ -188,4 +215,28 @@ public class BoardService {
 
 		return naviMap;
 	}
+
+	// NoticeDTO -> BoardDTO
+	private BoardDTO convertNoti( NoticeDTO ndto ) {
+		BoardDTO bdto = new BoardDTO();
+		bdto.setSeq(ndto.getNoti_seq());
+		bdto.setTitle(ndto.getNoti_title());
+		bdto.setContents(ndto.getNoti_contents());
+		bdto.setWriteDate(ndto.getNoti_writeDate());
+		bdto.setWriter("관리자");
+		bdto.setCategory(ndto.getCategory());
+		return bdto;
+	}
+	
+	
+	// 메인 홈페이지 홍보 게시글 10개
+	public List<BoardDTO> getPromote() {
+		return bdao.getPromote();
+	}
+
+	// 메인 홈페이지 공지 게시글 10개
+	public List<NoticeDTO> getNotice(String noticeType) {
+		return bdao.getNotice(noticeType);
+	}
+
 }

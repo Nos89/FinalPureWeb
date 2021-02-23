@@ -18,7 +18,7 @@
 							<c:forEach var="i" items="${files}">
 							<div class="row">
 								<div class="col-12">
-									<a href="/boardFiles/${i.savedName}" target="_blank">${i.oriName}</a>
+									<a href="/main/board.download?fileName=${i.savedName}&oriName=${i.oriName}" target="_blank">${i.oriName}</a>
 								</div>
 							</div>
 							</c:forEach>
@@ -186,7 +186,12 @@ $(document).ready(function(){
 	}
 	
 	$(".btnList").click(function(){
-		location.href="/main/board.list?pageGroup=${pageGroup}&type=${type}&page=${page}${ search != null ? '&search=' : '' }${search!=null?search:''}";
+		location.href=
+			"/main/board.list?"+
+					"pageGroup=${pageGroup}"+
+					"&type=${type}"+
+					"&page=${page}${ search != null ? '&search=' : '' }${search!=null?search:''}"+
+					"${ category != null ? '&category=' : '' }${ category != null? category : '' }";
 	})
 	
 	// 게시글 수정

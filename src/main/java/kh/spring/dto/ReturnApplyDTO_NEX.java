@@ -1,8 +1,6 @@
 package kh.spring.dto;
 
-import java.sql.Date;
-
-public class ReturnApplyDTO {
+public class ReturnApplyDTO_NEX {
 	private int seq;
 	private String id;
 	private String name;
@@ -11,28 +9,15 @@ public class ReturnApplyDTO {
 	private String reason;
 	private int return_year;
 	private String return_semester;
-	private Date apply_date;
+	private String apply_date;
 	private String apply_approve;
 	
-	
-	public ReturnApplyDTO() {
+	public ReturnApplyDTO_NEX() {
 		super();
 	}
 
-	public ReturnApplyDTO(int seq, String id, String reason, int return_year, String return_semester, Date apply_date, String apply_approve) {
-		super();
-		this.seq = seq;
-		this.id = id;
-		this.reason = reason;
-		this.return_year = return_year;
-		this.return_semester = return_semester;
-		this.apply_date = apply_date;
-		this.apply_approve = apply_approve;
-	}
-	
-	// 신청처리용
-	public ReturnApplyDTO(int seq, String id, String name, String col_title, String dept_title, String reason,
-			int return_year, String return_semester, Date apply_date, String apply_approve) {
+	public ReturnApplyDTO_NEX(int seq, String id, String name, String col_title, String dept_title, String reason,
+			int return_year, String return_semester, String apply_date, String apply_approve) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -45,12 +30,11 @@ public class ReturnApplyDTO {
 		this.apply_date = apply_date;
 		this.apply_approve = apply_approve;
 	}
-	
 
 	public int getSeq() {
 		return seq;
 	}
-	
+
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
@@ -111,11 +95,11 @@ public class ReturnApplyDTO {
 		this.return_semester = return_semester;
 	}
 
-	public Date getApply_date() {
+	public String getApply_date() {
 		return apply_date;
 	}
 
-	public void setApply_date(Date apply_date) {
+	public void setApply_date(String apply_date) {
 		this.apply_date = apply_date;
 	}
 

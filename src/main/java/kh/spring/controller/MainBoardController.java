@@ -1,8 +1,12 @@
 package kh.spring.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +15,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
@@ -18,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,13 +52,18 @@ public class MainBoardController {
 
 	// 게시글 목록 보기
 	@RequestMapping("/board.list")
-	public String boardList(String pageGroup, String type, String page, Model model) {
+	public String boardList(String pageGroup, String type, String category, String page, Model model) {
 		int currentPage = this.convertPage(page);
 		model.addAttribute("pageGroup", pageGroup);
 		model.addAttribute("type", type);
-		model.addAttribute("cont", bservice.getArticles(type, currentPage));
 		model.addAttribute("page", currentPage);
 		model.addAttribute("list", true);
+		if( category != null ) {
+			model.addAttribute("category", category);
+			model.addAttribute("cont", bservice.getArticles(type, category, currentPage));
+		} else {
+			model.addAttribute("cont", bservice.getArticles(type, null, currentPage));
+		}
 		return "main/" + pageGroup + "/board";
 	}
 
@@ -144,7 +155,7 @@ public class MainBoardController {
 
 	// 게시글 보기
 	@RequestMapping("/board.view")
-	public String viewArticle(String pageGroup, String type, int seq, String page, String purp, String commentPage, String search,
+	public String viewArticle(String pageGroup, String type, int seq, String page, String purp, String category, String commentPage, String search,
 			Model model) {
 		model.addAttribute("article", bservice.viewArticle(type, seq));
 		model.addAttribute("pageGroup", pageGroup);
@@ -158,6 +169,11 @@ public class MainBoardController {
 		}
 		if (search != null) {
 			model.addAttribute("search", search);
+		}
+		System.out.println(category);
+		if( category != null ) {
+			model.addAttribute("category", category);
+			System.out.println("if");
 		}
 		model.addAttribute("files", bservice.getFiles(seq));
 		// 댓글
@@ -255,13 +271,14 @@ public class MainBoardController {
 
 	// 게시판 검색
 	@RequestMapping("/board.search")
-	public String boardSearch(String pageGroup, String type, String search, String page, Model model) {
+	public String boardSearch(String pageGroup, String type, String search, String category, String page, Model model) {
 		int currentPage = this.convertPage(page);
 		model.addAttribute("pageGroup", pageGroup);
 		model.addAttribute("type", type);
 		model.addAttribute("search", search);
 		model.addAttribute("page", currentPage);
-		model.addAttribute("cont", bservice.boardSearch(type, search, currentPage));
+		model.addAttribute("category", category);
+		model.addAttribute("cont", bservice.boardSearch(type, search, category, currentPage));
 		model.addAttribute("page", currentPage);
 		model.addAttribute("list", true);
 		return "main/" + pageGroup + "/board";
@@ -276,5 +293,67 @@ public class MainBoardController {
 			currentPage = 1;
 		}
 		return currentPage;
+	}
+	
+	
+	//파일다운로드
+	@RequestMapping("/board.download")
+	public void fileDownlaod(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		String fileName = (String)request.getParameter("fileName");
+		String oriName = (String)request.getParameter("oriName");
+		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
+		String fileRoot = contextRoot + "resources/files/board/";
+		
+		String fullPath = fileRoot + "/" + fileName;
+		File file = new File(fullPath);
+		
+        if(file != null) {
+            fileName = null;
+            String userAgent = request.getHeader("User-Agent");
+            
+            if(userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("Trident") > -1){
+                fileName = URLEncoder.encode(file.getName(), "utf-8").replaceAll("\\+", "%20");;
+            }else if(userAgent.indexOf("Chrome") > -1) {
+            	StringBuffer sb = new StringBuffer();
+            	for(int i=0; i<file.getName().length(); i++) {
+            		char c = file.getName().charAt(i);
+            		if(c > '~') {
+            			sb.append(URLEncoder.encode(""+c, "UTF-8"));
+            		}else {
+            			sb.append(c);
+            		}
+            	}
+            	fileName = sb.toString();
+            }else {
+            	fileName = new String(file.getName().getBytes("utf-8"));
+            }
+            response.setContentType(request.getContentType());
+            response.setContentLength((int)file.length());
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + oriName + "\";");
+            response.setHeader("Content-Transfer-Encoding", "binary");
+            
+            OutputStream out = response.getOutputStream();
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(file);
+                FileCopyUtils.copy(fis, out);
+            } catch(Exception e){
+                e.printStackTrace();
+            }finally{
+                if(fis != null){
+                    try{
+                        fis.close();
+                    }catch(Exception e){
+                    	e.printStackTrace();
+                    }
+                }
+                
+                if(out != null) {
+                	out.flush();
+                }
+            }
+            
+        }
+		
 	}
 }

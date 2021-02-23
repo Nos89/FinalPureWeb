@@ -6,6 +6,8 @@ public class ChangeDeptApplyDTO {
 	private int seq;
 	private String id;
 	private String name;
+	private String colTitle;
+	private String deptTitle;
 	private int changeYear;
 	private String changeSemester;
 	private String reason;
@@ -28,12 +30,15 @@ public class ChangeDeptApplyDTO {
 	}
 
 	// 신청 수리용
-	public ChangeDeptApplyDTO(int seq, String id, String name, int changeYear, String changeSemester, String reason,
-			String changeCollege, String changeDept, Date apply_date, String apply_approve) {
+	public ChangeDeptApplyDTO(int seq, String id, String name, String colTitle, String deptTitle, int changeYear,
+			String changeSemester, String reason, String changeCollege, String changeDept, Date apply_date,
+			String apply_approve) {
 		super();
 		this.seq = seq;
 		this.id = id;
 		this.name = name;
+		this.colTitle = colTitle;
+		this.deptTitle = deptTitle;
 		this.changeYear = changeYear;
 		this.changeSemester = changeSemester;
 		this.reason = reason;
@@ -58,6 +63,22 @@ public class ChangeDeptApplyDTO {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public String getColTitle() {
+		return colTitle;
+	}
+
+	public void setColTitle(String colTitle) {
+		this.colTitle = colTitle;
+	}
+
+	public String getDeptTitle() {
+		return deptTitle;
+	}
+
+	public void setDeptTitle(String deptTitle) {
+		this.deptTitle = deptTitle;
 	}
 
 	public int getChangeYear() {
