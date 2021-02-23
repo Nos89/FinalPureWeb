@@ -70,7 +70,7 @@
 	</select>
 	
 	<select id="getMyClassTime" resultType="kh.spring.dto.MyClassTimeDTO">
-		select o.oc_schedule,s.name s_name,u.name p_name,o.oc_class_room from users u,ClassRegistration c,open_class o,subject s where c.lec_code = o.oc_code and s.code = o.oc_code and o.oc_pro_code = u.id and substr(o.oc_year,0,2) = #{dto.year} and o.oc_semester = #{dto.semester} and c.id = #{id} and c.cr_completeDiv = '완료상태'
+		select o.oc_schedule,s.name s_name,u.name p_name,o.oc_class_room from users u,ClassRegistration c,open_class o,subject s where c.lec_code = s.code and s.code = o.oc_code and o.oc_pro_code = u.id and substr(o.oc_year,0,2) = #{dto.year} and o.oc_semester = #{dto.semester} and c.id = #{id} and c.cr_completeDiv = '완료상태'
 	</select>
 	
 	<select id="getMyClass" resultType="kh.spring.dto.MyClassDTO">
@@ -159,5 +159,27 @@
 		select NVL(sum(s.reco_score),0) from subject s,open_class o,ClassRegistration c where o.oc_code = s.code and c.lec_code = o.oc_code and c.id=#{id} and s.isu in('전공선택','교양선택')
 	</select>
 	
+	<select id="getMyMenu" resultType="kh.spring.dto.MyMenuDTO">
+		select MENU_CD,UP_MENU_CD,MENU_NM,MENU_LVL,PGM_PATH,PGM_ID from mymenu where id=#{id}
+	</select>
 	
+	<insert id="myMenuAdd">
+		insert into mymenu values(#{id},#{MENU_CD},#{UP_MENU_CD},#{MENU_NM},#{MENU_LVL},#{PGM_PATH},#{PGM_ID})
+	</insert>
+	
+	<delete id="myMenuDel">
+		delete from mymenu where id=#{id} and MENU_NM=#{MENU_NM}
+	</delete>
+	
+	<select id="checkMyMenu" resultType="kh.spring.dto.MyMenuDTO">
+		select * from mymenu where id=#{id} and MENU_NM=#{MENU_NM}
+	</select>
+	
+	<select id="getMailBox" resultType="kh.spring.dto.MailDTO">
+		SELECT * FROM MAIL WHERE RECEIVER=#{id} ORDER BY RECEIVED_DATE DESC
+	</select>
+	
+	<update id="updateReadStatus">
+		UPDATE MAIL SET READ=1 WHERE MAIL_SEQ=#{mail_seq}
+	</update>
 </mapper>

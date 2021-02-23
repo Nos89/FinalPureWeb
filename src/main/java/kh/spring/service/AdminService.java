@@ -15,8 +15,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import kh.spring.dao.AdminDAO;
 import kh.spring.dao.BoardDAO;
-import kh.spring.dto.ApplicationDTO;
-import kh.spring.dto.ApplicationDTO_NEX;
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.BuildDTO;
@@ -149,13 +147,6 @@ public class AdminService {
 		}
 		return admdao.modifyPost(dto2);
 	}
-	
-	
-	
-	
-//	public int updateBoard(BoardDTO_NEX dto) {
-//		return admdao.updateBoard(dto);
-//	}
 
 	//파일 개별삭제
 	public List<FilesDTO> delSpecFile(String name, int fileseq,int parent_code) {
