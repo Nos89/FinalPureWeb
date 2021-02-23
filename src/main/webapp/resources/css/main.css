@@ -7,6 +7,27 @@
 /* header */
 
 .container-fluid .header .headerLogo{
+<<<<<<< HEAD
+	width: 100%;
+}
+
+
+.container-fluid .header .mainMenu div{
+	float: left;
+	height: 100%;
+	width: 25%;
+	text-align: center;
+	font-size: 30px;	
+}
+
+.container-fluid .header .mainMenu div a{
+	display: inline-block;
+	width:100%;
+	height:100%;
+}
+
+.container-fluid .header .collapse{
+=======
 	height: 75px;
 }
 
@@ -15,6 +36,7 @@
 }
 
 .container-fluid .header .menuDetail{
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 	background: #ffffff;
 	border-top: 1px solid #949494;
 	border-bottom: 1px solid #949494;
@@ -22,7 +44,16 @@
 	transition-duration: 1s;
 }
 
+<<<<<<< HEAD
+.container-fluid .header .collapse .menuItemWrapper{
+	border-left: 1px solid #949494;
+	border-right: 1px solid #949494;	
+}
+
+.container-fluid .header .collapse li{
+=======
 .container-fluid .header .menuDetail li{
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 	list-style: none;
 	margin-bottom: 3px;
 	font-size: 20px;
@@ -47,7 +78,13 @@
 }
 
 .container-fluid .body .advSlider .advItemWrapper{
+<<<<<<< HEAD
+	float: left;
+	height: 200px;
+	width: 200px;
+=======
 	height: 220px;
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 	margin-right: 20px;
 	border: 1px solid black;
 }
@@ -77,6 +114,9 @@
 	border-bottom: 1px solid #949494;
 }
 
+<<<<<<< HEAD
+.container-fluid .body .goBox a{
+=======
 .container-fluid .body .noticeBoardWrapper {
 	background: #F8F9FA;
 	
@@ -84,10 +124,16 @@
 
 .container-fluid .body .noticeItemWrapper a{
 	display: inline-block;
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 	width: 100%;
 	height: 100%;
 }
 
+<<<<<<< HEAD
+.container-fluid .body .goBox .gotoPortal{
+	
+	background: #09E3F5;	
+=======
 .container-fluid .body .goBox a{
 	width: 100%;
 	height: 100%;
@@ -96,6 +142,7 @@
 .container-fluid .body .goBox img{
 	width: 100%;
 	transition-duration: 0.5s;
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 }
 
 /* common board */
@@ -105,12 +152,20 @@
 	height: 100%;
 }
 
+<<<<<<< HEAD
+.container-fluid .body .searchWrapper .searchType, .container .body .searchWrapper .searchText{
+=======
 .container-fluid .body .searchWrapper .searchType, .container-fluid .body .searchWrapper .searchText{
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 	width: 100%;
 	height: 100%;
 }
 
+<<<<<<< HEAD
+.container-fluid .body .writerWrapper .title, .container .body .writerWrapper #summernote{
+=======
 .container-fluid .body .writerWrapper .title, .container-fluid .body .writerWrapper #summernote{
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 	width: 100%;
 }
 

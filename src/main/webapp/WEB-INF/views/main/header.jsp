@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <body>
 	<div class="container-fluid">
+<<<<<<< HEAD
+		<div class="row header">
+=======
 		<div class="row header m-0">
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 			<!-- Header 부분입니다. 로고, 타이틀, 상단 메뉴 등을 넣어주세요. -->
 			<div class="col-12 h-50">
 				<div class="row">
