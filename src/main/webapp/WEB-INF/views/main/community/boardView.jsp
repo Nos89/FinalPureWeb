@@ -186,7 +186,12 @@ $(document).ready(function(){
 	}
 	
 	$(".btnList").click(function(){
-		location.href="/main/board.list?pageGroup=${pageGroup}&type=${type}&page=${page}${ search != null ? '&search=' : '' }${search!=null?search:''}";
+		location.href=
+			"/main/board.list?"+
+					"pageGroup=${pageGroup}"+
+					"&type=${type}"+
+					"&page=${page}${ search != null ? '&search=' : '' }${search!=null?search:''}"+
+					"${ category != null ? '&category=' : '' }${ category != null? category : '' }";
 	})
 	
 	// 게시글 수정

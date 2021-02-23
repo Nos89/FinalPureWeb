@@ -11,10 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 
 import kh.spring.dto.ColScheduleDTO;
+import kh.spring.dto.NoticeDTO;
+import kh.spring.service.BoardService;
+import kh.spring.service.CommonService;
 import kh.spring.service.InfoService;
 
 
@@ -26,10 +32,29 @@ public class HomeController {
 	HttpSession session;
 	@Autowired
 	private InfoService iservice;
+	@Autowired
+	private BoardService bservice;
+	@Autowired
+	private CommonService cservice;
 	
 	@RequestMapping("/")
 	public String home(Locale locale, Model model) {
+		model.addAttribute("promote", bservice.getPromote());
+		model.addAttribute("notice", bservice.getNotice("학사"));
+		model.addAttribute("colSchedule", cservice.getColSchedule());
 		return "home";
+	}
+	
+	@RequestMapping(value="/getNotice", produces = "text/plain; charset=UTF8")
+	@ResponseBody
+	public String getNotice(String division) {
+		List<NoticeDTO> list = bservice.getNotice(division);
+		Gson gs = new Gson();
+		JsonArray jrr = new JsonArray();
+		for( NoticeDTO d : list ) {
+			jrr.add(gs.toJson(d));
+		}
+		return jrr.toString();
 	}
 	
 	@RequestMapping("/main")

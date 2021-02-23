@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.GradeCardDTO;
@@ -31,5 +32,9 @@ public class CommonDAO {
 	}
 	public List<GradeCardDTO>getGradeCard(){
 		return db.selectList("Common.getGradeCard");
+	}
+	
+	public List<ColScheduleDTO> getColSchedule(){
+		return db.selectList("Common.getColSche");
 	}
 }

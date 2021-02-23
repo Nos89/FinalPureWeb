@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Board">
+
 	<!-- 게시물 작성 -->
 	<insert id="insert">
 		insert into board values( board_seq.nextval, 
@@ -17,66 +18,54 @@
 		insert into files_board values(files_board_seq.nextval, #{parent_code}, #{oriName}, #{savedName}, sysdate)
 	</insert>
 	
-	
 	<!-- 현재 게시판 게시물 갯수 -->
 	<select id="articleCount" resultType="Integer">
-		select count(*) from board where division_code = (select code from board_division where title = #{value})
+		select count(*)
+		from 
+		<choose>
+			<when test="type == 'notice'">
+				board_notice 
+				<if test="category != null">
+					where category = #{category}
+				</if>
+			</when>
+			<otherwise>
+				board where division_code = (select code from board_division where title = #{type})
+			</otherwise>
+		</choose>
 	</select>
 	
 	<!-- 현재 페이지당 게시물 목록 가져오기 -->
 	<select id="getArticles" resultType="kh.spring.dto.BoardDTO">
 		select * from 
-			(select 
-			<choose>
-				<when test="boardType == 'board_notice'">
-					board_notice.*
-				</when>
-				<otherwise>
-					board.*
-				</otherwise>
-			</choose>
-			, row_number() over( order by 
-			<choose>
-				<when test="boardType == 'board_notice'">
-					noti_writeDate
-				</when>
-				<otherwise>
-					writeDate		
-				</otherwise>
-			</choose>
-			 desc ) rn 
-			from 
-			<choose>
-				<when test="boardType == 'board_notice'">
-					board_notice)
-				</when>
-				<otherwise>
-					board where division_code = (select code from board_division where title = #{boardType}))
-				</otherwise>
-			</choose>
+			(
+				select board.*, row_number() over( order by writeDate desc ) rn 
+				from board 
+				where division_code = (select code from board_division where title = #{boardType})
+			)
 			where rn between #{startNumByPage} and #{endNumByPage}
+	</select>
+	
+	<select id="getNotices" resultType="kh.spring.dto.NoticeDTO">
+		select * from
+			(
+				select board_notice.*, row_number() over( order by noti_writeDate desc ) rn
+				from board_notice
+			<if test="category != null">
+				where category = #{category}
+			</if>
+			)
+		where rn between #{startNumByPage} and #{endNumByPage}
+			
 	</select>
 	
 	<!-- 게시물 하나 seq로 가져오기 -->
 	<select id="getArticle" resultType="kh.spring.dto.BoardDTO">
-		select * from 
-		<choose>
-				<when test="boardType == 'board_notice'">
-					board_notice
-				</when>
-				<otherwise>
-					board
-				</otherwise>
-			</choose>
-		where 
-		<choose>
-			<when test="boardType == 'board_notice'">
-				noti_seq = #{noti_seq}
-			</when>
-			<otherwise>
-				seq = #{seq}			
-			</otherwise>
-		</choose>
+		select * from board where seq = #{seq}			
+	</select>
+	
+	<select id="getNotice" resultType="kh.spring.dto.NoticeDTO">
+		select * from board_notice where noti_seq = #{seq}
 	</select>
 	
 	<!-- 게시물 첨부 파일 가져오기 -->
@@ -112,8 +101,18 @@
 	<!-- 게시판 검색 -->
 	<!-- 게시물 count -->
 	<select id="articleSearchCount" resultType="Integer">
-		select count(*) from board where
-		division_code = (select code from board_division where title = #{boardType}) and
+		select count(*) from 
+		<choose>
+			<when test="boardType == notice">
+				board_notice where
+				
+			</when>
+			<otherwise>
+				board where
+				division_code = (select code from board_division where title = #{boardType}) and
+			</otherwise>
+		</choose>
+		
 		<if test="searchType == 'title'">
 			(title like
 			<foreach collection="searchText" item="i" open="(" close=")" separator="or">
@@ -143,4 +142,26 @@
 		) where rn between #{startNumByPage} and #{endNumByPage}
 	</select>
 	
+	
+	<!-- 메인 홈페이지 홍보 게시글 10개 가져오기 -->
+	<select id="mainPromote" resultType="kh.spring.dto.BoardDTO">
+		select * 
+		from (
+		    select board.*, row_number() over( order by writedate desc ) rn 
+		    from board where division_code = 4
+		)
+		where division_code = 4 and rn between 1 and 10
+	</select>
+	
+	<!-- 메인 홈페이지 공지 게시글 10개 가져오기 -->
+	<select id="mainNotice" resultType="kh.spring.dto.NoticeDTO">
+		select * 
+		from 
+		    (
+		        select board_notice.*, row_number() over( order by noti_writedate desc ) rn 
+		        from board_notice 
+		        where category=#{value}
+		    )
+		where rn between 1 and 10
+	</select>
 </mapper>
