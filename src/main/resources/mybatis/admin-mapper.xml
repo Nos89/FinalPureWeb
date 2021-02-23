@@ -271,9 +271,12 @@
 	UPDATE CREDITRENOUNCE SET APPLY_APPROVE=#{apply_approve} WHERE SEQ=#{seq}
 </update>
 
-
-<insert id="sendAppResult">
+<insert id="sendMail">
 	INSERT INTO MAIL VALUES(MAIL_SEQ.NEXTVAL,#{receiver},#{title},#{contents},SYSDATE, 0)
 </insert>
+
+<select id="getOutBox" resultType="kh.spring.dto.MailDTO">
+	SELECT * FROM MAIL ORDER BY RECEIVED_DATE DESC
+</select>
 
 </mapper>

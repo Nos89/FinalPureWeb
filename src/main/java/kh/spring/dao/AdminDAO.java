@@ -199,10 +199,6 @@ public class AdminDAO {
 	}
 	
 	
-	// 메일 전송
-	public int sendAppResult(MailDTO dto) {
-		return db.insert("Admin.sendAppResult",dto);
-	}
 	
 	// 전과신청 목록
 	public List<ChangeDeptApplyDTO> getChangeDeptApply(){
@@ -242,5 +238,15 @@ public class AdminDAO {
 	// 학점포기신청 처리
 	public int creditRenounceApproval(CreditRenounceDTO dto) {
 		return db.update("Admin.creditRenounce",dto);
+	}
+	
+	// 신청결과 메일 통지
+	public int sendMail(MailDTO dto) {
+		return db.insert("Admin.sendMail",dto);
+	}
+	
+	// 발신메일함 목록
+	public List<MailDTO> getOutBox(){
+		return db.selectList("Admin.getOutBox");
 	}
 }

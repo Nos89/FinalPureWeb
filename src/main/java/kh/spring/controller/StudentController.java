@@ -428,7 +428,7 @@ public class StudentController {
 		return nr;
 	}
 	
-	@RequestMapping("getMailBox.nex")
+	@RequestMapping("getInBox.nex")
 	public NexacroResult getMailBox() {
 		String id = (String)session.getAttribute("loginID");
 		NexacroResult nr = new NexacroResult();

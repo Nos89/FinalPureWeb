@@ -460,10 +460,13 @@ public class AdminService {
 		return admdao.creditRenounceApproval(dto2);
 	}
 
-	// 메일 전송
-	public int sendAppResult(MailDTO dto) {
-		return admdao.sendAppResult(dto);
+	// 메일 작성
+	public int sendMail(MailDTO dto) {
+		return admdao.sendMail(dto);
 	}
 	
-	
+	// 발신메일함
+	public List<MailDTO> getOutBox(){
+		return admdao.getOutBox();
+	}
 }

@@ -441,11 +441,20 @@ public class AdminController {
 		return new NexacroResult();		
 	}
 		
-	// 메일 전송
-	@RequestMapping("sendAppResult.nex")
-	public NexacroResult sendAppResult(@ParamDataSet(name="in_mail")MailDTO dto) {
-		admService.sendAppResult(dto);
+	// 메일 작성
+	@RequestMapping("sendMail.nex")
+	public NexacroResult sendMail(@ParamDataSet(name="in_mail")MailDTO dto) {
+		admService.sendMail(dto);
 		return new NexacroResult();
+	}
+	
+	// 발신메일 목록
+	@RequestMapping("getOutBox.nex")
+	public NexacroResult getOutBox() {
+		NexacroResult nr = new NexacroResult();
+		List<MailDTO> list = admService.getOutBox();
+		nr.addDataSet("out_mail",list);
+		return nr;
 	}
 
 }
