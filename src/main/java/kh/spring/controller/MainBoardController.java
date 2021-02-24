@@ -52,13 +52,18 @@ public class MainBoardController {
 
 	// 게시글 목록 보기
 	@RequestMapping("/board.list")
-	public String boardList(String pageGroup, String type, String page, Model model) {
+	public String boardList(String pageGroup, String type, String category, String page, Model model) {
 		int currentPage = this.convertPage(page);
 		model.addAttribute("pageGroup", pageGroup);
 		model.addAttribute("type", type);
-		model.addAttribute("cont", bservice.getArticles(type, currentPage));
 		model.addAttribute("page", currentPage);
 		model.addAttribute("list", true);
+		if( category != null ) {
+			model.addAttribute("category", category);
+			model.addAttribute("cont", bservice.getArticles(type, category, currentPage));
+		} else {
+			model.addAttribute("cont", bservice.getArticles(type, null, currentPage));
+		}
 		return "main/" + pageGroup + "/board";
 	}
 
@@ -150,7 +155,7 @@ public class MainBoardController {
 
 	// 게시글 보기
 	@RequestMapping("/board.view")
-	public String viewArticle(String pageGroup, String type, int seq, String page, String purp, String commentPage, String search,
+	public String viewArticle(String pageGroup, String type, int seq, String page, String purp, String category, String commentPage, String search,
 			Model model) {
 		model.addAttribute("article", bservice.viewArticle(type, seq));
 		model.addAttribute("pageGroup", pageGroup);
@@ -164,6 +169,11 @@ public class MainBoardController {
 		}
 		if (search != null) {
 			model.addAttribute("search", search);
+		}
+		System.out.println(category);
+		if( category != null ) {
+			model.addAttribute("category", category);
+			System.out.println("if");
 		}
 		model.addAttribute("files", bservice.getFiles(seq));
 		// 댓글
@@ -261,13 +271,14 @@ public class MainBoardController {
 
 	// 게시판 검색
 	@RequestMapping("/board.search")
-	public String boardSearch(String pageGroup, String type, String search, String page, Model model) {
+	public String boardSearch(String pageGroup, String type, String search, String category, String page, Model model) {
 		int currentPage = this.convertPage(page);
 		model.addAttribute("pageGroup", pageGroup);
 		model.addAttribute("type", type);
 		model.addAttribute("search", search);
 		model.addAttribute("page", currentPage);
-		model.addAttribute("cont", bservice.boardSearch(type, search, currentPage));
+		model.addAttribute("category", category);
+		model.addAttribute("cont", bservice.boardSearch(type, search, category, currentPage));
 		model.addAttribute("page", currentPage);
 		model.addAttribute("list", true);
 		return "main/" + pageGroup + "/board";

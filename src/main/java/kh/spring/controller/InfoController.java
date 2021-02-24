@@ -72,9 +72,10 @@ public class InfoController {
 				String semester;
 				if (currentRegMonth >= 1 && currentRegMonth <= 6) {
 					// 1학기
-					classRegDate = currentRegYear + "-02-22";
-					SimpleDateFormat fm = new SimpleDateFormat("yy-MM-dd");
+					classRegDate = currentRegYear + "/02/19";
+					SimpleDateFormat fm = new SimpleDateFormat("yy/MM/dd");
 					Date tempDate = fm.parse(classRegDate);
+					System.out.println("tempDate : " + tempDate);
 
 					semester = "1";
 					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, tempDate);
@@ -371,6 +372,26 @@ public class InfoController {
 		return "info/info";
 	}
 
+	// 달력 넘어가면 그 날짜에 맞는 학사일정 옆에 보이게 하는...(미완성)
+	@RequestMapping("/calendar")
+	public String calendar(int month_click, Model model) {
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		Date time = new Date();
+		String current = format.format(time);
+		String arr[] = current.split("/");
+		String result = arr[0]+"-"+month_click+"-01";
+		
+		arr[0] = arr[0].replaceAll("20", "");
+		String month_click2 = arr[0]+"/0"+Integer.toString(month_click);
+		List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(month_click2);
+		
+		model.addAttribute("result", result);
+		model.addAttribute("main_colSche", main_colSche);
+		return "main/info/info";
+	}
+
+
 	@RequestMapping("/logout")
 	public String logout() {
 		session.invalidate();
@@ -378,5 +399,4 @@ public class InfoController {
 
 	}
 
-	
 }

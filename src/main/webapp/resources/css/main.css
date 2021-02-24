@@ -1,17 +1,18 @@
 @charset "UTF-8";
 
-.container a{
+.container-fluid a{
 	text-decoration: none;
 	color: black;
 }
 /* header */
 
-.container .header .headerLogo{
+.container-fluid .header .headerLogo{
+<<<<<<< HEAD
 	width: 100%;
 }
 
 
-.container .header .mainMenu div{
+.container-fluid .header .mainMenu div{
 	float: left;
 	height: 100%;
 	width: 25%;
@@ -19,26 +20,40 @@
 	font-size: 30px;	
 }
 
-.container .header .mainMenu div a{
+.container-fluid .header .mainMenu div a{
 	display: inline-block;
 	width:100%;
 	height:100%;
 }
 
-.container .header .collapse{
+.container-fluid .header .collapse{
+=======
+	height: 75px;
+}
+
+.container-fluid .header .mainMenu .navbarItemWrapper .menuItem a {
+	font-size: 25px;
+}
+
+.container-fluid .header .menuDetail{
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 	background: #ffffff;
 	border-top: 1px solid #949494;
 	border-bottom: 1px solid #949494;
-	z-index: 1000;
+	z-index: 10000;
 	transition-duration: 1s;
 }
 
-.container .header .collapse .menuItemWrapper{
+<<<<<<< HEAD
+.container-fluid .header .collapse .menuItemWrapper{
 	border-left: 1px solid #949494;
 	border-right: 1px solid #949494;	
 }
 
-.container .header .collapse li{
+.container-fluid .header .collapse li{
+=======
+.container-fluid .header .menuDetail li{
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 	list-style: none;
 	margin-bottom: 3px;
 	font-size: 20px;
@@ -50,11 +65,11 @@
 
 
 /* body */
-.container .body .advSliderWrapper{
+.container-fluid .body .advSliderWrapper{
 	overflow: hidden;
 }
 
-.container .body .advSlider{
+.container-fluid .body .advSlider{
 	width: 2200px;
 }
 
@@ -62,89 +77,122 @@
 	max-width: 100% !important;
 }
 
-.container .body .advSlider .advItemWrapper{
+.container-fluid .body .advSlider .advItemWrapper{
+<<<<<<< HEAD
 	float: left;
 	height: 200px;
 	width: 200px;
+=======
+	height: 220px;
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 	margin-right: 20px;
 	border: 1px solid black;
 }
 
-.container .body .boardTitleWrapper div{
+.container-fluid .body .boardTitleWrapper div{
 	float:left;
 }
 
 /* leftMenu */
-.container .body .leftMenu a{
+.container-fluid .body .leftMenu a{
 	display: inline-block;
 	width: 100%;
 	height: 100%;
 }
 
-.container .body .leftMenu .list-group .list-group-item.active{
+.container-fluid .body .leftMenu .list-group .list-group-item.active{
 	background-color: #44587B !important;
 }
 
-.container .body .leftMenu .list-group .list-group-item.active a{
+.container-fluid .body .leftMenu .list-group .list-group-item.active a{
 	color: #FFFFFF !important;
 }
 
 /* mainContents */
-.container .body .subTitle{
+.container-fluid .body .subTitle{
 	font-size: 30px;
 	border-bottom: 1px solid #949494;
 }
 
-.container .body .goBox a{
+<<<<<<< HEAD
+.container-fluid .body .goBox a{
+=======
+.container-fluid .body .noticeBoardWrapper {
+	background: #F8F9FA;
+	
+}
+
+.container-fluid .body .noticeItemWrapper a{
+	display: inline-block;
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 	width: 100%;
 	height: 100%;
 }
 
-.container .body .goBox .gotoPortal{
+<<<<<<< HEAD
+.container-fluid .body .goBox .gotoPortal{
 	
 	background: #09E3F5;	
+=======
+.container-fluid .body .goBox a{
+	width: 100%;
+	height: 100%;
+}
+
+.container-fluid .body .goBox img{
+	width: 100%;
+	transition-duration: 0.5s;
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 }
 
 /* common board */
-.container .body .bodyWrapper .boardTitle a{
+.container-fluid .body .bodyWrapper .boardTitle a{
 	display: inline-block;
 	width: 100%;
 	height: 100%;
 }
 
-.container .body .searchWrapper .searchType, .container .body .searchWrapper .searchText{
+<<<<<<< HEAD
+.container-fluid .body .searchWrapper .searchType, .container .body .searchWrapper .searchText{
+=======
+.container-fluid .body .searchWrapper .searchType, .container-fluid .body .searchWrapper .searchText{
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 	width: 100%;
 	height: 100%;
 }
 
-.container .body .writerWrapper .title, .container .body .writerWrapper #summernote{
+<<<<<<< HEAD
+.container-fluid .body .writerWrapper .title, .container .body .writerWrapper #summernote{
+=======
+.container-fluid .body .writerWrapper .title, .container-fluid .body .writerWrapper #summernote{
+>>>>>>> 788b24cdddb04052c2232b76167a006022c288f4
 	width: 100%;
 }
 
 /* 댓글 */
 
-.container .body .commentWrapper .inputComment{
+.container-fluid .body .commentWrapper .inputComment{
 	width: 100%;
 	height: 100%;
 }
 
-.container .body .commentWrapper .btnInputComment{
+.container-fluid .body .commentWrapper .btnInputComment{
 	width: 50%;
 	height: 50%;
 	transform: translate(0, 50%);
 }
 
-.container .body .commentWrapper .realCommentsWriter{
+.container-fluid .body .commentWrapper .realCommentsWriter{
 	display: none;
 }
 
 /* footer */
-.container .footer .footerItem{
+.container-fluid .footer .footerItem{
 	float: left;
 	border-right: 1px solid #949494;
 	padding: 0px 10px;
 }
 
-.container .footer .footerItem:last-child{
+.container-fluid .footer .footerItem:last-child{
 	border-right: none;
 }

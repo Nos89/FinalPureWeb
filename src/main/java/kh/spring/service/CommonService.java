@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dao.CommonDAO;
+import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.GradeCardDTO;
@@ -33,5 +34,9 @@ public class CommonService {
 	}
 	public List<GradeCardDTO> getGradeCard(){
 		return comdao.getGradeCard();
+	}
+	
+	public List<ColScheduleDTO> getColSchedule(){
+		return comdao.getColSchedule();
 	}
 }
