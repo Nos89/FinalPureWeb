@@ -1,0 +1,10 @@
+@charset "UTF-8";
+		.socialTitle{background: #707070; height: 50px; color:white; font-size: 17px; text-align: center; line-height: 50px;}
+        .socialInner_wrap{}
+        .socialText{height: 50px; border-bottom: 1px dotted black; border-left: 1px dotted black; border-right: 1px dotted black; }
+        .socialTitle2{background: #788db0; height: 50px; color:white; font-size: 17px; text-align: center; line-height: 50px;}
+        .socialTitle3{background: #2b4d88; height: 50px; color:white; font-size: 17px; text-align: center; line-height: 50px;}
+        .socialTitle4{background: #1c3764; height: 50px; color:white; font-size: 17px; text-align: center; line-height: 50px;}
+        .socialArrowDown{text-align: center; height:50px; line-height: 50px;}
+        .socialH4{font-weight:bold;}
+        .em_red{color: red; font-style: normal; }

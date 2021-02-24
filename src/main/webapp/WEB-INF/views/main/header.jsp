@@ -50,15 +50,12 @@
 									<li>수업</li>
 									<li>
 										<ol class="subMenu">
-											<li><a href="#">성적 예고제</a></li>
-											<li><a href="#">시험 및 성적</a></li>
-											<li><a href="#">계절 학기</a></li>
-											<li><a href="#">사회 봉사 과목 이수</a></li>
-											<li><a href="#">취업 관련 교과목 이수</a></li>
-											<li><a href="#">강의 평가</a></li>
-											<li><a href="#">전자 출결부</a></li>
-											<li><a href="#">휴강 보강</a></li>
-											<li><a href="#">공결 허가</a></li>
+											<li><a href="/main?pageGroup=class&type=gradeAnnouncement">성적 예고제</a></li>
+											<li><a href="/main?pageGroup=class&type=testAndGrade">시험 및 성적</a></li>
+											<li><a href="/main?pageGroup=class&type=seasonalSemester">계절 학기</a></li>
+											<li><a href="/main?pageGroup=class&type=socialServiceCourse">사회 봉사 과목 이수</a></li>
+											<li><a href="/main?pageGroup=class&type=employmentSubject">취업 관련 교과목 이수</a></li>
+											<li><a href="/main?pageGroup=class&type=attendence">전자 출결부</a></li>
 										</ol>
 									</li>
 								</ol>
@@ -68,11 +65,11 @@
 									<li>학적</li>
 									<li>
 										<ol class="subMenu">
-											<li><a href="#">재입학</a></li>
-											<li><a href="#">휴복학</a></li>
-											<li><a href="#">전공배정</a></li>
-											<li><a href="#">유급 제적</a></li>
-											<li><a href="#">수료자 졸업</a></li>
+											<li><a href="/main?pageGroup=academic&type=reEntering">재입학</a></li>
+											<li><a href="/main?pageGroup=academic&type=returnSchool">휴복학</a></li>
+											<li><a href="/main?pageGroup=academic&type=majorAssignment">전공배정</a></li>
+											<li><a href="/main?pageGroup=academic&type=exclusion">유급 제적</a></li>
+											<li><a href="/main?pageGroup=academic&type=gradutionInfo">수료자 졸업</a></li>
 										</ol>
 									</li>
 								</ol>
@@ -82,17 +79,17 @@
 									<li>등록</li>
 									<li>
 										<ol class="subMenu">
-											<li><a href="#">등록급 납부</a></li>
-											<li><a href="#">학자금 대출</a></li>
+											<li><a href="/main?pageGroup=registration&type=tuition">등록급 납부</a></li>
+											<li><a href="https://www.kosaf.go.kr/ko/tuition.do?pg=tuition_main&">학자금 대출</a></li>
 										</ol>
 									</li>
-									<li><a href="#">졸업</a></li>
-									<li><a href="#">대학 ROAD-MAP</a></li>
+									<li><a href="/main?pageGroup=&type=gradution">졸업</a></li>
+									<li><a href="/main?pageGroup=&type=road-map">대학 ROAD-MAP</a></li>
 									<li>증명서 발급</li>
 									<li>
 										<ol class="subMenu">
-											<li><a href="#">학적 증명서 발급</a></li>
-											<li><a href="#">학생증 발급</a></li>
+											<li><a href="/main?pageGroup=certificate&type=academicIssuance">학적 증명서 발급</a></li>
+											<li><a href="/main?pageGroup=certificate&type=studentID">학생증 발급</a></li>
 										</ol>
 									</li>
 								</ol>

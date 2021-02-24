@@ -5,7 +5,7 @@
 	<select id="openClass_lecPlan" resultType="kh.spring.dto.OpenClass_LecPlan">
 		select oc_code,oc_year,oc_semester,oc_max,oc_part,oc_is_close,oc_close_reason,oc_pro_code,oc_class_room,
 		oc_targetlevel,oc_schedule,s.name,s.reco_score,s.isu,s.dept_code,d.col_code
-		from subject s, open_class o, department d where s.code=oc_code AND s.dept_code=d.dept_code AND oc_pro_code=#{value}
+		from subject s, open_class o, department d where s.code=oc_code AND s.dept_code=d.dept_code AND oc_pro_code=#{value} AND oc_is_close='N'
 	</select>
 	
 	<select id="selectLecture"  resultType="kh.spring.dto.LectureDTO">

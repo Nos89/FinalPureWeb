@@ -1,0 +1,5 @@
+@charset "UTF-8";
+		.attTableTitle{height: 50px; text-align: center; background: #fafafa; line-height: 50px; border-top: 1px solid #3a3a3a; border-bottom: 1px solid #949494;}
+        .attTableContent{height: 150px; text-align: center; background: #ffffff; border-bottom: 1px solid #c6c6c6; padding-top: 20px; line-height: 30px; font-size: 15px}
+        .em_blue{font-style: normal; color: #2253ad;}
+        .em_green{font-style: normal; color:#0b8254; font-weight:bold;}
