@@ -11,6 +11,12 @@
 	<meta http-equiv="Expires" content="0">
 	<meta http-equiv="Pragma" content="no-cache">
 	<link rel="stylesheet" href="/resources/css/main.css?ver=1">
+	<link rel="stylesheet" href="/resources/css/class/gradeAnnouncement.css?ver=1">
+	<link rel="stylesheet" href="/resources/css/class/socialServiceCourse.css?ver=1">
+	<link rel="stylesheet" href="/resources/css/class/attendence.css?ver=1">
+	<link rel="stylesheet" href="/resources/css/academic/majorAssignment.css?ver=1">
+	<link rel="stylesheet" href="/resources/css/academic/tution.css?ver=1">
+	
 	
 	<!-- BootStrap 및 Jquery -다른 jsp 만들때 가져가주세요 -->
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>

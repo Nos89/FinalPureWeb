@@ -1,0 +1,10 @@
+@charset "UTF-8";
+        *{box-sizing: border-box; }
+        .annoMethod{border: 5px solid #0052a6; height: 60px;  text-align: center;margin-top: 10px; margin-bottom: 10px; margin-right: 10px;}
+        .annoMethodcon{padding: 5px; border: 1px dashed black; }
+        .announcementTitle{background: #fdfdfd;}
+        .annoRow1{}
+        .annoSecondTitle{color: #0052a6; }
+        .annoh3{font-weight: bold;}
+        .annoSubContent{margin-left: 30px; font-size:13px; }
+		.annoH3{font-weight:bold;}
