@@ -142,7 +142,7 @@
 }
 
 /* footer */
-.footer{background-color:#292f3c; height:100px;}
+.footer{background-color:#292f3c;}
 .container-fluid .footer .footerItem{
 	float: left;
 	border-right: 1px solid #949494;
