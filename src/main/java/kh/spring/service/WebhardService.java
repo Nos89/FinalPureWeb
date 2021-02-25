@@ -32,7 +32,7 @@ public class WebhardService {
 		// 정렬
 		while(iter.hasNext()) {
 			DirectoryDTO d = iter.next();
-			
+			System.out.println( d.getDirID() + " : " + d.getDirectoryName());
 			// 반복자에서 꺼낸 값이 userID와 같다면 => Root 폴더이므로 바로 olist에 넣기
 			if( d.getDirectoryName().contentEquals(userID) ) {
 				olist.add(d);
@@ -130,6 +130,7 @@ public class WebhardService {
 			i.setIsFolder("true");
 			i.setSavedName(d.getDirectoryName());
 			i.setSize(wdao.getFolderSize(d.getDirID()));
+			i.setDate(d.getCrtDate());
 			indirList.add(i);
 		}
 		for( CloudDTO c : fileList ) {

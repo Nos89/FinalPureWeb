@@ -46,8 +46,9 @@ public class WebhardController {
 	@Transactional
 	public NexacroResult onload() {
 		NexacroResult nr = new NexacroResult();
+		System.out.println("onload event");
 		String loginID = (String) session.getAttribute("loginID");
-		if( loginID.contentEquals("") || loginID.contentEquals(null) ) {
+		if( loginID.contentEquals("") || loginID == null ) {
 			nr.setErrorCode(-1);
 			nr.setErrorMsg("로그인 정보를 확인해주세요.");
 			return nr;
@@ -154,7 +155,7 @@ public class WebhardController {
 	public NexacroResult getIndir(@ParamVariable(name = "parentID") int parentID) {
 		NexacroResult nr = new NexacroResult();
 		String loginID = (String) session.getAttribute("loginID");
-		if( loginID.contentEquals("") || loginID.contentEquals(null) ) {
+		if( loginID.contentEquals("") || loginID == null ) {
 			nr.setErrorCode(-1);
 			nr.setErrorMsg("로그인 정보를 확인해주세요.");
 			return nr;
@@ -170,14 +171,15 @@ public class WebhardController {
 	@RequestMapping("/delete")
 	@Transactional
 	public NexacroResult delIndir(@ParamVariable(name = "name") String name, @ParamVariable(name = "location") int location,
-			@ParamVariable(name = "isFolder") String isFolder, HttpServletRequest request) {
+			@ParamVariable(name = "isFolder") boolean isFolder, HttpServletRequest request) {
 		NexacroResult nr = new NexacroResult();
 
-		System.out.println(name + " : " + location + " : " + isFolder);
+		System.out.println("삭제 " + name + " : " + location + " : " + isFolder);
+		
 		String userID = (String) session.getAttribute("loginID");
 		String filePath = request.getSession().getServletContext().getRealPath("/resources/webhard/");
 
-		if (isFolder.contentEquals("true")) {
+		if (isFolder) {
 			System.out.println("Folder 삭제");
 			Map<String, Object> result = wservice.delFolder(location, name, userID);
 			List<CloudDTO> flist = (ArrayList<CloudDTO>) result.get("flist");
@@ -234,7 +236,7 @@ public class WebhardController {
 				}
 
 				FileCopyUtils.copy(fis, out);
-
+				nr.setErrorCode(1);
 				System.out.println("fileDownload filename==>" + oriname + ", 전송완료. ");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -334,7 +336,7 @@ public class WebhardController {
 		NexacroResult nr = new NexacroResult();
 		
 		String loginID = (String)session.getAttribute("loginID");
-		if( loginID.contentEquals("") || loginID.contentEquals(null) ) {
+		if( loginID.contentEquals("") || loginID == null ) {
 			nr.setErrorCode(-1);
 			nr.setErrorMsg("로그인 정보를 확인해주세요.");
 			return nr;

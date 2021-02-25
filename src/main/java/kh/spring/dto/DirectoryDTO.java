@@ -1,22 +1,26 @@
 package kh.spring.dto;
 
+import java.sql.Date;
+
 public class DirectoryDTO {
 	private int dirID;
 	private String userID;
 	private String directoryName;
 	private int parentID;
 	private int lv;
+	private Date crtDate;
 	public DirectoryDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public DirectoryDTO(int dirID, String userID, String directoryName, int parentID, int lv) {
+	public DirectoryDTO(int dirID, String userID, String directoryName, int parentID, int lv, Date crtDate) {
 		super();
 		this.dirID = dirID;
 		this.userID = userID;
 		this.directoryName = directoryName;
 		this.parentID = parentID;
 		this.lv = lv;
+		this.crtDate = crtDate;
 	}
 	public int getDirID() {
 		return dirID;
@@ -48,6 +52,11 @@ public class DirectoryDTO {
 	public void setLv(int lv) {
 		this.lv = lv;
 	}
-	
+	public Date getCrtDate() {
+		return crtDate;
+	}
+	public void setCrtDate(Date crtDate) {
+		this.crtDate = crtDate;
+	}
 	
 }

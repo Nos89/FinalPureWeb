@@ -610,7 +610,7 @@
 		//location.href="/info/calendar?currentDay="+today;
 		//alert(today);
 	}
-	function buildCalendar() {//현재 달 달력 만들기
+	function buildCalendar(today) {//현재 달 달력 만들기
 		var doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 		var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 		var tbCalendar = document.getElementById("calendar");//날짜를 찍을 테이블 변수 만듬, 일 까지 다 찍힘
@@ -657,7 +657,6 @@
 			}
 		}
 	}
-    buildCalendar();
 </script>
 <script>
 		let day;
