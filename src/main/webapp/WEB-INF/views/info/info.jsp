@@ -68,7 +68,7 @@
 								<input type=checkbox name="saveID" id=chkBox ${checked}> 아이디 저장
 							</div>
 							<div id=findIDPW>
-								<input type=button id=findID value="아이디찾기"><input
+								<input type=button id=findID value="아이디찾기/"><input
 									type=button id=findPW value="비밀번호재설정">
 							</div>
 
@@ -102,8 +102,8 @@
 							<div class="row">
 								<div class="col-3 col-sm-12 menuPart"><a href="/classRegistration.nex">수강신청</a></div>
 								<div class="col-3 col-sm-12 menuPart"><a href="/" class="d-inline-block">대표홈페이지</a></div>
-								<div class="col-2 col-sm-12  menuPart">~~로 이동</div>
-								<div class="col-2 col-sm-12  menuPart">~~로 이동</div>
+								<div class="col-2 col-sm-12  menuPart">학사일정</div>
+								<div class="col-2 col-sm-12  menuPart">게시판</div>
 								<div class="col-2 col-sm-12  menuPart">도움말</div>
 							</div>
 
