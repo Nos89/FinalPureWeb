@@ -120,8 +120,7 @@
 							</div>
 						</c:forEach>
 						<div class="row my-2">
-							<div class="col-12 col-sm-3">인쇄/엑셀다운</div>
-							<div class="col-12 col-sm-9">정상출석/지각/결석처리</div>
+							<div class="col-12 col-sm-9" style="float:right;">정상출석/지각/결석처리</div>
 						</div>
 						<div class="row">
 							<div class="col-sm-2" style="border: 1px solid black;">주차</div>

@@ -368,7 +368,7 @@
 									<div class="col-12 col-sm-6 calendar" style="padding-left:0px; padding-right:0px;">
 										<table id="calendar" border="1" style="width:100%; height:100%; text-align:center">
 											<tr>
-												<td id="tbCalendarYM" colspan="5" id=currentDay>yyyy년 m월</td>
+												<td id="tbCalendarYM" colspan="5">yyyy년 m월</td>
 												<td><label onclick="prevCalendar()" style="cursor:pointer">◀</label></td>
 												<td><label onclick="nextCalendar()" style="cursor:pointer;">▶</label></td>
 											</tr>
@@ -593,32 +593,30 @@
 		<script>
 	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 	var date = new Date();//today의 Date를 세어주는 역할
-	
-	today.setTime(Date.parse("2020-01-01"));
-	
-	console.log(today);
-	console.log(Date.parse("2020-01-01"));
-	console.log(today.getTime());
-	
-	buildCalendar(today);
+	var currentDay;
 
 	function prevCalendar() {//이전 달
 		today = new Date(today.getFullYear(), today.getMonth() - 1, today
 				.getDate());
 		buildCalendar();
+		//location.href="/info/calendar?currentDay=오늘";
+		//alert(today);
+		
 	}
 	function nextCalendar() {//다음 달
 		today = new Date(today.getFullYear(), today.getMonth() + 1, today
 				.getDate());
 		buildCalendar();
+		//location.href="/info/calendar?currentDay="+today;
+		//alert(today);
 	}
 	function buildCalendar(today) {//현재 달 달력 만들기
 		var doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 		var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 		var tbCalendar = document.getElementById("calendar");//날짜를 찍을 테이블 변수 만듬, 일 까지 다 찍힘
 		var tbCalendarYM = document.getElementById("tbCalendarYM");//테이블에 정확한 날짜 찍는 변수
-		tbCalendarYM.innerHTML = today.getFullYear() + "년 "
-				+ (today.getMonth() + 1) + "월";
+		currentDay = today.getFullYear() + "년 "+ (today.getMonth() + 1) + "월";
+		tbCalendarYM.innerHTML = currentDay;
 
 		/*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
 		while (tbCalendar.rows.length > 2) {
@@ -761,7 +759,7 @@
 
 	</script>
 
-		</c:otherwise>
+	</c:otherwise>
 	</c:choose>
 
 
