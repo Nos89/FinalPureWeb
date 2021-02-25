@@ -29,7 +29,10 @@
 	console.log("userName : ${userName}");
 	console.log("userMajor : ${userMajor}");
 	console.log("${msg} : ${errMsg}");
-</script>	
+</script>
+	<c:if test="${not empty  cookie.saveID}">
+		<c:set value="checked" var="checked"/>
+	</c:if>
 	<c:choose>
 		<c:when test="${loginID==null}">
 			<div class="container-fluid title">
@@ -54,7 +57,7 @@
 							<div id=loginID>
 								<div id=idTitle>ID</div>
 								<input type=text name=id id=idText placeholder="id placeholder"
-									required>
+									required value="${cookie.saveID!=''? cookie.saveID.value:'' }">
 							</div>
 							<div id=loginPW>
 								<div id=pwTitle>PW</div>
@@ -62,7 +65,7 @@
 									required>
 							</div>
 							<div id=rmbId>
-								<input type=checkbox id=chkBox> 아이디 저장
+								<input type=checkbox name="saveID" id=chkBox ${checked}> 아이디 저장
 							</div>
 							<div id=findIDPW>
 								<input type=button id=findID value="아이디찾기"><input

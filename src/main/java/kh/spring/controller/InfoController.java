@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ public class InfoController {
 	private InfoService iservice;
 
 	@RequestMapping("/login")
-	public String login(String id, String pw, Model model) throws ParseException {
+	public String login(String id, String pw, Boolean saveID, Model model, HttpServletResponse response) throws ParseException {
 		int result = iservice.login(id, pw);
 		String name = iservice.getName(id, pw);
 		String major = iservice.getMajor(id, pw);
@@ -49,7 +51,17 @@ public class InfoController {
 			session.setAttribute("loginID", id);
 			session.setAttribute("userName", name);
 			session.setAttribute("userMajor", major);
-
+			
+			Cookie cookie = new Cookie("saveID", id);
+			if( saveID != null ) {
+				if( saveID ) {
+					response.addCookie(cookie);
+				}
+			} else {
+				cookie.setMaxAge(0);
+				response.addCookie(cookie);
+			}
+			
 			session.setAttribute("list_std", list_std);
 			session.setAttribute("list_scholar", list_scholar);
 			session.setAttribute("list_enter", list_enter);
