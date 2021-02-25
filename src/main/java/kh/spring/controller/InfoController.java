@@ -374,20 +374,37 @@ public class InfoController {
 
 	// 달력 넘어가면 그 날짜에 맞는 학사일정 옆에 보이게 하는...(미완성)
 	@RequestMapping("/calendar")
-	public String calendar(int month_click, Model model) {
-		
+	public String calendar(int month_click, Model model) {		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 		Date time = new Date();
 		String current = format.format(time);
 		String arr[] = current.split("/");
-		String result = arr[0]+"-"+month_click+"-01";
+		String result = arr[0]+"-0"+month_click+"-01";
 		
 		arr[0] = arr[0].replaceAll("20", "");
-		String month_click2 = arr[0]+"/0"+Integer.toString(month_click);
+		String month_click2 =null;
+		month_click2 = arr[0]+"/0"+Integer.toString(month_click);
+		
+		String teneletwe = Integer.toString(month_click);
+		if(teneletwe.contentEquals("10") || teneletwe.contentEquals("11") || teneletwe.contentEquals("12")) {
+			 month_click2 = arr[0]+"/"+teneletwe;
+		}
+		
 		List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(month_click2);
 		
 		model.addAttribute("result", result);
 		model.addAttribute("main_colSche", main_colSche);
+		return "main/info/info";
+	}
+	
+	@RequestMapping("/changeSemester")
+	public String changeSemester(String semSelect, Model model) {		
+		System.out.println("changeSemester : "+ semSelect);
+		String arr[] = semSelect.split(" ");
+		model.addAttribute("change", arr[1]);
+		
+		
+
 		return "main/info/info";
 	}
 
