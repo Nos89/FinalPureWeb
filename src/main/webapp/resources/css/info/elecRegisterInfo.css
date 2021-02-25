@@ -1,8 +1,0 @@
-@charset "UTF-8";
- *{box-sizing: border-box;}
-            .wrapper{width: 1000px;}
-            .wrapper2{width: 1000px; border-top: 3px solid black;margin-top: 30px; }
-            .photo{float: left; width: 20%; height: 200px; border-bottom: 2px solid gray;}
-            .info{float: left; width:80%; height: 200px;}
-            .fixed{width:10%;float: left; height: 25%; border: 1px solid gray; background-color:lightgray; color:black;}
-            .moreInfo{float: left; width: 90%; height: 25%; border: 1px solid gray;}
