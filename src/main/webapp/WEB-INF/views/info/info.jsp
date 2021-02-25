@@ -44,7 +44,7 @@
     background-image: url('/resources/img/login_bg.jpg'); 
     background-repeat : no-repeat;
     background-size : cover;}
-    .newContainer2{background-color : #f1f1f1; height:100vh;}
+    .newContainer2{background-color : #f1f1f1; height:100%;}
     .gachalogo{background-image:url('/resources/img/info/gachalogo.png'); background-size: contain; ;background-position: center;background-repeat: no-repeat;
     border:0px solid white;}
     .userBox{background-color : white; border:0px solid white;}
@@ -107,13 +107,8 @@
 							</div>
 							<div id=loginID>
 								<div id=idTitle>ID</div>
-<<<<<<< HEAD
 								<input type=text name=id id=idText placeholder="ID 학번입력"
-									required>
-=======
-								<input type=text name=id id=idText placeholder="id placeholder"
 									required value="${cookie.saveID!=''? cookie.saveID.value:'' }">
->>>>>>> 3d23044185e2f52e6e7dcdeeee0307ac627485f4
 							</div>
 							<div id=loginPW>
 								<div id=pwTitle>PW</div>
@@ -156,19 +151,11 @@
 						</div>
 						<div class="col-sm-2 menu">
 							<div class="row">
-<<<<<<< HEAD
 								<div class="col-3 col-sm-12 menuPart" id="classRegistation" style="border-bottom: 1px solid #0c3181;"><div class="goSugang"></div><p>수강신청</p></div>
 								<div class="col-3 col-sm-12 menuPart" id="goHome" style="border-top: 1px solid #0c3181; border-bottom: 1px solid #0c3181;"><div class="goHome"></div><p>대표홈페이지</p></div>
 								<div class="col-2 col-sm-12  menuPart"id="goCalendar"style="border-top: 1px solid #0c3181; border-bottom: 1px solid #0c3181;"><div class="goCalender"></div><p>학사일정 바로가기</p></div>
 								<div class="col-2 col-sm-12  menuPart"id="goComunity" style="border-top: 1px solid #0c3181; border-bottom: 1px solid #0c3181;"><div class="goComunity"></div><p>커뮤니티</p></div>
 								<div class="col-2 col-sm-12  menuPart"id="goIntro"style="border-top: 1px solid #0c3181;"><div class="goIntro"></div><p>학사소개</p></div>
-=======
-								<div class="col-3 col-sm-12 menuPart"><a href="/classRegistration.nex">수강신청</a></div>
-								<div class="col-3 col-sm-12 menuPart"><a href="/" class="d-inline-block">대표홈페이지</a></div>
-								<div class="col-2 col-sm-12  menuPart"><a href="/main?pageGroup=info&type=info">학사일정</a></div>
-								<div class="col-2 col-sm-12  menuPart"><a href="/main/board.list?pageGrup=community&type=free&write=false">게시판</a></div>
-								<div class="col-2 col-sm-12  menuPart">도움말</div>
->>>>>>> 3d23044185e2f52e6e7dcdeeee0307ac627485f4
 							</div>
 
 						</div>
