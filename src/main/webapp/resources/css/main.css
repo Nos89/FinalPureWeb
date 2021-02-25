@@ -98,6 +98,11 @@
 	transition-duration: 0.5s;
 }
 
+
+.colScheduleDate{ color:#0e4590;margin-left:20px;font-weight:bold; margin-left:20px; }
+.colScheduleTitle{ font-weight:bold; height:30px; border-bottom:1px dashed #c7c7c7;}
+
+
 /* common board */
 .container-fluid .body .bodyWrapper .boardTitle a{
 	display: inline-block;
@@ -114,6 +119,11 @@
 	width: 100%;
 }
 
+.headerWrapper{border-top:2px solid black; border-bottom:1px solid #c7c7c7; height:40px; padding-top:10px;}
+.bodyWrapper{border-bottom :1px solid #c7c7c7;}
+.bodyWrapper .row{border-bottom:1px solid #c7c7c7; height:30px;}
+
+.writerWrapper{}
 /* 댓글 */
 
 .container-fluid .body .commentWrapper .inputComment{
@@ -132,10 +142,13 @@
 }
 
 /* footer */
+.footer{background-color:#292f3c; height:100px;}
 .container-fluid .footer .footerItem{
 	float: left;
 	border-right: 1px solid #949494;
 	padding: 0px 10px;
+	color :#696d76;
+	margin-top : 10px;
 }
 
 .container-fluid .footer .footerItem:last-child{

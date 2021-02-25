@@ -5,13 +5,7 @@
     padding-left: none;
 } .container{padding: none;}
        
-       
-       
-       
-       
- 
-        
-        
+
            .newContainer2{background-color: #f1f1f1; height:100%;}
            .my,.board,.subject,.timetable,.schedule{padding: 0px;border:4px solid #f1f1f1;}
             #electAttend:hover{background-color:#063976; color:white;}
@@ -53,8 +47,8 @@
             
             .row>.timetable{height:440px;overflow:scroll;}
             .realtimetable{height:380px;}
-            .realtimetable>.timeTable{width:100%; text-align:center; height:100%;}
-            th{width:16%;}
+            .realtimetable>.timeTable{width:100%; text-align:center; height:100%; border:1px solid #c7c7c7;}
+            th{width:16%; background-color : darkgray; color:white;}
                        
             .schedule>.row{margin:0px;}
             .row>.calendar,.sche{height:220px;}
@@ -67,8 +61,8 @@
             .shortcutPart>.row>div{color:white;height:100px;}
             .shortcutPart>.row>div>.image{height:75px;}
              .shortcutPart>.row>div>.image>img{width:40px; height:40px; margin-left:60px; margin-top:15px;}
-             .shortcutPart>.row>div>.text{height:25px; text-align:center;font-size:14px;}
+             .shortcutPart>.row>div>.text{height:30px; text-align:center;font-size:14px;}
             .shortcut{margin-left:10px; margin-top:10px; font-weight:bold; font-size:16px;}
-            .toClassSche,.toBus,.toDomi,.toReportBoard,.toExAuth{cursor:pointer;}
+            .toClassSche,.toReturnSchool,.toTestAndGrade,.toReportBoard,.toExAuth{cursor:pointer;}
             
             .footer>div{text-align:center}
