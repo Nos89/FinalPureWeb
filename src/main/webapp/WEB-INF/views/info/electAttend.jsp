@@ -15,20 +15,16 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/resources/css/info/elecAttend.css?ver=1">
-<link rel="stylesheet"
-	href="/resources/css/info/elecRegisterInfo.css?ver=1">
+
 
 </head>
-<body>
-	<div class="container-fluid">
+<body style="background-color: #dfe2e9;">
+	<div class="container-fluid top" style="background-color: white;">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-2 order-0 order-sm-0"
-					style="border: 1px solid black;">title</div>
-				<div class="col-sm-8 order-2 order-sm-1"
-					style="border: 1px solid black;">전자출결</div>
-				<div class="col-sm-2 order-1 order-sm-2"
-					style="border: 1px solid black;">${userName }</div>
+				<div class="col-sm-2 order-0 order-sm-0" id="titleImge">oo대학교 전자출결시스템 사진 넣기</div>
+				<div class="col-sm-8 order-2 order-sm-1" id="titleText">전자출결</div>
+				<div class="col-sm-2 order-1 order-sm-2 userName">${userName }</div>
 			</div>
 		</div>
 
@@ -37,12 +33,12 @@
 		<div class="row">
 			<div class="col-12 col-sm-2">
 				<div class="row">
-					<div class="col-12" style="border: 1px solid black; height: 200px;">
+					<div class="col-12 changeSemester">
 						- 학기
 						<form>
 							<select id=semesterSelect onchange="chageSemesterSelect()">
 								<option>= 학기선택 =</option>
-								<option value="abc">2021년 1학기</option>
+								<option>2021년 1학기</option>
 								<option>2020년 2학기</option>
 								<option>2020년 1학기</option>
 								<option>2019년 2학기</option>
@@ -53,24 +49,28 @@
 
 
 					</div>
-					<div class="col-12" style="border: 1px solid black; height: 300px;">
+					<div class="col-12 changeClass">
 						- 전자출석부
 						<form>
 							<select id=classSelect onchange="chageClassSelect()">
-								<option>==과목 선택==</option>
+								<option>=과목 선택=</option>
 								<c:forEach var="i" items="${classList}" varStatus="status">
 									<option>${i.lec_title }</option>
 								</c:forEach>
 							</select>
 						</form>
-						-기타
+						<br>-기타
 						<button id=btnRegisterInfo>전자출결 등록정보</button>
 					</div>
 				</div>
 			</div>
 			<div class="col-12 col-sm-10">
 				<c:choose>
-
+					<c:when test="${first=='첫화면에 사진' || divide != null}">
+					 <div class="firstImg">
+					 <img src="/resources/img/info/elecAttendFirstImg.png">
+					 </div>
+					</c:when>
 					<c:when test="${selClassInfoList != null }">
 
 						<div class="title" style="border: 1px solid black;">${yearSemester }
@@ -120,7 +120,7 @@
 							</div>
 						</c:forEach>
 						<div class="row my-2">
-							<div class="col-12 col-sm-9" style="float:right;">정상출석/지각/결석처리</div>
+							<div class="col-12 col-sm-9" style="float: right;">정상출석/지각/결석처리</div>
 						</div>
 						<div class="row">
 							<div class="col-sm-2" style="border: 1px solid black;">주차</div>
@@ -144,11 +144,11 @@
 						</c:forEach>
 					</c:when>
 					<c:when test="${regInfoBtn=='등록정보' }">
+					<div class="userInfoWrapper">
 						<div class=wrapper>
-							<div>
-								<h2>| 전자출결 시스템 등록정보</h2>
-							</div>
-							<div style="border: 1px solid black; margin-top: 30px">-
+							<div class=infostick>|</div>
+							<div class=infotitle> 전자출결 시스템 등록정보</div>
+							<div style=" margin-top: 30px">-
 								전자출결 시스템 등록정보 입니다.</div>
 
 						</div>
@@ -162,10 +162,9 @@
 								<div class=fixed>신분</div>
 								<div class="moreInfo">학부생</div>
 								<div class=fixed>학과</div>
-								<div class="moreInfo">${major }</div>
-
+							<div class="moreInfo">${major }</div>
 							</div>
-
+						</div>
 						</div>
 					</c:when>
 
@@ -176,6 +175,25 @@
 		</div>
 
 	</div>
+	<div class="container-fluid footer">
+		<div class="row">
+			<div class="col-3" style="border:1px solid white;">
+				대학마크+타이틀 사진 넣기
+			</div>
+			<div class="col-9">
+				<div>[가챠대학교 전자출결시스템]</div>
+				<div class=grayText>[874-88] 서울시 어디구 어디로 87-99 | TEL: 02-0008-4545 | FAX: 02-4878-6524</div>
+				<div class=grayText>COPYRIGHT (c) 2021 BY gggg UNIVERSITY. ALL RIGHTS RESERVED</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+
+
 	<script>
 		let semester = "${semester}";
 
@@ -194,6 +212,12 @@
 
 		document.getElementById("btnRegisterInfo").onclick = function() {
 			location.href = "/elec/idRegisterInfo";
+		}
+		document.getElementById("titleImge").onclick = function() {
+			location.href = "/elec/toElectAttend";
+		}
+		document.getElementById("titleText").onclick = function() {
+			location.href = "/elec/toElectAttend";
 		}
 	</script>
 </body>
