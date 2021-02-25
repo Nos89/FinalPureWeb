@@ -49,7 +49,7 @@
 						</div>
 						<div class="row border border-secondary rounded colScheduleWrapper">
 							<c:forEach var="i" items="${colSchedule}" varStatus="q">
-							<div class="col-12 colScheduleItem">
+							<div class="col-12 pb-2 border-bottom colScheduleItem">
 								<div class="row">
 									<div class="col-6 col-lg-12">${i.sche_startDate} ~ ${i.sche_endDate}</div>
 									<div class="col-6 col-lg-12">${i.title}</div>
@@ -100,7 +100,7 @@
 						advItemWrapper = $("<div></div>");
 						advItemWrapper.addClass("advItemWrapper");
 						//promoteTItle = $('<p>${i.title}</p>');
-						promoteTitle = $('<p></p>');
+						promoteTitle = $('<p class="mt-2"></p>');
 						promoteTitle.append('${i.title}');
 						promoteDate = $("<p>${i.writeDate}</p>");
 						
@@ -118,8 +118,8 @@
 					
 					let advSlider = $(".advSlider").bxSlider({
 						auto: true,
-						minSlides: 4,
-						maxSlides: 1,
+						minSlides: 1,
+						maxSlides: 10,
 						slideWidth: 200,
 						slideHeight: 300,
 						moveSlides: 1,

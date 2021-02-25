@@ -48,6 +48,7 @@ public class InfoController {
 		String yearMonth = dayArr[0] + "/" + dayArr[1];
 		List<ColScheduleDTO> list_colSche = iservice.getColSchedule(yearMonth);
 
+		System.out.println(id + " : " + pw + " : " + result);
 		if (result > 0) {
 			session.setAttribute("loginID", id);
 			session.setAttribute("userName", name);
@@ -378,7 +379,7 @@ public class InfoController {
 			} else if (arrId[0].contentEquals("A")) { // 관리자 넥사크로 페이지로 이동
 				return "info/temp";
 			}
-		} else if (result == 0) {
+		} else if (result <= 0) {
 			model.addAttribute("errMsg", "아이디와 비밀번호 확인");
 			return "info/info";
 		}

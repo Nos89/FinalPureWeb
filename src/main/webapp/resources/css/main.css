@@ -10,8 +10,20 @@
 	height: 75px;
 }
 
+.container-fluid .header .mainMenu{
+	background: #7286AF;
+	/* background: linear-gradient(45deg, #ffffff, #00236F); */
+	
+}
+
+.container-fluid .header .mainMenu .navbarItemWrapper .menuItem:hover{
+	background: #7392d1;
+	border-radius: 50% 20% / 10% 40%;
+}
+
 .container-fluid .header .mainMenu .navbarItemWrapper .menuItem a {
 	font-size: 25px;
+	color: #ffffff;
 }
 
 .container-fluid .header .menuDetail{
@@ -34,6 +46,13 @@
 
 
 /* body */
+/* .container-fluid .body{
+	background-image: url("/resources/img/home/main_back.png");
+	background-size: contain; 
+	background-position: bottom;
+	background-repeat: no-repeat;
+} */
+
 .container-fluid .body .advSliderWrapper{
 	overflow: hidden;
 }
@@ -54,6 +73,10 @@
 
 .container-fluid .body .boardTitleWrapper div{
 	float:left;
+}
+
+.container-fluid .body .colScheduleWrapper .colScheduleItem{
+	
 }
 
 /* leftMenu */
