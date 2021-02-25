@@ -51,7 +51,7 @@
 							<c:forEach var="i" items="${colSchedule}" varStatus="q">
 							<div class="col-12 pb-2 border-bottom colScheduleItem">
 								<div class="row">
-									<div class="col-6 col-lg-12">${i.sche_startDate} ~ ${i.sche_endDate}</div>
+									<div class="col-6 col-lg-12 colScheduleDate">${i.sche_startDate} ~ ${i.sche_endDate}</div>
 									<div class="col-6 col-lg-12">${i.title}</div>
 								</div>
 							</div>
