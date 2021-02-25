@@ -119,56 +119,82 @@
 <select id="getCollege" resultType="kh.spring.dto.CollegeDTO">
 	SELECT * FROM COLLEGE
 </select>
-
+<!-- 학과 목록 -->
 <select id="getDepartment" resultType="kh.spring.dto.DepartmentDTO">
 	SELECT * FROM DEPARTMENT
 </select>
 
+
+<!-- 교수 정보 -->
 <select id="getProfessor" resultType="kh.spring.dto.ProfessorDTO">
 	SELECT
-	    U.ID, PW, NAME, BIRTH, GENDER, COUNTRY,
-	   	INDATE, OUTDATE, COLCODE, DEPTCODE, C.COL_TITLE, D.DEPT_TITLE,
-	    ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE,
-	    BANK, ACCOUNTNUM, PRO_OFFICE, PRO_STATUS
-	FROM USERS U, COLLEGE C, DEPARTMENT D, PROFESSOR P
-	WHERE U.ID=P.PRO_ID AND U.DEPTCODE=D.DEPT_CODE AND D.COL_CODE=C.COL_CODE
+	    U.ID, PW, NAME, BIRTH, GENDER, COUNTRY, INDATE, OUTDATE, COLCODE, DEPTCODE,
+	    ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE, BANK, ACCOUNTNUM, PRO_OFFICE, PRO_STATUS
+	FROM USERS U, PROFESSOR P
+	WHERE U.ID=P.PRO_ID
 	ORDER BY U.ID
 </select>
 
-<update id="updateProfessor1" parameterType="java.util.List">
-   <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
-		UPDATE USERS SET OUTDATE=#{item.outDate, jdbcType=DATE} WHERE ID=#{item.id}
-	</foreach>
+<insert id="addProfessor">
+	INSERT ALL
+		INTO USERS(ID, PW, NAME, BIRTH, GENDER, COUNTRY,INDATE, OUTDATE, COLCODE, DEPTCODE,ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE,BANK, ACCOUNTNUM)
+		VALUES(#{id},#{pw},#{name},#{birth},#{gender},#{country},#{inDate},#{outDate,jdbcType=DATE},#{colcode},#{deptcode},
+				#{zipcode},#{addr1},#{addr2},#{email},#{phone},#{bank},#{accountnum})
+		INTO PROFESSOR(PRO_ID,PRO_OFFICE,PRO_STATUS)
+		VALUES(#{id},#{pro_office},#{pro_status})
+		SELECT * FROM DUAL
+</insert>
+
+<update id="modifyProfessorU">
+	UPDATE USERS SET OUTDATE=#{outDate, jdbcType=DATE} WHERE ID=#{id}
 </update>
-<update id="updateProfessor2" parameterType="java.util.List">
-   <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
-	    UPDATE PROFESSOR
-	    	SET PRO_OFFICE=#{item.pro_office}, PRO_STATUS=#{item.pro_status} WHERE PRO_ID=#{item.id}
-	</foreach>
+<update id="modifyProfessorP">
+	   UPDATE PROFESSOR
+	   	SET PRO_OFFICE=#{pro_office}, PRO_STATUS=#{pro_status} WHERE PRO_ID=#{id}
 </update>
 
+<delete id="deleteProfessorU">
+	DELETE FROM USERS WHERE ID=#{id}
+</delete>
+<delete id="deleteProfessorP">
+	DELETE FROM PROFESSOR WHERE PRO_ID=#{id}
+</delete>
+
+
+<!-- 학생 정보 -->
 <select id="getStudent" resultType="kh.spring.dto.StudentDTO">
 	SELECT
-    	U.ID, PW, NAME, BIRTH, GENDER, COUNTRY,
-	    INDATE, OUTDATE, COLCODE, DEPTCODE, C.COL_TITLE, D.DEPT_TITLE,
-	    ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE,
-	    BANK, ACCOUNTNUM,
-	    STD_STATUS, STD_YEAR
-	FROM USERS U, COLLEGE C, DEPARTMENT D, STUDENTS S
-	WHERE U.ID=S.ID AND U.DEPTCODE=D.DEPT_CODE AND D.COL_CODE=C.COL_CODE
+    	U.ID, PW, NAME, BIRTH, GENDER, COUNTRY, INDATE, OUTDATE, COLCODE, DEPTCODE,
+	    ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE, BANK, ACCOUNTNUM, STD_STATUS, STD_YEAR
+	FROM USERS U, STUDENTS S
+	WHERE U.ID=S.ID
 	ORDER BY U.ID
 </select>
 
-<update id="modifyStudent1" parameterType="java.util.List">
-    <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
-    	UPDATE USERS SET COLCODE=#{item.colcode}, DEPTCODE=#{item.deptcode}, OUTDATE=#{item.outDate}, COUNTRY=#{item.country} WHERE ID=#{item.id}
-    </foreach>
+<insert id="addStudent">
+	INSERT ALL
+		INTO USERS(ID, PW, NAME, BIRTH, GENDER, COUNTRY,INDATE, OUTDATE, COLCODE, DEPTCODE,ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE,BANK, ACCOUNTNUM)
+		VALUES(#{id},#{pw},#{name},#{birth},#{gender},#{country},#{inDate},#{outDate},#{colcode},#{deptcode},
+				#{zipcode},#{addr1},#{addr2},#{email},#{phone},#{bank},#{accountnum})
+		INTO STUDENTS(ID,STD_STATUS, STD_YEAR)
+		VALUES(#{id},#{std_status},#{std_year})
+		SELECT * FROM DUAL
+</insert>
+
+<update id="modifyStudentU">
+	UPDATE USERS SET COLCODE=#{colcode}, DEPTCODE=#{deptcode}, OUTDATE=#{outDate}, COUNTRY=#{country} WHERE ID=#{id}
 </update>
-<update id="modifyStudent2" parameterType="java.util.List">
-    <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
-    	UPDATE STUDENTS SET	STD_STATUS=#{item.std_status} WHERE ID=#{item.id}
-    </foreach>
+<update id="modifyStudentS">
+	UPDATE STUDENTS SET	STD_STATUS=#{std_status} WHERE ID=#{id}
 </update>
+
+<delete id="deleteStudentU">
+	DELETE FROM USERS WHERE ID=#{id}
+</delete>
+<delete id="deleteStudentS">
+	DELETE FROM STUDENTS WHERE ID=#{id}
+</delete>
+
 
 <select id="getSyllabus" resultType="kh.spring.dto.LectureDTO">
 	SELECT LECTURE.*, EXTRACT(YEAR FROM OC_YEAR) AS OC_YEAR FROM LECTURE,OPEN_CLASS WHERE LEC_CODE=OC_CODE
