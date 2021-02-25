@@ -24,6 +24,7 @@ import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.ReturnApplyDTO;
 import kh.spring.dto.StudentDTO;
+import kh.spring.dto.StudentDTO_NEX;
 import kh.spring.dto.TakeOffApplyDTO;
 
 @Repository
@@ -108,6 +109,8 @@ public class AdminDAO {
 		return db.delete("Admin.deletePosts", map);
 	}
 	
+	
+	
 	// 단과대 목록
 	public List<CollegeDTO> getCollege() throws Exception {
 		return db.selectList("Admin.getCollege");
@@ -123,12 +126,21 @@ public class AdminDAO {
 		return db.selectList("Admin.getProfessor");
 	}
 	
-	// 교수 정보 변경
-	public int updateProfessor1(List<ProfessorDTO> list) throws Exception {
-		return db.update("Admin.updateProfessor1", list);
+	// 교수 추가
+	public int addProfessor(ProfessorDTO dto) {
+		return db.insert("Admin.addProfessor",dto);
 	}
-	public int updateProfessor2(List<ProfessorDTO> list) throws Exception {
-		return db.update("Admin.updateProfessor2", list);
+	
+	// 교수 정보 변경
+	public int modifyProfessor(ProfessorDTO dto) {
+		db.update("Admin.modifyProfessorP", dto);
+		return db.update("Admin.modifyProfessorU", dto);
+	}
+	
+	// 교수 정보 삭제
+	public int deleteProfessor(String id) {
+		db.delete("Admin.deleteProfessorP",id);
+		return db.delete("Admin.deleteProfessorU",id);
 	}
 	
 	// 학생 목록 가져오기
@@ -136,13 +148,24 @@ public class AdminDAO {
 		return db.selectList("Admin.getStudent");
 	}
 	
+	// 학생 추가
+	public int addStudent(StudentDTO dto) {
+		return db.insert("Admin.addStudent",dto);
+	}
+	
 	// 학생 정보 변경
-	public int modifyStudent1(List<StudentDTO> list) throws Exception {
-		return db.update("Admin.modifyStudent1", list);
+	public int modifyStudent(StudentDTO dto) {
+		db.update("Admin.modifyStudentS",dto);
+		return db.update("Admin.modifyStudentU", dto);
 	}
-	public int modifyStudent2(List<StudentDTO> list) throws Exception {
-		return db.update("Admin.modifyStudent2", list);
+	
+	// 학생 정보 삭제
+	public int deleteStudent(String id) {
+		db.delete("Admin.deleteStudentS",id);
+		return db.delete("Admin.deleteStudentU",id);
 	}
+	
+	
 	
 	// 강의계획서 가져오기
 	public List<LectureDTO> getSyllabus() {
@@ -177,6 +200,8 @@ public class AdminDAO {
 		map.put("semester",semester);
 		return db.selectList("Admin.searchClsTimetable", map);
 	}
+	
+	
 	
 	// 학사일정 조회
 	public List<ColScheduleDTO> getColSchedule(){

@@ -28,6 +28,40 @@ public class StudentDTO {
 	public StudentDTO() {
 		super();
 	}
+	
+	public StudentDTO(String id, String pw, String name, Date birth, String gender, String country, Date inDate,
+			Date outDate, String colcode, String deptcode, String zipcode, String addr1, String addr2, String email,
+			String phone, String bank, String accountnum, String std_status, int std_year) {
+		super();
+		this.id = id;
+		this.pw = pw;
+		this.name = name;
+		this.birth = birth;
+		this.gender = gender;
+		this.country = country;
+		this.inDate = inDate;
+		this.outDate = outDate;
+		this.colcode = colcode;
+		this.deptcode = deptcode;
+		this.zipcode = zipcode;
+		this.addr1 = addr1;
+		this.addr2 = addr2;
+		this.email = email;
+		this.phone = phone;
+		this.bank = bank;
+		this.accountnum = accountnum;
+		this.std_status = std_status;
+		this.std_year = std_year;
+	}
+
+	public StudentDTO(String id, String std_status, int std_year) {
+		super();
+		this.id = id;
+		this.std_status = std_status;
+		this.std_year = std_year;
+	}
+
+	
 	// pw, coltitle,depttitle 제외
 	public StudentDTO(String id, String name, Date birth, String gender, String country, Date inDate,
 			Date outDate, String colcode, String deptcode, String zipcode, String addr1, String addr2, String email,

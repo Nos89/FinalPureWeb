@@ -78,6 +78,34 @@ public class ProfessorDTO {
 		this.pro_status = pro_status;
 	}
 	
+	public ProfessorDTO(String id, String pw, String name, Date birth, String gender, String country, Date inDate,
+			Date outDate, String colcode, String deptcode, String col_title, String dept_title, String zipcode,
+			String addr1, String addr2, String email, String phone, String bank, String accountnum, String pro_office,
+			String pro_status) {
+		super();
+		this.id = id;
+		this.pw = pw;
+		this.name = name;
+		this.birth = birth;
+		this.gender = gender;
+		this.country = country;
+		this.inDate = inDate;
+		this.outDate = outDate;
+		this.colcode = colcode;
+		this.deptcode = deptcode;
+		this.col_title = col_title;
+		this.dept_title = dept_title;
+		this.zipcode = zipcode;
+		this.addr1 = addr1;
+		this.addr2 = addr2;
+		this.email = email;
+		this.phone = phone;
+		this.bank = bank;
+		this.accountnum = accountnum;
+		this.pro_office = pro_office;
+		this.pro_status = pro_status;
+	}
+
 	public ProfessorDTO() {
 		super();
 	}
