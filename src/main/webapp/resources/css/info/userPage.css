@@ -5,28 +5,43 @@
     padding-left: none;
 } .container{padding: none;}
            
-            .topMenu,.my,.board,.subject,.timetable,.schedule,.footer{padding: 0px;border: 1px solid black;}
-            #electAttend:hover{background-color:white; color:black;}
+           .my,.board,.subject,.timetable,.schedule{padding: 0px;border:4px solid #f1f1f1;}
+            #electAttend:hover{background-color:#063976; color:white;}
+            #mainpage:hover{background-color:#063976; color:white;}
+            #system:hover{background-color:#063976; color:white;}
+            .timetable,.schedule{background-color:white;}
+            .board{background-color: #e8e8e8;}
+            .footer{background-color:#f8f9fa;}
+            
+            .top{height:70px;}
+            .top>ul>li>a{color:black;}
+            .top>ul>li>a:hover{color:blue;}
+            .navbar{padding:0px;}
         
-          	.row>.my{ height: 220px;float: left;}
+          	.row>.my{ height: 220px;float: left;background-color:white;}
             .row>.my>.name{width: 100px; margin-top: 15px; margin-left: 5px; font-weight: bold;}
             .row>.my>.major{width: 150px;margin-top: 10px; font-size: 12px;  margin-left: 5px; color: blue; }
             .row>.my>.mail{ margin-top: 20px; font-size: 12px;  margin-left: 5px; }
             .mail>.mail_notRead{width: 45%; float: left; }
             .mail>.mail_notReadNum{width: 45%; float: left;text-align: end;}
-            .row>.my>.consultReqPart{ margin-top: 30px; font-size: 12px;  margin-left: 5px;}
+            .row>.my>.consultReqPart{ margin-top: 30px; font-size: 12px;  margin-left: 2px;}
             .consultReqPart>.consultReq{width: 45%; float: left; }
              .consultReqPart>.consultReqNum{width: 45%; float: left;  text-align: end;}
             
              .row>.board{height: 220px;float: left; }
-            .tab_title{float: left; width: 80%;  cursor:pointer}
+            .tab_title{float: left; width: 80%;  cursor:pointer; margin-left:10px; margin-top:3px; font-size:14px;}
             .tab_title:hover{color:blue;}
-            .tab_date{ text-align: end; color:gray;}
+            .tab_date{ text-align: end; color:gray;margin-top:3px;font-size:14px; margin-right:15px;}
+            .nav-tabs>li{font-weight:bold; font-size:15px;}
+            .tab-content{background-color:white; height:169px; width:562px;}
             
-            .row>.subject{height: 220px;overflow:scroll}
-            .row>.subject>.subject_list>.subject_isu{float:left; width:40%;}
-            .row>.subject>.subject_list>.subject_title{float:left; width:60%; }
-            .row>.subject>.subject_list>.subject_score{font-size: 13px; color: gray;}
+            .row>.subject{height: 220px;overflow:scroll;background-color:#063976;}
+            .row>.subject>.subject_list>.subject_isu{float:left; width:35%; color:white; font-size:14px; margin-left:5%; }
+            .row>.subject>.subject_list>.subject_title{float:left; width:60%;color:white; font-size:14px;}
+            .row>.subject>.subject_list>.subject_score{font-size: 13px; color: lightgray;font-size:13px; margin-bottom:10px; margin-left:5%; }
+            
+            .colSche_day, .colSche_title{margin-left:20px; font-size:13px;}
+            .colSche_day{color:#0e4590; font-weight:bold;}
             
             .row>.timetable{height:440px;overflow:scroll;}
             .realtimetable{height:380px;}
@@ -34,12 +49,18 @@
             th{width:16%;}
                        
             .schedule>.row{margin:0px;}
-            .row>.calendar,.sche{border:1px solid black;height:220px;}
+            .row>.calendar,.sche{height:220px;}
             .schedule>.row>.calendar>table{}
            .col-sm-6{padding-left:0px; padding-right:0px;}       
-           #calendar{}
-           .row>.sche{}
+           #tbCalendarYM{font-weight:bold;}
+           #weeks>td{background-color:darkgray;}
            
-            .shortcutPart{border: 1px solid black; margin-top:10px; }
-            .shortcut{height: 50px;}
-            .toClassSche,.toBus,.toDomi,.toReportBoard,.toExAuth{border: 1px solid black;height:100px;}
+            .shortcutPart{margin-top:10px;  background-color:#08274e;}
+            .shortcutPart>.row>div{color:white;height:100px;}
+            .shortcutPart>.row>div>.image{height:75px;}
+             .shortcutPart>.row>div>.image>img{width:40px; height:40px; margin-left:60px; margin-top:15px;}
+             .shortcutPart>.row>div>.text{height:25px; text-align:center;font-size:14px;}
+            .shortcut{margin-left:10px; margin-top:10px; font-weight:bold; font-size:16px;}
+            .toClassSche,.toBus,.toDomi,.toReportBoard,.toExAuth{cursor:pointer;}
+            
+            .footer>div{text-align:center}

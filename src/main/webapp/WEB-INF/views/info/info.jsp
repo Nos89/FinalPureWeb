@@ -22,7 +22,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 </head>
-<body>
+<body style="background-color: #f1f1f1">
 <!-- 테스트 -->
 <script>
 	console.log("info.jsp 로딩 : ${loginID}");
@@ -140,11 +140,11 @@
 			</script>
 		</c:when>
 		<c:otherwise>
-			<div class="container-fluid userPage">
+			<div class="container-fluid userPage" >
 				<div class="row">
 					<div class="col-12 ">
 						<nav class="navbar navbar-expand-lg navbar-light bg-light">
-							<div class="container">
+							<div class="container top">
 								<a class="navbar-brand" href="/">oo대학교 포털사이트</a>
 
 								<ul class="nav justify-content-end">
@@ -173,10 +173,10 @@
 										<div class="container">
 											<ul class="navbar-nav mr-auto" id=topMenuInfo>
 												<li class="nav-item active"><a class="nav-link"
-													href="/home.nex">종합정보시스템</a></li>
+													href="/home.nex" id=system>종합정보시스템</a></li>
 												<li class="nav-item active"><a class="nav-link"
 													id="electAttend" href="/elec/toElectAttend" target="_blank">전자출결</a></li>
-												<li class="nav-item active"><a class="nav-link"
+												<li class="nav-item active"><a class="nav-link" id=mainpage
 													href="/">대표홈페이지</a></li>
 											</ul>
 										</div>
@@ -202,9 +202,9 @@
 										<div class="container">
 											<ul class="navbar-nav mr-auto">
 												<li class="nav-item active"><a class="nav-link"
-													href="/home.nex">종합정보시스템</a></li>
+													href="/home.nex" id=system>종합정보시스템</a></li>
 												<li class="nav-item active"><a class="nav-link"
-													href="#">대표홈페이지</a></li>
+													href="#" id=mainpage>대표홈페이지</a></li>
 											</ul>
 										</div>
 
@@ -218,7 +218,7 @@
 				</c:choose>
 
 			</div>
-			<div class="container center" style="margin-top: 30px;">
+			<div class="container center" style="margin-top: 30px; ">
 				<div class="row">
 					<div class="col-sm-9">
 						<div class="row">
@@ -254,8 +254,8 @@
 
 							<div class="col-12 col-sm-8 board">
 								<div class="row">
-									<div class="col-11">
-										<ul class="nav nav-tabs">
+									<div class="col-11" >
+										<ul class="nav nav-tabs " >
 											<li class="nav-item"><a class="nav-link active"
 												data-toggle="tab" href="#nav-std-tab">학사</a></li>
 											<li class="nav-item"><a class="nav-link"
@@ -268,7 +268,7 @@
 											<div class="tab-pane fade show active" id="nav-std-tab">
 												<div class="tab_list">
 													<c:forEach var="i" items="${list_std}" varStatus="status">
-														<div class="tab_title">${i.noti_title}</div>
+														<div class="tab_title" >${i.noti_title}</div>
 														<div class="tab_date">${i.noti_writedate}</div>
 													</c:forEach>
 												</div>
@@ -294,7 +294,7 @@
 
 									</div>
 									<div class="col-1">
-										<nav class="nav justify-content-end">
+										<nav class="nav justify-content-end" >
 											<a class="nav-link " href="#"
 												style="color: black; font-weight: bold;">+</a>
 										</nav>
@@ -311,13 +311,13 @@
 											<div class="col-5 ">
 												<nav class="nav">
 													<a class="nav-link disabled" href="#" aria-disabled="true"
-														style="color: black; font-weight: bold; font-size: 14px;">수강과목</a>
+														style="color:white; font-weight: bold; font-size: 14px;">수강과목</a>
 												</nav>
 											</div>
 											<div class="col-7">
 												<nav class="nav justify-content-end">
 													<a class="nav-link disabled" href="#" aria-disabled="true"
-														style="color: black; font-size: 12px;">${openClassYear }년도
+														style="color:white; font-size: 12px;">${openClassYear }년도
 														${semester }학기</a>
 												</nav>
 											</div>
@@ -338,13 +338,13 @@
 											<div class="col-5 ">
 												<nav class="nav">
 													<a class="nav-link disabled" href="#" aria-disabled="true"
-														style="color: black; font-weight: bold; font-size: 14px;">강의과목</a>
+														style="color:white; font-weight: bold; font-size: 14px;">강의과목</a>
 												</nav>
 											</div>
 											<div class="col-7">
 												<nav class="nav justify-content-end">
 													<a class="nav-link disabled" href="#" aria-disabled="true"
-														style="color: black; font-size: 12px;">${openClassYear }년도
+														style="color:white; font-size: 12px;">${openClassYear }년도
 														${semester }학기</a>
 												</nav>
 											</div>
@@ -366,20 +366,20 @@
 								<div class="row">
 
 									<div class="col-12 col-sm-6 calendar" style="padding-left:0px; padding-right:0px;">
-										<table id="calendar" border="1" style="width:100%; height:100%; text-align:center">
+										<table id="calendar"  style="width:100%; height:100%; text-align:center">
 											<tr>
-												<td id="tbCalendarYM" colspan="5">yyyy년 m월</td>
+												<td id="tbCalendarYM" colspan="5" >yyyy년  m월</td>
 												<td><label onclick="prevCalendar()" style="cursor:pointer">◀</label></td>
 												<td><label onclick="nextCalendar()" style="cursor:pointer;">▶</label></td>
 											</tr>
 											<tr id=weeks>
-												<td align="center" style="background-color:darkgray"><font color="red">일</font></td>
-												<td align="center" style="background-color:darkgray"><font color="white">월</font></td>
-												<td align="center" style="background-color:darkgray"><font color="white">화</font></td>
-												<td align="center" style="background-color:darkgray"><font color="white">수</font></td>
-												<td align="center" style="background-color:darkgray"><font color="white">목</font></td>
-												<td align="center" style="background-color:darkgray"><font color="white">금</font></td>
-												<td align="center" style="background-color:darkgray"><font color="blue">토</font></td>
+												<td align="center"><font color="red">일</font></td>
+												<td align="center"><font color="white">월</font></td>
+												<td align="center"><font color="white">화</font></td>
+												<td align="center"><font color="white">수</font></td>
+												<td align="center"><font color="white">목</font></td>
+												<td align="center"><font color="white">금</font></td>
+												<td align="center"><font color="blue">토</font></td>
 											</tr>
 										</table>
 									</div>
@@ -401,8 +401,8 @@
 										<div class="colSche_list">
 											<c:forEach var="i" items="${list_colSche}"
 												varStatus="status">
-												<div class="subject_isu">${i.sche_startDate } ~ ${i.sche_endDate }</div>
-												<div class="subject_score">${i.title }</div>
+												<div class="colSche_day" >${i.sche_startDate } ~ ${i.sche_endDate }</div>
+												<div class="colSche_title">${i.title }</div>
 											</c:forEach>
 										</div>
 										
@@ -541,14 +541,29 @@
 				</div>
 
 			</div>
-			<div class="container shortcutPart" style="margin-top: 30px;">
+			<div class="container shortcutPart">
 				<div class="row">
 					<div class="col-12 col-sm-1 shortcut">바로가기</div>
-					<div class="col-2 col-sm-2 toClassSche">학사일정</div>
-					<div class="col-2 col-sm-2 toBus">통학버스</div>
-					<div class="col-2 col-sm-2 toDomi">생활관안내</div>
-					<div class="col-2 col-sm-2 toReportBoard">건의게시판</div>
-					<div class="col-2 col-sm-2 toExAuth">인터넷증명</div>
+					<div class="col-2 col-sm-2 toClassSche">
+					<div class="image"><img src="/resources/img/info/calendar.png"></div>
+					<div class="text">학사일정</div>
+					</div>
+					<div class="col-2 col-sm-2 toBus">
+					<div class="image"><img src="/resources/img/info/bus.png"></div>
+					<div class="text">통학버스</div>
+					</div>
+					<div class="col-2 col-sm-2 toDomi">
+					<div class="image"><img src="/resources/img/info/dormitory.png"></div>
+					<div class="text">생활관안내</div>
+					</div>
+					<div class="col-2 col-sm-2 toReportBoard">
+					<div class="image"><img src="/resources/img/info/board.png"></div>
+					<div class="text">건의게시판</div>
+					</div>
+					<div class="col-2 col-sm-2 toExAuth">
+					<div class="image"><img src="/resources/img/info/document.png"></div>
+					<div class="text">인터넷증명</div>
+					</div>
 				</div>
 			</div>
 			<div class="container-fluid footer" style="margin-top: 30px;">
@@ -583,40 +598,33 @@
 			<div class="container-fluid footer">
 				<div class="row">
 					<div class="col-12">
-						<div class="container">copyright 사진</div>
+						<div class="container" style="padding-top:50px;">COPYRIGHTⓒ 2017 GACHA UNIVERSITY. ALL RIGHTS RESERVED.</div>
 					</div>
 				</div>
 
 
 			</div>
 
-		<script>
+<script>
 	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 	var date = new Date();//today의 Date를 세어주는 역할
-	var currentDay;
-
+	
+	buildCalendar();
+	
 	function prevCalendar() {//이전 달
-		today = new Date(today.getFullYear(), today.getMonth() - 1, today
-				.getDate());
+		today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
 		buildCalendar();
-		//location.href="/info/calendar?currentDay=오늘";
-		//alert(today);
-		
 	}
 	function nextCalendar() {//다음 달
-		today = new Date(today.getFullYear(), today.getMonth() + 1, today
-				.getDate());
+		today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
 		buildCalendar();
-		//location.href="/info/calendar?currentDay="+today;
-		//alert(today);
 	}
-	function buildCalendar(today) {//현재 달 달력 만들기
+	function buildCalendar() {//현재 달 달력 만들기
 		var doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 		var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 		var tbCalendar = document.getElementById("calendar");//날짜를 찍을 테이블 변수 만듬, 일 까지 다 찍힘
 		var tbCalendarYM = document.getElementById("tbCalendarYM");//테이블에 정확한 날짜 찍는 변수
-		currentDay = today.getFullYear() + "년 "+ (today.getMonth() + 1) + "월";
-		tbCalendarYM.innerHTML = currentDay;
+		tbCalendarYM.innerHTML = today.getFullYear() + "년 "+ (today.getMonth() + 1) + "월";
 
 		/*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
 		while (tbCalendar.rows.length > 2) {
@@ -658,6 +666,7 @@
 		}
 	}
 </script>
+
 <script>
 		let day;
 		let time;
@@ -739,7 +748,7 @@
 		</c:forEach>
 	</script>
 
-	<script>
+<script>
 	<!--바로가기 모음  -->
 		$(document).on('click', '.toClassSche', function() {
 			location.href = "";
