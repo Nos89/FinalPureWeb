@@ -12,7 +12,7 @@
 				<div class="col-9">
 					<div class="row">
 						<div class="col-2">
-							<button type="button" class="btnFile">파일 추가</button>
+							<button type="button" class="btn btn-outline-secondary btnFile">파일 추가</button>
 						</div>
 						<div class="col-10"></div>
 						<div class="col-12 inputFileWrapper">
@@ -20,8 +20,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-1"><input type="submit" value="작성하기"></div>
-				<div class="col-2"><button class="btnList" type="button">목록으로</button></div>
+				<div class="col-1"><input class="btn btn-outline-warning" type="submit" value="작성하기"></div>
+				<div class="col-2"><button class="btn btn-outline-success btnList" type="button">목록으로</button></div>
 			</div>
 		</div>
 	</form>
@@ -123,7 +123,7 @@ $(document).ready(function() {
 			alert("내용을 입력 해주세요.");
 			return false;
 		} else {
-			alert("게시글 작성!!")
+			alert("게시글이 작성됐습니다.");
 		}
 	})
 	
@@ -138,8 +138,10 @@ $(document).ready(function() {
 			row.addClass("row");
 			let div = $("<div></div>");
 			div.addClass("col-12");
+			let span = $("<span></span>");
+			span.addClass("btn btn-outline-secondary");
 			div.append("<input type=file name=inputFile>");
-			div.append("<button type=button class=delFile>X</button>");
+			div.append("<button type=button class='btn btn-outline-danger delFile'>X</button>");
 			row.append(div);
 			$(".inputFileWrapper").append(row);
 		} else {

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<div class="row writerWrapper">
-		<div class="col-8 mb-4 articleTitle">${article.title}</div>
-		<div class="col-2 mb-4 articleWriter">${ type == 'anonym'? '익명' : article.writer}</div>
-		<div class="col-2 mb-4 articleWriteDate">${article.writeDate}</div>
+		<div class="col-8 border-bottom  mb-4 articleTitle">${article.title}</div>
+		<div class="col-2 border-bottom  mb-4 articleWriter">${ type == 'anonym'? '익명' : article.writer}</div>
+		<div class="col-2 border-bottom  mb-4 articleWriteDate">${article.writeDate}</div>
 		<div class="col-12 summernote">
 			${article.contents}
 		</div>

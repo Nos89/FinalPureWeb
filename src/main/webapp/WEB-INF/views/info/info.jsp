@@ -593,6 +593,14 @@
 		<script>
 	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 	var date = new Date();//today의 Date를 세어주는 역할
+	
+	today.setTime(Date.parse("2020-01-01"));
+	
+	console.log(today);
+	console.log(Date.parse("2020-01-01"));
+	console.log(today.getTime());
+	
+	buildCalendar(today);
 
 	function prevCalendar() {//이전 달
 		today = new Date(today.getFullYear(), today.getMonth() - 1, today
@@ -604,7 +612,7 @@
 				.getDate());
 		buildCalendar();
 	}
-	function buildCalendar() {//현재 달 달력 만들기
+	function buildCalendar(today) {//현재 달 달력 만들기
 		var doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 		var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 		var tbCalendar = document.getElementById("calendar");//날짜를 찍을 테이블 변수 만듬, 일 까지 다 찍힘
@@ -651,7 +659,6 @@
 			}
 		}
 	}
-    buildCalendar();
 </script>
 <script>
 		let day;
