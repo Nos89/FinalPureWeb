@@ -68,8 +68,8 @@
 								<input type=checkbox name="saveID" id=chkBox ${checked}> 아이디 저장
 							</div>
 							<div id=findIDPW>
-								<input type=button id=findID value="아이디찾기/"><input
-									type=button id=findPW value="비밀번호재설정">
+								<input type=button id=findID value="아이디찾기/">
+								<input type=button id=findPW value="비밀번호재설정">
 							</div>
 
 							<div id=loginBtn>
@@ -102,8 +102,8 @@
 							<div class="row">
 								<div class="col-3 col-sm-12 menuPart"><a href="/classRegistration.nex">수강신청</a></div>
 								<div class="col-3 col-sm-12 menuPart"><a href="/" class="d-inline-block">대표홈페이지</a></div>
-								<div class="col-2 col-sm-12  menuPart">학사일정</div>
-								<div class="col-2 col-sm-12  menuPart">게시판</div>
+								<div class="col-2 col-sm-12  menuPart"><a href="/main?pageGroup=info&type=info">학사일정</a></div>
+								<div class="col-2 col-sm-12  menuPart"><a href="/main/board.list?pageGrup=community&type=free&write=false">게시판</a></div>
 								<div class="col-2 col-sm-12  menuPart">도움말</div>
 							</div>
 
@@ -140,6 +140,19 @@
 					loginAdmin.style.backgroundColor = "#272727";
 					loginAdmin.style.color = "ivory";
 				}
+				
+				$(document).ready(function(){
+					<c:if test="${result == true}">
+						nw.close();
+					</c:if>
+					$("#findID").click(function(){
+						var nw = window.open("/info/find?find=id", "아이디 찾기", "width=500px; height=300px");
+					})
+					
+					$("#findPW").click(function(){
+						var nw = window.open("/info/find?find=pw", "비밀번호 찾기", "width=500px; height=300px");
+					})
+				})
 			</script>
 		</c:when>
 		<c:otherwise>

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.InfoBoardDTO;
@@ -426,6 +427,29 @@ public class InfoController {
 		session.invalidate();
 		return "info/info";
 
+	}
+	
+	@RequestMapping("/find")
+	public String find(String find, Model model) {
+		model.addAttribute("find", find);
+		return "/info/find";
+	}
+	
+	@RequestMapping("/findIDPW")
+	@ResponseBody
+	public String findIDPW(String find, String userID, String userName, String userRRN ) {
+		String result = "";
+		result = iservice.findIDPW(find, userID, userName, userRRN);
+		if( find.contentEquals("id") ) {
+			System.out.println(result);
+			if( result != null ) {
+				return result;
+			} else {
+				return "false";
+			}
+		} else {
+		}
+		return "hi";
 	}
 
 }

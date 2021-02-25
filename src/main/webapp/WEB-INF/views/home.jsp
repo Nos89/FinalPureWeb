@@ -199,6 +199,10 @@
 							}
 						}
 					})
+					
+					$(".btnMoreColSchedule").click(function(){
+						location.href = "/main?pageGroup=info&type=info";
+					})
 				})
 				
 				let getNotice = function(noticeType){
