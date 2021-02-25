@@ -4,7 +4,15 @@
     padding-right: none;
     padding-left: none;
 } .container{padding: none;}
-           
+       
+       
+       
+       
+       
+ 
+        
+        
+           .newContainer2{background-color: #f1f1f1; height:100%;}
            .my,.board,.subject,.timetable,.schedule{padding: 0px;border:4px solid #f1f1f1;}
             #electAttend:hover{background-color:#063976; color:white;}
             #mainpage:hover{background-color:#063976; color:white;}
@@ -33,7 +41,7 @@
             .tab_title:hover{color:blue;}
             .tab_date{ text-align: end; color:gray;margin-top:3px;font-size:14px; margin-right:15px;}
             .nav-tabs>li{font-weight:bold; font-size:15px;}
-            .tab-content{background-color:white; height:169px; width:562px;}
+            .tab-content{background-color:white; height:169px; width:562px; padding-left:10px; padding-right:10px;}
             
             .row>.subject{height: 220px;overflow:scroll;background-color:#063976;}
             .row>.subject>.subject_list>.subject_isu{float:left; width:35%; color:white; font-size:14px; margin-left:5%; }
