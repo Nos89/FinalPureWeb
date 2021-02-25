@@ -22,35 +22,74 @@
 				</div>
 				<div class="input-group mb-3">
 				  <div class="input-group-prepend">
-				    <span class="input-group-text">주민번호</span>
+				    <span class="input-group-text">핸드폰번호</span>
 				  </div>
-				  <input type="text" name="prefixRRN" class="form-control">
-				  <input type="password" name="suffixRRN" class="form-control">
+				  <input type="text" name="firstPN" class="form-control">
+				  <input type="text" name="secondPN" class="form-control">
+				  <input type="text" name="thirdPN" class="form-control">
+				</div>
+				<div class="input-group text-center mb-3">
+					<div class="input-group-prepend resultDiv">
+						
+					</div>
 				</div>
 				<div class="input-group-prepend text-center">
 				    <button class="btn btn-outline-secondary findIDPW" type="button">찾기</button>
-				    <button class="btn btn-outline-secondary close" type="button">닫기</button>
-				  </div>
+				    <button class="btn btn-outline-secondary btnClose" type="button">닫기</button>
+			  	</div>
 			</div>
 		</div>
 	</div>
 	<script>
 		$(document).ready(function(){
-			//new RegExp(/abc/g, 'i')
-			var chkNum = new RegExp(/[^0-9]+$/, 'g');
+			
+			$("input[name=firstPN]").keydown(function(e){
+				if( $("input[name=firstPN]").val().length >= 3 && e.keyCode != 8){
+					$("input[name=secondPN]").focus();
+				}
+			})
+			
+			$("input[name=secondPN]").keydown(function(e){
+				if( $("input[name=secondPN]").val().length >= 4 && e.keyCode != 8){
+					$("input[name=thirdPN]").focus();
+				} else if( $("input[name=secondPN").val().length == 0 && e.keyCode == 8 ){
+					$("input[name=firstPN]").focus();
+				}
+			})
+			
+			$("input[name=thirdPN]").keydown(function(e){
+				if( $("input[name=thirdPN]").val().length >= 4 && e.keyCode != 8){
+					$(".findIDPW").focus();
+				} else if( $("input[name=thirdPN]").val().length == 0 && e.keyCode == 8 ){
+					$("input[name=secondPN]").focus();
+				}
+			})
 			
 			$(".findIDPW").click(function(){
+				// 유효성 체크
+				
+				var pn = $("input[name=firstPN]").val()+"-"+
+						$("input[name=secondPN]").val()+"-"+
+						$("input[name=thirdPN]").val();
 				if( "${find}" == "id" ){
 					$.ajax({
 						url: "/info/findIDPW",
 						data: {
 							find : "${find}",
 							userName : $("input[name=userName]").val(),
-							userRRN : $("input[name=prefixRRN]").val() + $("input[name=suffixRRN]").val()
+							pn : pn
 						},
 						type: "post",
 					}).done(function(resp){
-						alert(resp);
+							var sp = $("<span></span>");
+							sp.addClass("input-group-text");
+						if( resp != "false" ){
+							sp.append(resp);
+						} else {
+							sp.append("일치하는 정보가 없습니다.");							
+						}
+						$(".resultDiv").html("");
+						$(".resultDiv").append(sp);
 					})
 				} else {
 					$.ajax({
@@ -59,15 +98,62 @@
 							find : "${find}",
 							userID : $("input[name=userID]").val(),
 							userName : $("input[name=userName]").val(),
-							userRRN : $("input[name=prefixRRN]").val() + $("input[name=suffixRRN]").val()
+							pn : pn
 						},
 						type: "post",
 					}).done(function(resp){
-						alert(resp);
+						var sp = $("<span></span>");
+						sp.addClass("input-group-text");
+						sp.addClass("input-group-text");
+						
+						if( resp != "false" ){
+							sp.append("비밀번호");
+							var input1 = $("<input>");
+							input1.attr("type", "password");
+							input1.attr("name", "firstPW");
+							input1.addClass("form-control");
+							var input2 = $("<input>");
+							input2.attr("type", "password");
+							input2.attr("name", "secondPW");
+							input2.addClass("form-control");
+							$(".resultDiv").append(sp);
+							$(".resultDiv").parent().append(input1);
+							$(".resultDiv").parent().append(input2);
+							var btnDiv = $("<div></div>");
+							btnDiv.addClass("input-group-append");
+							var btn = $("<button>재설정</button>");
+							btn.attr("type", "button");
+							btn.addClass("btn btn-outline-secondary resetPW");
+							btnDiv.append(btn);
+							$(".resultDiv").parent().append(btnDiv);
+							btn.click(function(){
+								if( input1.val() != input2.val() ){
+									alert("비밀번호가 일치하지 않습니다.");
+								} else {
+									$.ajax({
+										url: "/info/changePW",
+										type: "post",
+										data: {
+											userID: $("input[name=userID]").val(),
+											pw: input1.val()
+										}
+									}).done(function(resp){
+										console.log(resp);
+										if( resp == true ){
+											alert("비밀번호가 변경됐습니다.");
+											close();
+										}
+									})
+								}
+							})
+						}
 					})
 				}
 			})
 			
+			$(".btnClose").click(function(){
+				close();
+			})
 		})
 	</script>
 </body>

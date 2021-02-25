@@ -435,21 +435,27 @@ public class InfoController {
 		return "/info/find";
 	}
 	
-	@RequestMapping("/findIDPW")
+	@RequestMapping(value="/findIDPW", produces="application/json; charset=utf8")
 	@ResponseBody
-	public String findIDPW(String find, String userID, String userName, String userRRN ) {
+	public String findIDPW(String find, String userID, String userName, String pn ) {
 		String result = "";
-		result = iservice.findIDPW(find, userID, userName, userRRN);
-		if( find.contentEquals("id") ) {
-			System.out.println(result);
-			if( result != null ) {
-				return result;
-			} else {
-				return "false";
-			}
+		result = iservice.findIDPW(find, userID, userName, pn);
+		if( result != null ) {
+			return result;
 		} else {
+			return "false";
 		}
-		return "hi";
 	}
-
+	
+	@RequestMapping(value="/changePW", produces="application/json; charset=utf8")
+	@ResponseBody
+	public String changePW(String userID, String pw) {
+		int result = iservice.changePW(userID, pw);
+		System.out.println(result);
+		if( result > 0 ) {
+			return "true";
+		} else {
+			return "false";
+		}
+	}
 }

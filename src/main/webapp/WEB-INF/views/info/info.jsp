@@ -22,7 +22,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 </head>
-<body style="background-color: #f1f1f1">
+<body>
 <!-- 테스트 -->
 <script>
 	console.log("info.jsp 로딩 : ${loginID}");
@@ -35,33 +35,34 @@
 	</c:if>
 	<c:choose>
 		<c:when test="${loginID==null}">
+			<div class="newContainer">
 			<div class="container-fluid title">
 				<div class="row">
-					<div class="col-2 mx-5 my-2">oo 대학교 (로고사진)</div>
+					<div class="col-2 gachalogo mx-5 my-2" style="border : 0px solid white;"></div>
 				</div>
 			</div>
 
 			<div class="container center">
 				<form action="/info/login" method=post>
 					<div class="row">
-						<div class=" col-sm-5 login">
+						<div class=" col-sm-5 login" style="background-color:#ffffff">
 							<div id=loginTitle>
 								<h3>로그인</h3>
 							</div>
 							<div id=loginTitle_eng>Login</div>
-							<div id=part>
-								<div id="loginStd" style="background-color: #272727; color: ivory;">학부생용</div>
-								<div id="loginPro">교수용</div>
-								<div id="loginAdmin">관리자용</div>
+							<div class="part" id=part>
+								<div class="selectUser" id="loginStd" style="background-color: #272727; color: ivory; border:0px solid white;">학부생용</div>
+								<div class="selectUser" id="loginPro" style=" border:0px solid white;">교수용</div>
+								<div class="selectUser" id="loginAdmin" style="border:0px solid white;">관리자용</div>
 							</div>
 							<div id=loginID>
 								<div id=idTitle>ID</div>
-								<input type=text name=id id=idText placeholder="id placeholder"
+								<input type=text name=id id=idText placeholder="ID 학번입력"
 									required value="${cookie.saveID!=''? cookie.saveID.value:'' }">
 							</div>
 							<div id=loginPW>
 								<div id=pwTitle>PW</div>
-								<input type=password name=pw id=pwText placeholder="pw placeholder"
+								<input type=password name=pw id=pwText placeholder="비밀번호 입력"
 									required>
 							</div>
 							<div id=rmbId>
@@ -100,22 +101,22 @@
 						</div>
 						<div class="col-sm-2 menu">
 							<div class="row">
-								<div class="col-3 col-sm-12 menuPart"><a href="/classRegistration.nex">수강신청</a></div>
-								<div class="col-3 col-sm-12 menuPart"><a href="/" class="d-inline-block">대표홈페이지</a></div>
-								<div class="col-2 col-sm-12  menuPart"><a href="/main?pageGroup=info&type=info">학사일정</a></div>
-								<div class="col-2 col-sm-12  menuPart"><a href="/main/board.list?pageGrup=community&type=free&write=false">게시판</a></div>
-								<div class="col-2 col-sm-12  menuPart">도움말</div>
+								<div class="col-3 col-sm-12 menuPart" id="classRegistation" style="border-bottom: 1px solid #0c3181;"><div class="goSugang"></div><p>수강신청</p></div>
+								<div class="col-3 col-sm-12 menuPart" id="goHome" style="border-top: 1px solid #0c3181; border-bottom: 1px solid #0c3181;"><div class="goHome"></div><p>대표홈페이지</p></div>
+								<div class="col-2 col-sm-12  menuPart"id="goCalendar"style="border-top: 1px solid #0c3181; border-bottom: 1px solid #0c3181;"><div class="goCalender"></div><p>학사일정 바로가기</p></div>
+								<div class="col-2 col-sm-12  menuPart"id="goComunity" style="border-top: 1px solid #0c3181; border-bottom: 1px solid #0c3181;"><div class="goComunity"></div><p>커뮤니티</p></div>
+								<div class="col-2 col-sm-12  menuPart"id="goIntro"style="border-top: 1px solid #0c3181;"><div class="goIntro"></div><p>학사소개</p></div>
 							</div>
 
 						</div>
 					</div>
 				</form>
 			</div>
+			</div>
 			<script>
 				let loginPro = document.getElementById("loginPro");
 				let loginStd = document.getElementById("loginStd");
 				let loginAdmin = document.getElementById("loginAdmin");
-
 				loginStd.onclick = function() {
 					loginStd.style.backgroundColor = "#272727";
 					loginStd.style.color = "ivory";
@@ -140,7 +141,22 @@
 					loginAdmin.style.backgroundColor = "#272727";
 					loginAdmin.style.color = "ivory";
 				}
-				
+				//각 메뉴 페이지 연결
+				document.getElementById("classRegistation").onclick = function(){
+					location.href="/classRegistration.nex";	
+				}
+				document.getElementById("goHome").onclick = function(){
+					location.href="/";	
+				}
+				document.getElementById("goCalendar").onclick = function(){
+					location.href="/main?pageGroup=info&type=info";	
+				}
+				document.getElementById("goIntro").onclick = function(){
+					location.href="/main?pageGroup=intro&type=intro";	
+				}
+				document.getElementById("goComunity").onclick = function(){
+					location.href="/main?pageGroup=community&type=free";	
+				}
 				$(document).ready(function(){
 					<c:if test="${result == true}">
 						nw.close();
@@ -150,22 +166,23 @@
 					})
 					
 					$("#findPW").click(function(){
-						var nw = window.open("/info/find?find=pw", "비밀번호 찾기", "width=500px; height=300px");
+						var nw = window.open("/info/find?find=pw", "비밀번호 찾기", "width=500px; height=330px");
 					})
 				})
 			</script>
 		</c:when>
 		<c:otherwise>
+		<div class="newContainer2">
 			<div class="container-fluid userPage" >
 				<div class="row">
 					<div class="col-12 ">
 						<nav class="navbar navbar-expand-lg navbar-light bg-light">
 							<div class="container top">
-								<a class="navbar-brand" href="/">oo대학교 포털사이트</a>
+								<a class="navbar-brand" href="/">가차대학교 포털사이트</a>
 
 								<ul class="nav justify-content-end">
 
-									<li class="nav-item"><a class="nav-link" href="#">Home</a>
+									<li class="nav-item"><a class="nav-link" href="/">Home</a>
 									</li>
 									<li class="nav-item"><a class="nav-link"
 										href="/info/logout">Logout</a></li>
@@ -582,6 +599,7 @@
 					</div>
 				</div>
 			</div>
+			</div>
 			<div class="container-fluid footer" style="margin-top: 30px;">
 				<div class="row">
 					<div class="col-12">
@@ -641,7 +659,6 @@
 		var tbCalendar = document.getElementById("calendar");//날짜를 찍을 테이블 변수 만듬, 일 까지 다 찍힘
 		var tbCalendarYM = document.getElementById("tbCalendarYM");//테이블에 정확한 날짜 찍는 변수
 		tbCalendarYM.innerHTML = today.getFullYear() + "년 "+ (today.getMonth() + 1) + "월";
-
 		/*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
 		while (tbCalendar.rows.length > 2) {
 			//열을 지워줌
@@ -688,7 +705,6 @@
 		let time;
 		let title;
 		let classroom;
-
 		<c:forEach var="i" items="${timeList}" varStatus="status">
 		//가*/월/2/강의명/강의실
 		day = "${i}".split("/")[0];
@@ -697,7 +713,6 @@
 		time = "${i}".split("/")[1];
 		title = "${i}".split("/")[2];
 		classroom = "${i}".split("/")[3];
-
 		if (day == "월") {
 			let lecture = $("<td></td>");
 			// lecture.attr("rowspan", time[1] - time[0] );
@@ -760,7 +775,6 @@
 				}
 			}
 		}
-
 		</c:forEach>
 	</script>
 
@@ -781,12 +795,8 @@
 		$(document).on('click', '.toExAuth', function() {
 			location.href = "";
 		});
-
 	</script>
-
 	</c:otherwise>
 	</c:choose>
-
-
 </body>
 </html>

@@ -79,15 +79,20 @@ public class InfoService {
 	}
 
 	
-	public String findIDPW(String find, String userID, String userName, String userRRN ) {
+	public String findIDPW(String find, String userID, String userName, String pn ) {
 		Map<String, String> parm = new HashMap<>();
 		parm.put("find", find);
 		parm.put("userID", userID);
 		parm.put("userName", userName);
-		parm.put("userRRN", userRRN);
+		parm.put("pn", pn);
 		return idao.findIDPW(parm);
 	}
 	
-	
+	public int changePW(String id, String pw ) {
+		Map<String, String> parm = new HashMap<>();
+		parm.put("id", id);
+		parm.put("pw", pw);
+		return idao.changePW(parm);
+	}
 
 }
