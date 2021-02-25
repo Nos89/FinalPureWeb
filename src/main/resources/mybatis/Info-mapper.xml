@@ -65,12 +65,16 @@
 				<when test="find == 'id'">
 					id
 				</when>
-				<when test="find == 'pw">
+				<when test="find == 'pw'">
 					pw
 				</when>
 			</choose>
 		from users
-		where name = #{userName} and rrn = #{userRRN}
+		where name = #{userName} and phone = #{pn}
 	</select>
 	
+	<!-- 비밀번호 변경 -->
+	<update id="changePW">
+		update users set pw = #{pw} where id = #{id}
+	</update>
 </mapper>
