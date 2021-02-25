@@ -28,7 +28,8 @@ public class ElecAttendController {
 
 	// 전자출결 페이지로 이동
 	@RequestMapping("/toElectAttend")
-	public String toElectAttend() {
+	public String toElectAttend(Model model) {
+		model.addAttribute("first", "첫화면에 사진");
 		return "/info/electAttend";
 	}
 
@@ -61,6 +62,9 @@ public class ElecAttendController {
 				model.addAttribute("lecAttList", lecAttList);
 				model.addAttribute("selClassInfoList", selClassInfoList);
 				model.addAttribute("yearSemester", yearSemester);
+			}
+			else if(className == null) {
+				model.addAttribute("divide", "구분");
 			}
 
 			model.addAttribute("semester", semester);
