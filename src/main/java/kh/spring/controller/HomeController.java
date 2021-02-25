@@ -65,10 +65,25 @@ public class HomeController {
 			model.addAttribute("write", false);
 			return "redirect:/main/board.list";
 		}
+		else if( pageGroup.contentEquals("info")) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+			Date time = new Date();
+			String current = format.format(time);
+	
+			String arr[] = current.split("-");
+			//String result = arr[0]+"-03"+"-01";
+			
+			arr[0] = arr[0].replaceAll("20", "");
+			String month_click2 = arr[0]+"/"+arr[1];
+			List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(month_click2);
+						
+			model.addAttribute("result_main", current+"-01");
+			model.addAttribute("main_colSche", main_colSche);
+		}
 		return "main/"+pageGroup+"/"+type;
 	}
 	
-	@RequestMapping("/info")
+	@RequestMapping("/info") //종합정보페이지 로그인 옆에 잇는 학사일정 4개 
 	public String infoPageGoTo(Model model) {
 		SimpleDateFormat format2 = new SimpleDateFormat("yy/MM/dd"); // 오늘날짜 요일 가져오기
 		Date time2 = new Date();
