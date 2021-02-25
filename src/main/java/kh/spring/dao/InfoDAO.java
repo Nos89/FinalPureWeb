@@ -98,6 +98,8 @@ public class InfoDAO {
 		return db.selectOne("Info.findIDPW", parm);
 	}
 
-
+	public int changePW(Map<String, String> parm) {
+		return db.update("Info.changePW", parm);
+	}
 
 }
