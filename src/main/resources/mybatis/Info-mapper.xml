@@ -57,4 +57,20 @@
  		SELECT * FROM (SELECT Col_schedule.*, ROW_NUMBER() OVER(ORDER BY sche_startdate DESC) N
 					FROM Col_schedule  where sche_startdate like '%'||#{value}||'%' or sche_enddate like '%'||#{value}||'%') WHERE (N BETWEEN 1 AND 4)
 	</select>
+	
+	<!-- 아이디 비번 찾기 -->
+	<select id="findIDPW" resultType="String">
+		select 
+			<choose>
+				<when test="find == 'id'">
+					id
+				</when>
+				<when test="find == 'pw">
+					pw
+				</when>
+			</choose>
+		from users
+		where name = #{userName} and rrn = #{userRRN}
+	</select>
+	
 </mapper>

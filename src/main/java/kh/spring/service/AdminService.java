@@ -1,7 +1,6 @@
 package kh.spring.service;
 
 import java.io.File;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +11,9 @@ import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.nexacro.uiadapter17.spring.core.data.DataSetRowTypeAccessor;
+import com.nexacro17.xapi.data.DataSet;
 
 import kh.spring.dao.AdminDAO;
 import kh.spring.dao.BoardDAO;
@@ -208,146 +210,52 @@ public class AdminService {
 		return admdao.getProfessor();
 	}
 	
-	// 교수 명단 업데이트
-	public int updateProfessor1(List<ProfessorDTO_NEX> list) throws Exception {
-		List<ProfessorDTO> list2 = new ArrayList<>();
-		for(int i=0; i<list.size(); i++) {
-			ProfessorDTO dto = new ProfessorDTO();
-			dto.setId(list.get(i).getId());
-			dto.setPw(list.get(i).getPw());
-			dto.setName(list.get(i).getName());
-			dto.setBirth(ConvertDate.utilToSql(list.get(i).getBirth()));
-			dto.setGender(list.get(i).getGender());
-			dto.setCountry(list.get(i).getCountry());
-			dto.setInDate(ConvertDate.utilToSql(list.get(i).getInDate()));
-			if(list.get(i).getOutDate()==null) {
-				dto.setOutDate(null);
-			}else {
-				dto.setOutDate(ConvertDate.utilToSql(list.get(i).getOutDate()));
-			}
-			dto.setColcode(list.get(i).getColcode());
-			dto.setDeptcode(list.get(i).getDeptcode());
-			dto.setCol_title(list.get(i).getCol_title());
-			dto.setDept_title(list.get(i).getDept_title());
-			dto.setZipcode(list.get(i).getZipcode());
-			dto.setAddr1(list.get(i).getAddr1());
-			dto.setAddr2(list.get(i).getAddr2());
-			dto.setEmail(list.get(i).getEmail());
-			dto.setPhone(list.get(i).getPhone());
-			dto.setBank(list.get(i).getBank());
-			dto.setAccountnum(list.get(i).getAccountnum());
-			dto.setPro_office(list.get(i).getPro_office());
-			dto.setPro_status(list.get(i).getPro_status());
-			list2.add(dto);
+	// 교수 추가, 수정
+	public int modifyProfessor(ProfessorDTO dto, int rowType) {
+		int result=0;
+		if (rowType == DataSet.ROW_TYPE_INSERTED){
+			result = admdao.addProfessor(dto);
+			System.out.println("rowType: "+rowType);
+		}else if (rowType == DataSet.ROW_TYPE_UPDATED){ 
+			result = admdao.modifyProfessor(dto);
+			System.out.println("rowType: "+rowType);
+		}else {
+			result = -1;
 		}
-		return admdao.updateProfessor1(list2);
+		return result;
 	}
-	public int updateProfessor2(List<ProfessorDTO_NEX> list) throws Exception {
-		List<ProfessorDTO> list2 = new ArrayList<>();
-		for(int i=0; i<list.size(); i++) {
-			ProfessorDTO dto = new ProfessorDTO();
-			dto.setId(list.get(i).getId());
-			dto.setPw(list.get(i).getPw());
-			dto.setName(list.get(i).getName());
-			dto.setBirth(ConvertDate.utilToSql(list.get(i).getBirth()));
-			dto.setGender(list.get(i).getGender());
-			dto.setCountry(list.get(i).getCountry());
-			dto.setInDate(ConvertDate.utilToSql(list.get(i).getInDate()));
-			if(list.get(i).getOutDate()==null) {
-				dto.setOutDate(null);
-			}else {
-				dto.setOutDate(ConvertDate.utilToSql(list.get(i).getOutDate()));
-			}
-			dto.setColcode(list.get(i).getColcode());
-			dto.setDeptcode(list.get(i).getDeptcode());
-			dto.setCol_title(list.get(i).getCol_title());
-			dto.setDept_title(list.get(i).getDept_title());
-			dto.setZipcode(list.get(i).getZipcode());
-			dto.setAddr1(list.get(i).getAddr1());
-			dto.setAddr2(list.get(i).getAddr2());
-			dto.setEmail(list.get(i).getEmail());
-			dto.setPhone(list.get(i).getPhone());
-			dto.setBank(list.get(i).getBank());
-			dto.setAccountnum(list.get(i).getAccountnum());
-			dto.setPro_office(list.get(i).getPro_office());
-			dto.setPro_status(list.get(i).getPro_status());
-			list2.add(dto);
-		}
-		return admdao.updateProfessor2(list2);
+
+	// 교수 삭제
+	public int deleteProfessor(String id) {
+		return admdao.deleteProfessor(id);
 	}
+
 	
 	// 학생 목록 가져오기
 	public List<StudentDTO> getStudentOnLoad() throws Exception {
 		return admdao.getStudentOnLoad();
 	}
 	
-	// 학생 명단 등록
-	public int modifyStudent1(List<StudentDTO_NEX> list) throws Exception {
-		List<StudentDTO> list2 = new ArrayList<>();
-		for(int i=0; i<list.size(); i++) {
-			StudentDTO dto = new StudentDTO();
-			dto.setId(list.get(i).getId());
-			dto.setPw(list.get(i).getPw());
-			dto.setName(list.get(i).getName());
-			Date d1 = ConvertDate.stringToDate(list.get(i).getBirth());
-			dto.setBirth(d1);
-			dto.setGender(list.get(i).getGender());
-			dto.setCountry(list.get(i).getCountry());
-			Date d2 = ConvertDate.stringToDate(list.get(i).getInDate());
-			dto.setInDate(d2);
-			Date d3 = ConvertDate.stringToDate(list.get(i).getOutDate());
-			dto.setOutDate(d3);
-			dto.setColcode(list.get(i).getColcode());
-			dto.setDeptcode(list.get(i).getDeptcode());
-			dto.setCol_title(list.get(i).getCol_title());
-			dto.setDept_title(list.get(i).getDept_title());
-			dto.setZipcode(list.get(i).getZipcode());
-			dto.setAddr1(list.get(i).getAddr1());
-			dto.setAddr2(list.get(i).getAddr2());
-			dto.setEmail(list.get(i).getEmail());
-			dto.setPhone(list.get(i).getPhone());
-			dto.setBank(list.get(i).getBank());
-			dto.setAccountnum(list.get(i).getAccountnum());
-			dto.setStd_year(list.get(i).getStd_year());
-			dto.setStd_status(list.get(i).getStd_status());
-			list2.add(dto);
+	// 학생 추가,수정
+	public int modifyStudent(StudentDTO dto,int rowType) throws Exception {
+		int result=0;
+		if (rowType == DataSet.ROW_TYPE_INSERTED){
+			result = admdao.addStudent(dto);
+			System.out.println("rowType: "+rowType);
+		}else if (rowType == DataSet.ROW_TYPE_UPDATED){ 
+			result = admdao.modifyStudent(dto);
+			System.out.println("rowType: "+rowType);
+		}else {
+			result = -1;
 		}
-		return admdao.modifyStudent1(list2);
+		return result;
 	}
 	
-	// 학생 명단 등록
-	public int modifyStudent2(List<StudentDTO_NEX> list) throws Exception {
-		List<StudentDTO> list2 = new ArrayList<>();
-		for(int i=0; i<list.size(); i++) {
-			StudentDTO dto = new StudentDTO();
-			dto.setId(list.get(i).getId());
-			dto.setPw(list.get(i).getPw());
-			dto.setName(list.get(i).getName());
-			Date d1 = ConvertDate.stringToDate(list.get(i).getBirth());
-			dto.setBirth(d1);
-			dto.setGender(list.get(i).getGender());
-			dto.setCountry(list.get(i).getCountry());
-			Date d2 = ConvertDate.stringToDate(list.get(i).getInDate());
-			dto.setInDate(d2);
-			Date d3 = ConvertDate.stringToDate(list.get(i).getOutDate());
-			dto.setOutDate(d3);
-			dto.setColcode(list.get(i).getColcode());
-			dto.setDeptcode(list.get(i).getDeptcode());
-			dto.setCol_title(list.get(i).getCol_title());
-			dto.setDept_title(list.get(i).getDept_title());
-			dto.setZipcode(list.get(i).getZipcode());
-			dto.setAddr1(list.get(i).getAddr1());
-			dto.setAddr2(list.get(i).getAddr2());
-			dto.setEmail(list.get(i).getEmail());
-			dto.setPhone(list.get(i).getPhone());
-			dto.setBank(list.get(i).getBank());
-			dto.setAccountnum(list.get(i).getAccountnum());
-			dto.setStd_year(list.get(i).getStd_year());
-			dto.setStd_status(list.get(i).getStd_status());
-			list2.add(dto);
-		}
-		return admdao.modifyStudent2(list2);
+	// 학생 삭제
+	public int deleteStudent(String id){
+		return admdao.deleteStudent(id);
 	}
+
 	
 	// 강의계획서 가져오기
 	public List<LectureDTO> getSyllabus() {
@@ -407,17 +315,9 @@ public class AdminService {
 	
 	// 전과신청 처리
 	public int changeDeptApproval(ChangeDeptApplyDTO_NEX dto) throws Exception {
-		ChangeDeptApplyDTO dto2 = new ChangeDeptApplyDTO();
-		dto2.setSeq(dto.getSeq());
-		dto2.setId(dto.getId());
-		dto2.setName(dto.getName());
-		dto2.setReason(dto.getReason());
-		dto2.setChangeYear(dto.getChangeYear());
-		dto2.setChangeSemester(dto.getChangeSemester());
-		dto2.setChangeCollege(dto.getChangeCollege());
-		dto2.setChangeDept(dto.getChangeDept());
-		dto2.setApply_date(ConvertDate.stringToDate(dto.getApply_date()));
-		dto2.setApply_approve(dto.getApply_approve());
+		ChangeDeptApplyDTO dto2 = new ChangeDeptApplyDTO(dto.getSeq(),dto.getId(),dto.getName(),dto.getChangeYear(),dto.getChangeSemester(),
+														dto.getReason(),dto.getChangeCollege(),dto.getChangeDept(),
+														ConvertDate.stringToDate(dto.getApply_date()),dto.getApply_approve());
 		return admdao.changeDeptApproval(dto2);
 	}
 	

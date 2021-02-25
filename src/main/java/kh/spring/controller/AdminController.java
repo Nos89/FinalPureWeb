@@ -3,6 +3,10 @@ package kh.spring.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
 import com.nexacro.uiadapter17.spring.core.annotation.ParamVariable;
+import com.nexacro.uiadapter17.spring.core.data.DataSetRowTypeAccessor;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
+import com.nexacro17.xapi.data.DataSet;
+import com.nexacro17.xapi.data.PlatformData;
+import com.nexacro17.xapi.tx.HttpPlatformRequest;
 
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.BoardDTO_NEX;
@@ -234,6 +242,7 @@ public class AdminController {
 		nr.addDataSet("out_ds", list);
 		return nr;
 	}
+	
 	//게시판 수정시 파일 삭제
 	@RequestMapping("delFile.nex")
 	public NexacroResult delFile(@ParamVariable(name="fileSeq")int fileSeq,@ParamVariable(name="parent_code")int parent_code, @ParamVariable(name="name")String name) {
@@ -244,8 +253,6 @@ public class AdminController {
 		return nr;
 	}
 	
-
-
 	// 페이지 유효성
 	private int convertPage(String page) {
 		int currentPage = 1;
@@ -272,11 +279,49 @@ public class AdminController {
 	
 	// 교수 정보 수정
 	@RequestMapping("ProfessorUpdate.nex")
-	public NexacroResult updateProfessor(@ParamDataSet(name="in_pro")List<ProfessorDTO_NEX> list) throws Exception {
-		admService.updateProfessor1(list); // user 테이블
-		admService.updateProfessor2(list); // professor 테이블
+	public NexacroResult updateProfessor(HttpServletRequest request) throws Exception {
+		HttpPlatformRequest pReq =  new HttpPlatformRequest(request);
+		pReq.receiveData();
+		PlatformData inData = pReq.getData();
+		DataSet ds = inData.getDataSet("in_pro");
+		
+		// 삭제된 데이터
+		for(int i=0;i<ds.getRemovedRowCount();i++) {
+			String id = ds.getRemovedStringData(i, "id");
+			System.out.println("삭제된 아이디: "+id);
+			admService.deleteProfessor(id);
+		}
+		
+		// 추가, 수정된 데이터
+		for(int i=0;i<ds.getRowCount();i++) {
+			ProfessorDTO dto = new ProfessorDTO();
+			dto.setId(dsGet(ds,i,"id"));
+			dto.setPw(dsGet(ds,i,"birth"));
+			dto.setName(dsGet(ds,i,"name"));
+			dto.setBirth(ConvertDate.stringToDate(dsGet(ds,i,"birth")));
+			dto.setGender(dsGet(ds,i,"gender"));
+			dto.setCountry(dsGet(ds,i,"country"));
+			dto.setInDate(ConvertDate.stringToDate(dsGet(ds,i,"inDate")));
+			dto.setOutDate(ConvertDate.stringToDate(dsGet(ds,i,"outDate")));
+			dto.setColcode(dsGet(ds,i,"colcode"));
+			dto.setDeptcode(dsGet(ds,i,"deptcode"));
+			dto.setZipcode(dsGet(ds,i,"zipcode"));
+			dto.setAddr1(dsGet(ds,i,"addr1"));
+			dto.setAddr2(dsGet(ds,i,"addr2"));
+			dto.setEmail(dsGet(ds,i,"email"));
+			dto.setPhone(dsGet(ds,i,"phone"));
+			dto.setBank(dsGet(ds,i,"bank"));
+			dto.setAccountnum(dsGet(ds,i,"accountnum"));
+			dto.setPro_office(dsGet(ds,i,"pro_office"));
+			dto.setPro_status(dsGet(ds,i,"pro_status"));
+			int rowType = ds.getRowType(i);
+			System.out.println("row타입: "+rowType);
+			admService.modifyProfessor(dto,rowType);
+		}
 		return new NexacroResult();
+		
 	}
+	
 	
 	// 학생 목록 로드
 	@RequestMapping("StudentOnLoad.nex")
@@ -291,15 +336,60 @@ public class AdminController {
 		return nr;		
 	}
 	
-	// 학생 등록
+	// 학생 정보 수정
 	@RequestMapping("StudentUpdate.nex")
-	public NexacroResult modifyStudent(@ParamDataSet(name="in_std")List<StudentDTO_NEX> list) throws Exception {
-		System.out.println(list.size());
-		admService.modifyStudent1(list);
-		admService.modifyStudent2(list);
+	public NexacroResult modifyStudent(HttpServletRequest request) throws Exception {
+		HttpPlatformRequest pReq = new HttpPlatformRequest(request);
+		pReq.receiveData();
+		PlatformData inData = pReq.getData();
+		DataSet ds = inData.getDataSet("in_std");
+		
+		// 삭제된 데이터
+		for(int i=0;i<ds.getRemovedRowCount();i++) {
+			String id = ds.getRemovedStringData(i, "id");
+			System.out.println("삭제된 아이디: "+id);
+			admService.deleteStudent(id);
+		}
+		
+		// 추가, 수정된 데이터
+		for(int i=0;i<ds.getRowCount();i++) {
+			StudentDTO dto = new StudentDTO();
+			dto.setId(dsGet(ds,i,"id"));
+			dto.setPw(dsGet(ds,i,"birth"));
+			dto.setName(dsGet(ds,i,"name"));
+			dto.setBirth(ConvertDate.stringToDate(dsGet(ds,i,"birth")));
+			dto.setGender(dsGet(ds,i,"gender"));
+			dto.setCountry(dsGet(ds,i,"country"));
+			dto.setInDate(ConvertDate.stringToDate(dsGet(ds,i,"inDate")));
+			dto.setOutDate(ConvertDate.stringToDate(dsGet(ds,i,"outDate")));
+			dto.setColcode(dsGet(ds,i,"colcode"));
+			dto.setDeptcode(dsGet(ds,i,"deptcode"));
+			dto.setZipcode(dsGet(ds,i,"zipcode"));
+			dto.setAddr1(dsGet(ds,i,"addr1"));
+			dto.setAddr2(dsGet(ds,i,"addr2"));
+			dto.setEmail(dsGet(ds,i,"email"));
+			dto.setPhone(dsGet(ds,i,"phone"));
+			dto.setBank(dsGet(ds,i,"bank"));
+			dto.setAccountnum(dsGet(ds,i,"accountnum"));
+			dto.setStd_status(dsGet(ds,i,"std_status"));
+			dto.setStd_year(Integer.parseInt(dsGet(ds,i,"std_year")));
+			int rowType = ds.getRowType(i);
+			System.out.println("row타입: "+rowType);
+			admService.modifyStudent(dto,rowType);
+		}
 		return new NexacroResult();
 	}
 
+	private String dsGet(DataSet ds, int rowNum, String colName) {
+		String result = ds.getString(rowNum, colName);
+		if(result==null) {
+			return "";
+		}else {
+			return result;
+		}
+	}
+
+	
 	// 강의계획서 가져오기
 	@RequestMapping("SyllabusOnLoad.nex")
 	public NexacroResult getSyllabus() {

@@ -16,15 +16,19 @@ public class ConvertDate {
 	
 	// String to Date
 	public static Date stringToDate(String str) throws Exception {
-		System.out.println("original String: "+str);
-		str = str.substring(0, 8);
-		System.out.println("modified String: "+str);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		java.util.Date uDate = sdf.parse(str);
-		System.out.println("uDate: "+uDate);
-		Date sDate = utilToSql(uDate);
-		System.out.println("sDate: "+sDate);
-		return sDate;
+		if(str==null||str.trim().isEmpty()) {
+			return null;
+		}else {
+			System.out.println("original String: "+str);
+			str = str.substring(0, 8);
+			System.out.println("modified String: "+str);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			java.util.Date uDate = sdf.parse(str);
+			System.out.println("uDate: "+uDate);
+			Date sDate = utilToSql(uDate);
+			System.out.println("sDate: "+sDate);
+			return sDate;
+		}
 	}
 	
 	// Date to String
