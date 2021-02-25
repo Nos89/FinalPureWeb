@@ -79,7 +79,10 @@
 	console.log("userName : ${userName}");
 	console.log("userMajor : ${userMajor}");
 	console.log("${msg} : ${errMsg}");
-</script>	
+</script>
+	<c:if test="${not empty  cookie.saveID}">
+		<c:set value="checked" var="checked"/>
+	</c:if>
 	<c:choose>
 		<c:when test="${loginID==null}">
 		<div class="newContainer">
@@ -104,8 +107,13 @@
 							</div>
 							<div id=loginID>
 								<div id=idTitle>ID</div>
+<<<<<<< HEAD
 								<input type=text name=id id=idText placeholder="ID 학번입력"
 									required>
+=======
+								<input type=text name=id id=idText placeholder="id placeholder"
+									required value="${cookie.saveID!=''? cookie.saveID.value:'' }">
+>>>>>>> 3d23044185e2f52e6e7dcdeeee0307ac627485f4
 							</div>
 							<div id=loginPW>
 								<div id=pwTitle>PW</div>
@@ -113,11 +121,11 @@
 									required>
 							</div>
 							<div id=rmbId>
-								<input type=checkbox id=chkBox> 아이디 저장
+								<input type=checkbox name="saveID" id=chkBox ${checked}> 아이디 저장
 							</div>
 							<div id=findIDPW>
-								<input type=button id=findID value="아이디찾기"><input
-									type=button id=findPW value="비밀번호재설정">
+								<input type=button id=findID value="아이디찾기/">
+								<input type=button id=findPW value="비밀번호재설정">
 							</div>
 
 							<div id=loginBtn>
@@ -148,11 +156,19 @@
 						</div>
 						<div class="col-sm-2 menu">
 							<div class="row">
+<<<<<<< HEAD
 								<div class="col-3 col-sm-12 menuPart" id="classRegistation" style="border-bottom: 1px solid #0c3181;"><div class="goSugang"></div><p>수강신청</p></div>
 								<div class="col-3 col-sm-12 menuPart" id="goHome" style="border-top: 1px solid #0c3181; border-bottom: 1px solid #0c3181;"><div class="goHome"></div><p>대표홈페이지</p></div>
 								<div class="col-2 col-sm-12  menuPart"id="goCalendar"style="border-top: 1px solid #0c3181; border-bottom: 1px solid #0c3181;"><div class="goCalender"></div><p>학사일정 바로가기</p></div>
 								<div class="col-2 col-sm-12  menuPart"id="goComunity" style="border-top: 1px solid #0c3181; border-bottom: 1px solid #0c3181;"><div class="goComunity"></div><p>커뮤니티</p></div>
 								<div class="col-2 col-sm-12  menuPart"id="goIntro"style="border-top: 1px solid #0c3181;"><div class="goIntro"></div><p>학사소개</p></div>
+=======
+								<div class="col-3 col-sm-12 menuPart"><a href="/classRegistration.nex">수강신청</a></div>
+								<div class="col-3 col-sm-12 menuPart"><a href="/" class="d-inline-block">대표홈페이지</a></div>
+								<div class="col-2 col-sm-12  menuPart"><a href="/main?pageGroup=info&type=info">학사일정</a></div>
+								<div class="col-2 col-sm-12  menuPart"><a href="/main/board.list?pageGrup=community&type=free&write=false">게시판</a></div>
+								<div class="col-2 col-sm-12  menuPart">도움말</div>
+>>>>>>> 3d23044185e2f52e6e7dcdeeee0307ac627485f4
 							</div>
 
 						</div>
@@ -190,6 +206,7 @@
 					loginAdmin.style.color = "ivory";
 				}
 				
+				//각 메뉴 페이지 연결
 				document.getElementById("classRegistation").onclick = function(){
 					location.href="/classRegistration.nex";	
 				}
@@ -202,6 +219,20 @@
 				document.getElementById("goIntro").onclick = function(){
 					location.href="/main?pageGroup=intro&type=intro";	
 				}
+
+				$(document).ready(function(){
+					<c:if test="${result == true}">
+						nw.close();
+					</c:if>
+					$("#findID").click(function(){
+						var nw = window.open("/info/find?find=id", "아이디 찾기", "width=500px; height=300px");
+					})
+					
+					$("#findPW").click(function(){
+						var nw = window.open("/info/find?find=pw", "비밀번호 찾기", "width=500px; height=300px");
+					})
+				})
+
 			</script>
 		</c:when>
 		<c:otherwise>
@@ -677,7 +708,7 @@
 		//location.href="/info/calendar?currentDay="+today;
 		//alert(today);
 	}
-	function buildCalendar() {//현재 달 달력 만들기
+	function buildCalendar(today) {//현재 달 달력 만들기
 		var doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 		var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 		var tbCalendar = document.getElementById("calendar");//날짜를 찍을 테이블 변수 만듬, 일 까지 다 찍힘
@@ -724,7 +755,6 @@
 			}
 		}
 	}
-    buildCalendar();
 </script>
 <script>
 		let day;

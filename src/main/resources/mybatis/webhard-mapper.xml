@@ -3,7 +3,7 @@
 <mapper namespace="Webhard">
 	<!-- 디렉토리 가져오기 -->
 	<select id="directories" resultType="kh.spring.dto.DirectoryDTO">
-		select * from directory where userID = #{value} order by lv
+		select * from directory where userID = #{value} order by lv, crtDate
 	</select>
 	
 	<select id="storage" resultType="Integer">
@@ -18,7 +18,7 @@
 	<!-- 폴더 생성 -->
 	<insert id="createFolder">
 		insert into directory values( dir_seq.nextval, #{id}, #{dirName}, #{parentID},
-		(select lv+1 from directory where dirID=#{parentID}) )
+		(select lv+1 from directory where dirID=#{parentID}), sysdate )
 	</insert>
 	
 	<!-- 파일 정보 저장-->
@@ -28,12 +28,12 @@
 	
 	<!-- 폴더 파일 가져오기  -->
 	<select id="getFiles" resultType="kh.spring.dto.CloudDTO">
-		select * from cloud where cloud_id = #{id} and file_location = #{parentID}
+		select * from cloud where cloud_id = #{id} and file_location = #{parentID} order by file_date
 	</select>
 	
 	<!-- 하위 폴더 가져오기 -->
 	<select id="getFolder" resultType="kh.spring.dto.DirectoryDTO">
-		select * from directory where userID = #{id} and  parentID = #{parentID}
+		select * from directory where userID = #{id} and  parentID = #{parentID} order by crtDate
 	</select>
 	
 	<!-- 파일 정보 삭제 -->

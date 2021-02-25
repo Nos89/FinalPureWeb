@@ -11,15 +11,15 @@
 			<div class="col-12 subTitle mb-4">학사 일정</div>
 			<div class="col-12 mb-5 text-center"
 				style="border-bottom: 1px solid black; float: none; margin: 0 auto">
-				학기 <select id=classSelect onchange="chageClassSelect()"
+				학기 <select id=chageSemester onchange="chageSemester()"
 					style="text-align: center">
 					<option>2021학년도 1학기</option>
-					<option>2021학년도 2학기</option>
 				</select>
-				<button>검색</button>
+				<button id=semChangeBtn>검색</button>
 			</div>
 			<div class="col-12 mb-5 text-center"
 				style="border-bottom: 1px solid black; float: none; margin: 0 auto">
+				<button id=jan>1월</button>
 				<button id=feb>2월</button>
 				<button id=march>3월</button>
 				<button id=april>4월</button>
@@ -27,7 +27,14 @@
 				<button id=june>6월</button>
 				<button id=july>7월</button>
 				<button id=august>8월</button>
+				<button id=sep>9월</button>
+				<button id=oct>10월</button>
+				<button id=nov>11월</button>
+				<button id=dec>12월</button>
+		
 			</div>
+
+
 			<div class="col-12 col-sm-4 calendar"
 				style="padding-left: 0px; padding-right: 0px;">
 				<table id="calendar" border="1"
@@ -66,52 +73,104 @@
 		</div>
 	</div>
 </div>
+<script>
+	
+</script>
+<script>
+	
+</script>
 
 <script>
 	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 	var date = new Date();//today의 Date를 세어주는 역할
 	//
+	document.getElementById("semChangeBtn").onclick = function() {
+		let chageSemester = document.getElementById("chageSemester");
+		let seme_selectValue = chageSemester.options[chageSemester.selectedIndex].text;
+		//location.href = "info/changeSemester?semSelect=" + seme_selectValue;
+	}
+	//버튼 눌러서 달 바꿈
+	if ("${result}" != "") {
+		let result = "${result}";
+		today.setTime(Date.parse(result));
+		buildCalendar();
+
+	}
+	//학사안내 들어가자마자 현재 달에 대한 달력 보이기
+	else{
+		let result_main = "${result_main}";
+		today.setTime(Date.parse(result_main));
+		buildCalendar();
+	}
+
+
+	document.getElementById("jan").onclick = function() {
+		location.href = "info/calendar?month_click=01";
+		if ("${result}" != "") {
+			location.href = "calendar?month_click=01"
+		}
+	}
 	document.getElementById("feb").onclick = function() {
-		location.href="info/calendar?month_click=02";
-		if("${result}" != ""){location.href="calendar?month_click=02"}
+		location.href = "info/calendar?month_click=02";
+		if ("${result}" != "") {
+			location.href = "calendar?month_click=02"
+		}
 	}
 	document.getElementById("march").onclick = function() {
-		location.href="info/calendar?month_click=03";
-		if("${result}" != ""){location.href="calendar?month_click=03"}
+		location.href = "info/calendar?month_click=03";
+		if ("${result}" != "") {
+			location.href = "calendar?month_click=03"
+		}
 	}
 	document.getElementById("april").onclick = function() {
 		location.href = "info/calendar?month_click=04";
-		if("${result}" != ""){location.href="calendar?month_click=04"}
+		if ("${result}" != "") {
+			location.href = "calendar?month_click=04"
+		}
 	}
 	document.getElementById("may").onclick = function() {
 		location.href = "info/calendar?month_click=05";
-		if("${result}" != ""){location.href="calendar?month_click=05"}
+		if ("${result}" != "") {
+			location.href = "calendar?month_click=05"
+		}
 	}
 	document.getElementById("june").onclick = function() {
 		location.href = "info/calendar?month_click=06";
-		if("${result}" != ""){location.href="calendar?month_click=06"}
+		if ("${result}" != "") {
+			location.href = "calendar?month_click=06"
+		}
 	}
 	document.getElementById("july").onclick = function() {
 		location.href = "info/calendar?month_click=07";
-		if("${result}" != ""){location.href="calendar?month_click=07"}
+		if ("${result}" != "") {
+			location.href = "calendar?month_click=07"
+		}
 	}
 	document.getElementById("august").onclick = function() {
 		location.href = "info/calendar?month_click=08";
-		if("${result}" != ""){location.href="calendar?month_click=08"}
+		if ("${result}" != "") {
+			location.href = "calendar?month_click=08"
+		}
 	}
-	if("${result}" != ""){
-        let result = "${result}";
-        console.log("result : "+result);
-        today.setTime(Date.parse(result));
+	document.getElementById("sep").onclick = function() {
+		location.href = "info/calendar?month_click=09";
+		if("${result}" != ""){location.href="calendar?month_click=09"}
+	}
+	document.getElementById("oct").onclick = function() {
+		location.href = "info/calendar?month_click=10";
+		if("${result}" != ""){location.href="calendar?month_click=10"}
+	}
+	document.getElementById("nov").onclick = function() {
+		location.href = "info/calendar?month_click=11";
+		if("${result}" != ""){location.href="calendar?month_click=11"}
+	}
+	document.getElementById("dec").onclick = function() {
+		location.href = "info/calendar?month_click=12";
+		if("${result}" != ""){location.href="calendar?month_click=12"}
+	}
 
-        console.log(today);
-        buildCalendar();
-    }
-    else{
-        buildCalendar();
-    }
 	//
-	
+
 	function buildCalendar() {//현재 달 달력 만들기
 		var doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 		var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
@@ -119,7 +178,7 @@
 		var tbCalendarYM = document.getElementById("tbCalendarYM");//테이블에 정확한 날짜 찍는 변수
 		currentDay = today.getFullYear() + "년 " + (today.getMonth() + 1) + "월";
 		tbCalendarYM.innerHTML = currentDay;
-		
+
 		/*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
 		while (tbCalendar.rows.length > 2) {
 			//열을 지워줌

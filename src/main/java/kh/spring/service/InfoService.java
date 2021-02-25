@@ -1,7 +1,9 @@
 package kh.spring.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +12,6 @@ import kh.spring.dao.InfoDAO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.InfoBoardDTO;
 import kh.spring.dto.TakingClassDTO;
-import kh.spring.utils.EncryptUtils;
 
 @Service
 public class InfoService {
@@ -78,7 +79,14 @@ public class InfoService {
 	}
 
 	
-
+	public String findIDPW(String find, String userID, String userName, String userRRN ) {
+		Map<String, String> parm = new HashMap<>();
+		parm.put("find", find);
+		parm.put("userID", userID);
+		parm.put("userName", userName);
+		parm.put("userRRN", userRRN);
+		return idao.findIDPW(parm);
+	}
 	
 	
 

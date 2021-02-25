@@ -7,12 +7,15 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.InfoBoardDTO;
@@ -29,7 +32,7 @@ public class InfoController {
 	private InfoService iservice;
 
 	@RequestMapping("/login")
-	public String login(String id, String pw, Model model) throws ParseException {
+	public String login(String id, String pw, Boolean saveID, Model model, HttpServletResponse response) throws ParseException {
 		int result = iservice.login(id, pw);
 		String name = iservice.getName(id, pw);
 		String major = iservice.getMajor(id, pw);
@@ -49,7 +52,17 @@ public class InfoController {
 			session.setAttribute("loginID", id);
 			session.setAttribute("userName", name);
 			session.setAttribute("userMajor", major);
-
+			
+			Cookie cookie = new Cookie("saveID", id);
+			if( saveID != null ) {
+				if( saveID ) {
+					response.addCookie(cookie);
+				}
+			} else {
+				cookie.setMaxAge(0);
+				response.addCookie(cookie);
+			}
+			
 			session.setAttribute("list_std", list_std);
 			session.setAttribute("list_scholar", list_scholar);
 			session.setAttribute("list_enter", list_enter);
@@ -374,20 +387,37 @@ public class InfoController {
 
 	// 달력 넘어가면 그 날짜에 맞는 학사일정 옆에 보이게 하는...(미완성)
 	@RequestMapping("/calendar")
-	public String calendar(int month_click, Model model) {
-		
+	public String calendar(int month_click, Model model) {		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 		Date time = new Date();
 		String current = format.format(time);
 		String arr[] = current.split("/");
-		String result = arr[0]+"-"+month_click+"-01";
+		String result = arr[0]+"-0"+month_click+"-01";
 		
 		arr[0] = arr[0].replaceAll("20", "");
-		String month_click2 = arr[0]+"/0"+Integer.toString(month_click);
+		String month_click2 =null;
+		month_click2 = arr[0]+"/0"+Integer.toString(month_click);
+		
+		String teneletwe = Integer.toString(month_click);
+		if(teneletwe.contentEquals("10") || teneletwe.contentEquals("11") || teneletwe.contentEquals("12")) {
+			 month_click2 = arr[0]+"/"+teneletwe;
+		}
+		
 		List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(month_click2);
 		
 		model.addAttribute("result", result);
 		model.addAttribute("main_colSche", main_colSche);
+		return "main/info/info";
+	}
+	
+	@RequestMapping("/changeSemester")
+	public String changeSemester(String semSelect, Model model) {		
+		System.out.println("changeSemester : "+ semSelect);
+		String arr[] = semSelect.split(" ");
+		model.addAttribute("change", arr[1]);
+		
+		
+
 		return "main/info/info";
 	}
 
@@ -397,6 +427,29 @@ public class InfoController {
 		session.invalidate();
 		return "info/info";
 
+	}
+	
+	@RequestMapping("/find")
+	public String find(String find, Model model) {
+		model.addAttribute("find", find);
+		return "/info/find";
+	}
+	
+	@RequestMapping("/findIDPW")
+	@ResponseBody
+	public String findIDPW(String find, String userID, String userName, String userRRN ) {
+		String result = "";
+		result = iservice.findIDPW(find, userID, userName, userRRN);
+		if( find.contentEquals("id") ) {
+			System.out.println(result);
+			if( result != null ) {
+				return result;
+			} else {
+				return "false";
+			}
+		} else {
+		}
+		return "hi";
 	}
 
 }

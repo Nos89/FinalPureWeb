@@ -8,7 +8,7 @@
             .title>div{height: 100px;}
             .title>.row>div{border: 1px solid black;}
             .center{margin-top: 50px;}
-            .login,.acaCal,.menu{border: 1px solid black;}
+            .login,.acaCal,.menu{border: 1px solid black; background-color:#f1f1f1;}
             
             #loginTitle, #acdmCalTitle{float: left; margin-left: 30px; margin-top: 30px;}
             #loginTitle_eng, #acdmCalTitle_eng{float: left; margin-left: 10px; margin-top: 38px;}
@@ -29,7 +29,7 @@
             #acmdCalIcon{ width: 15%; height: 100%;float: left;}
             #acmdCalContents{ width: 85%; height: 100%;float: left;}
             #acmdCalPart{ width: 80%; height: 70px; margin-top: 10px; margin-left: 15px}
-            #acmdCalDate{color: darkgray}
+            #acmdCalDate{color:#555752;}
             
             .menu{}
             .row>.menuPart{ height: 103px;  cursor: pointer;border: 1px solid black;}

@@ -94,7 +94,9 @@ public class InfoDAO {
 		return db.selectList("Info.getColSchedule",month_click2);
 	}
 
-
+	public String findIDPW(Map<String, String> parm) {
+		return db.selectOne("Info.findIDPW", parm);
+	}
 
 
 
