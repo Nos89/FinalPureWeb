@@ -42,7 +42,7 @@
 						<h4>2021</h4>
 						<ol class="clearfix" style="list-style: none;">
 							<li><span class="date">2021. 03. 05</span>
-								<div class="text">포브스 선정 가장 다니기 좋은대학</div></li>
+								<div class="text">포브스 선정 다니기 좋은대학 340위  </div></li>
 							<li><span class="date">2021. 03. 01</span>
 								<div class="text">가차 대학교 개교</div></li>
 						</ol>
