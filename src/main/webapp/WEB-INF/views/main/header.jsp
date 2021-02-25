@@ -53,8 +53,8 @@
 									<li><a href="#">교과 과정</a></li>
 									<li>	
 										<ol class="subMenu">
-											<li><a href="#">복수 전공 / 부 전공</a></li>
-											<li><a href="#">교직과정</a></li>
+											<li><a href="/main?pageGroup=curriculum&type=multipleMajor">복수 전공 / 부 전공</a></li>
+											<li><a href="/main?pageGroup=curriculum&type=teachingCourse">교직과정</a></li>
 										</ol>
 									</li>
 								</ol>

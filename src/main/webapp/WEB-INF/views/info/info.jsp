@@ -22,6 +22,56 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 </head>
+<style>
+	body{overflow-x:hidden;}
+	
+	.menuPart{background-color:#00236f; color:white; text-align:center; padding:20px;}
+	.menuPart > a{color : white;}
+	.menuPart:hover{background-color:#ee9300;}
+	.login{border-style: solid; border-width: 1px 0px 1px 1px;/*상・우・하・좌*/  border-color:#c7c7c7;}
+	.acaCal{border-style: solid; border-width: 1px 0px 1px 0px;/*상・우・하・좌*/  border-color:#c7c7c7; background-image:url('/resources/img/login_list_bg.jpg');}
+	.menu{border : 0px solid #c7c7c7;}
+	.part{background-color:#eeeeee; border:0px solid white;}
+	#loginID ,#loginPW{border:0px solid white; background-color :#eeeeee;}
+	.goSugang, .goHome, .goComunity, .goCalender, .goIntro{background-size: contain; ;background-position: center;background-repeat: no-repeat; height:80%;}
+	.goSugang{background-image:url('/resources/img/info/semester.png');}
+	.goHome{background-image:url('/resources/img/info/remote.png');}
+	.goCalender{background-image:url('/resources/img/info/Calendar.png');}
+	.goComunity{background-image:url('/resources/img/info/personnum.png');}
+	.goIntro{background-image:url('/resources/img/info/Intro.png');}
+	.newContainer{height : 100vh;
+	width :100vw;
+    background-image: url('/resources/img/login_bg.jpg'); 
+    background-repeat : no-repeat;
+    background-size : cover;}
+    .newContainer2{background-color : #f1f1f1; height:100vh;}
+    .gachalogo{background-image:url('/resources/img/info/gachalogo.png'); background-size: contain; ;background-position: center;background-repeat: no-repeat;
+    border:0px solid white;}
+    .userBox{background-color : white; border:0px solid white;}
+    .board{background-color : white; border-style: solid; border-width: 0px 0px 1px 1px;/*상・우・하・좌*/  border-color:#c7c7c7;}
+    .tab-content{margin-top :15px; margin-left:15px;}
+    .schedule{border: 1px solid #c7c7c7;}
+    .sche{background-color : white;  border:0px solid white; padding-left:10px;}
+    .sche .colSche_list .subject_score{border-bottom:1px dashed #c7c7c7; height:30px;}
+    .sche .colSche_list .subject_isu{color : #2b5b9d; font-weight:bold;}
+    .calendar{ background-color : white;}
+	.subject{background-color : white; border-style: solid; border-width: 1px 0px 1px 1px;/*상・우・하・좌*/  border-color:#c7c7c7;}
+	.subject .subject_list{margin-left : 15px;}
+	.timetable{border : 1px solid #c7c7c7; background-color : white;}
+	.timetable .classtimetable{}
+	.realtimetable .timeTable th{background-color : darkgray; color:white;}
+	.realtimetable .timeTable tr,td{border:1px solid #c7c7c7;}
+	.shortcutPart{background-color : #08274e; color:white; text-align:center; padding:20px 20px 20px 20px; /*상・우・하・좌*/}
+	.shortcutPart .shortcut{text-align:center; font-size:15px;}
+	.shortcutPart .toClassSche{margin-left:30px;}
+	.shortcutPart .shortcurt,.toClassSche,.toReturnSchool,.toTestAndGrade,.toReportBoard,.toExAuth{border:0px;}
+	.toClassSchebg,.toReturnSchoolbg,.toTestAndGradebg,.toReportBoardbg,.toExAuthbg{background-size: contain; ;background-position: center;background-repeat: no-repeat; height:50%; }
+	.toClassSchebg{background-image:url('/resources/img/info/Calendar.png');}
+	.toReturnSchoolbg{background-image:url('/resources/img/info/returnSchool.png');}
+	.toTestAndGradebg{background-image:url('/resources/img/info/semester.png');}
+	.toReportBoardbg{background-image:url('/resources/img/info/report.png');}
+	.toExAuthbg{background-image:url('/resources/img/info/toExAuth.png');}
+</style>
 <body>
 <!-- 테스트 -->
 <script>
@@ -32,33 +82,34 @@
 </script>	
 	<c:choose>
 		<c:when test="${loginID==null}">
+		<div class="newContainer">
 			<div class="container-fluid title">
 				<div class="row">
-					<div class="col-2 mx-5 my-2">oo 대학교 (로고사진)</div>
+					<div class="col-2 gachalogo mx-5 my-2" style="border : 0px solid white;"></div>
 				</div>
 			</div>
 
 			<div class="container center">
 				<form action="/info/login" method=post>
 					<div class="row">
-						<div class=" col-sm-5 login">
+						<div class=" col-sm-5 login" style="background-color:#ffffff">
 							<div id=loginTitle>
 								<h3>로그인</h3>
 							</div>
 							<div id=loginTitle_eng>Login</div>
-							<div id=part>
-								<div id="loginStd" style="background-color: #272727; color: ivory;">학부생용</div>
-								<div id="loginPro">교수용</div>
-								<div id="loginAdmin">관리자용</div>
+							<div class="part" id=part>
+								<div class="selectUser" id="loginStd" style="background-color: #272727; color: ivory; border:0px solid white;">학부생용</div>
+								<div class="selectUser" id="loginPro" style=" border:0px solid white;">교수용</div>
+								<div class="selectUser" id="loginAdmin" style="border:0px solid white;">관리자용</div>
 							</div>
 							<div id=loginID>
 								<div id=idTitle>ID</div>
-								<input type=text name=id id=idText placeholder="id placeholder"
+								<input type=text name=id id=idText placeholder="ID 학번입력"
 									required>
 							</div>
 							<div id=loginPW>
 								<div id=pwTitle>PW</div>
-								<input type=password name=pw id=pwText placeholder="pw placeholder"
+								<input type=password name=pw id=pwText placeholder="비밀번호 입력"
 									required>
 							</div>
 							<div id=rmbId>
@@ -97,16 +148,17 @@
 						</div>
 						<div class="col-sm-2 menu">
 							<div class="row">
-								<div class="col-3 col-sm-12 menuPart"><a href="/classRegistration.nex">수강신청</a></div>
-								<div class="col-3 col-sm-12 menuPart"><a href="/" class="d-inline-block">대표홈페이지</a></div>
-								<div class="col-2 col-sm-12  menuPart">~~로 이동</div>
-								<div class="col-2 col-sm-12  menuPart">~~로 이동</div>
-								<div class="col-2 col-sm-12  menuPart">도움말</div>
+								<div class="col-3 col-sm-12 menuPart" id="classRegistation" style="border-bottom: 1px solid #0c3181;"><div class="goSugang"></div><p>수강신청</p></div>
+								<div class="col-3 col-sm-12 menuPart" id="goHome" style="border-top: 1px solid #0c3181; border-bottom: 1px solid #0c3181;"><div class="goHome"></div><p>대표홈페이지</p></div>
+								<div class="col-2 col-sm-12  menuPart"id="goCalendar"style="border-top: 1px solid #0c3181; border-bottom: 1px solid #0c3181;"><div class="goCalender"></div><p>학사일정 바로가기</p></div>
+								<div class="col-2 col-sm-12  menuPart"id="goComunity" style="border-top: 1px solid #0c3181; border-bottom: 1px solid #0c3181;"><div class="goComunity"></div><p>커뮤니티</p></div>
+								<div class="col-2 col-sm-12  menuPart"id="goIntro"style="border-top: 1px solid #0c3181;"><div class="goIntro"></div><p>학사소개</p></div>
 							</div>
 
 						</div>
 					</div>
 				</form>
+			</div>
 			</div>
 			<script>
 				let loginPro = document.getElementById("loginPro");
@@ -137,15 +189,29 @@
 					loginAdmin.style.backgroundColor = "#272727";
 					loginAdmin.style.color = "ivory";
 				}
+				
+				document.getElementById("classRegistation").onclick = function(){
+					location.href="/classRegistration.nex";	
+				}
+				document.getElementById("goHome").onclick = function(){
+					location.href="/";	
+				}
+				document.getElementById("goCalendar").onclick = function(){
+					location.href="/main?pageGroup=info&type=info";	
+				}
+				document.getElementById("goIntro").onclick = function(){
+					location.href="/main?pageGroup=intro&type=intro";	
+				}
 			</script>
 		</c:when>
 		<c:otherwise>
+		<div class="newContainer2">
 			<div class="container-fluid userPage">
 				<div class="row">
 					<div class="col-12 ">
 						<nav class="navbar navbar-expand-lg navbar-light bg-light">
 							<div class="container">
-								<a class="navbar-brand" href="/">oo대학교 포털사이트</a>
+								<a class="navbar-brand" href="/">가차대학교 포털사이트</a>
 
 								<ul class="nav justify-content-end">
 
@@ -225,7 +291,7 @@
 
 							<c:choose>
 								<c:when test="${userPart == '학생' }">
-									<div class="col-12 col-sm-4 my">
+									<div class="col-12 userBox col-sm-4 my">
 										<div class=name>${userName }님</div>
 										<div class="major">${userMajor }학과</div>
 										<div class="mail">
@@ -240,7 +306,7 @@
 									</div>
 								</c:when>
 								<c:when test="${userPart == '교수' }">
-									<div class="col-12 col-sm-4 my">
+									<div class="col-12 userBox col-sm-4 my">
 										<div class=name>${userName }님</div>
 										<div class="major">${userMajor }학과</div>
 										<div class="mail">
@@ -363,10 +429,10 @@
 							</c:choose>
 
 							<div class="col-12 col-sm-8 schedule">
-								<div class="row">
+								<div class="row" style="padding:3px; border:1px solid #fff;">
 
-									<div class="col-12 col-sm-6 calendar" style="padding-left:0px; padding-right:0px;">
-										<table id="calendar" border="1" style="width:100%; height:100%; text-align:center">
+									<div class="col-12 col-sm-6 calendar" style="padding-left:0px; padding-right:0px; border:0px solid white;">
+										<table id="calendar" border="1" style="width:100%; height:100%; text-align:center;border-right:0px; border-color:#c7c7c7;">
 											<tr>
 												<td id="tbCalendarYM" colspan="5">yyyy년 m월</td>
 												<td><label onclick="prevCalendar()" style="cursor:pointer">◀</label></td>
@@ -383,7 +449,7 @@
 											</tr>
 										</table>
 									</div>
-									<div class="col-12 col-sm-6 sche" style="overflow:scroll;">
+									<div class="col-12 col-sm-6 sche" style="overflow:scroll; overflow-x:hidden;">
 										<div class="row ">
 											<div class="col-6 ">
 												<nav class="nav">
@@ -435,7 +501,7 @@
 										</div>
 									</div>
 									<div class="realtimetable">
-										<table class="timeTable" border=1>
+										<table class="timeTable" style="border: 1px solid #c7c7c7;">
 											<tr>
 												<th style="font-size: 10px;">요일/교시</th>
 												<th>월</th>
@@ -544,14 +610,14 @@
 			<div class="container shortcutPart" style="margin-top: 30px;">
 				<div class="row">
 					<div class="col-12 col-sm-1 shortcut">바로가기</div>
-					<div class="col-2 col-sm-2 toClassSche">학사일정</div>
-					<div class="col-2 col-sm-2 toBus">통학버스</div>
-					<div class="col-2 col-sm-2 toDomi">생활관안내</div>
-					<div class="col-2 col-sm-2 toReportBoard">건의게시판</div>
-					<div class="col-2 col-sm-2 toExAuth">인터넷증명</div>
+					<div class="col-2 col-sm-2 toClassSche"><div class="toClassSchebg"></div><br><p>학사일정</p></div>
+					<div class="col-2 col-sm-2 toReturnSchool"><div class="toReturnSchoolbg"></div><br><p>휴ㆍ복학 안내</p> </div>
+					<div class="col-2 col-sm-2 toTestAndGrade"><div class="toTestAndGradebg"></div><br><p>성적 안내</p></div>
+					<div class="col-2 col-sm-2 toReportBoard"><div class=toReportBoardbg></div><br><p>건의게시판</p></div>
+					<div class="col-2 col-sm-2 toExAuth"><div class="toExAuthbg"></div><br><p>인터넷증명</p></div>
 				</div>
 			</div>
-			<div class="container-fluid footer" style="margin-top: 30px;">
+			<!--  <div class="container-fluid footer" style="margin-top: 30px;">
 				<div class="row">
 					<div class="col-12">
 						<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -579,8 +645,8 @@
 				</div>
 
 
-			</div>
-			<div class="container-fluid footer">
+			</div>-->
+			<!-- <div class="container-fluid footer">
 				<div class="row">
 					<div class="col-12">
 						<div class="container">copyright 사진</div>
@@ -588,8 +654,9 @@
 				</div>
 
 
+			</div> -->
+			<%@ include file="/WEB-INF/views/main/footer.jsp" %>
 			</div>
-
 		<script>
 	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 	var date = new Date();//today의 Date를 세어주는 역할
@@ -743,23 +810,22 @@
 	<script>
 	<!--바로가기 모음  -->
 		$(document).on('click', '.toClassSche', function() {
-			location.href = "";
+			location.href = "/main?pageGroup=info&type=info";
 		});
-		$(document).on('click', '.toBus', function() {
-			location.href = "";
+		$(document).on('click', '.toReturnSchool', function() {
+			location.href = "/main?pageGroup=academic&type=returnSchool";
 		});
-		$(document).on('click', '.toDomi', function() {
-			location.href = "";
+		$(document).on('click', '.toTestAndGrade', function() {
+			location.href = "/main?pageGroup=class&type=testAndGrade";
 		});
 		$(document).on('click', '.toReportBoard', function() {
-			location.href = "";
+			location.href = "/main?pageGroup=community&type=report";
 		});
 		$(document).on('click', '.toExAuth', function() {
-			location.href = "";
+			location.href = "/main?pageGroup=certificate&type=academicIssuance";
 		});
 
 	</script>
-
 	</c:otherwise>
 	</c:choose>
 
