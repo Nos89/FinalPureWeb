@@ -92,18 +92,13 @@ $(document).ready(function() {
 				console.log(data.url);
             	//항상 업로드된 파일의 url이 있어야 한다.
             	
-            	/* let div = $("<div></div>");
-            	div.append("<p>이미지 불러오는중입니다.</p>");
-            	div.addClass("savingImg");
-            	$("#summernote").append(div);
-            	
-            	console.log(div); */
-            	
-            	setTimeout(function(){
+            	/* setTimeout(function(){
 					$(editor).summernote('insertImage', data.url);
 					$(".savingImg").remove();
-            	}, 1000);
+            	}, 1000); */
 			}
+		}).done(function(data){
+			$(editor).summernote('insertImage', data.url);
 		});
 	}
 	
