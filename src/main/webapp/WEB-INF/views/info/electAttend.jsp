@@ -212,8 +212,7 @@
 		function chageClassSelect() {
 			let classSelect = document.getElementById("classSelect");
 			let class_selectValue = classSelect.options[classSelect.selectedIndex].value;
-			location.href = "/elec/comboChange?semester=" + semester
-					+ "&className=" + class_selectValue;
+			location.href = "/elec/comboChange?semester=" + semester+ "&className=" + class_selectValue;
 		}
 
 		document.getElementById("btnRegisterInfo").onclick = function() {
