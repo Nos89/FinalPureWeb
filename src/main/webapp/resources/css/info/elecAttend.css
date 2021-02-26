@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+*{box-sizing: border-box;}
 .top{height:120px;border-bottom: 4px solid #4183b7;}
 .top>.row>div{height:120px;}
 .title{line-height:120px; font-size:20px; color: #666666;}
@@ -22,12 +23,10 @@
 .row{margin-left:0px; margin-right:0px;}
 
 
-.userInfoWrapper{background-color:white;height:508px; width:900px;border-right: 3px solid #d2d5db;border-bottom: 3px solid #d2d5db; border-radius:3px;}
-            .wrapper{width:900px; height:20%;}
-            .infostick{width:5%; height:100px;font-weight:bold; color:#4183b7; font-size:25px; float:left; }
-          .infotitle{width:95%; height:100px;font-weight:bold; font-size:25px;float:left;}
+.userInfoWrapper{background-color:white;height:510px; width:900px;border-right: 3px solid #d2d5db;border-bottom: 3px solid #d2d5db; border-radius:3px;}
             
-            .wrapper2{width:100%; height:80%; border-top: 3px solid black;margin-top: 30px; }
+            
+            .wrapper2{ height:80%; border-top: 3px solid black;margin-top: 30px; }
             .photo{float: left; width: 20%; height: 200px; border-bottom: 2px solid gray;}
             .info{float: left; width:80%; height: 200px;}
             .fixed{width:10%;float: left; height: 25%; border: 1px solid gray; background-color:lightgray; color:black;}

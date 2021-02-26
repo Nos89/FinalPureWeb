@@ -60,7 +60,7 @@
 							</div>
 							<div class="col-12 col-lg-3 border-top pt-2 menuItemWrapper">
 								<ol>
-									<li>수업</li>
+									<li><a href="/main?pageGroup=class&type=gradeAnnouncement">수업</a></li>
 									<li>
 										<ol class="subMenu">
 											<li><a href="/main?pageGroup=class&type=gradeAnnouncement">성적 예고제</a></li>
@@ -135,16 +135,20 @@
 			$(".menuItem").mouseover(function(){
 				let link = $(this).attr("href");
 				console.log(link);
-				$(link).addClass("show");
+				//$(link).addClass("show");
+				$(link).collapse("show");
 			})
 			$(".menuItem").mouseout(function(){
 				let link = $(this).attr("href");
-				$(link).removeClass("show");
+				//$(link).removeClass("show");
+				$(link).collapse("hide");
 			})
 			$(".collapse").mouseover(function(){
-				$(this).addClass("show");
+				//$(this).addClass("show");
+				$(this).collapse("show");
 			})
 			$(".collapse").mouseout(function(){
-				$(this).removeClass("show");
+				//$(this).removeClass("show");
+				$(this).collapse("show");
 			})
 		</script>
