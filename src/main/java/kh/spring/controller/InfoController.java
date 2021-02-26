@@ -406,6 +406,7 @@ public class InfoController {
 		
 		List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(month_click2);
 		
+		model.addAttribute("type", "info");
 		model.addAttribute("result", result);
 		model.addAttribute("main_colSche", main_colSche);
 		return "main/info/info";

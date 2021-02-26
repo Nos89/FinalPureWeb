@@ -77,7 +77,7 @@ public class HomeController {
 			arr[0] = arr[0].replaceAll("20", "");
 			String month_click2 = arr[0]+"/"+arr[1];
 			List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(month_click2);
-						
+			
 			model.addAttribute("result_main", current+"-01");
 			model.addAttribute("main_colSche", main_colSche);
 		}
