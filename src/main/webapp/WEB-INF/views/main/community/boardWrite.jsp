@@ -92,19 +92,25 @@ $(document).ready(function() {
 				console.log(data.url);
             	//항상 업로드된 파일의 url이 있어야 한다.
             	
-            	/* let div = $("<div></div>");
-            	div.append("<p>이미지 불러오는중입니다.</p>");
-            	div.addClass("savingImg");
-            	$("#summernote").append(div);
+            	var loadingUrl = "/resources/img/imgLoading.gif";
             	
-            	console.log(div); */
+            	/* <div class="spinner-border text-primary" role="status">
+				  <span class="sr-only">Loading...</span>
+				</div> */
+            	var loadingImgTag = $("<img>");
+            	loadingImgTag.addClass("loadingImg");
+            	loadingImgTag.attr("src", loadingUrl);
+            	
+            	$("#summernote").summernote("insertNode", loadingImgTag[0]);
             	
             	setTimeout(function(){
 					$(editor).summernote('insertImage', data.url);
-					$(".savingImg").remove();
-            	}, 1000);
+					
+					$(".loadingImg").remove();
+					
+            	}, 5000);
 			}
-		});
+		})
 	}
 	
 	/* setTimeout(function() {
