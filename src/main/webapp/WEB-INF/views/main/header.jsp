@@ -135,20 +135,20 @@
 			$(".menuItem").mouseover(function(){
 				let link = $(this).attr("href");
 				console.log(link);
-				//$(link).addClass("show");
-				$(link).collapse("show");
+				$(link).addClass("show");
+				//$(link).collapse("show");
 			})
 			$(".menuItem").mouseout(function(){
 				let link = $(this).attr("href");
-				//$(link).removeClass("show");
-				$(link).collapse("hide");
+				$(link).removeClass("show");
+				//$(link).collapse("hide");
 			})
 			$(".collapse").mouseover(function(){
-				//$(this).addClass("show");
-				$(this).collapse("show");
+				$(this).addClass("show");
+				//$(this).collapse("show");
 			})
 			$(".collapse").mouseout(function(){
-				//$(this).removeClass("show");
-				$(this).collapse("show");
+				$(this).removeClass("show");
+				//$(this).collapse("show");
 			})
 		</script>

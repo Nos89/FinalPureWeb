@@ -201,7 +201,7 @@ public class StudentController {
 		
 		nr.addDataSet("out_myClassList",myClassList);
 		nr.addDataSet("out_classList",classList);
-		
+		System.out.println("왜 서버에서 안옴");
 		return nr;
 	}
 	
@@ -221,7 +221,7 @@ public class StudentController {
 	public NexacroResult getMyGrade(@ParamDataSet(name="in_condition") ConditionForMyClassDTO cdto) {
 		NexacroResult nr = new NexacroResult();
 		String id = (String)session.getAttribute("loginID");
-		
+		System.out.println(id);
 		List<MyGradeDTO> mgList = new ArrayList<>();
 		mgList = sservice.getMyGrade(cdto,id);
 		
@@ -240,8 +240,6 @@ public class StudentController {
 		
 		List<GradeListDTO> glList = new ArrayList<>();
 		glList = sservice.getMyElectivesGrade(id);
-		
-		System.out.println(id);
 		
 		nr.addDataSet("out_gradeList",glList);
 		return nr;
