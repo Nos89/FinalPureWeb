@@ -62,6 +62,7 @@ public class HomeController {
 	public String simplePageGoTo(String pageGroup, String type, Model model) throws ParseException {
 		model.addAttribute("type", type);
 		model.addAttribute("pageGroup", pageGroup);
+		System.out.println(type + " : " + pageGroup);
 		if( pageGroup.contentEquals("community")) {
 			model.addAttribute("write", false);
 			return "redirect:/main/board.list";
