@@ -35,7 +35,6 @@
 						<li class="list-group-item leftItem"><a href="/main?pageGroup=academic&type=returnSchool">휴복학</a></li>
 						<li class="list-group-item leftItem"><a href="/main?pageGroup=academic&type=majorAssignment">전공배정</a></li>
 						<li class="list-group-item leftItem"><a href="/main?pageGroup=academic&type=exclusion">유급 제적</a></li>
-						<li class="list-group-item leftItem"><a href="/main?pageGroup=academic&type=gradutionInfo">수료자 졸업</a></li>
 			  		</ul>
 			  	</div>
 	  		</li>
