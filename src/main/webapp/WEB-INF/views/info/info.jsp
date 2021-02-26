@@ -328,7 +328,7 @@
 									</div>
 									<div class="col-1">
 										<nav class="nav justify-content-end" >
-											<a class="nav-link " href="#"
+											<a class="nav-link " href="/main/board.list?pageGroup=community&type=notice"
 												style="color: black; font-weight: bold;">+</a>
 										</nav>
 									</div>
@@ -426,7 +426,7 @@
 											</div>
 											<div class="col-6">
 												<nav class="nav justify-content-end">
-													<a class="nav-link " href="#"
+													<a class="nav-link " href="/main?pageGroup=info&type=info"
 														style="color: black; font-weight: bold;">+</a>
 												</nav>
 											</div>

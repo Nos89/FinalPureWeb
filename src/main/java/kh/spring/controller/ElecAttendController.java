@@ -38,7 +38,6 @@ public class ElecAttendController {
 		String id = (String) session.getAttribute("loginID");
 		//semester 나오는 모양=> 2021년 1학기
 		String semTitle = semester;
-		//System.out.println(semester);
 		String temp[] = semTitle.split(" ");
 		String temp2[] = temp[0].split("년");
 		temp2[0] = temp2[0]+"학년도"; 
@@ -65,13 +64,35 @@ public class ElecAttendController {
 			}
 			else if(className == null) {
 				model.addAttribute("divide", "구분");
+				model.addAttribute("classList", classList);
+			}
+
+			model.addAttribute("semester", semester);
+			model.addAttribute("className", className);
+			//model.addAttribute("classList", classList);
+		}
+		else if (sem.contentEquals("2학기")) {
+			String regDate = arr[0] + "/08/19";
+			List<ElecSelectClassDTO> classList = eservice.getClassList(id, regDate);
+			
+			if (className != null) {
+				List<TakingClassDTO> selClassInfoList = eservice.getClassInfo(id, regDate, className);
+				//String schedule = selClassInfoList.get(0).getLec_schedule().toString();
+				String lecCode = selClassInfoList.get(0).getLec_code().toString();
+				List<ProAttendMngDTO> lecAttList = eservice.lecAttList(id,lecCode);
+				String yearSemester = temp2[0]+" "+sem;
+				
+				model.addAttribute("lecAttList", lecAttList);
+				model.addAttribute("selClassInfoList", selClassInfoList);
+				model.addAttribute("yearSemester", yearSemester);
+			}
+			else if(className == null) {
+				model.addAttribute("divide", "구분");
 			}
 
 			model.addAttribute("semester", semester);
 			model.addAttribute("className", className);
 			model.addAttribute("classList", classList);
-			
-
 		}
 		return "/info/electAttend";
 	}

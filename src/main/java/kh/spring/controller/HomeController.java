@@ -1,5 +1,6 @@
 package kh.spring.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +59,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/main")
-	public String simplePageGoTo(String pageGroup, String type, Model model) {
+	public String simplePageGoTo(String pageGroup, String type, Model model) throws ParseException {
 		model.addAttribute("type", type);
 		model.addAttribute("pageGroup", pageGroup);
 		if( pageGroup.contentEquals("community")) {
@@ -71,10 +72,10 @@ public class HomeController {
 			String current = format.format(time);
 	
 			String arr[] = current.split("-");
-			//String result = arr[0]+"-03"+"-01";
-			
 			arr[0] = arr[0].replaceAll("20", "");
 			String month_click2 = arr[0]+"/"+arr[1];
+			System.out.println("arr[1] : "+ arr[1]);
+			
 			List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(month_click2);
 						
 			model.addAttribute("result_main", current+"-01");
@@ -88,7 +89,7 @@ public class HomeController {
 		SimpleDateFormat format2 = new SimpleDateFormat("yy/MM/dd"); // 오늘날짜 요일 가져오기
 		Date time2 = new Date();
 		String day2 = format2.format(time2); //21/02/18
-		String dayArr[] = day2.split("/");
+		String dayArr[] = day2.split("/");		
 		String yearMonth = dayArr[0]+"/"+dayArr[1];
 		List<ColScheduleDTO> list4_colSche = iservice.get4ColSchedule(yearMonth);
 		model.addAttribute("list4_colSche", list4_colSche);

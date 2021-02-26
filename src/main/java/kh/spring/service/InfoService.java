@@ -74,6 +74,7 @@ public class InfoService {
 	}
 
 	//메인페이지, 달에 맞는 학사일정 리스트로
+	
 	public List<ColScheduleDTO> getMainSchedule(String month_click2) {
 		return idao.getMainSchedule(month_click2);
 	}
