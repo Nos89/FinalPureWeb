@@ -5,34 +5,33 @@
 			<!-- Header 부분입니다. 로고, 타이틀, 상단 메뉴 등을 넣어주세요. -->
 			<div class="col-12 h-50">
 				<div class="row">
-					<div class="col-2 p-0">
+					<div class="col-1 p-0">
 						<a href="/" class="navbar-brand">
-							<img src="/resources/img/home/Logo.jpg" class="headerLogo">
+							<img src="/resources/img/info/gachalogo.png" class="headerLogo">
 						</a>
 					</div>
-					<div class="col-8 text-center mainMenu">
+					<div class="col-11 text-center rounded mainMenu">
 						<div class="row navbarItemWrapper h-100">
-							<div class="col-3 menuItem pt-4" href="#introduce">
+							<div class="col-3 menuItem pt-3" href="#introduce">
 								<a href="/main?pageGroup=intro&type=intro">학사 소개</a>
 							</div>
-							<div class="col-3 menuItem pt-4" href="#intCol">
+							<div class="col-3 menuItem pt-3" href="#intCol">
 								<a href="/main?pageGroup=info&type=info">학사 안내</a>
 							</div>
-							<div class="col-3 menuItem pt-4" href="#community">
+							<div class="col-3 menuItem pt-3" href="#community">
 								<a href="/main?pageGroup=community&type=free">커뮤니티</a>
 							</div>
-							<div class="col-3 menuItem pt-4 font-weight-bold" href="#signUpInfo">
+							<div class="col-3 menuItem pt-3 font-weight-bold" href="#signUpInfo">
 								<a href="#">입학 안내</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-2"></div>
 				</div>
 				<div class="row position-relative">
 					<div class="col-12 collapse p-3 position-absolute border menuDetail" id="introduce">
 						<div class="row">
-							<div class="col-2 d-none d-lg-block"><p>학사 소개<p></div>
-							<div class="col-12 col-lg-3 menuItemWrapper">
+							<div class="col-2 d-none d-lg-block  bg-light"><p>학사 소개<p></div>
+							<div class="col-12 col-lg-3 border-top pt-2 menuItemWrapper">
 								<ol>
 									<li><a href="/main?pageGroup=intro&type=intro">학사 소개</a></li>
 									<li><a href="/main?pageGroup=intro&type=history">연혁</a></li>
@@ -46,8 +45,8 @@
 				<div class="row position-relative">
 					<div class="col-12 collapse p-3 position-absolute border menuDetail" id="intCol">
 						<div class="row">
-							<div class="col-2 d-none d-lg-block"><p>학사 안내<p></div>
-							<div class="col-12 col-lg-3 menuItemWrapper">
+							<div class="col-2 d-none d-lg-block bg-light"><p>학사 안내<p></div>
+							<div class="col-12 col-lg-3 border-top pt-2 menuItemWrapper">
 								<ol>
 									<li><a href="/main?pageGroup=info&type=info">학사 일정</a></li>
 									<li><a href="#">교과 과정</a></li>
@@ -59,7 +58,7 @@
 									</li>
 								</ol>
 							</div>
-							<div class="col-12 col-lg-3 menuItemWrapper">
+							<div class="col-12 col-lg-3 border-top pt-2 menuItemWrapper">
 								<ol>
 									<li>수업</li>
 									<li>
@@ -74,7 +73,7 @@
 									</li>
 								</ol>
 							</div>
-							<div class="col-12 col-lg-2 menuItemWrapper">
+							<div class="col-12 col-lg-2 border-top pt-2 menuItemWrapper">
 								<ol>
 									<li>학적</li>
 									<li>
@@ -88,7 +87,7 @@
 									</li>
 								</ol>
 							</div>
-							<div class="col-12 col-lg-2 menuItemWrapper">
+							<div class="col-12 col-lg-2 border-top pt-2 menuItemWrapper">
 								<ol>
 									<li>등록</li>
 									<li>
@@ -114,10 +113,10 @@
 				<div class="row position-relative">
 					<div class="col-12 collapse p-3 position-absolute border menuDetail" id="community">
 						<div class="row">
-							<div class="col-lg-2 d-none d-lg-block">
+							<div class="col-lg-2 d-none d-lg-block bg-light">
 								<p>커뮤니티</p>
 							</div>
-							<div class="col-12 col-lg-3 menuItemWrapper">
+							<div class="col-12 col-lg-3 border-top pt-2 menuItemWrapper">
 								<ol>
 									<li><a href="/main?pageGroup=community&type=free">자유 게시판</a></li>
 									<li><a href="/main?pageGroup=community&type=anonym">대나무숲</a></li>

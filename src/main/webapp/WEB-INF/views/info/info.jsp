@@ -581,13 +581,13 @@
 					<div class="image"><img src="/resources/img/info/calendar.png"></div>
 					<div class="text">학사일정</div>
 					</div>
-					<div class="col-2 col-sm-2 toBus">
-					<div class="image"><img src="/resources/img/info/bus.png"></div>
-					<div class="text">통학버스</div>
+					<div class="col-2 col-sm-2 toReturnSchool">
+					<div class="image"><img src="/resources/img/info/returnSchool.png"></div>
+					<div class="text">휴ㆍ복학 안내</div>
 					</div>
-					<div class="col-2 col-sm-2 toDomi">
+					<div class="col-2 col-sm-2 toTestAndGrade">
 					<div class="image"><img src="/resources/img/info/dormitory.png"></div>
-					<div class="text">생활관안내</div>
+					<div class="text">시험 및 성적</div>
 					</div>
 					<div class="col-2 col-sm-2 toReportBoard">
 					<div class="image"><img src="/resources/img/info/board.png"></div>
@@ -781,19 +781,19 @@
 <script>
 	<!--바로가기 모음  -->
 		$(document).on('click', '.toClassSche', function() {
-			location.href = "";
+			location.href = "/main?pageGroup=info&type=info";
 		});
-		$(document).on('click', '.toBus', function() {
-			location.href = "";
+		$(document).on('click', '.toReturnSchool', function() {
+			location.href = "/main?pageGroup=academic&type=returnSchool";
 		});
-		$(document).on('click', '.toDomi', function() {
-			location.href = "";
+		$(document).on('click', '.toTestAndGrade', function() {
+			location.href = "/main?pageGroup=class&type=testAndGrade";
 		});
 		$(document).on('click', '.toReportBoard', function() {
-			location.href = "";
+			location.href = "/main?pageGroup=community&type=report";
 		});
 		$(document).on('click', '.toExAuth', function() {
-			location.href = "";
+			location.href = "/main?pageGroup=certificate&type=academicIssuance";
 		});
 	</script>
 	</c:otherwise>
