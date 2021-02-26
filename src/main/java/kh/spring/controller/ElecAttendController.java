@@ -50,6 +50,7 @@ public class ElecAttendController {
 		if (sem.contentEquals("1학기")) {
 			String regDate = arr[0] + "/02/19";
 			List<ElecSelectClassDTO> classList = eservice.getClassList(id, regDate);
+			System.out.println("classList size 확인: "+ classList.size());
 			
 			if (className != null) {
 				List<TakingClassDTO> selClassInfoList = eservice.getClassInfo(id, regDate, className);
@@ -62,7 +63,8 @@ public class ElecAttendController {
 				model.addAttribute("selClassInfoList", selClassInfoList);
 				model.addAttribute("yearSemester", yearSemester);
 			}
-			else if(className == null) {
+			else  {
+				System.out.println("z콤보가 안바겨ㅜ");
 				model.addAttribute("divide", "구분");
 				model.addAttribute("classList", classList);
 			}

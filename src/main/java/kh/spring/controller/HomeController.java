@@ -76,7 +76,12 @@ public class HomeController {
 			String month_click2 = arr[0]+"/"+arr[1];
 			System.out.println("arr[1] : "+ arr[1]);
 			
-			List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(month_click2);
+			SimpleDateFormat fm = new SimpleDateFormat("yy/MM");
+			Date tempDate = fm.parse(month_click2);
+			System.out.println("tempDate : "+ tempDate);
+			
+			//List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(month_click2);
+			List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(tempDate);
 						
 			model.addAttribute("result_main", current+"-01");
 			model.addAttribute("main_colSche", main_colSche);
@@ -85,13 +90,17 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/info") //종합정보페이지 로그인 옆에 잇는 학사일정 4개 
-	public String infoPageGoTo(Model model) {
+	public String infoPageGoTo(Model model) throws ParseException {
 		SimpleDateFormat format2 = new SimpleDateFormat("yy/MM/dd"); // 오늘날짜 요일 가져오기
 		Date time2 = new Date();
 		String day2 = format2.format(time2); //21/02/18
 		String dayArr[] = day2.split("/");		
 		String yearMonth = dayArr[0]+"/"+dayArr[1];
-		List<ColScheduleDTO> list4_colSche = iservice.get4ColSchedule(yearMonth);
+		
+		SimpleDateFormat fm = new SimpleDateFormat("yy/MM");
+		Date tempDate = fm.parse(yearMonth);
+		
+		List<ColScheduleDTO> list4_colSche = iservice.get4ColSchedule(tempDate);
 		model.addAttribute("list4_colSche", list4_colSche);
 		return "info/info";
 	}
