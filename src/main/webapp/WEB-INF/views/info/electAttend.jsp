@@ -41,9 +41,7 @@
 								<option>= 학기선택 =</option>
 								<option>2021년 1학기</option>
 								<option>2020년 2학기</option>
-								<option>2020년 1학기</option>
-								<option>2019년 2학기</option>
-								<option>2019년 1학기</option>
+								
 
 							</select>
 						</form>
