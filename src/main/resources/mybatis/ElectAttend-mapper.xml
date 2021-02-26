@@ -5,7 +5,7 @@
 	<select id="getClassList" resultType="kh.spring.dto.ElecSelectClassDTO">
 		select lec_code, lec_title from lecture 
 		where lec_code IN (select lec_code from classregistration 
-							where id=#{id} and cr_date like #{regDate} and cr_divide='정기' and cr_completeDiv='완료상태')
+							where id=#{id} and to_char(cr_date, 'yymmdd') like #{regDate} and cr_divide='정기' and cr_completeDiv='완료상태')
 	</select>
 	
 	<select id="getClassInfo" resultType="kh.spring.dto.TakingClassDTO">
