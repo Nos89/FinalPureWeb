@@ -55,7 +55,7 @@
             .schedule>.row>.calendar>table{}
            .col-sm-6{padding-left:0px; padding-right:0px;}       
            #tbCalendarYM{font-weight:bold;}
-           #weeks>td{background-color:darkgray;}
+           #weeks>td{background-color:darkgray; font-size:13px;}
            
             .shortcutPart{margin-top:10px;  background-color:#08274e;}
             .shortcutPart>.row>div{color:white;height:100px;}

@@ -46,10 +46,16 @@ public class InfoController {
 		String day2 = format2.format(time2); // 21/02/18
 		String dayArr[] = day2.split("/");
 		String yearMonth = dayArr[0] + "/" + dayArr[1];
-		List<ColScheduleDTO> list_colSche = iservice.getColSchedule(yearMonth);
+		
+		SimpleDateFormat fm = new SimpleDateFormat("yy/MM");
+		Date tempDate = fm.parse(yearMonth);
+		
+		List<ColScheduleDTO> list_colSche = iservice.getColSchedule(tempDate);
+		
 
-		System.out.println(id + " : " + pw + " : " + result);
+		//System.out.println(id + " : " + pw + " : " + result);
 		if (result > 0) {
+			System.out.println("로그인 성공 아이디 : " +id);
 			session.setAttribute("loginID", id);
 			session.setAttribute("userName", name);
 			session.setAttribute("userMajor", major);
@@ -79,6 +85,7 @@ public class InfoController {
 
 			String arrId[] = id.split("-");
 			String openClassYear = "20" + currentRegYear;
+			
 			if (arrId[0].contentEquals("S")) { // 학생 종합정보페이지
 				session.setAttribute("userPart", "학생");
 
@@ -87,9 +94,9 @@ public class InfoController {
 				if (currentRegMonth >= 1 && currentRegMonth <= 6) {
 					// 1학기
 					classRegDate = currentRegYear + "/02/19";
-					SimpleDateFormat fm = new SimpleDateFormat("yy/MM/dd");
-					Date tempDate = fm.parse(classRegDate);
-					System.out.println("tempDate : " + tempDate);
+					fm = new SimpleDateFormat("yy/MM/dd");
+					tempDate = fm.parse(classRegDate);
+					//System.out.println("tempDate : " + tempDate);
 
 					semester = "1";
 					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, tempDate);
@@ -207,9 +214,10 @@ public class InfoController {
 					timeList.add("바*토/");
 					Collections.sort(timeList);
 					for (String i : timeList) {
-						System.out.println(i);
+						//System.out.println(i);
 					}
-					model.addAttribute("timeList", timeList);
+					session.setAttribute("timeList", timeList);
+					//model.addAttribute("timeList", timeList);
 					session.setAttribute("list_takingClass", list_takingClass);
 					session.setAttribute("openClassYear", openClassYear);
 					session.setAttribute("semester", semester);
@@ -221,8 +229,8 @@ public class InfoController {
 					// 2학기
 					classRegDate = currentRegYear + "-08-22";
 					semester = "2";
-					SimpleDateFormat fm = new SimpleDateFormat("yy-MM-dd");
-					Date tempDate = fm.parse(classRegDate);
+					fm = new SimpleDateFormat("yy-MM-dd");
+					tempDate = fm.parse(classRegDate);
 
 					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, tempDate);
 					session.setAttribute("list_takingClass", list_takingClass);
@@ -242,8 +250,8 @@ public class InfoController {
 					// 1학기
 					semester = "1";
 					classOpenDate = currentRegYear + "-01-25";
-					SimpleDateFormat fm = new SimpleDateFormat("yy-MM-dd");
-					Date tempDate = fm.parse(classOpenDate);
+					fm = new SimpleDateFormat("yy-MM-dd");
+					tempDate = fm.parse(classOpenDate);
 
 					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, semester, tempDate);
 					List<TakingClassDTO> list_classSche = iservice.classSche(id, semester, tempDate);
@@ -362,8 +370,8 @@ public class InfoController {
 					// 2학기
 					classOpenDate = currentRegYear + "-08-22";
 					semester = "2";
-					SimpleDateFormat fm = new SimpleDateFormat("yy-MM-dd");
-					Date tempDate = fm.parse(classOpenDate);
+					fm = new SimpleDateFormat("yy-MM-dd");
+					tempDate = fm.parse(classOpenDate);
 
 					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, semester, tempDate);
 					session.setAttribute("list_takingClass", list_takingClass); // 강의항목
@@ -379,8 +387,9 @@ public class InfoController {
 			} else if (arrId[0].contentEquals("A")) { // 관리자 넥사크로 페이지로 이동
 				return "info/temp";
 			}
-		} else if (result <= 0) {
-			model.addAttribute("errMsg", "아이디와 비밀번호 확인");
+		} else if (result == 0) {
+			System.out.println("비번 틀림 ==> "+id + " : " + " : " + pw + " : "+ result);
+			model.addAttribute("errMsg", "아이디 또는 비밀번호를 확인하세요.");
 			return "info/info";
 		}
 		return "info/info";
@@ -388,7 +397,7 @@ public class InfoController {
 
 	// 달력 넘어가면 그 날짜에 맞는 학사일정 옆에 보이게 하는...(미완성)
 	@RequestMapping("/calendar")
-	public String calendar(int month_click, Model model) {		
+	public String calendar(int month_click, Model model) throws ParseException {		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 		Date time = new Date();
 		String current = format.format(time);
@@ -398,13 +407,10 @@ public class InfoController {
 		arr[0] = arr[0].replaceAll("20", "");
 		String month_click2 =null;
 		month_click2 = arr[0]+"/0"+Integer.toString(month_click);
+		SimpleDateFormat fm = new SimpleDateFormat("yy/MM");
+		Date tempDate = fm.parse(month_click2);
 		
-		String teneletwe = Integer.toString(month_click);
-		if(teneletwe.contentEquals("10") || teneletwe.contentEquals("11") || teneletwe.contentEquals("12")) {
-			 month_click2 = arr[0]+"/"+teneletwe;
-		}
-		
-		List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(month_click2);
+		List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(tempDate);
 		
 		model.addAttribute("type", "info");
 		model.addAttribute("result", result);
@@ -417,18 +423,13 @@ public class InfoController {
 		System.out.println("changeSemester : "+ semSelect);
 		String arr[] = semSelect.split(" ");
 		model.addAttribute("change", arr[1]);
-		
-		
-
 		return "main/info/info";
 	}
-
 
 	@RequestMapping("/logout")
 	public String logout() {
 		session.invalidate();
-		return "info/info";
-
+		return "redirect:/info";
 	}
 	
 	@RequestMapping("/find")

@@ -82,16 +82,17 @@ public class InfoDAO {
 		return db.selectList("Info.takingClass_pro", param);
 	}
 
-	public List<ColScheduleDTO> getColSchedule(String yearMonth) {
-		return db.selectList("Info.getColSchedule",yearMonth);
+	public List<ColScheduleDTO> getColSchedule(Date tempDate) {
+		return db.selectList("Info.getColSchedule",tempDate);
 	}
 
-	public List<ColScheduleDTO> get4ColSchedule(String yearMonth) {
-		return db.selectList("Info.get4ColSchedule",yearMonth);
+	public List<ColScheduleDTO> get4ColSchedule(Date tempDate) {
+		return db.selectList("Info.get4ColSchedule",tempDate);
 	}
 	
-	public List<ColScheduleDTO> getMainSchedule(String month_click2) {
-		return db.selectList("Info.getColSchedule",month_click2);
+	public List<ColScheduleDTO> getMainSchedule(Date tempDate) {
+		//System.out.println("infoDAO tempdate : " + tempDate);
+		return db.selectList("Info.getColSchedule", tempDate);
 	}
 
 	public String findIDPW(Map<String, String> parm) {
@@ -101,5 +102,6 @@ public class InfoDAO {
 	public int changePW(Map<String, String> parm) {
 		return db.update("Info.changePW", parm);
 	}
+
 
 }

@@ -22,6 +22,8 @@ public class ElecAttendDAO {
 		Map<String, String> param = new HashMap<>();
 		param.put("id",id);
 		param.put("regDate",regDate);
+		System.out.println("elecDAO ID : "+ id);
+		System.out.println("elecDAO regDate : "+ regDate);
 		return db.selectList("Elec.getClassList", param);
 	}
 

@@ -65,19 +65,18 @@ public class InfoService {
 	}
 
 	//학사일정
-	public List<ColScheduleDTO> getColSchedule(String yearMonth) {
-		return idao.getColSchedule(yearMonth);
+	public List<ColScheduleDTO> getColSchedule(Date tempDate) {
+		return idao.getColSchedule(tempDate);
 	}
 
-	public List<ColScheduleDTO> get4ColSchedule(String yearMonth) {
-		return idao.get4ColSchedule(yearMonth);
+	public List<ColScheduleDTO> get4ColSchedule(Date tempDate) {
+		return idao.get4ColSchedule(tempDate);
 	}
 
 	//메인페이지, 달에 맞는 학사일정 리스트로
-	public List<ColScheduleDTO> getMainSchedule(String month_click2) {
-		return idao.getMainSchedule(month_click2);
+	public List<ColScheduleDTO> getMainSchedule(Date tempDate) {
+		return idao.getMainSchedule(tempDate);
 	}
-
 	
 	public String findIDPW(String find, String userID, String userName, String pn ) {
 		Map<String, String> parm = new HashMap<>();
@@ -94,5 +93,6 @@ public class InfoService {
 		parm.put("pw", pw);
 		return idao.changePW(parm);
 	}
+
 
 }
