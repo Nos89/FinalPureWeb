@@ -1,7 +1,9 @@
 package kh.spring.controller;
 
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -15,7 +17,6 @@ import kh.spring.dto.ElecSelectClassDTO;
 import kh.spring.dto.ProAttendMngDTO;
 import kh.spring.dto.TakingClassDTO;
 import kh.spring.service.ElecAttendService;
-import kh.spring.service.InfoService;
 
 @Controller
 @RequestMapping("/elec")
@@ -34,11 +35,10 @@ public class ElecAttendController {
 	}
 
 	@RequestMapping("/comboChange")
-	public String comboChange(String semester, String className, Model model) {
+	public String comboChange(String semester, String className, Model model) throws ParseException  {
 		String id = (String) session.getAttribute("loginID");
 		//semester 나오는 모양=> 2021년 1학기
 		String semTitle = semester;
-		//System.out.println(semester);
 		String temp[] = semTitle.split(" ");
 		String temp2[] = temp[0].split("년");
 		temp2[0] = temp2[0]+"학년도"; 
@@ -49,11 +49,16 @@ public class ElecAttendController {
 		String sem = arr[1];
 
 		if (sem.contentEquals("1학기")) {
-			String regDate = arr[0] + "/02/19";
-			List<ElecSelectClassDTO> classList = eservice.getClassList(id, regDate);
+			String regDate = "20"+arr[0] + "/02/19";
+			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
+			Date tempDate = sdf.parse(regDate);
+			List<ElecSelectClassDTO> classList = eservice.getClassList(id, tempDate);
+			System.out.println("classList size 확인: "+ classList.size());
 			
 			if (className != null) {
-				List<TakingClassDTO> selClassInfoList = eservice.getClassInfo(id, regDate, className);
+				sdf = new SimpleDateFormat("yy/MM/dd");
+				tempDate = sdf.parse(regDate);
+				List<TakingClassDTO> selClassInfoList = eservice.getClassInfo(id, tempDate, className);
 				//String schedule = selClassInfoList.get(0).getLec_schedule().toString();
 				String lecCode = selClassInfoList.get(0).getLec_code().toString();
 				List<ProAttendMngDTO> lecAttList = eservice.lecAttList(id,lecCode);
@@ -63,15 +68,45 @@ public class ElecAttendController {
 				model.addAttribute("selClassInfoList", selClassInfoList);
 				model.addAttribute("yearSemester", yearSemester);
 			}
-			else if(className == null) {
+			else  {
+				System.out.println("z콤보가 안바겨ㅜ");
 				model.addAttribute("divide", "구분");
+				model.addAttribute("classList", classList);
 			}
 
 			model.addAttribute("semester", semester);
 			model.addAttribute("className", className);
 			model.addAttribute("classList", classList);
+		}
+		else if (sem.contentEquals("2학기")) {
+			System.out.println("2학기 확인!!!!!!!");
+			String regDate = "20"+arr[0] + "/08/19";
+			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM//dd");
+			Date tempDate = sdf.parse(regDate);
+			List<ElecSelectClassDTO> classList = eservice.getClassList(id, tempDate);
+			System.out.println("classList size 확인: "+ classList.size());
 			
+			if (className != null) {	
+				sdf = new SimpleDateFormat("yy/MM/dd");
+				tempDate = sdf.parse(regDate);
+				List<TakingClassDTO> selClassInfoList = eservice.getClassInfo(id, tempDate, className);
+				//String schedule = selClassInfoList.get(0).getLec_schedule().toString();
+				String lecCode = selClassInfoList.get(0).getLec_code().toString();
+				List<ProAttendMngDTO> lecAttList = eservice.lecAttList(id,lecCode);
+				String yearSemester = temp2[0]+" "+sem;
+				
+				model.addAttribute("lecAttList", lecAttList);
+				model.addAttribute("selClassInfoList", selClassInfoList);
+				model.addAttribute("yearSemester", yearSemester);
+			}
+			else{
+				model.addAttribute("divide", "구분");
+				model.addAttribute("classList", classList);
+			}
 
+			model.addAttribute("semester", semester);
+			model.addAttribute("className", className);
+			model.addAttribute("classList", classList);
 		}
 		return "/info/electAttend";
 	}

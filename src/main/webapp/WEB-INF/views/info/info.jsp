@@ -30,6 +30,12 @@
 	console.log("userMajor : ${userMajor}");
 	console.log("${msg} : ${errMsg}");
 </script>
+<script>
+if("${errMsg}" != ""){
+	alert("${errMsg}");
+	location.href="/info";
+}
+</script>
 	<c:if test="${not empty  cookie.saveID}">
 		<c:set value="checked" var="checked"/>
 	</c:if>
@@ -57,7 +63,7 @@
 							</div>
 							<div id=loginID>
 								<div id=idTitle>ID</div>
-								<input type=text name=id id=idText placeholder="ID 학번입력"
+								<input type=text name=id id=idText value="S-" placeholder="ID 학번입력"
 									required value="${cookie.saveID!=''? cookie.saveID.value:'' }">
 							</div>
 							<div id=loginPW>
@@ -124,6 +130,7 @@
 					loginPro.style.color = "black";
 					loginAdmin.style.backgroundColor = "transparent";
 					loginAdmin.style.color = "black";
+					$("#idText").val("S-");
 				}
 				loginPro.onclick = function() {
 					loginStd.style.backgroundColor = "transparent";
@@ -132,6 +139,7 @@
 					loginPro.style.color = "ivory";
 					loginAdmin.style.backgroundColor = "transparent";
 					loginAdmin.style.color = "black";
+					$("#idText").val("P-");
 				}
 				loginAdmin.onclick = function() {
 					loginStd.style.backgroundColor = "transparent";
@@ -140,7 +148,29 @@
 					loginPro.style.color = "black";
 					loginAdmin.style.backgroundColor = "#272727";
 					loginAdmin.style.color = "ivory";
+					$("#idText").val("A-");
 				}
+				
+				$(document)
+                .keydown(
+                        function(e) {
+                            if (e.target.nodeName == "INPUT") {
+                                if (e.keyCode === 8) {
+                                    if (e.target.value.indexOf('S-') == 0  e.target.value.indexOf('P-') == 0 e.target.value.indexOf('A-') == 0) {
+                                        if (e.target.value.length < 2) {
+                                            return false;
+                                        }else if(e.target.value.indexOf('S-')==0){
+                                            $("#idText").val("S-s");
+                                        }else if(e.target.value.indexOf('P-')==0){
+                                            $("#idText").val("P-s");
+                                        }else if(e.target.value.indexOf('A-')==0){
+                                            $("#idText").val("A-s");
+                                        }
+                                    }
+                                }
+                            }
+                        });
+				
 				//각 메뉴 페이지 연결
 				document.getElementById("classRegistation").onclick = function(){
 					location.href="/classRegistration.nex";	
@@ -237,7 +267,7 @@
 												<li class="nav-item active"><a class="nav-link"
 													href="/home.nex" id=system>종합정보시스템</a></li>
 												<li class="nav-item active"><a class="nav-link"
-													href="#" id=mainpage>대표홈페이지</a></li>
+													href="/" id=mainpage>대표홈페이지</a></li>
 											</ul>
 										</div>
 
@@ -328,7 +358,7 @@
 									</div>
 									<div class="col-1">
 										<nav class="nav justify-content-end" >
-											<a class="nav-link " href="#"
+											<a class="nav-link " href="/main/board.list?pageGroup=community&type=notice"
 												style="color: black; font-weight: bold;">+</a>
 										</nav>
 									</div>
@@ -406,13 +436,13 @@
 												<td><label onclick="nextCalendar()" style="cursor:pointer;">▶</label></td>
 											</tr>
 											<tr id=weeks>
-												<td align="center"><font color="red">일</font></td>
-												<td align="center"><font color="white">월</font></td>
-												<td align="center"><font color="white">화</font></td>
-												<td align="center"><font color="white">수</font></td>
-												<td align="center"><font color="white">목</font></td>
-												<td align="center"><font color="white">금</font></td>
-												<td align="center"><font color="blue">토</font></td>
+												<td align="center"><font color="red">SUN</font></td>
+												<td align="center"><font color="white">MON</font></td>
+												<td align="center"><font color="white">TUE</font></td>
+												<td align="center"><font color="white">WED</font></td>
+												<td align="center"><font color="white">THU</font></td>
+												<td align="center"><font color="white">FRI</font></td>
+												<td align="center"><font color="blue">SAT</font></td>
 											</tr>
 										</table>
 									</div>
@@ -426,7 +456,7 @@
 											</div>
 											<div class="col-6">
 												<nav class="nav justify-content-end">
-													<a class="nav-link " href="#"
+													<a class="nav-link " href="/main?pageGroup=info&type=info"
 														style="color: black; font-weight: bold;">+</a>
 												</nav>
 											</div>
@@ -470,7 +500,7 @@
 									<div class="realtimetable">
 										<table class="timeTable" border=1>
 											<tr>
-												<th style="font-size: 10px;">요일/교시</th>
+												<th style="font-size: 10px;">요일 / 교시</th>
 												<th>월</th>
 												<th>화</th>
 												<th>수</th>
@@ -529,7 +559,7 @@
 									<div class="realtimetable">
 										<table class="timeTable" border=1>
 											<tr>
-												<th style="font-size: 10px;">요일/교시</th>
+												<th style="font-size: 10px;">요일 / 교시</th>
 												<th style="width: 15%;">월</th>
 												<th style="width: 15%;">화</th>
 												<th style="width: 15%;">수</th>
@@ -578,7 +608,7 @@
 				<div class="row">
 					<div class="col-12 col-sm-1 shortcut">바로가기</div>
 					<div class="col-2 col-sm-2 toClassSche">
-					<div class="image"><img src="/resources/img/info/calendar.png"></div>
+					<div class="image"><img src="/resources/img/info/Calendar.png"></div>
 					<div class="text">학사일정</div>
 					</div>
 					<div class="col-2 col-sm-2 toReturnSchool">
@@ -638,7 +668,6 @@
 
 
 			</div>
-
 <script>
 	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 	var date = new Date();//today의 Date를 세어주는 역할

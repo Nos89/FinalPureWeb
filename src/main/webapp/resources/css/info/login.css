@@ -50,7 +50,7 @@
 	.goSugang, .goHome, .goComunity, .goCalender, .goIntro{background-size: contain; ;background-position: center;background-repeat: no-repeat; height:80%;}
 	.goSugang{background-image:url('/resources/img/info/semester.png');}
 	.goHome{background-image:url('/resources/img/info/remote.png');}
-	.goCalender{background-image:url('/resources/img/info/calendar.png');}
+	.goCalender{background-image:url('/resources/img/info/Calendar.png');}
 	.goComunity{background-image:url('/resources/img/info/personnum.png');}
 	.goIntro{background-image:url('/resources/img/info/Intro.png');}
 .newContainer{height : 100vh;

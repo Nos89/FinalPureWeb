@@ -1,5 +1,6 @@
 package kh.spring.dao;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,17 +19,19 @@ public class ElecAttendDAO {
 	@Autowired
 	private SqlSession db;
 
-	public List<ElecSelectClassDTO> getClassList(String id, String regDate) {
-		Map<String, String> param = new HashMap<>();
+	public List<ElecSelectClassDTO> getClassList(String id, Date tempDate) {
+		Map<String, Object> param = new HashMap<>();
 		param.put("id",id);
-		param.put("regDate",regDate);
+		param.put("regDate",tempDate);
+		System.out.println("elecDAO ID : "+ id);
+		System.out.println("elecDAO regDate : "+ tempDate);
 		return db.selectList("Elec.getClassList", param);
 	}
 
-	public List<TakingClassDTO> getClassInfo(String id, String regDate, String className) {
-		Map<String, String> param = new HashMap<>();
+	public List<TakingClassDTO> getClassInfo(String id, Date tempDate, String className) {
+		Map<String, Object> param = new HashMap<>();
 		param.put("id",id);
-		param.put("regDate",regDate);
+		param.put("regDate",tempDate);
 		param.put("className",className);
 		return db.selectList("Elec.getClassInfo", param);
 	}
