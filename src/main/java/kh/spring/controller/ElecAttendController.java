@@ -46,10 +46,12 @@ public class ElecAttendController {
 		String arr[] = semester.split(" ");
 		arr[0] = arr[0].replaceAll("년", "");
 		arr[0] = arr[0].replaceAll("20", "");
+		System.out.println("semester : "+ semester);
+		System.out.println("if 전에 arr[0] : "+ arr[0]);
 		String sem = arr[1];
 
 		if (sem.contentEquals("1학기")) {
-			String regDate = "20"+arr[0] + "/02/19";
+			String regDate = arr[0] + "/02/19";
 			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
 			Date tempDate = sdf.parse(regDate);
 			List<ElecSelectClassDTO> classList = eservice.getClassList(id, tempDate);
@@ -69,7 +71,6 @@ public class ElecAttendController {
 				model.addAttribute("yearSemester", yearSemester);
 			}
 			else  {
-				System.out.println("z콤보가 안바겨ㅜ");
 				model.addAttribute("divide", "구분");
 				model.addAttribute("classList", classList);
 			}
@@ -79,9 +80,12 @@ public class ElecAttendController {
 			model.addAttribute("classList", classList);
 		}
 		else if (sem.contentEquals("2학기")) {
-			System.out.println("2학기 확인!!!!!!!");
-			String regDate = "20"+arr[0] + "/08/19";
-			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM//dd");
+			String arr2[] = semester.split(" ");
+			arr2[0] = arr2[0].replaceAll("년", "");
+			arr2[0] = arr2[0].substring(2);
+
+			String regDate = arr2[0] + "/08/19";
+			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
 			Date tempDate = sdf.parse(regDate);
 			List<ElecSelectClassDTO> classList = eservice.getClassList(id, tempDate);
 			System.out.println("classList size 확인: "+ classList.size());
