@@ -1,27 +1,27 @@
 package kh.spring.dto;
 
 public class ConditionForMyClassDTO {
-	private int year;
-	private int semester;
+	private String year;
+	private String semester;
 	public ConditionForMyClassDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ConditionForMyClassDTO(int year, int semester) {
+	public ConditionForMyClassDTO(String year, String semester) {
 		super();
 		this.year = year;
 		this.semester = semester;
 	}
-	public int getYear() {
+	public String getYear() {
 		return year;
 	}
-	public void setYear(int year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
-	public int getSemester() {
+	public String getSemester() {
 		return semester;
 	}
-	public void setSemester(int semester) {
+	public void setSemester(String semester) {
 		this.semester = semester;
 	}
 	
