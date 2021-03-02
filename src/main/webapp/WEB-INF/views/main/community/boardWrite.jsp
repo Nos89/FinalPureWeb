@@ -28,6 +28,7 @@
 </div>
 <script>
 var writeResult = "";
+var ajaxImgUrl = [];
 
 $(document).ready(function() {
 	//여기 아래 부분
@@ -87,13 +88,19 @@ $(document).ready(function() {
 			type : "POST",
 			url : "/main/uploadSummernoteImageFile",
 			cache : false,
+			dataType: "json",
+			 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 			contentType : false,
-			processData : false
+			processData : false,
+			error: function (jqXHR, textStatus, errorThrown) {
+                console.error(textStatus + " " + errorThrown);
+            }
 		}).done(function(data){
 			data = data;
-			console.log(data);
-			console.log(data.url);
-			console.log(data.exist)
+			console.log("data : " + data);
+			console.log("url : " + data.url);
+			console.log("exist : " + data.exist);
+			console.log("path : " + data.contextPath);
            	//항상 업로드된 파일의 url이 있어야 한다.
            	var loadingUrl = "/resources/img/imgLoading.gif";
            	var loadingImgTag = $("<img>");
@@ -102,10 +109,11 @@ $(document).ready(function() {
            	
            	$("#summernote").summernote("insertNode", loadingImgTag[0]);
            	
-           	setTimeout(function(){
-				$(editor).summernote('insertImage', data.url);
 				$(".loadingImg").remove();
-           	}, 1000);
+           		//var img = $("<img>");
+           		//img.attr("src", data.url);
+           		//$("#summernote").summernote("insertNode", img);
+				$(editor).summernote('insertImage', data.url);
 		})
 	}
 	

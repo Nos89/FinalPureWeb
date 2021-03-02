@@ -144,9 +144,11 @@ public class MainBoardController {
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile); // 파일 저장
+			Map<String, Object> map = new HashMap<>();
 			jsonObject.addProperty("url", "/resources/img/board/" + savedFileName); // contextroot + resources + 저장할 내부 폴더명
 			jsonObject.addProperty("responseCode", "success");
 			jsonObject.addProperty("exist", targetFile.exists());
+			jsonObject.addProperty("contextPath", contextRoot);
 		} catch (IOException e) {
 			FileUtils.deleteQuietly(targetFile); // 저장된 파일 삭제
 			jsonObject.addProperty("responseCode", "error");
@@ -225,7 +227,8 @@ public class MainBoardController {
 			this.delSpecFile(delSeq, fileRoot);
 		}
 		bservice.deleteArticle(type, seq);
-
+		
+		
 		model.addAttribute("pageGroup", pageGroup);
 		model.addAttribute("type", type);
 		return "redirect:/main/board.list";
