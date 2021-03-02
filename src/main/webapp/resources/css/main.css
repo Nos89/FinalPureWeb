@@ -186,3 +186,14 @@
 .container-fluid .footer .footerItem:last-child{
 	border-right: none;
 }
+
+/*스크롤 없애기  */
+.box1 {
+	overflow-y:scroll;
+	height:700px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.box1::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
