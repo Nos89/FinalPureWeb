@@ -327,29 +327,52 @@ if("${errMsg}" != ""){
 											<div class="tab-pane fade show active" id="nav-std-tab">
 												<div class="tab_list">
 													<c:forEach var="i" items="${list_std}" varStatus="status">
-														<div class="tab_title" >${i.noti_title}</div>
+														<div class="tab_title_std">${i.noti_title}<div id=std_seq style="display:none;">${i.noti_seq }</div></div>
 														<div class="tab_date">${i.noti_writedate}</div>
 													</c:forEach>
 												</div>
 											</div>
+											
+											<script>
+											$(document).on('click', '.tab_title_std', function() {
+												let seq = $(this).children().html();
+												location.href="/info/tabToGoBoard?category=학사&seq="+seq;
+											});
+											</script>
+											
 											<div class="tab-pane fade" id="nav-scholarship-tab">
 												<div class="tab_list">
 													<c:forEach var="i" items="${list_scholar}"
 														varStatus="status">
-														<div class="tab_title">${i.noti_title}</div>
+														<div class="tab_title_scholar">${i.noti_title}<div id=std_seq style="display:none;">${i.noti_seq }</div></div>
 														<div class="tab_date">${i.noti_writedate}</div>
 													</c:forEach>
 												</div>
 											</div>
+										<script>
+											$(document).on('click', '.tab_title_scholar', function() {
+												let seq = $(this).children().html();
+												location.href="/info/tabToGoBoard?category=장학&seq="+seq;
+											});
+											</script>
+											
+											
 											<div class="tab-pane fade" id="nav-enter-tab">
 												<div class="tab_list">
 													<c:forEach var="i" items="${list_enter}" varStatus="status">
-														<div class="tab_title">${i.noti_title}</div>
+														<div class="tab_title_enter" id=tabTitle_enter>${i.noti_title}<div id=std_seq style="display:none;">${i.noti_seq }</div></div>
 														<div class="tab_date">${i.noti_writedate}</div>
 													</c:forEach>
 												</div>
 											</div>
+											<script>
+											$(document).on('click', '.tab_title_enter', function() {
+												let seq = $(this).children().html();
+												location.href="/info/tabToGoBoard?category=입학&seq="+seq;
+											});
+											</script>
 										</div>
+										
 
 									</div>
 									<div class="col-1">

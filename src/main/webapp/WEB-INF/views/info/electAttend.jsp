@@ -42,8 +42,6 @@
 								<option>2020년 2학기</option>
 							</select>
 						</form>
-
-
 					</div>
 					<div class="col-12 changeClass">
 						- 전자출석부
@@ -68,41 +66,57 @@
 						</div>
 					</c:when>
 					<c:when test="${selClassInfoList != null }">
-					<div class="ClassInfoListWrapper">
-    <div class=classInfoTitle ><h4>| ${yearSemester } 출석부</h4></div>
-    
-    <c:forEach var="i" items="${selClassInfoList}" varStatus="status">
-    <div class=infoBox_class>
-    <div class=fixed_class>교과목코드</div><div class=contents20>${i.lec_code }</div>
-    <div class=fixed_class>교과목명</div><div class=contents30>${i.lec_title }</div>
-    <div class=fixed_class>담당교수</div><div class=contents20>${i.pro_name }</div>
-    <div class=fixed_class>강의실</div><div class=contents20>${i.lec_classroom }</div>
-    <div class=fixed_class>수업시간</div><div class=contents30>${i.lec_schedule }</div>
-    <div class=fixed_class>학점</div><div class=contents20>${i.lec_score }</div>
-    </div>
-    </c:forEach>
-    
-    <div class=marks><font style="color:#418cc6; font-weight: bold;">O</font>:정상출석 <font style="color:#f97f35; font-weight: bold;">/</font>:지각 <font style="color:#fc1b1b; font-weight: bold;">X</font>:결석처리</div>
-    
-    <div class=attednInfoBox>
-    <div class=attendInfoFixed style="width:10%;">주차</div> <div  class=attendInfoFixed style="width: 20%;">수업순서</div> 
-        <div  class=attendInfoFixed style="width: 40%;">수업일자</div> <div class=attendInfoFixed style="width:30%; ">출석결과</div>
-        
-    <c:forEach var="i" items="${lecAttList}" varStatus="status">
-    <c:set var="number" value="${number+1 }" />
-							<c:if test="${number > 3 }">
-								<c:set var="number" value="1" />
-							</c:if>
-        
-     <div class=attendInfoContets style="width:10%;">${i.att_week }</div> <div  class=attendInfoContets style="width: 20%;">${number }</div> 
-        <div class=attendInfoContets style="width: 40%;">${i.att_date }</div> <div class=attendInfoContets style="width:30%; ">${i.att_attend }</div>
-    </c:forEach>
-   
-    
-    </div>
-    
-    
-        </div>
+						<div class="ClassInfoListWrapper">
+							<div class=classInfoTitle>
+								<h4>| ${yearSemester } 출석부</h4>
+							</div>
+
+							<c:forEach var="i" items="${selClassInfoList}" varStatus="status">
+								<div class=infoBox_class>
+									<div class=fixed_class>교과목코드</div>
+									<div class=contents20>${i.lec_code }</div>
+									<div class=fixed_class>교과목명</div>
+									<div class=contents30>${i.lec_title }</div>
+									<div class=fixed_class>담당교수</div>
+									<div class=contents20>${i.pro_name }</div>
+									<div class=fixed_class>강의실</div>
+									<div class=contents20>${i.lec_classroom }</div>
+									<div class=fixed_class>수업시간</div>
+									<div class=contents30>${i.lec_schedule }</div>
+									<div class=fixed_class>학점</div>
+									<div class=contents20>${i.lec_score }</div>
+								</div>
+							</c:forEach>
+
+							<div class=marks>
+								<font style="color: #418cc6; font-weight: bold;">O</font>:정상출석 <font
+									style="color: #f97f35; font-weight: bold;">/</font>:지각 <font
+									style="color: #fc1b1b; font-weight: bold;">X</font>:결석처리
+							</div>
+
+							<div class=attednInfoBox>
+								<div class=attendInfoFixed style="width: 10%;">주차</div>
+								<div class=attendInfoFixed style="width: 20%;">수업순서</div>
+								<div class=attendInfoFixed style="width: 40%;">수업일자</div>
+								<div class=attendInfoFixed style="width: 30%;">출석결과</div>
+
+								<c:forEach var="i" items="${lecAttList}" varStatus="status">
+									<c:set var="number" value="${number+1 }" />
+									<c:if test="${number > 3 }">
+										<c:set var="number" value="1" />
+									</c:if>
+
+									<div class=attendInfoContets style="width: 10%;">${i.att_week }</div>
+									<div class=attendInfoContets style="width: 20%;">${number }</div>
+									<div class=attendInfoContets style="width: 40%;">${i.att_date }</div>
+									<div class=attendInfoContets style="width: 30%;">${i.att_attend }</div>
+								</c:forEach>
+
+
+							</div>
+
+
+						</div>
 					</c:when>
 					<c:when test="${regInfoBtn=='등록정보' }">
 						<div class="userInfoWrapper">
