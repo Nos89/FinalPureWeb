@@ -1,26 +1,29 @@
 package kh.spring.dto;
 
 public class ConditionForRoomInfoDTO {
-	private int year;
-	private int semester;
+	private String year;
+	private String semester;
 	private String classroom;
-	public ConditionForRoomInfoDTO() {}
-	public ConditionForRoomInfoDTO(int year, int semester, String classroom) {
+	public ConditionForRoomInfoDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public ConditionForRoomInfoDTO(String year, String semester, String classroom) {
 		super();
 		this.year = year;
 		this.semester = semester;
 		this.classroom = classroom;
 	}
-	public int getYear() {
+	public String getYear() {
 		return year;
 	}
-	public void setYear(int year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
-	public int getSemester() {
+	public String getSemester() {
 		return semester;
 	}
-	public void setSemester(int semester) {
+	public void setSemester(String semester) {
 		this.semester = semester;
 	}
 	public String getClassroom() {
