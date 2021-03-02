@@ -533,37 +533,6 @@ public class AdminController {
 		admService.creditRenounceApproval(dto);
 		return new NexacroResult();		
 	}
-		
-	// 메일 작성
-	@RequestMapping("sendMail.nex")
-	public NexacroResult sendMail(@ParamDataSet(name="in_mail")MailDTO dto) {
-		admService.sendMail(dto);
-		return new NexacroResult();
-	}
 	
-	// 수신인 목록 가져오기
-	@RequestMapping("getReceiverList.nex")
-	public NexacroResult getReceiverList() {
-		NexacroResult nr = new NexacroResult();
-		List<StudentDTO> list = admService.getReceiverList();
-		List<CollegeDTO> list2 = admService.getCollege();
-		List<DepartmentDTO> list3 = admService.getDepartment();
-		nr.addDataSet("out_users",list);
-		nr.addDataSet("out_college",list2);
-		nr.addDataSet("out_department",list3);
-		return nr;
-	}
-	
-	
-	// 발신메일 목록
-	@RequestMapping("getOutBox.nex")
-	public NexacroResult getOutBox() {
-		NexacroResult nr = new NexacroResult();
-		List<MailDTO> list = admService.getOutBox();
-		List<StudentDTO> list2 = admService.getReceiverName();
-		nr.addDataSet("out_mail",list);
-		nr.addDataSet("out_name",list2);
-		return nr;
-	}
-
+	// 
 }

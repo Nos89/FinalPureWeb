@@ -423,22 +423,4 @@ public class StudentController {
 		}
 		return nr;
 	}
-	
-	
-	// 수신메일 목록
-	@RequestMapping("getInBox.nex")
-	public NexacroResult getMailBox() {
-		String id = (String)session.getAttribute("loginID");
-		NexacroResult nr = new NexacroResult();
-		List<MailDTO> list = sservice.getMailBox(id);
-		nr.addDataSet("out_mail",list);
-		return nr;
-	}
-	
-	// 읽음 표시
-	@RequestMapping("updateReadStatus.nex")
-	public NexacroResult updateReadStatus(@ParamDataSet(name="in_mail")MailDTO_NEX dto) throws Exception {
-		sservice.updateReadStatus(dto);
-		return new NexacroResult();
-	}
 }

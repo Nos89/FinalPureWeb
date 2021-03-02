@@ -184,12 +184,5 @@ public class StudentDAO {
 	public int checkMyMenu(Map menu) {
 		return db.selectList("Student.checkMyMenu",menu).size();
 	}
-	
-	public List<MailDTO> getMailBox(String id){
-		return db.selectList("Student.getMailBox",id);
-	}
-	
-	public int updateReadStatus(MailDTO dto) {
-		return db.update("Student.updateReadStatus", dto);
-	}
+
 }

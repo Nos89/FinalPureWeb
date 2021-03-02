@@ -247,7 +247,7 @@ if("${errMsg}" != ""){
 						</div>
 
 					</c:when>
-					<c:when test="${userPart == '교수' }">
+					<c:when test="${userPart == '교수' || userPart == '관리자'}">
 						<div class="row">
 							<div class="col-12 topMenu">
 								<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -289,7 +289,7 @@ if("${errMsg}" != ""){
 										<div class="major">${userMajor }학과</div>
 										<div class="mail">
 											<div class=mail_notRead>안 읽은 메일</div>
-											<div class="mail_notReadNum">건</div>
+											<div class="mail_notReadNum">${unread}건</div>
 										</div>
 										<div class="consultReqPart">
 											<div class=consultReq>상담신청</div>
@@ -304,7 +304,7 @@ if("${errMsg}" != ""){
 										<div class="major">${userMajor }학과</div>
 										<div class="mail">
 											<div class=mail_notRead>안 읽은 메일</div>
-											<div class="mail_notReadNum">건</div>
+											<div class="mail_notReadNum">${unread}건</div>
 										</div>
 									</div>
 								</c:when>

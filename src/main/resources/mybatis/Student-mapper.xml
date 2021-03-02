@@ -174,12 +174,5 @@
 	<select id="checkMyMenu" resultType="kh.spring.dto.MyMenuDTO">
 		select * from mymenu where id=#{id} and MENU_NM=#{MENU_NM}
 	</select>
-	
-	<select id="getMailBox" resultType="kh.spring.dto.MailDTO">
-		SELECT * FROM MAIL WHERE RECEIVER=#{id} ORDER BY RECEIVED_DATE DESC
-	</select>
-	
-	<update id="updateReadStatus">
-		UPDATE MAIL SET READ=1 WHERE MAIL_SEQ=#{mail_seq}
-	</update>
+
 </mapper>

@@ -103,5 +103,7 @@ public class InfoDAO {
 		return db.update("Info.changePW", parm);
 	}
 
-
+	public int getUnreadMailNum(String id) {
+		return db.selectOne("Info.getUnreadMailNum",id);
+	}
 }
