@@ -1,5 +1,6 @@
 package kh.spring.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,12 @@ public class ElecAttendService {
 	@Autowired
 	ElecAttendDAO edao;
 
-	public List<ElecSelectClassDTO> getClassList(String id, String regDate) {
-		return edao.getClassList(id,regDate);
+	public List<ElecSelectClassDTO> getClassList(String id, Date tempDate) {
+		return edao.getClassList(id,tempDate);
 	}
 
-	public List<TakingClassDTO> getClassInfo(String id, String regDate, String className) {
-		return edao.getClassInfo(id,regDate,className);
+	public List<TakingClassDTO> getClassInfo(String id, Date tempDate, String className) {
+		return edao.getClassInfo(id,tempDate,className);
 	}
 
 

@@ -129,7 +129,24 @@
 						data = data;
 						console.log(data.url)
 						//항상 업로드된 파일의 url이 있어야 한다.
-						$(editor).summernote('insertImage', data.url);
+
+						var loadingUrl = "/resources/img/imgLoading.gif";
+		            	
+		            	/* <div class="spinner-border text-primary" role="status">
+						  <span class="sr-only">Loading...</span>
+						</div> */
+		            	var loadingImgTag = $("<img>");
+		            	loadingImgTag.addClass("loadingImg");
+		            	loadingImgTag.attr("src", loadingUrl);
+		            	
+		            	$("#summernote").summernote("insertNode", loadingImgTag[0]);
+		            	
+		            	setTimeout(function(){
+							$(editor).summernote('insertImage', data.url);
+							
+							$(".loadingImg").remove();
+							
+		            	}, 5000);
 					}
 				});
 			}

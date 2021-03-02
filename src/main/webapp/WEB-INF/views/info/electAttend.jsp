@@ -41,9 +41,7 @@
 								<option>= 학기선택 =</option>
 								<option>2021년 1학기</option>
 								<option>2020년 2학기</option>
-								<option>2020년 1학기</option>
-								<option>2019년 2학기</option>
-								<option>2019년 1학기</option>
+								
 
 							</select>
 						</form>
@@ -212,8 +210,7 @@
 		function chageClassSelect() {
 			let classSelect = document.getElementById("classSelect");
 			let class_selectValue = classSelect.options[classSelect.selectedIndex].value;
-			location.href = "/elec/comboChange?semester=" + semester
-					+ "&className=" + class_selectValue;
+			location.href = "/elec/comboChange?semester=" + semester+ "&className=" + class_selectValue;
 		}
 
 		document.getElementById("btnRegisterInfo").onclick = function() {

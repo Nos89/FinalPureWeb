@@ -63,7 +63,7 @@ if("${errMsg}" != ""){
 							</div>
 							<div id=loginID>
 								<div id=idTitle>ID</div>
-								<input type=text name=id id=idText placeholder="ID 학번입력"
+								<input type=text name=id id=idText value="S-" placeholder="ID 학번입력"
 									required value="${cookie.saveID!=''? cookie.saveID.value:'' }">
 							</div>
 							<div id=loginPW>
@@ -130,6 +130,7 @@ if("${errMsg}" != ""){
 					loginPro.style.color = "black";
 					loginAdmin.style.backgroundColor = "transparent";
 					loginAdmin.style.color = "black";
+					$("#idText").val("S-");
 				}
 				loginPro.onclick = function() {
 					loginStd.style.backgroundColor = "transparent";
@@ -138,6 +139,7 @@ if("${errMsg}" != ""){
 					loginPro.style.color = "ivory";
 					loginAdmin.style.backgroundColor = "transparent";
 					loginAdmin.style.color = "black";
+					$("#idText").val("P-");
 				}
 				loginAdmin.onclick = function() {
 					loginStd.style.backgroundColor = "transparent";
@@ -146,7 +148,25 @@ if("${errMsg}" != ""){
 					loginPro.style.color = "black";
 					loginAdmin.style.backgroundColor = "#272727";
 					loginAdmin.style.color = "ivory";
+					$("#idText").val("A-");
 				}
+				$(document).keydown(function(e) {
+                            if (e.target.nodeName == "INPUT") {
+                                if (e.keyCode === 8) {
+                                    if (e.target.value.indexOf('S-') == 0 ||e.target.value.indexOf('P-') == 0|| e.target.value.indexOf('A-') == 0) {
+                                        if (e.target.value.length < 2) {
+                                            return false;
+                                        }else if(e.target.value.indexOf('S-')==0){
+                                            $("#idText").val("S-s");
+                                        }else if(e.target.value.indexOf('P-')==0){
+                                            $("#idText").val("P-s");
+                                        }else if(e.target.value.indexOf('A-')==0){
+                                            $("#idText").val("A-s");
+                                        }
+                                    }
+                                }
+                            }
+                        });
 				//각 메뉴 페이지 연결
 				document.getElementById("classRegistation").onclick = function(){
 					location.href="/classRegistration.nex";	
