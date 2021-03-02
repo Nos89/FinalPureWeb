@@ -6,7 +6,7 @@
 } .container{padding: none;}
        
 
-           .newContainer2{background-color: #f1f1f1; height:100%;}
+           .newContainer2{background-color: #f1f1f1; height:100%; overflow-x:hidden;}
            .my,.board,.subject,.timetable,.schedule{padding: 0px;border:4px solid #f1f1f1;}
             #electAttend:hover{background-color:#063976; color:white;}
             #mainpage:hover{background-color:#063976; color:white;}
