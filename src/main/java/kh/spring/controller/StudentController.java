@@ -164,7 +164,7 @@ public class StudentController {
 	}
 	
 	@RequestMapping("/getClassTime.nex")
-	public NexacroResult getClassTime(@ParamDataSet(name="in_condition") ConditionForRoomInfoDTO cdto) {
+	public NexacroResult getClassTime(@ParamDataSet(name="in_conditionByRoom") ConditionForRoomInfoDTO cdto) {
 		NexacroResult nr = new NexacroResult();
 
 		List<ClassTimeDTO> ctList = new ArrayList<>();
@@ -182,7 +182,7 @@ public class StudentController {
 		
 		List<MyClassTimeDTO> ctList = new ArrayList<>();
 		ctList = sservice.getMyClassTime(cdto,id);
-		
+		System.out.println("asd");
 		nr.addDataSet("out_classTime",ctList);
 		
 		return nr;
@@ -240,7 +240,7 @@ public class StudentController {
 		
 		List<GradeListDTO> glList = new ArrayList<>();
 		glList = sservice.getMyElectivesGrade(id);
-		
+		System.out.println(id);
 		nr.addDataSet("out_gradeList",glList);
 		return nr;
 	}
