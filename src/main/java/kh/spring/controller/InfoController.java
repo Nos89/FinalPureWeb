@@ -426,6 +426,14 @@ public class InfoController {
 		return "main/info/info";
 	}
 
+	@RequestMapping("/tabToGoBoard")
+	public String tabToGoBoard(int seq, String category) {
+		//System.out.println("탭고투보드 도착");
+		System.out.println("투고보드 seq : "+ seq);
+		System.out.println("투고보드 part : "+ category);
+		return "redirect:/main/board.view?pageGroup=community&type=notice&seq="+seq+"&page=1&purp=view&category="+category+"";
+	}
+	
 	@RequestMapping("/logout")
 	public String logout() {
 		session.invalidate();
