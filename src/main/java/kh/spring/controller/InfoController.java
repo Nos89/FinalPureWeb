@@ -17,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.JsonObject;
+
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.InfoBoardDTO;
 import kh.spring.dto.TakingClassDTO;
@@ -426,6 +428,11 @@ public class InfoController {
 		return "main/info/info";
 	}
 
+	@RequestMapping("/tabToGoBoard")
+	public String tabToGoBoard(int seq, String category) {
+		return "redirect:/main/board.view?pageGroup=community&type=notice&seq="+seq+"&page=1&purp=view&category="+category+"";
+	}
+	
 	@RequestMapping("/logout")
 	public String logout() {
 		session.invalidate();
@@ -443,10 +450,16 @@ public class InfoController {
 	public String findIDPW(String find, String userID, String userName, String pn ) {
 		String result = "";
 		result = iservice.findIDPW(find, userID, userName, pn);
+		JsonObject jo = new JsonObject();
 		if( result != null ) {
-			return result;
+			System.out.println(result.toString());
+			jo.addProperty("result", true);
+			jo.addProperty("id", result );
+			
+			return jo.toString();
 		} else {
-			return "false";
+			jo.addProperty("result", false);
+			return jo.toString();
 		}
 	}
 	

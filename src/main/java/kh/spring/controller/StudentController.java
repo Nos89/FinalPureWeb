@@ -182,7 +182,6 @@ public class StudentController {
 		
 		List<MyClassTimeDTO> ctList = new ArrayList<>();
 		ctList = sservice.getMyClassTime(cdto,id);
-		System.out.println("asd");
 		nr.addDataSet("out_classTime",ctList);
 		
 		return nr;
@@ -201,7 +200,6 @@ public class StudentController {
 		
 		nr.addDataSet("out_myClassList",myClassList);
 		nr.addDataSet("out_classList",classList);
-		System.out.println("왜 서버에서 안옴");
 		return nr;
 	}
 	
