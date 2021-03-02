@@ -146,7 +146,12 @@
 </insert>
 
 <update id="modifyProfessorU">
-	UPDATE USERS SET OUTDATE=#{outDate, jdbcType=DATE} WHERE ID=#{id}
+	UPDATE USERS
+		SET NAME=#{name},BIRTH=#{birth},GENDER=#{gender},COUNTRY=#{country},
+			INDATE=#{inDate},OUTDATE=#{outDate, jdbcType=DATE},COLCODE=#{colcode},DEPTCODE=#{deptcode},
+			ZIPCODE=#{zipcode},ADDR1=#{addr1},ADDR2=#{addr2},EMAIL=#{email},PHONE=#{phone},
+			BANK=#{bank},ACCOUNTNUM=#{accountnum}
+		WHERE ID=#{id}
 </update>
 <update id="modifyProfessorP">
 	UPDATE PROFESSOR SET PRO_OFFICE=#{pro_office}, PRO_STATUS=#{pro_status} WHERE PRO_ID=#{id}
@@ -181,10 +186,15 @@
 </insert>
 
 <update id="modifyStudentU">
-	UPDATE USERS SET COLCODE=#{colcode}, DEPTCODE=#{deptcode}, OUTDATE=#{outDate}, COUNTRY=#{country} WHERE ID=#{id}
+	UPDATE USERS
+		SET NAME=#{name},BIRTH=#{birth},GENDER=#{gender},COUNTRY=#{country},
+			INDATE=#{inDate},OUTDATE=#{outDate},COLCODE=#{colcode},DEPTCODE=#{deptcode},
+			ZIPCODE=#{zipcode},ADDR1=#{addr1},ADDR2=#{addr2},EMAIL=#{email},PHONE=#{phone},
+			BANK=#{bank},ACCOUNTNUM=#{accountnum}
+		WHERE ID=#{id}
 </update>
 <update id="modifyStudentS">
-	UPDATE STUDENTS SET	STD_STATUS=#{std_status} WHERE ID=#{id}
+	UPDATE STUDENTS SET	STD_YEAR=#{std_year},STD_STATUS=#{std_status} WHERE ID=#{id}
 </update>
 
 <delete id="deleteStudentU">
