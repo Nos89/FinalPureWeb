@@ -38,6 +38,7 @@ public class InfoController {
 		int result = iservice.login(id, pw);
 		String name = iservice.getName(id, pw);
 		String major = iservice.getMajor(id, pw);
+		int unread = iservice.getUnreadMailNum(id);
 
 		List<InfoBoardDTO> list_std = iservice.getRecentStd();
 		List<InfoBoardDTO> list_scholar = iservice.getRecentScholar();
@@ -61,6 +62,7 @@ public class InfoController {
 			session.setAttribute("loginID", id);
 			session.setAttribute("userName", name);
 			session.setAttribute("userMajor", major);
+			session.setAttribute("unread", unread);
 			
 			Cookie cookie = new Cookie("saveID", id);
 			if( saveID != null ) {
@@ -386,7 +388,8 @@ public class InfoController {
 
 				return "info/info";
 			} else if (arrId[0].contentEquals("A")) { // 관리자 넥사크로 페이지로 이동
-				return "info/temp";
+				session.setAttribute("userPart", "관리자");
+				return "info/info";
 			}
 		} else if (result == 0) {
 			System.out.println("비번 틀림 ==> "+id + " : " + " : " + pw + " : "+ result);
