@@ -27,6 +27,8 @@
 	</form>
 </div>
 <script>
+var writeResult = "";
+
 $(document).ready(function() {
 	//여기 아래 부분
 	$('#summernote').summernote({
@@ -107,7 +109,11 @@ $(document).ready(function() {
 		})
 	}
 	
+	
 	$("input[type=submit]").click(function(){
+		
+		writeResult = true;
+		
 		let title = $(".title").val();
 		let contents = $("#summernote").val();
 		if( title == null || title.length <= 0 ){
@@ -163,4 +169,27 @@ $(document).ready(function() {
         $(this).parent().find('input[type=text]').val( $(this).val() );
 	})
 });
+
+$(window).bind("beforeunload", function (e){
+	if( writeResult ){
+		return;
+	}
+	var contents = $("#summernote").val();
+	var images = $(contents).children("img");
+	var src = [];
+	for( var i = 0; i < images.length; i++ ){
+		src.push(images.eq(i).attr("src"));
+	}
+	console.log(src);
+	$.ajax({
+		url : "/main/beforeClose",
+		cache : "false", //캐시사용금지
+		method : "POST",
+		dataType : "json",
+		data : {
+			src : JSON.stringify(src),
+		}
+	});
+	return e;
+})
 </script>

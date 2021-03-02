@@ -70,39 +70,39 @@ public class WebhardService {
 	
 	// Create Folder
 	public int createFolder( int parentID, String nFolder, String loginID ) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("id", loginID);
-		map.put("dirName", nFolder);
-		map.put("parentID", parentID);
-		return wdao.createFolder(map);
+		Map<String, Object> param = new HashMap<>();
+		param.put("id", loginID);
+		param.put("dirName", nFolder);
+		param.put("parentID", parentID);
+		return wdao.createFolder(param);
 	}
 	
 	// 파일 정보 저장
 	public int saveFile( String id, int parentID, String oriName, String savedName, long size ) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("id", id);
-		map.put("parentID", parentID);
-		map.put("oriName", oriName);
-		map.put("savedName", savedName);
-		map.put("size", size);
-		return wdao.saveFile(map);
+		Map<String, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("parentID", parentID);
+		param.put("oriName", oriName);
+		param.put("savedName", savedName);
+		param.put("size", size);
+		return wdao.saveFile(param);
 	}
 	
 	// 폴더 파일 가져오기
 	public List<CloudDTO> getFiles( String id, int parentID ){
-		Map<String, Object> map = new HashMap<>();
-		map.put("id", id);
-		map.put("parentID", parentID);
-		return wdao.getFiles(map);
+		Map<String, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("parentID", parentID);
+		return wdao.getFiles(param);
 	}
 	
 	// 대상 폴더의 폴더 및 파일 가져오기
 	public List<InDirDTO> getInDir( String id, int parentID ){
-		Map<String, Object> map = new HashMap<>();
-		map.put("id", id);
-		map.put("parentID", parentID);
-		List<DirectoryDTO> dirList = wdao.getFolder(map);
-		List<CloudDTO> fileList = wdao.getFiles(map);
+		Map<String, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("parentID", parentID);
+		List<DirectoryDTO> dirList = wdao.getFolder(param);
+		List<CloudDTO> fileList = wdao.getFiles(param);
 		List<InDirDTO> indirList = new ArrayList<>();
 		
 		List<DirectoryDTO> listAll = this.getList(id);
@@ -147,10 +147,10 @@ public class WebhardService {
 	
 	// 파일 삭제
 	public int delFile(String name, int location ) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("name", name);
-		map.put("location", location);
-		return wdao.delFile(map);
+		Map<String, Object> param = new HashMap<>();
+		param.put("name", name);
+		param.put("location", location);
+		return wdao.delFile(param);
 	}
 	
 	// 폴더 삭제
@@ -179,10 +179,10 @@ public class WebhardService {
 		// 하위 폴더 내 파일 정보
 		List<CloudDTO> clist = new ArrayList<>();
 		for( DirectoryDTO d : delList ) {
-			Map<String, Object> map = new HashMap<>();
-			map.put("id", userID);
-			map.put("parentID", d.getDirID());
-			clist.addAll(wdao.getFiles(map));
+			Map<String, Object> param = new HashMap<>();
+			param.put("id", userID);
+			param.put("parentID", d.getDirID());
+			clist.addAll(wdao.getFiles(param));
 		}
 		
 		for( CloudDTO c : clist ) {
@@ -211,19 +211,19 @@ public class WebhardService {
 	
 	// 폴더 이동
 	public int moveFolder( String id, String name, int location, int moveLocation ) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("id", id);
-		map.put("name", name);
-		map.put("location", location);
-		map.put("moveLocation", moveLocation);
-		return wdao.moveFolder(map);
+		Map<String, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("name", name);
+		param.put("location", location);
+		param.put("moveLocation", moveLocation);
+		return wdao.moveFolder(param);
 	}
 	
 	// 파일 이동
 	public int moveFile( String name, int moveLocation ) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("name", name);
-		map.put("moveLocation", moveLocation);
-		return wdao.moveFile(map);
+		Map<String, Object> param = new HashMap<>();
+		param.put("name", name);
+		param.put("moveLocation", moveLocation);
+		return wdao.moveFile(param);
 	}
 }

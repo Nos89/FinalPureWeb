@@ -23,8 +23,8 @@ public class BoardDAO {
 	}
 
 	// 파일 첨부
-	public int insertFile(Map<String, Object> map) {
-		return session.insert("Board.insertFile", map);
+	public int insertFile(Map<String, Object> param) {
+		return session.insert("Board.insertFile", param);
 	}
 
 	//파일 첨부 넥사크로
@@ -37,26 +37,26 @@ public class BoardDAO {
 		return session.selectOne("Board.articleCount", temp);
 	}
 
-	public int getSearchCount(Map map) {
-		return session.selectOne("Board.articleSearchCount", map);
+	public int getSearchCount(Map param) {
+		return session.selectOne("Board.articleSearchCount", param);
 	}
 
 	// 네비 페이지당 게시물
-	public List<BoardDTO> getArticleByPage(Map map) {
-		return session.selectList("Board.getArticles", map);
+	public List<BoardDTO> getArticleByPage(Map param) {
+		return session.selectList("Board.getArticles", param);
 	}
 	
-	public List<NoticeDTO> getNoticesByPage(Map map){
-		return session.selectList("Board.getNotices", map);
+	public List<NoticeDTO> getNoticesByPage(Map param){
+		return session.selectList("Board.getNotices", param);
 	}
 
 	// 게시물 보기
-	public BoardDTO getArticle(Map map) {
-		return session.selectOne("Board.getArticle", map);
+	public BoardDTO getArticle(Map param) {
+		return session.selectOne("Board.getArticle", param);
 	}
 	
-	public NoticeDTO getNotice(Map map) {
-		return session.selectOne("Board.getNotice", map);
+	public NoticeDTO getNotice(Map param) {
+		return session.selectOne("Board.getNotice", param);
 	}
 
 	// 게시물 첨부파일
@@ -75,22 +75,22 @@ public class BoardDAO {
 	}
 
 	// 게시물 수정
-	public int modifyArticle(Map map) {
-		return session.update("Board.modifyArticle", map);
+	public int modifyArticle(Map param) {
+		return session.update("Board.modifyArticle", param);
 	}
 
 	// 게시글 삭제
-	public int deleteArticle(Map map) {
-		return session.delete("Board.deleteArticle", map);
+	public int deleteArticle(Map param) {
+		return session.delete("Board.deleteArticle", param);
 	}
 
 	// 게시글 검색
-	public List<BoardDTO> boardSearch(Map map) {
-		return session.selectList("Board.boardSearch", map);
+	public List<BoardDTO> boardSearch(Map param) {
+		return session.selectList("Board.boardSearch", param);
 	}
 	
-	public List<NoticeDTO> noticeSearch(Map map){
-		return session.selectList("Board.noticeSearch", map);
+	public List<NoticeDTO> noticeSearch(Map param){
+		return session.selectList("Board.noticeSearch", param);
 	}
 	
 	// 메인 홈페이지 홍보 게시글 10개
