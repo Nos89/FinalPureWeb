@@ -1,24 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<link rel="stylesheet" href="/resources/css/info/main_schedule.css?ver=1">
+
 <%@ include file="/resources/jsp/head.jsp"%>
 <%@ include file="../header.jsp"%>
 <div class="row body mt-3">
 	<!-- Body 부분 입니다. 왼쪽 메뉴, 메인 컨텐츠 부분 넣어주세요. -->
 	<%@ include file="left.jsp"%>
+	
+	
+	
+	
 	<div class="col-10">
-		<div class="row">
-			<div class="col-12 subTitle mb-4">학사 일정</div>
-			<div class="col-12 mb-5 text-center"
-				style="border-bottom: 1px solid black; float: none; margin: 0 auto">
-				학기 <select id=chageSemester onchange="chageSemester()"
-					style="text-align: center">
+		<div class="row scheduleBox">
+			<div class="col-12 subTitle">학사 일정</div>
+			<div class="col-12 text-center title mb-2">
+				학기 <select id=chageSemester onchange="chageSemester()">
 					<option>2021학년도 1학기</option>
 				</select>
 				<button id=semChangeBtn>검색</button>
 			</div>
-			<div class="col-12 mb-5 text-center"
-				style="border-bottom: 1px solid black; float: none; margin: 0 auto">
+			<div class="col-12 mb-5 text-center month" >
 				<button id=jan>1월</button>
 				<button id=feb>2월</button>
 				<button id=march>3월</button>
@@ -35,38 +39,28 @@
 			</div>
 
 
-			<div class="col-12 col-sm-4 calendar"
-				style="padding-left: 0px; padding-right: 0px;">
-				<table id="calendar" border="1"
-					style="width: 100%; height: 300px; text-align: center">
+			<div class="col-12 col-sm-5 mx-4 calendarWrapper">
+				<table id="calendar">
 					<tr>
 						<td id="tbCalendarYM" colspan="7"></td>
 					</tr>
 					<tr id=weeks>
-						<td align="center" style="background-color: darkgray"><font
-							color="red">일</font></td>
-						<td align="center" style="background-color: darkgray"><font
-							color="white">월</font></td>
-						<td align="center" style="background-color: darkgray"><font
-							color="white">화</font></td>
-						<td align="center" style="background-color: darkgray"><font
-							color="white">수</font></td>
-						<td align="center" style="background-color: darkgray"><font
-							color="white">목</font></td>
-						<td align="center" style="background-color: darkgray"><font
-							color="white">금</font></td>
-						<td align="center" style="background-color: darkgray"><font
-							color="blue">토</font></td>
+						<td align="center"><font color="red">일</font></td>
+						<td align="center"><font color="white">월</font></td>
+						<td align="center"><font color="white">화</font></td>
+						<td align="center"><font color="white">수</font></td>
+						<td align="center"><font color="white">목</font></td>
+						<td align="center"><font color="white">금</font></td>
+						<td align="center"><font color="blue">토</font></td>
 					</tr>
 				</table>
 			</div>
-			<div class="col-12 col-sm-6"
-				style="padding-left: 0px; padding-right: 0px;">
+			<div class="col-12 col-sm-5 mx-4 sche_contents">
 				<div class="colSche_list">
 					<c:forEach var="i" items="${main_colSche}" varStatus="status">
-						<div class="subject_isu">${i.sche_startDate }~
+						<div class="sche_date">${i.sche_startDate } ~
 							${i.sche_endDate }</div>
-						<div class="subject_score">${i.title }</div>
+						<div class="sche_title">${i.title }</div>
 					</c:forEach>
 				</div>
 			</div>

@@ -109,7 +109,20 @@
 									<div class=attendInfoContets style="width: 10%;">${i.att_week }</div>
 									<div class=attendInfoContets style="width: 20%;">${number }</div>
 									<div class=attendInfoContets style="width: 40%;">${i.att_date }</div>
-									<div class=attendInfoContets style="width: 30%;">${i.att_attend }</div>
+									<div class=attendInfoContets style="width: 30%;">
+										<c:choose>
+											<c:when test="${i.att_attend == 'O' }">
+												<font style="color: #418cc6;">${i.att_attend }</font>
+											</c:when>
+											<c:when test="${i.att_attend == '/' }">
+												<font style="color: #f97f35;">${i.att_attend }</font>
+											</c:when>
+											<c:when test="${i.att_attend == 'X' }">
+												<font style="color: #fc1b1b;">${i.att_attend }</font>
+											</c:when>
+										</c:choose>
+
+									</div>
 								</c:forEach>
 
 
