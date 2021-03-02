@@ -5,7 +5,7 @@
 <div class="row body mt-3">
 	<!-- Body 부분 입니다. 왼쪽 메뉴, 메인 컨텐츠 부분 넣어주세요. -->
 	<%@ include file="../info/left.jsp"%>
-		<div class="col-10">
+		<div class="col-10  box1">
 		<div class="row">
             <div class="col-12 subTitle mb-5"><h4>취업관련 교과목 이수</h4></div>
 			<div class="col-2"></div>

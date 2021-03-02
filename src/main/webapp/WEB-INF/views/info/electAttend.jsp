@@ -24,7 +24,7 @@
 			<div class="row">
 				<div class="col-sm-2 order-0 order-sm-0" id="titleImge">oo대학교
 					전자출결시스템 사진 넣기</div>
-				<div class="col-sm-8 order-2 order-sm-1" id="titleText">전자출결</div>
+				<div class="col-sm-8 order-2 order-sm-1 title" id="titleText">전자출결</div>
 				<div class="col-sm-2 order-1 order-sm-2 userName">${userName }</div>
 			</div>
 		</div>
@@ -38,11 +38,8 @@
 						- 학기
 						<form>
 							<select id=semesterSelect onchange="chageSemesterSelect()">
-								<option>= 학기선택 =</option>
 								<option>2021년 1학기</option>
 								<option>2020년 2학기</option>
-								
-
 							</select>
 						</form>
 
@@ -71,104 +68,79 @@
 						</div>
 					</c:when>
 					<c:when test="${selClassInfoList != null }">
-
-						<div class="title" style="border: 1px solid black;">${yearSemester }
-							출석부</div>
-
-						<c:forEach var="i" items="${selClassInfoList}" varStatus="status">
-							<div class="row">
-								<div class="col-12 col-sm-3" style="border: 1px solid black;">
-									<div class="row">
-										<div class="col-sm-6" style="border: 1px solid black;">교과목코드/분반</div>
-										<div class="col-sm-6" style="border: 1px solid black;">${i.lec_code }</div>
-									</div>
-								</div>
-								<div class="col-12 col-sm-6" style="border: 1px solid black;">
-									<div class="row" style="height: 100%;">
-										<div class="col-sm-6" style="border: 1px solid black;">교과목명</div>
-										<div class="col-sm-6" style="border: 1px solid black;">${i.lec_title }</div>
-									</div>
-								</div>
-								<div class="col-12 col-sm-3" style="border: 1px solid black;">
-									<div class="row" style="height: 100%;">
-										<div class="col-sm-6" style="border: 1px solid black;">담당교수</div>
-										<div class="col-sm-6" style="border: 1px solid black;">${i.pro_name }</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-12 col-sm-3" style="border: 1px solid black;">
-									<div class="row">
-										<div class="col-sm-6" style="border: 1px solid black;">강의실</div>
-										<div class="col-sm-6" style="border: 1px solid black;">${i.lec_classroom }</div>
-									</div>
-								</div>
-								<div class="col-12 col-sm-6" style="border: 1px solid black;">
-									<div class="row" style="height: 100%;">
-										<div class="col-sm-6" style="border: 1px solid black;">수업시간</div>
-										<div class="col-sm-6" style="border: 1px solid black;">${i.lec_schedule }</div>
-									</div>
-								</div>
-								<div class="col-12 col-sm-3" style="border: 1px solid black;">
-									<div class="row" style="height: 100%;">
-										<div class="col-sm-6" style="border: 1px solid black;">학점</div>
-										<div class="col-sm-6" style="border: 1px solid black;">${i.lec_score }</div>
-									</div>
-								</div>
-							</div>
-						</c:forEach>
-						<div class="row my-2">
-							<div class="col-12 col-sm-9" style="float: right;">정상출석/지각/결석처리</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-2" style="border: 1px solid black;">주차</div>
-							<div class="col-sm-2" style="border: 1px solid black;">수업순서</div>
-							<div class="col-sm-4" style="border: 1px solid black;">수업일자</div>
-							<div class="col-sm-4" style="border: 1px solid black;">출석결과</div>
-						</div>
-
-						<c:forEach var="i" items="${lecAttList}" varStatus="status">
-							<c:set var="number" value="${number+1 }" />
+					<div class="ClassInfoListWrapper">
+    <div class=classInfoTitle ><h4>| ${yearSemester } 출석부</h4></div>
+    
+    <c:forEach var="i" items="${selClassInfoList}" varStatus="status">
+    <div class=infoBox_class>
+    <div class=fixed_class>교과목코드</div><div class=contents20>${i.lec_code }</div>
+    <div class=fixed_class>교과목명</div><div class=contents30>${i.lec_title }</div>
+    <div class=fixed_class>담당교수</div><div class=contents20>${i.pro_name }</div>
+    <div class=fixed_class>강의실</div><div class=contents20>${i.lec_classroom }</div>
+    <div class=fixed_class>수업시간</div><div class=contents30>${i.lec_schedule }</div>
+    <div class=fixed_class>학점</div><div class=contents20>${i.lec_score }</div>
+    </div>
+    </c:forEach>
+    
+    <div class=marks><font style="color:#418cc6; font-weight: bold;">O</font>:정상출석 <font style="color:#f97f35; font-weight: bold;">/</font>:지각 <font style="color:#fc1b1b; font-weight: bold;">X</font>:결석처리</div>
+    
+    <div class=attednInfoBox>
+    <div class=attendInfoFixed style="width:10%;">주차</div> <div  class=attendInfoFixed style="width: 20%;">수업순서</div> 
+        <div  class=attendInfoFixed style="width: 40%;">수업일자</div> <div class=attendInfoFixed style="width:30%; ">출석결과</div>
+        
+    <c:forEach var="i" items="${lecAttList}" varStatus="status">
+    <c:set var="number" value="${number+1 }" />
 							<c:if test="${number > 3 }">
 								<c:set var="number" value="1" />
 							</c:if>
-
-							<div class="row">
-								<div class="col-sm-2" style="border: 1px solid black;">${i.att_week }</div>
-								<div class="col-sm-2" style="border: 1px solid black;">${number }</div>
-								<div class="col-sm-4" style="border: 1px solid black;">${i.att_date }</div>
-								<div class="col-sm-4" style="border: 1px solid black;">${i.att_attend }</div>
-							</div>
-						</c:forEach>
+        
+     <div class=attendInfoContets style="width:10%;">${i.att_week }</div> <div  class=attendInfoContets style="width: 20%;">${number }</div> 
+        <div class=attendInfoContets style="width: 40%;">${i.att_date }</div> <div class=attendInfoContets style="width:30%; ">${i.att_attend }</div>
+    </c:forEach>
+   
+    
+    </div>
+    
+    
+        </div>
 					</c:when>
 					<c:when test="${regInfoBtn=='등록정보' }">
 						<div class="userInfoWrapper">
-							<div class=wrapper style="height: 100px;">
-								<div class=regTop style="width: 100%; height: 90%;">
-									<div style="width: 50%; float: left; height: 90%; border: 1px solid black;">|</div>
-									<div style="width: 50%; float: left; height: 90%; border: 1px solid black;">전자출결 시스템 등록정보</div>
-								</div>
-
-								<div class=down
-									style="width: 100%; height: 10%; border: 1px solid black;">
-									다</div>
-
+							<div class=userInfoTitle>
+								<h4>| 전자출결 시스템 등록정보</h4>
 							</div>
-							<div class=wrapper2>
+							<div class=titleExplain>- 전자출결 시스템 등록정보 입니다.</div>
+							<div class=infoBox>
 								<div class=photo>사진</div>
-								<div class="info">
-									<div class=fixed>학번</div>
-									<div class="moreInfo">${id }</div>
-									<div class=fixed>이름</div>
-									<div class="moreInfo">${name }</div>
-									<div class=fixed>신분</div>
-									<div class="moreInfo">학부생</div>
-									<div class=fixed>학과</div>
-									<div class="moreInfo">${major }</div>
+								<div class=infoBoxDetail>
+									<div class=fixedOutline>
+										<div class=fixed>학번</div>
+										<div class=contents>${id }</div>
+									</div>
+									<div class=fixedOutline>
+										<div class=fixed>이름</div>
+										<div class=contents>${name }</div>
+									</div>
+									<div class=fixedOutline>
+										<div class=fixed>신분</div>
+										<div class=contents>학부생</div>
+									</div>
+									<div class=fixedOutline>
+										<div class=fixed>학과</div>
+										<div class=contents>${major }</div>
+									</div>
+
 								</div>
+
+								<button class=preButton id=preButton>이전화면</button>
+
 							</div>
 						</div>
+						<script>
+							document.getElementById("preButton").onclick = function() {
+								location.href = "/elec/toElectAttend";
+							}
+						</script>
 					</c:when>
 
 				</c:choose>
@@ -200,6 +172,7 @@
 
 	<script>
 		let semester = "${semester}";
+		let className = "${className}";
 
 		function chageSemesterSelect() {
 			let semesterSelect = document.getElementById("semesterSelect");
@@ -210,7 +183,16 @@
 		function chageClassSelect() {
 			let classSelect = document.getElementById("classSelect");
 			let class_selectValue = classSelect.options[classSelect.selectedIndex].value;
-			location.href = "/elec/comboChange?semester=" + semester+ "&className=" + class_selectValue;
+			location.href = "/elec/comboChange?semester=" + semester
+					+ "&className=" + class_selectValue;
+		}
+
+		if (semester != "") {
+			$("#semesterSelect").val(semester).attr("selected", "selected");
+		}
+
+		if (className != "") {
+			$("#classSelect").val(className).attr("selected", "selected");
 		}
 
 		document.getElementById("btnRegisterInfo").onclick = function() {

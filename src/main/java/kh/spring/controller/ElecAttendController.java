@@ -31,6 +31,7 @@ public class ElecAttendController {
 	@RequestMapping("/toElectAttend")
 	public String toElectAttend(Model model) {
 		model.addAttribute("first", "첫화면에 사진");
+		model.addAttribute("selected", "학기선택");
 		return "/info/electAttend";
 	}
 
@@ -45,9 +46,7 @@ public class ElecAttendController {
 		
 		String arr[] = semester.split(" ");
 		arr[0] = arr[0].replaceAll("년", "");
-		arr[0] = arr[0].replaceAll("20", "");
-		System.out.println("semester : "+ semester);
-		System.out.println("if 전에 arr[0] : "+ arr[0]);
+		arr[0] = arr[0].substring(2);
 		String sem = arr[1];
 
 		if (sem.contentEquals("1학기")) {
@@ -55,13 +54,12 @@ public class ElecAttendController {
 			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
 			Date tempDate = sdf.parse(regDate);
 			List<ElecSelectClassDTO> classList = eservice.getClassList(id, tempDate);
-			System.out.println("classList size 확인: "+ classList.size());
+			//System.out.println("classList size 확인: "+ classList.size());
 			
 			if (className != null) {
 				sdf = new SimpleDateFormat("yy/MM/dd");
 				tempDate = sdf.parse(regDate);
 				List<TakingClassDTO> selClassInfoList = eservice.getClassInfo(id, tempDate, className);
-				//String schedule = selClassInfoList.get(0).getLec_schedule().toString();
 				String lecCode = selClassInfoList.get(0).getLec_code().toString();
 				List<ProAttendMngDTO> lecAttList = eservice.lecAttList(id,lecCode);
 				String yearSemester = temp2[0]+" "+sem;
@@ -69,6 +67,7 @@ public class ElecAttendController {
 				model.addAttribute("lecAttList", lecAttList);
 				model.addAttribute("selClassInfoList", selClassInfoList);
 				model.addAttribute("yearSemester", yearSemester);
+				model.addAttribute("className", className);
 			}
 			else  {
 				model.addAttribute("divide", "구분");
@@ -77,6 +76,7 @@ public class ElecAttendController {
 
 			model.addAttribute("semester", semester);
 			model.addAttribute("className", className);
+			System.out.println("elect 컨트롤러 className : "+ className);
 			model.addAttribute("classList", classList);
 		}
 		else if (sem.contentEquals("2학기")) {
