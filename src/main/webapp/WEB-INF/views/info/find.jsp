@@ -67,11 +67,17 @@
 			
 			$(".findIDPW").click(function(){
 				// 유효성 체크
-				
 				var pn = $("input[name=firstPN]").val()+"-"+
 						$("input[name=secondPN]").val()+"-"+
 						$("input[name=thirdPN]").val();
 				if( "${find}" == "id" ){
+					if( $("input[name=userName]").val() == "" ){
+						alert("이름을 입력해주세요.");
+						return;
+					} else if( $("input[name=firstPN]").val() == "" || $("input[name=secondPN]").val() == "" || $("input[name=thirdPN]").val() == "" ){
+						alert("연락처를 입력해주세요.");
+						return;
+					}
 					$.ajax({
 						url: "/info/findIDPW",
 						data: {
@@ -79,19 +85,40 @@
 							userName : $("input[name=userName]").val(),
 							pn : pn
 						},
-						type: "post",
+						type: "post"
 					}).done(function(resp){
-							var sp = $("<span></span>");
-							sp.addClass("input-group-text");
-						if( resp != "false" ){
-							sp.append(resp);
-						} else {
-							sp.append("일치하는 정보가 없습니다.");							
-						}
 						$(".resultDiv").html("");
+						$(".resultDiv").siblings().remove();
+						
+						console.log(resp);
+						
+						var sp = $("<span></span>");
+						sp.addClass("input-group-text");
+						if( resp.result == false ){
+							sp.append("일치하는 아이디가 없습니다.");
+						} else {
+							sp.append("아이디");
+							var input = $("<input>");
+							input.attr("type", "text");
+							input.attr("name", "result");
+							input.addClass("form-control");
+							input.val(resp.id);
+							$(".resultDiv").parent().append(input);
+						}
+						
 						$(".resultDiv").append(sp);
 					})
 				} else {
+					if( $("input[name=userID]").val() == "" ){
+						alert("아이디를 입력해주세요.");
+						return;
+					} else if( $("input[name=userName]").val() == "" ){
+						alert("이름을 입력해주세요.");
+						return;
+					} else if( $("input[name=firstPN]").val() == "" || $("input[name=secondPN]").val() == "" || $("input[name=thirdPN]").val() == "" ){
+						alert("연락처를 입력해주세요.");
+						return;
+					}
 					$.ajax({
 						url: "/info/findIDPW",
 						data: {
@@ -104,9 +131,11 @@
 					}).done(function(resp){
 						var sp = $("<span></span>");
 						sp.addClass("input-group-text");
-						sp.addClass("input-group-text");
 						
 						if( resp != "false" ){
+							$(".resultDiv").html("");
+							$(".resultDiv").siblings().remove();
+							
 							sp.append("비밀번호");
 							var input1 = $("<input>");
 							input1.attr("type", "password");
@@ -126,7 +155,13 @@
 							btn.addClass("btn btn-outline-secondary resetPW");
 							btnDiv.append(btn);
 							$(".resultDiv").parent().append(btnDiv);
+							
 							btn.click(function(){
+								if( input1.val() == "" || input2.val() == ""){
+									alert("비밀번호를 입력해주세요.");
+									return;
+								}
+								
 								if( input1.val() != input2.val() ){
 									alert("비밀번호가 일치하지 않습니다.");
 								} else {
