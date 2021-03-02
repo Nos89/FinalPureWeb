@@ -25,7 +25,7 @@
 			from col_schedule
 			where sche_enddate >= sysdate
 		)
-		where rn between 1 and 10
+		where rn between 1 and 10 
 	</select>
 	
 	

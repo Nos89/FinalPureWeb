@@ -216,10 +216,9 @@ public class InfoController {
 					timeList.add("바*토/");
 					Collections.sort(timeList);
 					for (String i : timeList) {
-						//System.out.println(i);
+						System.out.println(i);
 					}
 					session.setAttribute("timeList", timeList);
-					//model.addAttribute("timeList", timeList);
 					session.setAttribute("list_takingClass", list_takingClass);
 					session.setAttribute("openClassYear", openClassYear);
 					session.setAttribute("semester", semester);
