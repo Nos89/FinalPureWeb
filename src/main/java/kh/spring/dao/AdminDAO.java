@@ -112,12 +112,12 @@ public class AdminDAO {
 	
 	
 	// 단과대 목록
-	public List<CollegeDTO> getCollege() throws Exception {
+	public List<CollegeDTO> getCollege() {
 		return db.selectList("Admin.getCollege");
 	}
 	
 	// 학과 목록
-	public List<DepartmentDTO> getDepartment() throws Exception {
+	public List<DepartmentDTO> getDepartment() {
 		return db.selectList("Admin.getDepartment");
 	}
 	
@@ -164,7 +164,6 @@ public class AdminDAO {
 		db.delete("Admin.deleteStudentS",id);
 		return db.delete("Admin.deleteStudentU",id);
 	}
-	
 	
 	
 	// 강의계획서 가져오기
@@ -268,6 +267,16 @@ public class AdminDAO {
 	// 신청결과 메일 통지
 	public int sendMail(MailDTO dto) {
 		return db.insert("Admin.sendMail",dto);
+	}
+	
+	// 수신인 목록
+	public List<StudentDTO> getReceiverList(){
+		return db.selectList("Admin.getReceiverList");
+	}
+	
+	// 수신인 이름
+	public List<StudentDTO> getReceiverName(){
+		return db.selectList("Admin.getReceiverName");
 	}
 	
 	// 발신메일함 목록
