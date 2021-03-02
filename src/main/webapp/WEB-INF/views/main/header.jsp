@@ -10,7 +10,7 @@
 							<img src="/resources/img/info/gachalogo.png" class="headerLogo">
 						</a>
 					</div>
-					<div class="col-11 text-center rounded mainMenu">
+					<div class="col-11 text-center rounded mainMenu" >
 						<div class="row navbarItemWrapper h-100">
 							<div class="col-3 menuItem pt-3" href="#introduce">
 								<a href="/main?pageGroup=intro&type=intro">학사 소개</a>
@@ -22,7 +22,7 @@
 								<a href="/main?pageGroup=community&type=free">커뮤니티</a>
 							</div>
 							<div class="col-3 menuItem pt-3 font-weight-bold" href="#signUpInfo">
-								<a href="#">입학 안내</a>
+								<a href="javascript:void(0);" onclick="callAlert(this)">입학 안내</a>
 							</div>
 						</div>
 					</div>
@@ -33,9 +33,9 @@
 							<div class="col-2 d-none d-lg-block  bg-light"><p>학사 소개<p></div>
 							<div class="col-12 col-lg-3 border-top pt-2 menuItemWrapper">
 								<ol>
-									<li><a href="/main?pageGroup=intro&type=intro">학사 소개</a></li>
-									<li><a href="/main?pageGroup=intro&type=history">연혁</a></li>
-									<li><a href="/main?pageGroup=intro&type=organization">조직도</a></li>
+									<li><a href="/main?pageGroup=intro&type=intro"><b>학사 소개</b></a></li>
+									<li><a href="/main?pageGroup=intro&type=history"><b>연혁</b></a></li>
+									<li><a href="/main?pageGroup=intro&type=educationalPhilosophy"><b>교육이념</b></a></li>
 								</ol>
 							</div>
 						</div>
@@ -48,8 +48,8 @@
 							<div class="col-2 d-none d-lg-block bg-light"><p>학사 안내<p></div>
 							<div class="col-12 col-lg-3 border-top pt-2 menuItemWrapper">
 								<ol>
-									<li><a href="/main?pageGroup=info&type=info">학사 일정</a></li>
-									<li><a href="#">교과 과정</a></li>
+									<li><a href="/main?pageGroup=info&type=info"><b>학사 일정</b></a></li>
+									<li><a href="#"><b>교과 과정</b></a></li>
 									<li>	
 										<ol class="subMenu">
 											<li><a href="/main?pageGroup=curriculum&type=multipleMajor">복수 전공 / 부 전공</a></li>
@@ -60,7 +60,7 @@
 							</div>
 							<div class="col-12 col-lg-3 border-top pt-2 menuItemWrapper">
 								<ol>
-									<li><a href="/main?pageGroup=class&type=gradeAnnouncement">수업</a></li>
+									<li><a href="/main?pageGroup=class&type=gradeAnnouncement"><b>수업</b></a></li>
 									<li>
 										<ol class="subMenu">
 											<li><a href="/main?pageGroup=class&type=gradeAnnouncement">성적 예고제</a></li>
@@ -75,7 +75,7 @@
 							</div>
 							<div class="col-12 col-lg-2 border-top pt-2 menuItemWrapper">
 								<ol>
-									<li>학적</li>
+									<li><b>학적</b></li>
 									<li>
 										<ol class="subMenu">
 											<li><a href="/main?pageGroup=academic&type=reEntering">재입학</a></li>
@@ -88,16 +88,16 @@
 							</div>
 							<div class="col-12 col-lg-2 border-top pt-2 menuItemWrapper">
 								<ol>
-									<li>등록</li>
+									<li><b>등록</b></li>
 									<li>
 										<ol class="subMenu">
 											<li><a href="/main?pageGroup=registration&type=tuition">등록급 납부</a></li>
 											<li><a href="https://www.kosaf.go.kr/ko/tuition.do?pg=tuition_main&">학자금 대출</a></li>
 										</ol>
 									</li>
-									<li><a href="/main?pageGroup=&type=gradution">졸업</a></li>
-									<li><a href="/main?pageGroup=&type=road-map">대학 ROAD-MAP</a></li>
-									<li>증명서 발급</li>
+									<li><a href="/main?pageGroup=&type=gradution"><b>졸업</b></a></li>
+									<li><a href="/main?pageGroup=&type=road-map"><b>대학 ROAD-MAP</b></a></li>
+									<li><b>증명서 발급</b></li>
 									<li>
 										<ol class="subMenu">
 											<li><a href="/main?pageGroup=certificate&type=academicIssuance">학적 증명서 발급</a></li>
@@ -150,4 +150,8 @@
 				$(this).removeClass("show");
 				//$(this).collapse("show");
 			})
+			
+			
+			function callAlert(){alert("미구현 페이지 입니다");
+			}
 		</script>

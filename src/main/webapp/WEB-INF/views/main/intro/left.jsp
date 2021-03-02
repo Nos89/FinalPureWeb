@@ -6,7 +6,7 @@
 			<ul class="list-group">
 			  <li class="list-group-item"><a href="/main?pageGroup=intro&type=intro">학사 소개</a></li>
 			  <li class="list-group-item"><a href="/main?pageGroup=intro&type=history">연혁</a></li>
-			  <li class="list-group-item"><a href="/main?pageGroup=intro&type=organization">조직도</a></li>
+			  <li class="list-group-item"><a href="/main?pageGroup=intro&type=educationalPhilosophy">교육이념</a></li>
 			</ul>
 		</div>
 	</div>

@@ -37,7 +37,7 @@
             
             
                 <!--  로그인 css -->  
-      	body{overflow-x:hidden;}
+     body{overflow-x:hidden;}
 	
 	.menuPart{background-color:#00236f; color:white; text-align:center; padding:20px;}
 	.menuPart > a{color : white;}
@@ -57,7 +57,8 @@
 	width :100vw;
     background-image: url('/resources/img/login_bg.jpg'); 
     background-repeat : no-repeat;
-    background-size : cover;}
+    background-size : cover;
+    overflow-x:hidden;}
     .newContainer2{background-color : #f1f1f1; height:100%;}
     .gachalogo{background-image:url('/resources/img/info/gachalogo.png'); background-size: contain; ;background-position: center;background-repeat: no-repeat;
     border:0px solid white;}

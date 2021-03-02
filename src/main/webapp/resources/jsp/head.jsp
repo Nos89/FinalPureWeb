@@ -19,6 +19,7 @@
 	<link rel="stylesheet" href="/resources/css/road-map.css?ver=1">
 	<link rel="stylesheet" href="/resources/css/curriculum/teachingCourse.css?ver=1">
 	<link rel="stylesheet" href="/resources/css/intro/history.css?ver=1">
+	<link rel="stylesheet" href="/resources/css/intro/educational.css?ver=1">
 	
 	
 	<!-- BootStrap 및 Jquery -다른 jsp 만들때 가져가주세요 -->
