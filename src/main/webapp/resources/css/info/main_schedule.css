@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+.subTitle{margin:20px;}
+.title{ float: none; margin: 0 auto}
+.title>select{text-align: center}
+.title>button{border:none; border-radius:2px; background-color:#063976; color:white;}
+
+.scheduleBox>*{padding-right:0px; padding-left:0px;}
+
+.month{border-bottom: 1px solid black; float: none; padding-bottom:20px;}
+.month>button{border:none; background-color:#4183b7; color:white; border-radius:4px;width:50px; height:40px;}
+
+#tbCalendarYM{font-weight:bold}
+#weeks>td{background-color: darkgray}
+
+.calendarWrapper{magin-left:50px;}
+.calendarWrapper>table{width: 100%; height: 300px; text-align: center;}
+.sche_contents{padding-left: 0px; padding-right: 0px;}
+
+.sche_title{margin-bottom:5px; border-bottom:1px solid gray;}

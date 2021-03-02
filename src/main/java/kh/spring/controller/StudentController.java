@@ -182,7 +182,6 @@ public class StudentController {
 		
 		List<MyClassTimeDTO> ctList = new ArrayList<>();
 		ctList = sservice.getMyClassTime(cdto,id);
-		System.out.println("asd");
 		nr.addDataSet("out_classTime",ctList);
 		
 		return nr;
@@ -201,7 +200,6 @@ public class StudentController {
 		
 		nr.addDataSet("out_myClassList",myClassList);
 		nr.addDataSet("out_classList",classList);
-		System.out.println("왜 서버에서 안옴");
 		return nr;
 	}
 	
@@ -426,6 +424,8 @@ public class StudentController {
 		return nr;
 	}
 	
+	
+	// 수신메일 목록
 	@RequestMapping("getInBox.nex")
 	public NexacroResult getMailBox() {
 		String id = (String)session.getAttribute("loginID");
@@ -435,6 +435,7 @@ public class StudentController {
 		return nr;
 	}
 	
+	// 읽음 표시
 	@RequestMapping("updateReadStatus.nex")
 	public NexacroResult updateReadStatus(@ParamDataSet(name="in_mail")MailDTO_NEX dto) throws Exception {
 		sservice.updateReadStatus(dto);
