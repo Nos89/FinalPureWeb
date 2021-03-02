@@ -291,11 +291,6 @@ if("${errMsg}" != ""){
 											<div class=mail_notRead>안 읽은 메일</div>
 											<div class="mail_notReadNum">${unread}건</div>
 										</div>
-										<div class="consultReqPart">
-											<div class=consultReq>상담신청</div>
-											<div class="consultReqNum">건</div>
-										</div>
-
 									</div>
 								</c:when>
 								<c:when test="${userPart == '교수' }">
@@ -749,82 +744,65 @@ if("${errMsg}" != ""){
 </script>
 
 <script>
-		let day;
-		let time;
-		let title;
-		let classroom;
-		<c:forEach var="i" items="${timeList}" varStatus="status">
-		//가*/월/2/강의명/강의실
-		day = "${i}".split("/")[0];
-		day = day.split("*");
-		day = day[1];
-		time = "${i}".split("/")[1];
-		title = "${i}".split("/")[2];
-		classroom = "${i}".split("/")[3];
-		if (day == "월") {
-			let lecture = $("<td></td>");
-			// lecture.attr("rowspan", time[1] - time[0] );
-			lecture.html(title);
-			$(".time").eq(time[0] - 1).append(lecture);
-		}
-		if (day == "화") {
-			for (let j = 0; j < 9; j++) {
-				if ($(".time").eq(j).children().length == 1) {
-					let empty = $("<td></td>");
-					$(".time").eq(j).append(empty);
-				}
-			}
-			let lecture = $("<td></td>");
-			//lecture.attr("rowspan", time[1] - time[0] );
-			lecture.html(title);
-			$(".time").eq(time[0] - 1).append(lecture);
-		}
-		if (day == "수") {
-			for (let j = 0; j < 9; j++) {
-				if ($(".time").eq(j).children().length <= 2) {
-					let empty = $("<td></td>");
-					$(".time").eq(j).append(empty);
-				}
-			}
-			let lecture = $("<td></td>");
-			//lecture.attr("rowspan", time[1] - time[0] );
-			lecture.html(title);
-			$(".time").eq(time[0] - 1).append(lecture);
-		}
-		if (day == "목") {
-			for (let j = 0; j < 9; j++) {
-				if ($(".time").eq(j).children().length <= 3) {
-					let empty = $("<td></td>");
-					$(".time").eq(j).append(empty);
-				}
-			}
-			let lecture = $("<td></td>");
-			//lecture.attr("rowspan", time[1] - time[0] );
-			lecture.html(title);
-			$(".time").eq(time[0] - 1).append(lecture);
-		}
-		if (day == "금") {
-			for (let j = 0; j < 9; j++) {
-				if ($(".time").eq(j).children().length <= 4) {
-					let empty = $("<td></td>");
-					$(".time").eq(j).append(empty);
-				}
-			}
-			let lecture = $("<td></td>");
-			//lecture.attr("rowspan", time[1] - time[0] );
-			lecture.html(title);
-			$(".time").eq(time[0] - 1).append(lecture);
-		}
-		if (day == "토") {
-			for (let j = 0; j < 9; j++) {
-				if ($(".time").eq(j).children().length <= 5) {
-					let empty = $("<td></td>");
-					$(".time").eq(j).append(empty);
-				}
-			}
-		}
-		</c:forEach>
-	</script>
+   let day;
+   let time;
+   let title;
+   let classroom;
+   let fillEmpty = function(fillLength){
+      for (let j = 0; j < 9; j++) {
+         if ($(".time").eq(j).children().length <= fillLength) {
+            let emptyLength = fillLength - $(".time").eq(j).children().length + 1;
+            for( let k = 0; k < emptyLength; k++ ){
+               let empty = $("<td></td>");
+               $(".time").eq(j).append(empty);
+            }
+         }
+      }
+   }
+   
+   <c:forEach var="i" items="${timeList}" varStatus="status">
+      //가*/월/2/강의명/강의실
+      day = "${i}".split("/")[0];
+      day = day.split("*");
+      day = day[1];
+      time = "${i}".split("/")[1];
+      title = "${i}".split("/")[2];
+      classroom = "${i}".split("/")[3];
+      
+      if (day == "월") {
+         let lecture = $("<td></td>");
+         lecture.html(title);
+         $(".time").eq(time[0] - 1).append(lecture);
+      }
+      if (day == "화") {
+         fillEmpty(1);
+         let lecture = $("<td></td>");
+         lecture.html(title);
+         $(".time").eq(time[0] - 1).append(lecture);
+      }
+      if (day == "수") {
+         fillEmpty(2);
+         let lecture = $("<td></td>");
+         lecture.html(title);
+         $(".time").eq(time[0] - 1).append(lecture);
+      }
+      if (day == "목") {
+         fillEmpty(3);
+         let lecture = $("<td></td>");
+         lecture.html(title);
+         $(".time").eq(time[0] - 1).append(lecture);
+      }
+      if (day == "금") {
+         fillEmpty(4);
+         let lecture = $("<td></td>");
+         lecture.html(title);
+         $(".time").eq(time[0] - 1).append(lecture);
+      }
+      if (day == "토") {
+         fillEmpty(5);
+      }
+   </c:forEach>
+</script>
 
 <script>
 	<!--바로가기 모음  -->
