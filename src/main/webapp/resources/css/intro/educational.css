@@ -1,0 +1,6 @@
+@charset "UTF-8";
+.educationalIntro { padding:50px 5%; color:black; background-repeat:no-repeat; background-position:center top; word-break:keep-all;
+            background:url('/resources/img/intro/educationalbg.jpg') no-repeat center bottom; background-size: 100vh ; height: 300px;}
+.ulNone{list-style:none;}
+.educationalTitlebox{margin:10px 0 80px; text-align: center;}
+.eduContentBox{border:1px dashed #c7c7c7; padding:10px;}

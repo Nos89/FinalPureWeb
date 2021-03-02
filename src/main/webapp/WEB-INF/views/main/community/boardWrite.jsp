@@ -31,7 +31,6 @@ $(document).ready(function() {
 	//여기 아래 부분
 	$('#summernote').summernote({
 		  height: 300,                 // 에디터 높이
-		  
 		  minHeight: 600,             // 최소 높이
 		  maxHeight: null,             // 최대 높이
 		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
@@ -85,38 +84,28 @@ $(document).ready(function() {
 			data : data,
 			type : "POST",
 			url : "/main/uploadSummernoteImageFile",
+			cache : false,
 			contentType : false,
-			processData : false,
-			success : function(data) {
-				data = data;
-				console.log(data.url);
-            	//항상 업로드된 파일의 url이 있어야 한다.
-            	
-            	var loadingUrl = "/resources/img/imgLoading.gif";
-            	
-            	/* <div class="spinner-border text-primary" role="status">
-				  <span class="sr-only">Loading...</span>
-				</div> */
-            	var loadingImgTag = $("<img>");
-            	loadingImgTag.addClass("loadingImg");
-            	loadingImgTag.attr("src", loadingUrl);
-            	
-            	$("#summernote").summernote("insertNode", loadingImgTag[0]);
-            	
-            	setTimeout(function(){
-					$(editor).summernote('insertImage', data.url);
-					
-					$(".loadingImg").remove();
-					
-            	}, 5000);
-			}
+			processData : false
+		}).done(function(data){
+			data = data;
+			console.log(data);
+			console.log(data.url);
+			console.log(data.exist)
+           	//항상 업로드된 파일의 url이 있어야 한다.
+           	var loadingUrl = "/resources/img/imgLoading.gif";
+           	var loadingImgTag = $("<img>");
+           	loadingImgTag.addClass("loadingImg");
+           	loadingImgTag.attr("src", loadingUrl);
+           	
+           	$("#summernote").summernote("insertNode", loadingImgTag[0]);
+           	
+           	setTimeout(function(){
+				$(editor).summernote('insertImage', data.url);
+				$(".loadingImg").remove();
+           	}, 1000);
 		})
 	}
-	
-	/* setTimeout(function() {
-		$(".spinner-border").css("display","none");
-		$(el).summernote('editor.insertImage', img_name);
-	}, 4000); */
 	
 	$("input[type=submit]").click(function(){
 		let title = $(".title").val();

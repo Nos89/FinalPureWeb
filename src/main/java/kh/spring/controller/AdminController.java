@@ -19,6 +19,8 @@ import com.nexacro.uiadapter17.spring.core.data.DataSetRowTypeAccessor;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 import com.nexacro17.xapi.data.DataSet;
 import com.nexacro17.xapi.data.PlatformData;
+import com.nexacro17.xapi.data.Variable;
+import com.nexacro17.xapi.data.VariableList;
 import com.nexacro17.xapi.tx.HttpPlatformRequest;
 
 import kh.spring.dto.BoardDTO;
@@ -284,6 +286,8 @@ public class AdminController {
 		pReq.receiveData();
 		PlatformData inData = pReq.getData();
 		DataSet ds = inData.getDataSet("in_pro");
+		Variable var = inData.getVariable("user");
+		String user = var.getString();
 		
 		// 삭제된 데이터
 		for(int i=0;i<ds.getRemovedRowCount();i++) {
@@ -319,7 +323,6 @@ public class AdminController {
 			admService.modifyProfessor(dto,rowType);
 		}
 		return new NexacroResult();
-		
 	}
 	
 	
@@ -538,12 +541,28 @@ public class AdminController {
 		return new NexacroResult();
 	}
 	
+	// 수신인 목록 가져오기
+	@RequestMapping("getReceiverList.nex")
+	public NexacroResult getReceiverList() {
+		NexacroResult nr = new NexacroResult();
+		List<StudentDTO> list = admService.getReceiverList();
+		List<CollegeDTO> list2 = admService.getCollege();
+		List<DepartmentDTO> list3 = admService.getDepartment();
+		nr.addDataSet("out_users",list);
+		nr.addDataSet("out_college",list2);
+		nr.addDataSet("out_department",list3);
+		return nr;
+	}
+	
+	
 	// 발신메일 목록
 	@RequestMapping("getOutBox.nex")
 	public NexacroResult getOutBox() {
 		NexacroResult nr = new NexacroResult();
 		List<MailDTO> list = admService.getOutBox();
+		List<StudentDTO> list2 = admService.getReceiverName();
 		nr.addDataSet("out_mail",list);
+		nr.addDataSet("out_name",list2);
 		return nr;
 	}
 
