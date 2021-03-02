@@ -196,14 +196,15 @@ public class AdminService {
 
 	}
 	// 단과대 목록
-	public List<CollegeDTO> getCollege() throws Exception {
+	public List<CollegeDTO> getCollege() {
 		return admdao.getCollege();
 	}
 	
 	// 학과 목록
-	public List<DepartmentDTO> getDepartment() throws Exception {
+	public List<DepartmentDTO> getDepartment() {
 		return admdao.getDepartment();
 	}
+
 	
 	// 교수 목록 가져오기
 	public List<ProfessorDTO> getProfessor() throws Exception {
@@ -363,6 +364,16 @@ public class AdminService {
 	// 메일 작성
 	public int sendMail(MailDTO dto) {
 		return admdao.sendMail(dto);
+	}
+	
+	// 수신인 목록
+	public List<StudentDTO> getReceiverList(){
+		return admdao.getReceiverList();
+	}
+	
+	// 수신인 이름
+	public List<StudentDTO> getReceiverName(){
+		return admdao.getReceiverName();
 	}
 	
 	// 발신메일함
