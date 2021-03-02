@@ -78,4 +78,8 @@
 	<update id="changePW">
 		update users set pw = #{pw} where id = #{id}
 	</update>
+	
+	<select id="getUnreadMailNum" resultType="Integer">
+		SELECT COUNT(*) FROM MAIL WHERE RECEIVER=#{id} AND READ=0
+	</select>
 </mapper>

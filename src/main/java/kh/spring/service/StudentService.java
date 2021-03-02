@@ -243,14 +243,5 @@ public class StudentService {
 		menu.put("MENU_NM", menu_nm);
 		return sdao.checkMyMenu(menu);
 	}
-	
-	public List<MailDTO> getMailBox(String id) {
-		return sdao.getMailBox(id);
-	}
-	
-	public int updateReadStatus(MailDTO_NEX dto) throws Exception {
-		MailDTO dto2 = new MailDTO(dto.getMail_seq(),dto.getReceiver(),dto.getTitle(),dto.getContents(),
-									ConvertDate.stringToDate(dto.getReceived_date()),dto.getRead());
-		return sdao.updateReadStatus(dto2);
-	}
+
 }

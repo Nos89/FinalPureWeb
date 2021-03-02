@@ -360,24 +360,4 @@ public class AdminService {
 														ConvertDate.stringToDate(dto.getApply_date()),dto.getApply_approve());
 		return admdao.creditRenounceApproval(dto2);
 	}
-
-	// 메일 작성
-	public int sendMail(MailDTO dto) {
-		return admdao.sendMail(dto);
-	}
-	
-	// 수신인 목록
-	public List<StudentDTO> getReceiverList(){
-		return admdao.getReceiverList();
-	}
-	
-	// 수신인 이름
-	public List<StudentDTO> getReceiverName(){
-		return admdao.getReceiverName();
-	}
-	
-	// 발신메일함
-	public List<MailDTO> getOutBox(){
-		return admdao.getOutBox();
-	}
 }
