@@ -71,4 +71,8 @@
 		set file_location = #{moveLocation}
 		where file_savedName = #{name}
 	</update>
+	
+	<select id="getMaxStorage" resultType="kh.spring.dto.CloudStorageDTO">
+		SELECT MAXSTORAGE WHERE ID=#{id}
+	</select>
 </mapper>

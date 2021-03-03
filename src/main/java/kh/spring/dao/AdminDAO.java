@@ -13,6 +13,7 @@ import kh.spring.dto.BoardDTO_NEX;
 import kh.spring.dto.BuildDTO;
 import kh.spring.dto.ChangeDeptApplyDTO;
 import kh.spring.dto.ClassroomDTO;
+import kh.spring.dto.CloudStorageDTO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.CreditRenounceDTO;
@@ -173,6 +174,7 @@ public class AdminDAO {
 
 	// 강의계획서 승인
 	public int syllabusApproved(LectureDTO dto) {
+		db.update("Admin.classOpened",dto);
 		return db.update("Admin.syllabusApproved", dto);
 	}
 	
@@ -262,5 +264,15 @@ public class AdminDAO {
 	// 학점포기신청 처리
 	public int creditRenounceApproval(CreditRenounceDTO dto) {
 		return db.update("Admin.creditRenounce",dto);
+	}
+	
+	// 웹하드 이용 명단
+	public List<CloudStorageDTO> getCloudStorage(){
+		return db.selectList("Admin.getCloudStorage");
+	}
+	
+	// 웹하드 용량 변경
+	public int modifyCloudStorage(List<CloudStorageDTO> list) {
+		return db.update("Admin.modifyCloudStorage",list);
 	}
 }

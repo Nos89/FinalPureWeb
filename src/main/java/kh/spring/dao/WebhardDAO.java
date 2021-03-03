@@ -74,4 +74,9 @@ public class WebhardDAO {
 	public int moveFile(Map<String, Object> param ) {
 		return session.update("Webhard.moveFile", param);
 	}
+	
+	// 최대 저장 용량
+	public int getMaxStorage(String id) {
+		return session.selectOne("Webhard.getMaxStorage",id);
+	}
 }

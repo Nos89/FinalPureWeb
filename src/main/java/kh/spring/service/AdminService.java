@@ -23,6 +23,7 @@ import kh.spring.dto.BuildDTO;
 import kh.spring.dto.ChangeDeptApplyDTO;
 import kh.spring.dto.ChangeDeptApplyDTO_NEX;
 import kh.spring.dto.ClassroomDTO;
+import kh.spring.dto.CloudStorageDTO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.CreditRenounceDTO;
@@ -359,5 +360,15 @@ public class AdminService {
 														dto.getLec_title(),dto.getGrade_code(),dto.getReco_score(),
 														ConvertDate.stringToDate(dto.getApply_date()),dto.getApply_approve());
 		return admdao.creditRenounceApproval(dto2);
+	}
+	
+	// 웹하드 이용명단
+	public List<CloudStorageDTO> getCloudStorage(){
+		return admdao.getCloudStorage();
+	}
+	
+	// 웹하드 용량 변경
+	public int modifyCloudStorage(List<CloudStorageDTO> list) {
+		return admdao.modifyCloudStorage(list);
 	}
 }

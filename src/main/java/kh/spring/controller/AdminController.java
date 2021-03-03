@@ -29,6 +29,7 @@ import kh.spring.dto.BuildDTO;
 import kh.spring.dto.ChangeDeptApplyDTO;
 import kh.spring.dto.ChangeDeptApplyDTO_NEX;
 import kh.spring.dto.ClassroomDTO;
+import kh.spring.dto.CloudStorageDTO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.ColScheduleDTO_NEX;
 import kh.spring.dto.CollegeDTO;
@@ -534,5 +535,19 @@ public class AdminController {
 		return new NexacroResult();		
 	}
 	
-	// 
+	// 웹하드 이용 명단 가져오기
+	@RequestMapping("getCloudStorage.nex")
+	public NexacroResult getCloudStorage() {
+		NexacroResult nr = new NexacroResult();
+		List<CloudStorageDTO> list = admService.getCloudStorage();
+		nr.addDataSet("out_cloudStorage",list);
+		return nr;
+	}
+	
+	// 웹하드 용량 변경
+	@RequestMapping("modifyCloudStorage.nex")
+	public NexacroResult modifyStorage(@ParamDataSet(name="in_cloudStorage")List<CloudStorageDTO> list) {
+		admService.modifyCloudStorage(list);		
+		return new NexacroResult();
+	}
 }

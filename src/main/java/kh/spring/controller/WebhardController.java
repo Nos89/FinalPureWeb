@@ -55,6 +55,7 @@ public class WebhardController {
 		} else {
 			nr.addDataSet("outds_dirList", wservice.getList(loginID));
 			nr.addVariable("storage", wservice.getStorage(loginID));
+			nr.addVariable("maxStorage", wservice.getMaxStorage(loginID));
 			nr.setErrorCode(1);
 			return nr;
 		}

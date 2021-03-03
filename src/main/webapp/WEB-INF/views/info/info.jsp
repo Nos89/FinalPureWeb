@@ -322,7 +322,7 @@
 											</div>
 											</div>
 					</c:when>
-					<c:when test="${userPart == '교수' || userPart == '관리자'}">
+					<c:when test="${userPart == '교수'}">
 						<div class="row">
 							<div class="col-12 topMenu">
 								<nav class="navbar navbar-expand-lg navbar-dark bg-dark">

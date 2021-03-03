@@ -226,4 +226,9 @@ public class WebhardService {
 		param.put("moveLocation", moveLocation);
 		return wdao.moveFile(param);
 	}
+	
+	// 최대 저장 용량
+	public int getMaxStorage(String id) {
+		return wdao.getMaxStorage(id);
+	}
 }

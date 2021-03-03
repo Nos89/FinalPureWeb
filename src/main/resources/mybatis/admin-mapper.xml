@@ -142,6 +142,8 @@
 				#{zipcode},#{addr1},#{addr2},#{email},#{phone},#{bank},#{accountnum})
 		INTO PROFESSOR(PRO_ID,PRO_OFFICE,PRO_STATUS)
 		VALUES(#{id},#{pro_office},#{pro_status})
+		INTO DIRECTORY(DIRID,USERID,DIRECTORYNAME,PARENTID,LV,CRTDATE)
+		VALUES(DIR_SEQ.NEXTVAL,#{id},#{id},null,0,SYSDATE)
 		SELECT * FROM DUAL
 </insert>
 
@@ -182,6 +184,8 @@
 				#{zipcode},#{addr1},#{addr2},#{email},#{phone},#{bank},#{accountnum})
 		INTO STUDENTS(ID,STD_STATUS, STD_YEAR)
 		VALUES(#{id},#{std_status},#{std_year})
+		INTO DIRECTORY(DIRID,USERID,DIRECTORYNAME,PARENTID,LV,CRTDATE)
+		VALUES(DIR_SEQ.NEXTVAL,#{id},#{id},null,0,SYSDATE)
 		SELECT * FROM DUAL
 </insert>
 
@@ -211,6 +215,9 @@
 
 <update id="syllabusApproved">
 	UPDATE LECTURE SET LEC_APPROVAL=#{lec_approval} WHERE LEC_CODE=#{lec_code}
+</update>
+<update id="classOpened">
+	UPDATE OPEN_CLASS SET IS_OC_CLOSE='N' WHERE OC_CODE=#{lec_code}
 </update>
 
 <update id="syllabusRejected">
@@ -306,5 +313,11 @@
 	UPDATE CREDITRENOUNCE SET APPLY_APPROVE=#{apply_approve} WHERE SEQ=#{seq}
 </update>
 
+<select id="getCloudStorage" resultType="kh.spring.dto.CloudStorageDTO">
+	SELECT C.ID, NAME, MAXSTORAGE FROM CLOUDSTORAGE C, USERS U WHERE C.ID=U.ID
+</select>
 
+<update id="modifyCloudStorage">
+	UPDATE CLOUDSTORAGE SET MAXSTORAGE=#{maxStorage} WHERE ID=#{id}
+</update>
 </mapper>
