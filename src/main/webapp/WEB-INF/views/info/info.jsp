@@ -349,6 +349,13 @@
 							</div>
 
 						</c:when>
+						<c:otherwise>
+							<script>
+								if( "${userPart == '관리자'}"){
+									location.href = "/home.nex";
+								}
+							</script>
+						</c:otherwise>
 					</c:choose>
 
 				</div>
