@@ -221,11 +221,11 @@ public class AdminService {
 		int result = 0;
 		if (rowType == DataSet.ROW_TYPE_INSERTED) {
 			result = admdao.addProfessor(dto);
+			wservice.addUserStorage(dto.getId());
 			this.createRootFolder(dto.getId());
-			System.out.println("rowType: " + rowType);
 		} else if (rowType == DataSet.ROW_TYPE_UPDATED) {
 			result = admdao.modifyProfessor(dto);
-			System.out.println("rowType: " + rowType);
+			wservice.deleteUserStorage(dto.getId());
 		} else {
 			result = -1;
 		}
