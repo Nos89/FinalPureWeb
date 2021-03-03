@@ -251,4 +251,14 @@ public class WebhardService {
 	public int getMaxStorage(String id) {
 		return wdao.getMaxStorage(id);
 	}
+
+	// 유저 용량 등록
+	public int addUserStorage(String id) {
+		return wdao.addUserStorage(id);
+	}
+	
+	// 유저 용량 삭제
+	public int deleteUserStorage(String id) {
+		return wdao.deleteUserStorage(id);
+	}
 }

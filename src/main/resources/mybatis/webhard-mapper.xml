@@ -82,7 +82,17 @@
 		select dirid from directory where userid = #{value} and lv = 0
 	</select>
 	
+	<!-- 유저별 용량 목록 -->
 	<select id="getMaxStorage" resultType="Integer">
 		SELECT MAXSTORAGE FROM CLOUDSTORAGE WHERE ID=#{id}
 	</select>
+	
+	<!-- 유저별 용량 추가 -->
+	<insert id="addUserStorage">
+		INSERT INTO CLOUDSTORAGE VALUES(#{value},52428800)
+	</insert>
+	
+	<delete id="deleteUserStorage">
+		DELETE FROM CLOUDSTORAGE WHERE ID=#{value}
+	</delete>
 </mapper>

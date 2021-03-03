@@ -250,17 +250,17 @@ public class AdminService {
 		int result = 0;
 		if (rowType == DataSet.ROW_TYPE_INSERTED) {
 			result = admdao.addStudent(dto);
+			wservice.addUserStorage(dto.getId());
 			this.createRootFolder(dto.getId());
-			System.out.println("rowType: " + rowType);
 		} else if (rowType == DataSet.ROW_TYPE_UPDATED) {
 			result = admdao.modifyStudent(dto);
-			System.out.println("rowType: " + rowType);
+			wservice.deleteUserStorage(dto.getId());
 		} else {
 			result = -1;
 		}
 		return result;
 	}
-
+	
 	// 학생 삭제
 	@Transactional
 	public int deleteStudent(String id, String filePath) {
@@ -282,7 +282,7 @@ public class AdminService {
 			wservice.delFile(cdto.getFile_savedName(), Integer.parseInt(cdto.getCloud_id()), filePath);
 		}
 	}
-
+	
 	// 강의계획서 가져오기
 	public List<LectureDTO> getSyllabus() {
 		return admdao.getSyllabus();

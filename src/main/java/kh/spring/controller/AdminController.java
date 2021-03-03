@@ -343,10 +343,10 @@ public class AdminController {
 		DataSet ds = inData.getDataSet("in_std");
 		String filePath = request.getSession().getServletContext().getRealPath("/resources/webhard/");
 		
+		
 		// 삭제된 데이터
 		for(int i=0;i<ds.getRemovedRowCount();i++) {
 			String id = ds.getRemovedStringData(i, "id");
-			System.out.println("삭제된 아이디: "+id);
 			admService.deleteStudent(id, filePath);
 		}
 		
@@ -373,7 +373,6 @@ public class AdminController {
 			dto.setStd_status(dsGet(ds,i,"std_status"));
 			dto.setStd_year(Integer.parseInt(dsGet(ds,i,"std_year")));
 			int rowType = ds.getRowType(i);
-			System.out.println("row타입: "+rowType);
 			admService.modifyStudent(dto,rowType);
 		}
 		return new NexacroResult();
