@@ -389,7 +389,7 @@ public class InfoController {
 				return "info/info";
 			} else if (arrId[0].contentEquals("A")) { // 관리자 넥사크로 페이지로 이동
 				session.setAttribute("userPart", "관리자");
-				return "info/info";
+				return "redirect:/home.nex";
 			}
 		} else if (result == 0) {
 			System.out.println("비번 틀림 ==> "+id + " : " + " : " + pw + " : "+ result);

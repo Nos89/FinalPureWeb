@@ -187,8 +187,8 @@
 .container-fluid .footer .footerItem:last-child{
 	border-right: none;
 }
-.footerBox{margin-left:37%;}
-.footerItem>a{font-size:15px; color: #696d76; }
+.footerBox>div>a{font-size:15px; color: #696d76;border-right: 1px solid #949494; padding-right:3px;}
+#borderNone{border:none;}
 
 
 /*스크롤 없애기  */

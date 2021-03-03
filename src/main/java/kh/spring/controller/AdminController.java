@@ -3,10 +3,8 @@ package kh.spring.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,12 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
 import com.nexacro.uiadapter17.spring.core.annotation.ParamVariable;
-import com.nexacro.uiadapter17.spring.core.data.DataSetRowTypeAccessor;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 import com.nexacro17.xapi.data.DataSet;
 import com.nexacro17.xapi.data.PlatformData;
 import com.nexacro17.xapi.data.Variable;
-import com.nexacro17.xapi.data.VariableList;
 import com.nexacro17.xapi.tx.HttpPlatformRequest;
 
 import kh.spring.dto.BoardDTO;
@@ -29,6 +25,7 @@ import kh.spring.dto.BuildDTO;
 import kh.spring.dto.ChangeDeptApplyDTO;
 import kh.spring.dto.ChangeDeptApplyDTO_NEX;
 import kh.spring.dto.ClassroomDTO;
+import kh.spring.dto.CloudStorageDTO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.ColScheduleDTO_NEX;
 import kh.spring.dto.CollegeDTO;
@@ -37,15 +34,12 @@ import kh.spring.dto.CreditRenounceDTO_NEX;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.FilesDTO;
 import kh.spring.dto.LectureDTO;
-import kh.spring.dto.MailDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
-import kh.spring.dto.ProfessorDTO_NEX;
 import kh.spring.dto.ReturnApplyDTO;
 import kh.spring.dto.ReturnApplyDTO_NEX;
 import kh.spring.dto.StudentDTO;
-import kh.spring.dto.StudentDTO_NEX;
 import kh.spring.dto.TakeOffApplyDTO;
 import kh.spring.dto.TakeOffApplyDTO_NEX;
 import kh.spring.service.AdminService;
@@ -288,12 +282,13 @@ public class AdminController {
 		DataSet ds = inData.getDataSet("in_pro");
 		Variable var = inData.getVariable("user");
 		String user = var.getString();
+		String filePath = request.getSession().getServletContext().getRealPath("/resources/webhard/");
 		
 		// 삭제된 데이터
 		for(int i=0;i<ds.getRemovedRowCount();i++) {
 			String id = ds.getRemovedStringData(i, "id");
 			System.out.println("삭제된 아이디: "+id);
-			admService.deleteProfessor(id);
+			admService.deleteProfessor(id, filePath);
 		}
 		
 		// 추가, 수정된 데이터
@@ -346,12 +341,13 @@ public class AdminController {
 		pReq.receiveData();
 		PlatformData inData = pReq.getData();
 		DataSet ds = inData.getDataSet("in_std");
+		String filePath = request.getSession().getServletContext().getRealPath("/resources/webhard/");
+		
 		
 		// 삭제된 데이터
 		for(int i=0;i<ds.getRemovedRowCount();i++) {
 			String id = ds.getRemovedStringData(i, "id");
-			System.out.println("삭제된 아이디: "+id);
-			admService.deleteStudent(id);
+			admService.deleteStudent(id, filePath);
 		}
 		
 		// 추가, 수정된 데이터
@@ -377,7 +373,6 @@ public class AdminController {
 			dto.setStd_status(dsGet(ds,i,"std_status"));
 			dto.setStd_year(Integer.parseInt(dsGet(ds,i,"std_year")));
 			int rowType = ds.getRowType(i);
-			System.out.println("row타입: "+rowType);
 			admService.modifyStudent(dto,rowType);
 		}
 		return new NexacroResult();
@@ -534,5 +529,19 @@ public class AdminController {
 		return new NexacroResult();		
 	}
 	
-	// 
+	// 웹하드 이용 명단 가져오기
+	@RequestMapping("getCloudStorage.nex")
+	public NexacroResult getCloudStorage() {
+		NexacroResult nr = new NexacroResult();
+		List<CloudStorageDTO> list = admService.getCloudStorage();
+		nr.addDataSet("out_cloudStorage",list);
+		return nr;
+	}
+	
+	// 웹하드 용량 변경
+	@RequestMapping("modifyCloudStorage.nex")
+	public NexacroResult modifyStorage(@ParamDataSet(name="in_cloudStorage")List<CloudStorageDTO> list) {
+		admService.modifyCloudStorage(list);		
+		return new NexacroResult();
+	}
 }

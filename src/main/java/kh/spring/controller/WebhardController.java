@@ -55,6 +55,7 @@ public class WebhardController {
 		} else {
 			nr.addDataSet("outds_dirList", wservice.getList(loginID));
 			nr.addVariable("storage", wservice.getStorage(loginID));
+			nr.addVariable("maxStorage", wservice.getMaxStorage(loginID));
 			nr.setErrorCode(1);
 			return nr;
 		}
@@ -184,13 +185,13 @@ public class WebhardController {
 			Map<String, Object> result = wservice.delFolder(location, name, userID);
 			List<CloudDTO> flist = (ArrayList<CloudDTO>) result.get("flist");
 			for (int i = 0; i < flist.size(); i++) {
-				this.delFile(flist.get(i).getFile_savedName(), flist.get(i).getFile_location(), filePath);
+				wservice.delFile(flist.get(i).getFile_savedName(), flist.get(i).getFile_location(), filePath);
 			}
 			nr.addDataSet("out_directory", result.get("directory"));
 			nr.setErrorCode(2);
 		} else {
 			System.out.println("File 삭제");
-			this.delFile(name, location, filePath);
+			wservice.delFile(name, location, filePath);
 			wservice.delFile(name, location);
 			nr.setErrorCode(1);
 			nr.setErrorMsg("Delete File Success");
@@ -198,14 +199,7 @@ public class WebhardController {
 		return nr;
 	}
 
-	// 파일 삭제
-	private void delFile(String name, int location, String filePath) {
-		File delFile = new File(filePath + "/" + name);
-		if (delFile.exists()) {
-			System.out.println("파일 존재");
-			delFile.delete();
-		}
-	}
+
 
 	// 파일 다운로드
 	@RequestMapping("downFile")
@@ -346,4 +340,5 @@ public class WebhardController {
 			return nr;
 		}
 	}
+
 }
