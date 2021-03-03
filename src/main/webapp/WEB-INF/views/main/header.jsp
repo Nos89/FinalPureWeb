@@ -22,7 +22,7 @@
 								<a href="/main?pageGroup=community&type=free">커뮤니티</a>
 							</div>
 							<div class="col-3 menuItem pt-3 font-weight-bold" href="#signUpInfo">
-								<a href="javascript:void(0);" onclick="callAlert(this)">입학 안내</a>
+								<a href="/main?pageGroup=admission&type=susi">입학 안내</a>
 							</div>
 						</div>
 					</div>

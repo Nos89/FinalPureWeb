@@ -179,7 +179,6 @@ $(document).ready(function(){
 	           	}, 1000);
 			})
 		}
-		}
 		
 		$(".btnInputComment").click(function(){
 			$.ajax({

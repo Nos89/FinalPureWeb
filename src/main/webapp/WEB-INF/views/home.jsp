@@ -61,7 +61,7 @@
 					<div class="col-12 col-lg-3 text-center mt-2 mt-lg-0">
 						<div class="row goBox ml-1">
 							<div class="col-6 col-lg-12 p-0">
-								<a href="#">
+								<a href="/main?pageGroup=admission&type=susi">
 									<img src="/resources/img/home/admissionInfo.png" class="rounded-pill">
 								</a>
 							</div>
@@ -248,7 +248,9 @@
 							noticeWriteDate = $("<div></div>");
 							noticeWriteDate.addClass("col-3");
 							var writeDate = noti.noti_writeDate.split(" ");
+							console.log(writeDate);
 							var y = writeDate[2].substring(2, 5);
+							console.log(writeDate[0].indexOf("월"));
 							var m = writeDate[0].substring(0, writeDate[0].indexOf("월"));
 							var d = writeDate[1].split(",")[0];
 							if( m.length == 1 ){

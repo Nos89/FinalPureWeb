@@ -1,11 +1,16 @@
 package kh.spring.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +64,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/main")
-	public String simplePageGoTo(String pageGroup, String type, Model model) throws ParseException {
+	public String simplePageGoTo(String pageGroup, String type, Model model, HttpServletResponse response) throws ParseException {
 		model.addAttribute("type", type);
 		model.addAttribute("pageGroup", pageGroup);
 		System.out.println(type + " : " + pageGroup);
