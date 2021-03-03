@@ -18,6 +18,8 @@
             .top{height:70px;}
             .top>ul>li>a{color:black;}
             .top>ul>li>a:hover{color:blue;}
+            .top>div>img{height: 75px;}
+            .top>div>a{font-weight:bold;}
             .navbar{padding:0px;}
         
           	.row>.my{ height: 220px;float: left;background-color:white;}
@@ -66,3 +68,4 @@
             .toClassSche,.toReturnSchool,.toTestAndGrade,.toReportBoard,.toExAuth{cursor:pointer;}
             
             .footer>div{text-align:center}
+            .footerText{font-size:12px;}
