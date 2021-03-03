@@ -23,7 +23,9 @@ import kh.spring.dto.BuildDTO;
 import kh.spring.dto.ChangeDeptApplyDTO;
 import kh.spring.dto.ChangeDeptApplyDTO_NEX;
 import kh.spring.dto.ClassroomDTO;
+
 import kh.spring.dto.CloudDTO;
+import kh.spring.dto.CloudStorageDTO;
 import kh.spring.dto.ColScheduleDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.CreditRenounceDTO;
@@ -248,17 +250,17 @@ public class AdminService {
 		int result = 0;
 		if (rowType == DataSet.ROW_TYPE_INSERTED) {
 			result = admdao.addStudent(dto);
+			wservice.addUserStorage(dto.getId());
 			this.createRootFolder(dto.getId());
-			System.out.println("rowType: " + rowType);
 		} else if (rowType == DataSet.ROW_TYPE_UPDATED) {
 			result = admdao.modifyStudent(dto);
-			System.out.println("rowType: " + rowType);
+			wservice.deleteUserStorage(dto.getId());
 		} else {
 			result = -1;
 		}
 		return result;
 	}
-
+	
 	// 학생 삭제
 	@Transactional
 	public int deleteStudent(String id, String filePath) {
@@ -280,7 +282,7 @@ public class AdminService {
 			wservice.delFile(cdto.getFile_savedName(), Integer.parseInt(cdto.getCloud_id()), filePath);
 		}
 	}
-
+	
 	// 강의계획서 가져오기
 	public List<LectureDTO> getSyllabus() {
 		return admdao.getSyllabus();
@@ -381,5 +383,15 @@ public class AdminService {
 				dto.getDept_title(), dto.getLec_title(), dto.getGrade_code(), dto.getReco_score(),
 				ConvertDate.stringToDate(dto.getApply_date()), dto.getApply_approve());
 		return admdao.creditRenounceApproval(dto2);
+	}
+	
+	// 웹하드 이용명단
+	public List<CloudStorageDTO> getCloudStorage(){
+		return admdao.getCloudStorage();
+	}
+	
+	// 웹하드 용량 변경
+	public int modifyCloudStorage(List<CloudStorageDTO> list) {
+		return admdao.modifyCloudStorage(list);
 	}
 }

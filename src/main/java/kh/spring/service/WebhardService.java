@@ -162,12 +162,12 @@ public class WebhardService {
 			delFile.delete();
 		}
 	}
-	
+
 	// Root folder seq 가져오기
 	public int getRootSeq( String id ) {
 		return wdao.getRootSeq(id);
 	}
-	
+
 	// 폴더 삭제
 	@Transactional
 	public Map<String, Object> delFolder(int parentID, String name, String userID) {
@@ -241,8 +241,24 @@ public class WebhardService {
 		return wdao.moveFile(param);
 	}
 
+
 	// 신규 유저 추가에 따른 Root Folder 생성
 	public int createRootFolder(String id) {
 		return wdao.createRootFolder(id);
+	}
+
+	// 최대 저장 용량
+	public int getMaxStorage(String id) {
+		return wdao.getMaxStorage(id);
+	}
+
+	// 유저 용량 등록
+	public int addUserStorage(String id) {
+		return wdao.addUserStorage(id);
+	}
+	
+	// 유저 용량 삭제
+	public int deleteUserStorage(String id) {
+		return wdao.deleteUserStorage(id);
 	}
 }
