@@ -12,7 +12,8 @@
 				type == 'report'? '건의게시판' : 
 				type == 'notice'? '공지사항' :
 				type == 'promote'? '홍보게시판' :
-				type == 'event'? '행사게시판' : '미확인'}
+				type == 'event'? '행사게시판' : 
+				type == 'archive'? '학사자료실' : '미확인'}
 			</div>
 			<div class="col-12">
 				<c:if test="${ list == true }">

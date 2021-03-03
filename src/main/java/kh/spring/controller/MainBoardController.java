@@ -180,6 +180,7 @@ public class MainBoardController {
 			System.out.println("if");
 		}
 		model.addAttribute("files", bservice.getFiles(seq));
+		System.out.println(bservice.getFiles(seq).size());
 		// 댓글
 		model.addAttribute("commentPage", this.convertPage(commentPage));
 		model.addAttribute("comments", cservice.getComments(seq, this.convertPage(commentPage)));
