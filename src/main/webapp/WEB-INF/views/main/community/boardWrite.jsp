@@ -88,10 +88,11 @@ $(document).ready(function() {
 			type : "POST",
 			url : "/main/uploadSummernoteImageFile",
 			cache : false,
-			dataType: "json",
-			 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 			contentType : false,
 			processData : false,
+			encytype : "multipart/form-data",
+			dataType: "json",
+			 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 			error: function (jqXHR, textStatus, errorThrown) {
                 console.error(textStatus + " " + errorThrown);
             }
@@ -108,12 +109,13 @@ $(document).ready(function() {
            	loadingImgTag.attr("src", loadingUrl);
            	
            	$("#summernote").summernote("insertNode", loadingImgTag[0]);
-           	
+           	setTimeout(function(){
 				$(".loadingImg").remove();
            		//var img = $("<img>");
            		//img.attr("src", data.url);
            		//$("#summernote").summernote("insertNode", img);
 				$(editor).summernote('insertImage', data.url);
+           	}, 1000);
 		})
 	}
 	

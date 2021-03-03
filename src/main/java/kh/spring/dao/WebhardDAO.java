@@ -74,4 +74,14 @@ public class WebhardDAO {
 	public int moveFile(Map<String, Object> param ) {
 		return session.update("Webhard.moveFile", param);
 	}
+	
+	// 신규 유저 추가에 따른 Root Folder 생성
+	public int createRootFolder(String id ) {
+		return session.insert("Webhard.createRootFolder", id);
+	}
+	
+	// Root folder seq 가져오기
+	public int getRootSeq( String id ) {
+		return session.selectOne("Webhard.getRootSeq", id);
+	}
 }

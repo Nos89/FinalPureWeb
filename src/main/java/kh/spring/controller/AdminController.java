@@ -288,12 +288,13 @@ public class AdminController {
 		DataSet ds = inData.getDataSet("in_pro");
 		Variable var = inData.getVariable("user");
 		String user = var.getString();
+		String filePath = request.getSession().getServletContext().getRealPath("/resources/webhard/");
 		
 		// 삭제된 데이터
 		for(int i=0;i<ds.getRemovedRowCount();i++) {
 			String id = ds.getRemovedStringData(i, "id");
 			System.out.println("삭제된 아이디: "+id);
-			admService.deleteProfessor(id);
+			admService.deleteProfessor(id, filePath);
 		}
 		
 		// 추가, 수정된 데이터
@@ -346,12 +347,13 @@ public class AdminController {
 		pReq.receiveData();
 		PlatformData inData = pReq.getData();
 		DataSet ds = inData.getDataSet("in_std");
+		String filePath = request.getSession().getServletContext().getRealPath("/resources/webhard/");
 		
 		// 삭제된 데이터
 		for(int i=0;i<ds.getRemovedRowCount();i++) {
 			String id = ds.getRemovedStringData(i, "id");
 			System.out.println("삭제된 아이디: "+id);
-			admService.deleteStudent(id);
+			admService.deleteStudent(id, filePath);
 		}
 		
 		// 추가, 수정된 데이터
