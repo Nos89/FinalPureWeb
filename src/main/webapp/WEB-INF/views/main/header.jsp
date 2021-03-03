@@ -5,7 +5,7 @@
 			<!-- Header 부분입니다. 로고, 타이틀, 상단 메뉴 등을 넣어주세요. -->
 			<div class="col-12 h-50">
 				<div class="row">
-					<div class="col-1 p-0">
+					<div class="col-1 p-0 my-1">
 						<a href="/" class="navbar-brand">
 							<img src="/resources/img/info/gachalogo.png" class="headerLogo">
 						</a>
@@ -36,6 +36,7 @@
 									<li><a href="/main?pageGroup=intro&type=intro"><b>학사 소개</b></a></li>
 									<li><a href="/main?pageGroup=intro&type=history"><b>연혁</b></a></li>
 									<li><a href="/main?pageGroup=intro&type=educationalPhilosophy"><b>교육이념</b></a></li>
+									
 								</ol>
 							</div>
 						</div>
@@ -49,7 +50,7 @@
 							<div class="col-12 col-lg-3 border-top pt-2 menuItemWrapper">
 								<ol>
 									<li><a href="/main?pageGroup=info&type=info"><b>학사 일정</b></a></li>
-									<li><a href="#"><b>교과 과정</b></a></li>
+									<li><a href="/main?pageGroup=curriculum&type=multipleMajor"><b>교과 과정</b></a></li>
 									<li>	
 										<ol class="subMenu">
 											<li><a href="/main?pageGroup=curriculum&type=multipleMajor">복수 전공 / 부 전공</a></li>
