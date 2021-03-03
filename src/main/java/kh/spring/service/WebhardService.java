@@ -1,5 +1,6 @@
 package kh.spring.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,37 +20,37 @@ import kh.spring.dto.InDirDTO;
 public class WebhardService {
 	@Autowired
 	WebhardDAO wdao;
-	
+
 	// Directory List
-	public List<DirectoryDTO> getList(String userID){
+	public List<DirectoryDTO> getList(String userID) {
 		// DB 에서 LV로 정렬해서 가져온 List
 		List<DirectoryDTO> list = wdao.getList(userID);
 		// Tree 구조로 정렬해서 넣을 List
 		List<DirectoryDTO> olist = new ArrayList<>();
 		// 가져온 list에 대한 반복자
 		Iterator<DirectoryDTO> iter = list.iterator();
-		
+
 		// 정렬
-		while(iter.hasNext()) {
+		while (iter.hasNext()) {
 			DirectoryDTO d = iter.next();
-			System.out.println( d.getDirID() + " : " + d.getDirectoryName());
+			System.out.println(d.getDirID() + " : " + d.getDirectoryName());
 			// 반복자에서 꺼낸 값이 userID와 같다면 => Root 폴더이므로 바로 olist에 넣기
-			if( d.getDirectoryName().contentEquals(userID) ) {
+			if (d.getDirectoryName().contentEquals(userID)) {
 				olist.add(d);
 			} else {
-				for(DirectoryDTO od : olist ) {
+				for (DirectoryDTO od : olist) {
 					// 반복자에서 꺼낸 값의 부모 폴더 ID 와 정렬된 olist에서 꺼낸 객체의 폴더 ID가 같은지 확인
-					if( d.getParentID() == od.getDirID() ) {
+					if (d.getParentID() == od.getDirID()) {
 
-						int index = olist.indexOf(od)+1;
-						if( d.getLv() == 1 ) {
+						int index = olist.indexOf(od) + 1;
+						if (d.getLv() == 1) {
 							olist.add(d);
 							break;
 						} else {
 							Iterator<DirectoryDTO> oiter = olist.iterator();
-							while(oiter.hasNext()) {
+							while (oiter.hasNext()) {
 								DirectoryDTO oi = oiter.next();
-								if( oi.getParentID() == d.getParentID() ) {
+								if (oi.getParentID() == d.getParentID()) {
 									index++;
 								}
 							}
@@ -63,22 +64,22 @@ public class WebhardService {
 		}
 		return olist;
 	}
-	
+
 	public int getStorage(String userID) {
 		return wdao.getStorage(userID);
 	}
-	
+
 	// Create Folder
-	public int createFolder( int parentID, String nFolder, String loginID ) {
+	public int createFolder(int parentID, String nFolder, String loginID) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id", loginID);
 		param.put("dirName", nFolder);
 		param.put("parentID", parentID);
 		return wdao.createFolder(param);
 	}
-	
+
 	// 파일 정보 저장
-	public int saveFile( String id, int parentID, String oriName, String savedName, long size ) {
+	public int saveFile(String id, int parentID, String oriName, String savedName, long size) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id", id);
 		param.put("parentID", parentID);
@@ -87,44 +88,44 @@ public class WebhardService {
 		param.put("size", size);
 		return wdao.saveFile(param);
 	}
-	
+
 	// 폴더 파일 가져오기
-	public List<CloudDTO> getFiles( String id, int parentID ){
+	public List<CloudDTO> getFiles(String id, int parentID) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id", id);
 		param.put("parentID", parentID);
 		return wdao.getFiles(param);
 	}
-	
+
 	// 대상 폴더의 폴더 및 파일 가져오기
-	public List<InDirDTO> getInDir( String id, int parentID ){
+	public List<InDirDTO> getInDir(String id, int parentID) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id", id);
 		param.put("parentID", parentID);
 		List<DirectoryDTO> dirList = wdao.getFolder(param);
 		List<CloudDTO> fileList = wdao.getFiles(param);
 		List<InDirDTO> indirList = new ArrayList<>();
-		
+
 		List<DirectoryDTO> listAll = this.getList(id);
-		
+
 		System.out.println(dirList.size() + " : " + parentID + " : " + listAll.get(0).getDirID());
-		if( dirList.size() != 0 ) {
-			if( dirList.get(0).getLv() != 1 ) {
+		if (dirList.size() != 0) {
+			if (dirList.get(0).getLv() != 1) {
 				InDirDTO i = new InDirDTO();
 				i.setName("...");
 				i.setIsFolder("true");
 				indirList.add(i);
 			}
 		} else {
-			if( listAll.get(0).getDirID() != parentID ) {
+			if (listAll.get(0).getDirID() != parentID) {
 				InDirDTO i = new InDirDTO();
 				i.setName("...");
 				i.setIsFolder("true");
 				indirList.add(i);
-			} 
+			}
 		}
-		
-		for( DirectoryDTO d : dirList ) {
+
+		for (DirectoryDTO d : dirList) {
 			InDirDTO i = new InDirDTO();
 			i.setName(d.getDirectoryName());
 			i.setIsFolder("true");
@@ -133,7 +134,7 @@ public class WebhardService {
 			i.setDate(d.getCrtDate());
 			indirList.add(i);
 		}
-		for( CloudDTO c : fileList ) {
+		for (CloudDTO c : fileList) {
 			InDirDTO i = new InDirDTO();
 			i.setName(c.getFile_oriName());
 			i.setIsFolder("false");
@@ -144,73 +145,86 @@ public class WebhardService {
 		}
 		return indirList;
 	}
-	
+
 	// 파일 삭제
-	public int delFile(String name, int location ) {
+	public int delFile(String name, int location) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("name", name);
 		param.put("location", location);
 		return wdao.delFile(param);
 	}
-	
+
+	// 실제 파일 삭제
+	public void delFile(String name, int location, String filePath) {
+		File delFile = new File(filePath + "/" + name);
+		if (delFile.exists()) {
+			System.out.println("파일 존재");
+			delFile.delete();
+		}
+	}
+
+	// Root folder seq 가져오기
+	public int getRootSeq( String id ) {
+		return wdao.getRootSeq(id);
+	}
+
 	// 폴더 삭제
 	@Transactional
 	public Map<String, Object> delFolder(int parentID, String name, String userID) {
 		// 하위 폴더들 가져오기
 		List<DirectoryDTO> delList = new ArrayList<>();
 		List<DirectoryDTO> directoryList = this.getList(userID);
-		
-		for( DirectoryDTO d : directoryList ) {
-			if( d.getParentID() == parentID && d.getDirectoryName().contentEquals(name)) {
+
+		for (DirectoryDTO d : directoryList) {
+			if (d.getParentID() == parentID && d.getDirectoryName().contentEquals(name) || parentID == 0 ) {
 				delList.add(d);
-			} else if( delList.size() != 0){
+			} else if (delList.size() != 0) {
 				System.out.println(delList.size());
-				if( d.getLv() > delList.get(0).getLv() ) {
+				if (d.getLv() > delList.get(0).getLv()) {
 					delList.add(d);
 				} else {
 					break;
 				}
 			}
 		}
-		for( DirectoryDTO d : delList ) {
+		for (DirectoryDTO d : delList) {
 			System.out.println(d.getDirectoryName());
 		}
-		
+
 		// 하위 폴더 내 파일 정보
 		List<CloudDTO> clist = new ArrayList<>();
-		for( DirectoryDTO d : delList ) {
+		for (DirectoryDTO d : delList) {
 			Map<String, Object> param = new HashMap<>();
 			param.put("id", userID);
 			param.put("parentID", d.getDirID());
 			clist.addAll(wdao.getFiles(param));
 		}
-		
-		for( CloudDTO c : clist ) {
+
+		for (CloudDTO c : clist) {
 			System.out.println(c.getFile_oriName());
 		}
 		// 폴더 정보 삭제 로직
-		if( delList.size() != 0) {
+		if (delList.size() != 0) {
 			wdao.delFolder(delList);
 		}
-		if( clist.size() != 0 ) {
+		if (clist.size() != 0) {
 			wdao.delFileByFolder(clist);
 		}
-		
+
 		// return Map setting
 		Map<String, Object> result = new HashMap<>();
 		result.put("directory", this.getList(userID));
 		result.put("flist", clist);
 		return result;
 	}
-	
+
 	// 삭제 폴더 하위 폴더들 모두 가져오기
-	private List<DirectoryDTO> getFolders(int parentID, List<DirectoryDTO> delList ){
-		
+	private List<DirectoryDTO> getFolders(int parentID, List<DirectoryDTO> delList) {
 		return delList;
 	}
-	
+
 	// 폴더 이동
-	public int moveFolder( String id, String name, int location, int moveLocation ) {
+	public int moveFolder(String id, String name, int location, int moveLocation) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id", id);
 		param.put("name", name);
@@ -218,15 +232,21 @@ public class WebhardService {
 		param.put("moveLocation", moveLocation);
 		return wdao.moveFolder(param);
 	}
-	
+
 	// 파일 이동
-	public int moveFile( String name, int moveLocation ) {
+	public int moveFile(String name, int moveLocation) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("name", name);
 		param.put("moveLocation", moveLocation);
 		return wdao.moveFile(param);
 	}
-	
+
+
+	// 신규 유저 추가에 따른 Root Folder 생성
+	public int createRootFolder(String id) {
+		return wdao.createRootFolder(id);
+	}
+
 	// 최대 저장 용량
 	public int getMaxStorage(String id) {
 		return wdao.getMaxStorage(id);

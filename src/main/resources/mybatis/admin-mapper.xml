@@ -317,7 +317,9 @@
 	SELECT C.ID, NAME, MAXSTORAGE FROM CLOUDSTORAGE C, USERS U WHERE C.ID=U.ID
 </select>
 
-<update id="modifyCloudStorage">
-	UPDATE CLOUDSTORAGE SET MAXSTORAGE=#{maxStorage} WHERE ID=#{id}
+<update id="modifyCloudStorage" parameterType="java.util.List">
+	<foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+		UPDATE CLOUDSTORAGE SET MAXSTORAGE=#{item.maxStorage} WHERE ID=#{item.id}
+	</foreach>
 </update>
 </mapper>

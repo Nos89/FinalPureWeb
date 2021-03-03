@@ -748,7 +748,7 @@
 						</div>
 						<div class="col-2 col-sm-2 toTestAndGrade">
 							<div class="image">
-								<img src="/resources/img/info/dormitory.png">
+								<img src="/resources/img/info/exam.png">
 							</div>
 							<div class="text">시험 및 성적</div>
 						</div>
@@ -906,23 +906,27 @@
 				if (day == "월") {
 					let lecture = $("<td></td>");
 					lecture.html(title);
+					lecture.attr("style","background-color:#c2786a;color:white;font-size:12px; font-weight:bold;");
 					$(".time").eq(time[0] - 1).append(lecture);
 				}
 				if (day == "화") {
 					fillEmpty(1);
 					let lecture = $("<td></td>");
 					lecture.html(title);
+					lecture.attr("style","background-color:#aec87a; color:white; font-size:12px; font-weight:bold;");
 					$(".time").eq(time[0] - 1).append(lecture);
 				}
 				if (day == "수") {
 					fillEmpty(2);
 					let lecture = $("<td></td>");
 					lecture.html(title);
+					lecture.attr("style","background-color:718dc3;color:white;font-size:12px; font-weight:bold;");
 					$(".time").eq(time[0] - 1).append(lecture);
 				}
 				if (day == "목") {
 					fillEmpty(3);
 					let lecture = $("<td></td>");
+					lecture.attr("style","background-color:#ce9663;color:white;font-size:12px; font-weight:bold;");
 					lecture.html(title);
 					$(".time").eq(time[0] - 1).append(lecture);
 				}
@@ -930,6 +934,7 @@
 					fillEmpty(4);
 					let lecture = $("<td></td>");
 					lecture.html(title);
+					lecture.attr("style","background-color:#8475bc;color:white;font-size:12px; font-weight:bold;");
 					$(".time").eq(time[0] - 1).append(lecture);
 				}
 				if (day == "토") {

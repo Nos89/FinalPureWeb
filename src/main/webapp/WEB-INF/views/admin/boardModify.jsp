@@ -123,16 +123,37 @@
 				data : data,
 				type : "POST",
 				url : "/main/uploadSummernoteImageFile",
+				cache : false,
 				contentType : false,
 				processData : false,
-				success : function(data) {
-						data = data;
-						console.log(data.url)
-						//항상 업로드된 파일의 url이 있어야 한다.
-						$(editor).summernote('insertImage', data.url);
-					}
-				});
-			}
+				encytype : "multipart/form-data",
+				dataType: "json",
+				 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+				error: function (jqXHR, textStatus, errorThrown) {
+	                console.error(textStatus + " " + errorThrown);
+	            }
+			}).done(function(data){
+				data = data;
+				console.log("data : " + data);
+				console.log("url : " + data.url);
+				console.log("exist : " + data.exist);
+				console.log("path : " + data.contextPath);
+	           	//항상 업로드된 파일의 url이 있어야 한다.
+	           	var loadingUrl = "/resources/img/imgLoading.gif";
+	           	var loadingImgTag = $("<img>");
+	           	loadingImgTag.addClass("loadingImg");
+	           	loadingImgTag.attr("src", loadingUrl);
+	           	
+	           	$("#summernote").summernote("insertNode", loadingImgTag[0]);
+	           	setTimeout(function(){
+					$(".loadingImg").remove();
+	           		//var img = $("<img>");
+	           		//img.attr("src", data.url);
+	           		//$("#summernote").summernote("insertNode", img);
+					$(editor).summernote('insertImage', data.url);
+	           	}, 1000);
+			})
+		}
 
 			$(".btnFile").click(function() {
 				let inputFile = $("input[type=file]");

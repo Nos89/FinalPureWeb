@@ -72,7 +72,17 @@
 		where file_savedName = #{name}
 	</update>
 	
-	<select id="getMaxStorage" resultType="kh.spring.dto.CloudStorageDTO">
-		SELECT MAXSTORAGE WHERE ID=#{id}
+	<!-- 신규 유저 추가에 따른 Root Folder 생성 -->
+	<insert id="createRootFolder">
+		insert into directory values( dir_seq.nextval, #{value}, #{value}, null, 0, sysdate)
+	</insert>
+	
+	<!-- Root folder seq 가져오기 -->
+	<select id="getRootSeq" resultType="Integer">
+		select dirid from directory where userid = #{value} and lv = 0
+	</select>
+	
+	<select id="getMaxStorage" resultType="Integer">
+		SELECT MAXSTORAGE FROM CLOUDSTORAGE WHERE ID=#{id}
 	</select>
 </mapper>

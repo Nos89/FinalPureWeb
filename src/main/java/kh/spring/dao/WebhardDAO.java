@@ -75,6 +75,16 @@ public class WebhardDAO {
 		return session.update("Webhard.moveFile", param);
 	}
 	
+	// 신규 유저 추가에 따른 Root Folder 생성
+	public int createRootFolder(String id ) {
+		return session.insert("Webhard.createRootFolder", id);
+	}
+	
+	// Root folder seq 가져오기
+	public int getRootSeq( String id ) {
+		return session.selectOne("Webhard.getRootSeq", id);
+	}
+	
 	// 최대 저장 용량
 	public int getMaxStorage(String id) {
 		return session.selectOne("Webhard.getMaxStorage",id);
