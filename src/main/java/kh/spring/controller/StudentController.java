@@ -182,6 +182,8 @@ public class StudentController {
 		
 		List<MyClassTimeDTO> ctList = new ArrayList<>();
 		ctList = sservice.getMyClassTime(cdto,id);
+
+
 		nr.addDataSet("out_classTime",ctList);
 		
 		return nr;
