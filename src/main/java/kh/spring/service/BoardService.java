@@ -35,8 +35,8 @@ public class BoardService {
 	}
 
 	// 파일 업로드 로직
-	public void uploadFile(Map<String, Object> map) {
-		bdao.insertFile(map);
+	public void uploadFile(Map<String, Object> param) {
+		bdao.insertFile(param);
 	}
 
 	// 전체 게시글 수
@@ -50,14 +50,14 @@ public class BoardService {
 	}
 
 	private int getSearchCount(String type, String searchType, String[] searchText, String category) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("boardType", type);
-		map.put("searchType", searchType);
-		map.put("searchText", searchText);
+		Map<String, Object> param = new HashMap<>();
+		param.put("boardType", type);
+		param.put("searchType", searchType);
+		param.put("searchText", searchText);
 		if( type.contentEquals("notice") ) {
-			map.put("category", category);
+			param.put("category", category);
 		}
-		return bdao.getSearchCount(map);
+		return bdao.getSearchCount(param);
 	}
 
 	// 페이징 적용된 게시글
@@ -65,23 +65,23 @@ public class BoardService {
 		int recordTotalCount = this.getArticleCount(type, category);
 		
 		Map<String, Object> navi = this.getNavigator(recordTotalCount, currentPage);
-		Map<String, Object> map = new HashMap<>();
-		map.put("boardType", type);
-		map.put("startNumByPage", navi.get("startNumByPage"));
-		map.put("endNumByPage", navi.get("endNumByPage"));
+		Map<String, Object> param = new HashMap<>();
+		param.put("boardType", type);
+		param.put("startNumByPage", navi.get("startNumByPage"));
+		param.put("endNumByPage", navi.get("endNumByPage"));
 		
 		Map<String, Object> temp = new HashMap<>();
 		temp.put("navi", navi);
 		if( type.contentEquals("notice") ) {
-			map.put("category", category);
-			List<NoticeDTO> list = bdao.getNoticesByPage(map);
+			param.put("category", category);
+			List<NoticeDTO> list = bdao.getNoticesByPage(param);
 			List<BoardDTO> clist = new ArrayList<>();
 			for( NoticeDTO n : list ) {
 				clist.add(this.convertNoti(n));
 			}
 			temp.put("list", clist);
 		} else {
-			List<BoardDTO> list = bdao.getArticleByPage(map);
+			List<BoardDTO> list = bdao.getArticleByPage(param);
 			System.out.println(list.size());
 			temp.put("list", list);
 		}
@@ -90,14 +90,14 @@ public class BoardService {
 	
 	// 게시글 보기
 	public BoardDTO viewArticle(String type, int seq) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("boardType", type);
-		map.put("seq", seq);
+		Map<String, Object> param = new HashMap<>();
+		param.put("boardType", type);
+		param.put("seq", seq);
 		
 		if( type.contentEquals("notice") ) {
-			return this.convertNoti(bdao.getNotice(map));
+			return this.convertNoti(bdao.getNotice(param));
 		} else {
-			return bdao.getArticle(map);
+			return bdao.getArticle(param);
 		}
 	}
 
@@ -118,43 +118,43 @@ public class BoardService {
 
 	// 게시물 수정
 	public int modifyArticle(BoardDTO bdto, String type) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("boardType", type);
-		map.put("bdto", bdto);
-		return bdao.modifyArticle(map);
+		Map<String, Object> param = new HashMap<>();
+		param.put("boardType", type);
+		param.put("bdto", bdto);
+		return bdao.modifyArticle(param);
 	}
 
 	// 게시글 삭제
 	public int deleteArticle(String type, int seq) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("boardType", type);
-		map.put("seq", seq);
-		return bdao.deleteArticle(map);
+		Map<String, Object> param = new HashMap<>();
+		param.put("boardType", type);
+		param.put("seq", seq);
+		return bdao.deleteArticle(param);
 	}
 
 	// 게시판 검색
 	public Map<String, Object> boardSearch(String type, String search, String category, int page) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("boardType", type);
+		Map<String, Object> param = new HashMap<>();
+		param.put("boardType", type);
 		String searchType = search.split("-")[0];
 		String[] searchText = (search.split("-")[1]).split(" ");
-		map.put("searchType", searchType);
-		map.put("searchText", searchText);
+		param.put("searchType", searchType);
+		param.put("searchText", searchText);
 		int searchCount = this.getSearchCount(type, searchType, searchText, category); 
 		System.out.println(searchCount);
 		Map<String, Object> navi = this.getNavigator(searchCount, page);
 		
-		map.put("startNumByPage", navi.get("startNumByPage"));
-		map.put("endNumByPage", navi.get("endNumByPage"));
+		param.put("startNumByPage", navi.get("startNumByPage"));
+		param.put("endNumByPage", navi.get("endNumByPage"));
 
 		List<BoardDTO> list = new ArrayList<>();
 		if( type.contentEquals("notice") ) {
-			List<NoticeDTO> nlist = bdao.noticeSearch(map);
+			List<NoticeDTO> nlist = bdao.noticeSearch(param);
 			for( NoticeDTO n : nlist ) {
 				list.add(this.convertNoti(n));
 			}
 		} else {
-			list = bdao.boardSearch(map);
+			list = bdao.boardSearch(param);
 		}
 		System.out.println(list.size());
 		Map<String, Object> result = new HashMap<>();

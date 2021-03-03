@@ -306,26 +306,5 @@
 	UPDATE CREDITRENOUNCE SET APPLY_APPROVE=#{apply_approve} WHERE SEQ=#{seq}
 </update>
 
-<insert id="sendMail">
-	INSERT INTO MAIL VALUES(MAIL_SEQ.NEXTVAL,#{receiver},#{title},#{contents},SYSDATE, 0)
-</insert>
-
-<select id="getReceiverList" resultType="kh.spring.dto.StudentDTO">
-	SELECT U.ID, NAME, COLCODE, DEPTCODE, C.COL_TITLE, D.DEPT_TITLE
-		FROM USERS U, STUDENTS S, COLLEGE C, DEPARTMENT D
-		WHERE U.ID=S.ID AND STD_STATUS NOT IN('졸업','퇴학') AND U.COLCODE=C.COL_CODE AND U.DEPTCODE=D.DEPT_CODE
-	UNION
-	SELECT U.ID, NAME, COLCODE, DEPTCODE, COL_TITLE, DEPT_TITLE
-		FROM USERS U, PROFESSOR P, COLLEGE C, DEPARTMENT D
-		WHERE U.ID=PRO_ID AND PRO_STATUS!='퇴직' AND U.COLCODE=C.COL_CODE AND U.DEPTCODE=D.DEPT_CODE
-</select>
-
-<select id="getReceiverName" resultType="kh.spring.dto.StudentDTO">
-	SELECT ID, NAME FROM USERS
-</select>
-
-<select id="getOutBox" resultType="kh.spring.dto.MailDTO">
-	SELECT * FROM MAIL ORDER BY RECEIVED_DATE DESC
-</select>
 
 </mapper>

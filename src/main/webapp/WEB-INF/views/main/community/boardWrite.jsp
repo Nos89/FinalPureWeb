@@ -27,6 +27,9 @@
 	</form>
 </div>
 <script>
+var writeResult = "";
+var ajaxImgUrl = [];
+
 $(document).ready(function() {
 	//여기 아래 부분
 	$('#summernote').summernote({
@@ -85,13 +88,19 @@ $(document).ready(function() {
 			type : "POST",
 			url : "/main/uploadSummernoteImageFile",
 			cache : false,
+			dataType: "json",
+			 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 			contentType : false,
-			processData : false
+			processData : false,
+			error: function (jqXHR, textStatus, errorThrown) {
+                console.error(textStatus + " " + errorThrown);
+            }
 		}).done(function(data){
 			data = data;
-			console.log(data);
-			console.log(data.url);
-			console.log(data.exist)
+			console.log("data : " + data);
+			console.log("url : " + data.url);
+			console.log("exist : " + data.exist);
+			console.log("path : " + data.contextPath);
            	//항상 업로드된 파일의 url이 있어야 한다.
            	var loadingUrl = "/resources/img/imgLoading.gif";
            	var loadingImgTag = $("<img>");
@@ -100,14 +109,19 @@ $(document).ready(function() {
            	
            	$("#summernote").summernote("insertNode", loadingImgTag[0]);
            	
-           	setTimeout(function(){
-				$(editor).summernote('insertImage', data.url);
 				$(".loadingImg").remove();
-           	}, 1000);
+           		//var img = $("<img>");
+           		//img.attr("src", data.url);
+           		//$("#summernote").summernote("insertNode", img);
+				$(editor).summernote('insertImage', data.url);
 		})
 	}
 	
+	
 	$("input[type=submit]").click(function(){
+		
+		writeResult = true;
+		
 		let title = $(".title").val();
 		let contents = $("#summernote").val();
 		if( title == null || title.length <= 0 ){
@@ -163,4 +177,27 @@ $(document).ready(function() {
         $(this).parent().find('input[type=text]').val( $(this).val() );
 	})
 });
+
+$(window).bind("beforeunload", function (e){
+	if( writeResult ){
+		return;
+	}
+	var contents = $("#summernote").val();
+	var images = $(contents).children("img");
+	var src = [];
+	for( var i = 0; i < images.length; i++ ){
+		src.push(images.eq(i).attr("src"));
+	}
+	console.log(src);
+	$.ajax({
+		url : "/main/beforeClose",
+		cache : "false", //캐시사용금지
+		method : "POST",
+		dataType : "json",
+		data : {
+			src : JSON.stringify(src),
+		}
+	});
+	return e;
+})
 </script>

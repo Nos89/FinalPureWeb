@@ -317,6 +317,30 @@
 														href="/" id=mainpage>대표홈페이지</a></li>
 												</ul>
 											</div>
+											</div>
+											</nav>
+											</div>
+											</div>
+					</c:when>
+					<c:when test="${userPart == '교수' || userPart == '관리자'}">
+						<div class="row">
+							<div class="col-12 topMenu">
+								<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+									<button class="navbar-toggler" type="button"
+										data-toggle="collapse" data-target="#navbarText"
+										aria-controls="navbarText" aria-expanded="false"
+										aria-label="Toggle navigation">
+										<span class="navbar-toggler-icon"></span>
+									</button>
+									<div class="collapse navbar-collapse" id="navbarText">
+										<div class="container">
+											<ul class="navbar-nav mr-auto">
+												<li class="nav-item active"><a class="nav-link"
+													href="/home.nex" id=system>종합정보시스템</a></li>
+												<li class="nav-item active"><a class="nav-link"
+													href="/" id=mainpage>대표홈페이지</a></li>
+											</ul>
+										</div>
 
 										</div>
 									</nav>
@@ -333,25 +357,26 @@
 						<div class="col-sm-9">
 							<div class="row">
 
-								<c:choose>
-									<c:when test="${userPart == '학생' }">
-										<div class="col-12 col-sm-4 my">
-											<div class=name>${userName }님</div>
-											<div class="major">${userMajor }학과</div>
-											<div class="mail">
-												<div class=mail_notRead>안 읽은 메일</div>
-												<div class="mail_notReadNum">건</div>
-											</div>
+							<c:choose>
+								<c:when test="${userPart == '학생' }">
+									<div class="col-12 col-sm-4 my">
+										<div class=name>${userName }님</div>
+										<div class="major">${userMajor }학과</div>
+										<div class="mail">
+											<div class=mail_notRead>안 읽은 메일</div>
+											<div class="mail_notReadNum">${unread}건</div>
 										</div>
-									</c:when>
-									<c:when test="${userPart == '교수' }">
-										<div class="col-12 col-sm-4 my">
-											<div class=name>${userName }님</div>
-											<div class="major">${userMajor }학과</div>
-											<div class="mail">
-												<div class=mail_notRead>안 읽은 메일</div>
-												<div class="mail_notReadNum">건</div>
-											</div>
+									</div>
+								</c:when>
+								<c:when test="${userPart == '교수' }">
+									<div class="col-12 col-sm-4 my">
+										<div class=name>${userName }님</div>
+										<div class="major">${userMajor }학과</div>
+										<div class="mail">
+											<div class=mail_notRead>안 읽은 메일</div>
+											<div class="mail_notReadNum">${unread}건</div>
+
+										</div>
 										</div>
 									</c:when>
 								</c:choose>

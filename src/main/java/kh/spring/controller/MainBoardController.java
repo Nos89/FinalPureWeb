@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,7 +57,7 @@ public class MainBoardController {
 		model.addAttribute("type", type);
 		model.addAttribute("page", currentPage);
 		model.addAttribute("list", true);
-		if( category != null ) {
+		if (category != null) {
 			model.addAttribute("category", category);
 			model.addAttribute("cont", bservice.getArticles(type, category, currentPage));
 		} else {
@@ -106,7 +105,10 @@ public class MainBoardController {
 				System.out.println("변경되지 않은 파일 입력");
 				continue;
 			}
-			String extension = oriName.substring(oriName.lastIndexOf(".")); // 파일 확장자
+			String extension = "";
+			if (oriName.lastIndexOf(".") >= 0) {
+				extension = oriName.substring(oriName.lastIndexOf(".")); // 파일 확장자
+			}
 			savedName = UUID.randomUUID().toString().replaceAll("-", "") + extension; // 저장될 파일 명
 			File targetFile = new File(fileRoot + savedName);
 			try {
@@ -142,9 +144,11 @@ public class MainBoardController {
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile); // 파일 저장
-			jsonObject.addProperty("url", "/boardImg/" + savedFileName); // contextroot + resources + 저장할 내부 폴더명
+			Map<String, Object> map = new HashMap<>();
+			jsonObject.addProperty("url", "/resources/img/board/" + savedFileName); // contextroot + resources + 저장할 내부 폴더명
 			jsonObject.addProperty("responseCode", "success");
 			jsonObject.addProperty("exist", targetFile.exists());
+			jsonObject.addProperty("contextPath", contextRoot);
 		} catch (IOException e) {
 			FileUtils.deleteQuietly(targetFile); // 저장된 파일 삭제
 			jsonObject.addProperty("responseCode", "error");
@@ -155,8 +159,8 @@ public class MainBoardController {
 
 	// 게시글 보기
 	@RequestMapping("/board.view")
-	public String viewArticle(String pageGroup, String type, int seq, String page, String purp, String category, String commentPage, String search,
-			Model model) {
+	public String viewArticle(String pageGroup, String type, int seq, String page, String purp, String category,
+			String commentPage, String search, Model model) {
 		model.addAttribute("article", bservice.viewArticle(type, seq));
 		model.addAttribute("pageGroup", pageGroup);
 		model.addAttribute("type", type);
@@ -171,7 +175,7 @@ public class MainBoardController {
 			model.addAttribute("search", search);
 		}
 		System.out.println(category);
-		if( category != null ) {
+		if (category != null) {
 			model.addAttribute("category", category);
 			System.out.println("if");
 		}
@@ -213,7 +217,7 @@ public class MainBoardController {
 	@Transactional
 	public String deleteArticle(String pageGroup, String type, int seq, HttpServletRequest request, Model model) {
 		List<FilesDTO> flist = bservice.getFiles(seq);
-		if( flist.size() != 0 ) {
+		if (flist.size() != 0) {
 			List<Integer> delSeq = new ArrayList<>();
 			for (FilesDTO dto : flist) {
 				delSeq.add(dto.getSeq());
@@ -223,7 +227,8 @@ public class MainBoardController {
 			this.delSpecFile(delSeq, fileRoot);
 		}
 		bservice.deleteArticle(type, seq);
-
+		
+		
 		model.addAttribute("pageGroup", pageGroup);
 		model.addAttribute("type", type);
 		return "redirect:/main/board.list";
@@ -294,66 +299,82 @@ public class MainBoardController {
 		}
 		return currentPage;
 	}
-	
-	
-	//파일다운로드
+
+	// 파일다운로드
 	@RequestMapping("/board.download")
-	public void fileDownlaod(HttpServletRequest request,HttpServletResponse response) throws Exception {
-		String fileName = (String)request.getParameter("fileName");
-		String oriName = (String)request.getParameter("oriName");
+	public void fileDownlaod(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String fileName = (String) request.getParameter("fileName");
+		String oriName = (String) request.getParameter("oriName");
 		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
 		String fileRoot = contextRoot + "resources/files/board/";
-		
+
 		String fullPath = fileRoot + "/" + fileName;
 		File file = new File(fullPath);
+
+		if (file != null) {
+			fileName = null;
+			String userAgent = request.getHeader("User-Agent");
+
+			if (userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("Trident") > -1) {
+				fileName = URLEncoder.encode(file.getName(), "utf-8").replaceAll("\\+", "%20");
+				;
+			} else if (userAgent.indexOf("Chrome") > -1) {
+				StringBuffer sb = new StringBuffer();
+				for (int i = 0; i < file.getName().length(); i++) {
+					char c = file.getName().charAt(i);
+					if (c > '~') {
+						sb.append(URLEncoder.encode("" + c, "UTF-8"));
+					} else {
+						sb.append(c);
+					}
+				}
+				fileName = sb.toString();
+			} else {
+				fileName = new String(file.getName().getBytes("utf-8"));
+			}
+			response.setContentType(request.getContentType());
+			response.setContentLength((int) file.length());
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + oriName + "\";");
+			response.setHeader("Content-Transfer-Encoding", "binary");
+
+			OutputStream out = response.getOutputStream();
+			FileInputStream fis = null;
+			try {
+				fis = new FileInputStream(file);
+				FileCopyUtils.copy(fis, out);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (fis != null) {
+					try {
+						fis.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				if (out != null) {
+					out.flush();
+				}
+			}
+		}
+	}
+	
+	// 작성화면 나갈때 이미지 삭제
+	@RequestMapping(value = "/beforeClose", produces="text/plain; charset=UTF8")
+	@ResponseBody
+	public String beforeClose(HttpServletRequest request) {
+		JsonArray ja = new JsonArray();
+		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
+		String src = request.getParameter("src");
+		src = src.replace("\"", "");
+		src = src.substring(1, src.length() -1 );
+		String[] arrSrc = src.split(",");
 		
-        if(file != null) {
-            fileName = null;
-            String userAgent = request.getHeader("User-Agent");
-            
-            if(userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("Trident") > -1){
-                fileName = URLEncoder.encode(file.getName(), "utf-8").replaceAll("\\+", "%20");;
-            }else if(userAgent.indexOf("Chrome") > -1) {
-            	StringBuffer sb = new StringBuffer();
-            	for(int i=0; i<file.getName().length(); i++) {
-            		char c = file.getName().charAt(i);
-            		if(c > '~') {
-            			sb.append(URLEncoder.encode(""+c, "UTF-8"));
-            		}else {
-            			sb.append(c);
-            		}
-            	}
-            	fileName = sb.toString();
-            }else {
-            	fileName = new String(file.getName().getBytes("utf-8"));
-            }
-            response.setContentType(request.getContentType());
-            response.setContentLength((int)file.length());
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + oriName + "\";");
-            response.setHeader("Content-Transfer-Encoding", "binary");
-            
-            OutputStream out = response.getOutputStream();
-            FileInputStream fis = null;
-            try {
-                fis = new FileInputStream(file);
-                FileCopyUtils.copy(fis, out);
-            } catch(Exception e){
-                e.printStackTrace();
-            }finally{
-                if(fis != null){
-                    try{
-                        fis.close();
-                    }catch(Exception e){
-                    	e.printStackTrace();
-                    }
-                }
-                
-                if(out != null) {
-                	out.flush();
-                }
-            }
-            
-        }
-		
+		for( int i = 0; i < arrSrc.length; i++ ) {
+			File targetFile = new File( contextRoot + arrSrc[i]);
+			System.out.println(targetFile.exists() + " : " + arrSrc[i]);
+			targetFile.delete();
+		}
+		return "";
 	}
 }

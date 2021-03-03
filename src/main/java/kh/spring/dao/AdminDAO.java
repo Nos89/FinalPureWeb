@@ -263,24 +263,4 @@ public class AdminDAO {
 	public int creditRenounceApproval(CreditRenounceDTO dto) {
 		return db.update("Admin.creditRenounce",dto);
 	}
-	
-	// 신청결과 메일 통지
-	public int sendMail(MailDTO dto) {
-		return db.insert("Admin.sendMail",dto);
-	}
-	
-	// 수신인 목록
-	public List<StudentDTO> getReceiverList(){
-		return db.selectList("Admin.getReceiverList");
-	}
-	
-	// 수신인 이름
-	public List<StudentDTO> getReceiverName(){
-		return db.selectList("Admin.getReceiverName");
-	}
-	
-	// 발신메일함 목록
-	public List<MailDTO> getOutBox(){
-		return db.selectList("Admin.getOutBox");
-	}
 }

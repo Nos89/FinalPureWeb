@@ -31,28 +31,28 @@ public class WebhardDAO {
 	}
 
 	// 폴더 생성
-	public int createFolder(Map<String, Object> map) {
-		return session.insert("Webhard.createFolder", map);
+	public int createFolder(Map<String, Object> param ) {
+		return session.insert("Webhard.createFolder", param);
 	}
 
 	// 파일 정보 저장
-	public int saveFile(Map<String, Object> map) {
-		return session.insert("Webhard.saveFile", map);
+	public int saveFile(Map<String, Object> param ) {
+		return session.insert("Webhard.saveFile", param);
 	}
 
 	// 폴더 파일 가져오기
-	public List<CloudDTO> getFiles(Map<String, Object> map){
-		return session.selectList("Webhard.getFiles", map);
+	public List<CloudDTO> getFiles(Map<String, Object> param ){
+		return session.selectList("Webhard.getFiles", param);
 	}
 	
 	// 하위 폴더 가져오기
-	public List<DirectoryDTO> getFolder(Map<String, Object> map){
-		return session.selectList("Webhard.getFolder", map);
+	public List<DirectoryDTO> getFolder(Map<String, Object> param ){
+		return session.selectList("Webhard.getFolder", param);
 	}
 	
 	// 파일 삭제
-	public int delFile(Map<String, Object> map ) {
-		return session.delete("Webhard.delFile", map);
+	public int delFile(Map<String, Object> param ) {
+		return session.delete("Webhard.delFile", param);
 	}
 	
 	// 폴더 삭제
@@ -66,12 +66,12 @@ public class WebhardDAO {
 	}
 	
 	// 폴더 이동
-	public int moveFolder(Map<String, Object> map ) {
-		return session.update("Webhard.moveFolder", map);
+	public int moveFolder(Map<String, Object> param ) {
+		return session.update("Webhard.moveFolder", param);
 	}
 	
 	// 파일 이동
-	public int moveFile(Map<String, Object> map ) {
-		return session.update("Webhard.moveFile", map);
+	public int moveFile(Map<String, Object> param ) {
+		return session.update("Webhard.moveFile", param);
 	}
 }

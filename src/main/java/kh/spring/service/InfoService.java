@@ -93,6 +93,9 @@ public class InfoService {
 		parm.put("pw", pw);
 		return idao.changePW(parm);
 	}
-
+	
+	public int getUnreadMailNum(String id) {
+		return idao.getUnreadMailNum(id);
+	}
 
 }
