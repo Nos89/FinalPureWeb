@@ -314,7 +314,7 @@
 </update>
 
 <select id="getCloudStorage" resultType="kh.spring.dto.CloudStorageDTO">
-	SELECT C.ID, NAME, MAXSTORAGE FROM CLOUDSTORAGE C, USERS U WHERE C.ID=U.ID
+	SELECT C.ID, NAME, MAXSTORAGE FROM CLOUDSTORAGE C, USERS U WHERE C.ID=U.ID ORDER BY C.ID
 </select>
 
 <update id="modifyCloudStorage" parameterType="java.util.List">
