@@ -84,4 +84,19 @@ public class WebhardDAO {
 	public int getRootSeq( String id ) {
 		return session.selectOne("Webhard.getRootSeq", id);
 	}
+	
+	// 최대 저장 용량
+	public int getMaxStorage(String id) {
+		return session.selectOne("Webhard.getMaxStorage",id);
+	}
+	
+	// 유저 용량 등록
+	public int addUserStorage(String id) {
+		return session.insert("Webhard.addUserStorage",id);
+	}
+	
+	// 유저 용량 삭제
+	public int deleteUserStorage(String id) {
+		return session.delete("Webhard.deleteUserStorage",id);
+	}
 }
