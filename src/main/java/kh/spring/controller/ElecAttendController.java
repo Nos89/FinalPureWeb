@@ -54,7 +54,6 @@ public class ElecAttendController {
 			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
 			Date tempDate = sdf.parse(regDate);
 			List<ElecSelectClassDTO> classList = eservice.getClassList(id, tempDate);
-			//System.out.println("classList size 확인: "+ classList.size());
 			
 			if (className != null) {
 				sdf = new SimpleDateFormat("yy/MM/dd");
@@ -76,7 +75,6 @@ public class ElecAttendController {
 
 			model.addAttribute("semester", semester);
 			model.addAttribute("className", className);
-			System.out.println("elect 컨트롤러 className : "+ className);
 			model.addAttribute("classList", classList);
 		}
 		else if (sem.contentEquals("2학기")) {
