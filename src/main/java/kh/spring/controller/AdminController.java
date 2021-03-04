@@ -232,7 +232,6 @@ public class AdminController {
 		return new NexacroResult();
 	}
 	
-	
 	//게시판 수정시 글에 첨부된 파일목록 불러오기
 	@RequestMapping("getFileList.nex")
 	public NexacroResult getFileList(@ParamVariable(name="seq")int seq) {
