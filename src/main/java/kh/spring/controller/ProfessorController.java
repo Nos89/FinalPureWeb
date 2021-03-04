@@ -130,8 +130,7 @@ public class ProfessorController {
 		}
 		return nr;
 	}
-	
-	
+		
 	@RequestMapping("/updateProSchedule.nex")
 	public NexacroResult updateProSchedule(@ParamDataSet(name="in_ds")ProScheduleDTO_NEX dto, @ParamVariable(name="id")String id)throws Exception {
 		NexacroResult nr = new NexacroResult();
