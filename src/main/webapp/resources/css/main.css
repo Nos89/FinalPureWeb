@@ -179,18 +179,6 @@
 
 /* footer */
 .footer{background-color:#292f3c;}
-.container-fluid .footer .footerItem{
-	float: left;
-	height:30px;
-	border-right: 1px solid #949494;
-	padding: 0px 10px;
-	color :#696d76;
-	margin-top : 10px;
-}
-
-.container-fluid .footer .footerItem:last-child{
-	border-right: none;
-}
 .footerBox>div>a{font-size:15px; color: #696d76;border-right: 1px solid #949494; padding-right:3px;}
 #borderNone{border:none;}
 

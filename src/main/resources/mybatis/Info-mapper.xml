@@ -50,14 +50,16 @@
 	<select id="getColSchedule" resultType="kh.spring.dto.ColScheduleDTO">
  		 select * from Col_schedule  
  		 where to_char(sche_startdate, 'yyyymmdd') like '%'||to_char(#{value}, 'yyyymm')||'%'
- 		 	or to_char(sche_enddate, 'yyyymmdd') like '%'||to_char(#{value}, 'yyyymm')||'%' order by sche_startdate desc
+ 		 	or to_char(sche_enddate, 'yyyymmdd') like '%'||to_char(#{value}, 'yyyymm')||'%' order by sche_startdate asc
 	</select>
 	
 	
 	<!--로그인 페이지, 최근 4개 학사일정 -->
 	<select id="get4ColSchedule" resultType="kh.spring.dto.ColScheduleDTO">
  		SELECT * FROM (SELECT Col_schedule.*, ROW_NUMBER() OVER(ORDER BY sche_startdate DESC) N
-					FROM Col_schedule  where to_char(sche_startdate, 'yyyymmdd') like '%'||to_char(#{value}, 'yyyymm')||'%' or to_char(sche_enddate, 'yyyymmdd') like '%'||to_char(#{value}, 'yyyymm')||'%') WHERE (N BETWEEN 1 AND 4)
+					FROM Col_schedule  where to_char(sche_startdate, 'yyyymmdd') like '%'||to_char(#{value}, 'yyyymm')||'%' or to_char(sche_enddate, 'yyyymmdd') like '%'||to_char(#{value}, 'yyyymm')||'%' order by sche_startdate asc) 
+					WHERE (N BETWEEN 1 AND 4)
+					
 	</select>
 	<!-- 아이디 비번 찾기 -->
 	<select id="findIDPW" resultType="String">
