@@ -142,8 +142,6 @@
 				#{zipcode},#{addr1},#{addr2},#{email},#{phone},#{bank},#{accountnum})
 		INTO PROFESSOR(PRO_ID,PRO_OFFICE,PRO_STATUS)
 		VALUES(#{id},#{pro_office},#{pro_status})
-		INTO DIRECTORY(DIRID,USERID,DIRECTORYNAME,PARENTID,LV,CRTDATE)
-		VALUES(DIR_SEQ.NEXTVAL,#{id},#{id},null,0,SYSDATE)
 		SELECT * FROM DUAL
 </insert>
 
@@ -184,8 +182,6 @@
 				#{zipcode},#{addr1},#{addr2},#{email},#{phone},#{bank},#{accountnum})
 		INTO STUDENTS(ID,STD_STATUS, STD_YEAR)
 		VALUES(#{id},#{std_status},#{std_year})
-		INTO DIRECTORY(DIRID,USERID,DIRECTORYNAME,PARENTID,LV,CRTDATE)
-		VALUES(DIR_SEQ.NEXTVAL,#{id},#{id},null,0,SYSDATE)
 		SELECT * FROM DUAL
 </insert>
 
