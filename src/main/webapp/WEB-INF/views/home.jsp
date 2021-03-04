@@ -10,6 +10,18 @@
 					<div><img src="/resources/img/home/homeSlider03.jpg"></div>
 				</div>
 			</div>
+			<div class="row goBox mb-4">
+				<div class="col-12 col-lg-6 p-0">
+					<a href="/main?pageGroup=admission&type=susi">
+						<img src="/resources/img/home/admissionInfo.png">
+					</a>
+				</div>
+				<div class="col-12 col-lg-6 gotoPortal p-0">
+					<a href="/info" class="d-flex align-items-center text-center">
+						<img src="/resources/img/home/infoPage.png">
+					</a>
+				</div>
+			</div>
 			<div class="col-1"></div>
 			<div class="col-10 advSliderWrapper p-0">
 				<div class="advSlider"></div>
@@ -18,7 +30,7 @@
 			<div class="col-1 pt-3 mb-3"></div>
 			<div class="col-10 pt-3 mb-3">
 				<div class="row">
-					<div class="col-12 col-lg-6 rounded">
+					<div class="col-12 col-lg-7 rounded">
 						<div class="row p-0 noticeBoardWrapper">
 							<div class="col-10 p-0">
 								<div class="boardTitleWrapper">
@@ -34,7 +46,7 @@
 							<div class="row border border-secondary rounded noticeWrapper p-0"></div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-3 mt-2 mt-lg-0">
+					<div class="col-12 col-lg-5 mt-2 mt-lg-0">
 						<div class="row">
 							<div class="col-8 col-lg-7 p-0">
 								<button class="btn btn-primary" disabled>학사일정</button>
@@ -56,20 +68,6 @@
 								</div>
 							</div>
 							</c:forEach>
-						</div>
-					</div>
-					<div class="col-12 col-lg-3 text-center mt-2 mt-lg-0">
-						<div class="row goBox ml-1">
-							<div class="col-6 col-lg-12 p-0">
-								<a href="/main?pageGroup=admission&type=susi">
-									<img src="/resources/img/home/admissionInfo.png" class="rounded-pill">
-								</a>
-							</div>
-							<div class="col-6 col-lg-12 gotoPortal p-0">
-								<a href="/info" class="d-flex align-items-center text-center">
-									<img src="/resources/img/home/infoPage.png" class="rounded-pill">
-								</a>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -247,20 +245,9 @@
 							
 							noticeWriteDate = $("<div></div>");
 							noticeWriteDate.addClass("col-3");
-							var writeDate = noti.noti_writeDate.split(" ");
-							console.log(writeDate);
-							var y = writeDate[2].substring(2, 5);
-							console.log(writeDate[0].indexOf("월"));
-							var m = writeDate[0].substring(0, writeDate[0].indexOf("월"));
-							var d = writeDate[1].split(",")[0];
-							if( m.length == 1 ){
-								m = "0" + m;
-							}
-							if( d.length == 1 ){
-								d = "0" + d;
-							}
-							var formattedDate = y + "-" + m + "-" + d;
-							noticeWriteDate.append(formattedDate);
+							console.log( "서버에서 넘어온 formatDate 값 : " + noti.formatDate);
+							
+							noticeWriteDate.append(noti.formatDate);
 							notiItem.append(noticeWriteDate);
 							
 							noticeItemWrapper.append(notiItem);
@@ -294,9 +281,7 @@
 							})
 					
 					$(".goBox").children().children().children().hover(function(){
-						$(this).removeClass("rounded-pill");
 					}, function(){
-						$(this).addClass("rounded-pill");
 					})
 				}
 			</script>

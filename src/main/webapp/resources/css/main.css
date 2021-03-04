@@ -80,6 +80,10 @@
 	font-weight: bold;
 }
 
+.container-fluid .body .goBox {
+	padding-left : 2rem;
+}
+
 /* leftMenu */
 .container-fluid .body .leftMenu a{
 	display: inline-block;

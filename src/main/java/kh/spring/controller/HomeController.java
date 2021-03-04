@@ -46,7 +46,13 @@ public class HomeController {
 	@RequestMapping("/")
 	public String home(Locale locale, Model model) {
 		model.addAttribute("promote", bservice.getPromote());
-		model.addAttribute("notice", bservice.getNotice("학사"));
+		List<NoticeDTO> nlist = bservice.getNotice("학사");
+		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+		for( NoticeDTO n : nlist ) {
+			n.setFormatDate(sdf.format(n.getNoti_writeDate()));
+			System.out.println(n.getFormatDate());
+		}
+		model.addAttribute("notice", nlist);
 		model.addAttribute("colSchedule", cservice.getColSchedule());
 		return "home";
 	}
@@ -55,6 +61,10 @@ public class HomeController {
 	@ResponseBody
 	public String getNotice(String division) {
 		List<NoticeDTO> list = bservice.getNotice(division);
+		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+		for( NoticeDTO n : list ) {
+			n.setFormatDate(sdf.format(n.getNoti_writeDate()));
+		}
 		Gson gs = new Gson();
 		JsonArray jrr = new JsonArray();
 		for( NoticeDTO d : list ) {
