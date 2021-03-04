@@ -89,7 +89,7 @@
 	
 	<!-- 유저별 용량 추가 -->
 	<insert id="addUserStorage">
-		INSERT INTO CLOUDSTORAGE VALUES(#{value},52428800)
+		INSERT INTO CLOUDSTORAGE VALUES(#{value},20971520)
 	</insert>
 	
 	<delete id="deleteUserStorage">

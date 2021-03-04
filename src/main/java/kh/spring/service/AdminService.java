@@ -23,7 +23,6 @@ import kh.spring.dto.BuildDTO;
 import kh.spring.dto.ChangeDeptApplyDTO;
 import kh.spring.dto.ChangeDeptApplyDTO_NEX;
 import kh.spring.dto.ClassroomDTO;
-
 import kh.spring.dto.CloudDTO;
 import kh.spring.dto.CloudStorageDTO;
 import kh.spring.dto.ColScheduleDTO;
@@ -212,7 +211,11 @@ public class AdminService {
 
 	// 교수 목록 가져오기
 	public List<ProfessorDTO> getProfessor() throws Exception {
-		return admdao.getProfessor();
+		List<ProfessorDTO> list = admdao.getProfessor();
+		if( list.size() == 0 ) {
+			list.add(new ProfessorDTO());
+		}
+		return list;
 	}
 
 	// 교수 추가, 수정
@@ -241,7 +244,11 @@ public class AdminService {
 
 	// 학생 목록 가져오기
 	public List<StudentDTO> getStudentOnLoad() throws Exception {
-		return admdao.getStudentOnLoad();
+		List<StudentDTO> list = admdao.getStudentOnLoad();
+		if( list.size() == 0 ) {
+			list.add(new StudentDTO());
+		}
+		return list;
 	}
 
 	// 학생 추가,수정
