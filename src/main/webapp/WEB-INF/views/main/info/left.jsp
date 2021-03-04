@@ -6,11 +6,11 @@
 			<ul class="list-group leftMenuWrapper">
 			  <li class="list-group-item p-0 pt-2 pb-2 leftItem"><a href="/main?pageGroup=info&type=info">학사 일정</a></li>
 			  <li class="list-group-item p-0 pt-2 pb-2">
-			  	<button class="collapseControl" type="button" data-toggle="collapse" data-target="#curriculumnCollapse">교과 과정</button>
-			  	<div class="collapse leftCollapseItem" id="curriculumnCollapse">
+			  	<button class="collapseControl" type="button" data-toggle="collapse" data-target="#curriculumCollapse">교과 과정</button>
+			  	<div class="collapse leftCollapseItem" id="curriculumCollapse">
 			  		<ul class="list-group">
-					  <li class="list-group-item leftItem"><a href="/main?pageGroup=class&type=gradeAnnouncement">복수전공 / 부전공</a> </li>
-					  <li class="list-group-item leftItem"><a href="/main?pageGroup=class&type=testAndGrade">교직과정</a></li>
+					  <li class="list-group-item leftItem"><a href="/main?pageGroup=curriculum&type=multipleMajor">복수전공 / 부전공</a> </li>
+					  <li class="list-group-item leftItem"><a href="/main?pageGroup=curriculum&type=teachingCourse">교직과정</a></li>
 					</ul>
 			  	</div>
 			  	</li>

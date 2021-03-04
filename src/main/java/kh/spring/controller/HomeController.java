@@ -1,11 +1,16 @@
 package kh.spring.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +46,13 @@ public class HomeController {
 	@RequestMapping("/")
 	public String home(Locale locale, Model model) {
 		model.addAttribute("promote", bservice.getPromote());
-		model.addAttribute("notice", bservice.getNotice("학사"));
+		List<NoticeDTO> nlist = bservice.getNotice("학사");
+		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+		for( NoticeDTO n : nlist ) {
+			n.setFormatDate(sdf.format(n.getNoti_writeDate()));
+			System.out.println(n.getFormatDate());
+		}
+		model.addAttribute("notice", nlist);
 		model.addAttribute("colSchedule", cservice.getColSchedule());
 		return "home";
 	}
@@ -50,6 +61,10 @@ public class HomeController {
 	@ResponseBody
 	public String getNotice(String division) {
 		List<NoticeDTO> list = bservice.getNotice(division);
+		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+		for( NoticeDTO n : list ) {
+			n.setFormatDate(sdf.format(n.getNoti_writeDate()));
+		}
 		Gson gs = new Gson();
 		JsonArray jrr = new JsonArray();
 		for( NoticeDTO d : list ) {
@@ -59,7 +74,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/main")
-	public String simplePageGoTo(String pageGroup, String type, Model model) throws ParseException {
+	public String simplePageGoTo(String pageGroup, String type, Model model, HttpServletResponse response) throws ParseException {
 		model.addAttribute("type", type);
 		model.addAttribute("pageGroup", pageGroup);
 		System.out.println(type + " : " + pageGroup);

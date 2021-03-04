@@ -80,6 +80,10 @@
 	font-weight: bold;
 }
 
+.container-fluid .body .goBox {
+	padding-left : 2rem;
+}
+
 /* leftMenu */
 .container-fluid .body .leftMenu a{
 	display: inline-block;
@@ -153,7 +157,7 @@
 
 .headerWrapper{border-top:2px solid black; border-bottom:1px solid #c7c7c7; height:40px; padding-top:10px;}
 .bodyWrapper{border-bottom :1px solid #c7c7c7;}
-.bodyWrapper .row{border-bottom:1px solid #c7c7c7; height:30px;}
+.bodyWrapper .row{border-bottom:1px solid #c7c7c7; height:40px; padding-top:10px; padding-bottom:10px;}
 
 .writerWrapper{}
 /* 댓글 */

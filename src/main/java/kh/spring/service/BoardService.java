@@ -70,8 +70,8 @@ public class BoardService {
 		param.put("startNumByPage", navi.get("startNumByPage"));
 		param.put("endNumByPage", navi.get("endNumByPage"));
 		
-		Map<String, Object> temp = new HashMap<>();
-		temp.put("navi", navi);
+		Map<String, Object> result = new HashMap<>();
+		result.put("navi", navi);
 		if( type.contentEquals("notice") ) {
 			param.put("category", category);
 			List<NoticeDTO> list = bdao.getNoticesByPage(param);
@@ -79,13 +79,13 @@ public class BoardService {
 			for( NoticeDTO n : list ) {
 				clist.add(this.convertNoti(n));
 			}
-			temp.put("list", clist);
+			result.put("list", clist);
 		} else {
 			List<BoardDTO> list = bdao.getArticleByPage(param);
 			System.out.println(list.size());
-			temp.put("list", list);
+			result.put("list", list);
 		}
-		return temp;
+		return result;
 	}
 	
 	// 게시글 보기
