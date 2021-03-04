@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,6 +55,8 @@ public class AdminController {
 	private AdminService admService;
 	@Autowired
 	CommentService cservice;
+	@Autowired
+	HttpSession session;
 	
 	
 	@Autowired
@@ -169,6 +172,7 @@ public class AdminController {
 	@RequestMapping("writeBoard.nex")
 	public NexacroResult writePost(@ParamDataSet(name="in_board")BoardDTO dto) {
 		NexacroResult nr = new NexacroResult();
+		dto.setWriter((String)session.getAttribute("loginID"));
 		int seq = admService.writePost(dto);
 		nr.addVariable("param",seq);
 		return nr;
