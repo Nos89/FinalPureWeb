@@ -1,5 +1,6 @@
 package kh.spring.service;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,11 +22,17 @@ public class CommentService {
 	public Map<String, Object> getComments( int seq, int commentsPage ){
 		int recordTotalCount = this.commentsCount(seq);
 		Map<String, Object> navi = this.getNavigator(recordTotalCount, commentsPage);
-		Map<String, Object> temp = new HashMap<>();
-		temp.put("seq", seq);
-		temp.put("startNumByPage", navi.get("startNumByPage"));
-		temp.put("endNumByPage", navi.get("endNumByPage"));
-		List<CommentsDTO> list =  cdao.getComments(temp);
+		Map<String, Object> param = new HashMap<>();
+		param.put("seq", seq);
+		param.put("startNumByPage", navi.get("startNumByPage"));
+		param.put("endNumByPage", navi.get("endNumByPage"));
+		List<CommentsDTO> list =  cdao.getComments(param);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for( CommentsDTO cdto : list ) {
+			cdto.setFormatDate(sdf.format(cdto.getReg_date()));
+		}
 		Map<String, Object> result = new HashMap<>();
 		result.put("navi", navi);
 		result.put("list", list);
@@ -39,11 +46,11 @@ public class CommentService {
 	
 	// 댓글 입력하기
 	public int insertComment( int parent_code, String writer, String contents) {
-		Map<String, Object> temp = new HashMap<>();
-		temp.put("parent_code", parent_code);
-		temp.put("writer", writer);
-		temp.put("contents", contents);
-		return cdao.insertComment(temp);
+		Map<String, Object> param = new HashMap<>();
+		param.put("parent_code", parent_code);
+		param.put("writer", writer);
+		param.put("contents", contents);
+		return cdao.insertComment(param);
 	}
 	
 	// 댓글 삭제

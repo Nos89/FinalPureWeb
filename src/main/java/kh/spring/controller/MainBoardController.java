@@ -174,12 +174,10 @@ public class MainBoardController {
 		if (search != null) {
 			model.addAttribute("search", search);
 		}
-		System.out.println(category);
 		if (category != null) {
 			model.addAttribute("category", category);
 		}
 		model.addAttribute("files", bservice.getFiles(seq));
-		System.out.println(bservice.getFiles(seq).size());
 		// 댓글
 		model.addAttribute("commentPage", this.convertPage(commentPage));
 		model.addAttribute("comments", cservice.getComments(seq, this.convertPage(commentPage)));
