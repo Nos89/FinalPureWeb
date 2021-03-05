@@ -54,6 +54,7 @@ public class ProfessorDAO {
 		return db.delete("Professor.delProSchedule", list);
 	}
 	public int insertProSchedule(ProScheduleDTO dto) {
+		System.out.println(dto.getSche_date() + dto.getSche_title()+dto.getCheck()+dto.getSche_proId()+dto.getSche_proName());
 		return db.insert("Professor.insertProSchedule", dto);	
 	}
 	public int updateProSchedule(ProScheduleDTO dto) {

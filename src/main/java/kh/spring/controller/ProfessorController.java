@@ -118,7 +118,7 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping("/delProSchedule.nex")
-	public NexacroResult delProSchedule(@ParamDataSet(name="in_ds")List<ProScheduleDTO_NEX> list) {
+	public NexacroResult delProSchedule(@ParamDataSet(name="in_ds")List<ProScheduleDTO_NEX> list)throws Exception {
 		NexacroResult nr = new NexacroResult();
 		int result = pservice.delProSchedule(list);
 		if(result != -1) {
@@ -130,11 +130,11 @@ public class ProfessorController {
 		}
 		return nr;
 	}
-	
-	
+		
 	@RequestMapping("/updateProSchedule.nex")
-	public NexacroResult updateProSchedule(@ParamDataSet(name="in_ds")ProScheduleDTO_NEX dto, @ParamVariable(name="id")String id) {
+	public NexacroResult updateProSchedule(@ParamDataSet(name="in_ds")ProScheduleDTO_NEX dto, @ParamVariable(name="id")String id)throws Exception {
 		NexacroResult nr = new NexacroResult();
+		System.out.println(dto.getSche_date() + dto.getSche_title()+dto.getCheck()+dto.getSche_proId()+dto.getSche_proName());
 		int result = pservice.updateProSchedule(dto,id);
 		if(result >=1) {
 			nr.setErrorCode(1);
