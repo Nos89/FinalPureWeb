@@ -45,28 +45,28 @@ public class InfoService {
 	}
 
 	//수강과목(학생)
-	public List<TakingClassDTO> takingClass(String id, Date tempDate) {
-		return idao.takingClass(id,tempDate);
+	public List<TakingClassDTO> takingClass(String id, Date tocharDate) {
+		return idao.takingClass(id,tocharDate);
 	}
 	
 	//강의과목(교수)
-	public List<TakingClassDTO> takingClass(String id, String semester, Date tempDate) {
-		return idao.takingClass(id,semester,tempDate);
+	public List<TakingClassDTO> takingClass(String id, String semester, Date tocharDate) {
+		return idao.takingClass(id,semester,tocharDate);
 	}
 
 	//강의시간표(학생)
-	public List<TakingClassDTO> classSche(String id, Date tempDate) {
-		return idao.classSche(id,tempDate);
+	public List<TakingClassDTO> classSche(String id, Date tocharDate) {
+		return idao.classSche(id,tocharDate);
 	}
 
 	//강의시간표(교수)
-	public List<TakingClassDTO> classSche(String id, String semester, Date tempDate) {
-		return idao.classSche(id,semester,tempDate);
+	public List<TakingClassDTO> classSche(String id, String semester, Date tocharDate) {
+		return idao.classSche(id,semester,tocharDate);
 	}
 
 	//학사일정
-	public List<ColScheduleDTO> getColSchedule(Date tempDate) {
-		return idao.getColSchedule(tempDate);
+	public List<ColScheduleDTO> getColSchedule(Date tocharDate) {
+		return idao.getColSchedule(tocharDate);
 	}
 
 	public List<ColScheduleDTO> get4ColSchedule(Date tempDate) {
@@ -74,8 +74,8 @@ public class InfoService {
 	}
 
 	//메인페이지, 달에 맞는 학사일정 리스트로
-	public List<ColScheduleDTO> getMainSchedule(Date tempDate) {
-		return idao.getMainSchedule(tempDate);
+	public List<ColScheduleDTO> getMainSchedule(Date mainDate) {
+		return idao.getMainSchedule(mainDate);
 	}
 	
 	public String findIDPW(String find, String userID, String userName, String pn ) {

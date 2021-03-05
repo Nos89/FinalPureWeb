@@ -106,7 +106,6 @@
 									<c:if test="${number > 3 }">
 										<c:set var="number" value="1" />
 									</c:if>
-
 									<div class=attendInfoContets style="width: 10%;">${i.att_week }</div>
 									<div class=attendInfoContets style="width: 20%;">${number }</div>
 									<div class=attendInfoContets style="width: 40%;">${i.att_date }</div>
@@ -122,7 +121,6 @@
 												<font style="color: #fc1b1b;">${i.att_attend }</font>
 											</c:when>
 										</c:choose>
-
 									</div>
 								</c:forEach>
 

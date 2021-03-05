@@ -51,9 +51,9 @@ public class InfoController {
 		String yearMonth = dayArr[0] + "/" + dayArr[1];
 		
 		SimpleDateFormat fm = new SimpleDateFormat("yy/MM");
-		Date tempDate = fm.parse(yearMonth);
+		Date tocharDate = fm.parse(yearMonth);
 		
-		List<ColScheduleDTO> list_colSche = iservice.getColSchedule(tempDate);
+		List<ColScheduleDTO> list_colSche = iservice.getColSchedule(tocharDate);
 		
 
 		//System.out.println(id + " : " + pw + " : " + result);
@@ -97,14 +97,13 @@ public class InfoController {
 				String semester;
 				if (currentRegMonth >= 1 && currentRegMonth <= 6) {
 					// 1학기
-					classRegDate = currentRegYear + "/02/19";
+					classRegDate = currentRegYear + "/03/05";
 					fm = new SimpleDateFormat("yy/MM/dd");
-					tempDate = fm.parse(classRegDate);
-					//System.out.println("tempDate : " + tempDate);
+					tocharDate = fm.parse(classRegDate);
 
 					semester = "1";
-					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, tempDate);
-					List<TakingClassDTO> list_classSche = iservice.classSche(id, tempDate);
+					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, tocharDate);
+					List<TakingClassDTO> list_classSche = iservice.classSche(id, tocharDate);
 
 					String schedule;
 					String classTitle;
@@ -121,10 +120,10 @@ public class InfoController {
 						String day = format1.format(time1);
 
 						if (schedule.contains("/")) { // 월(1,4)/수(4,7) 수(1,2)/목(3)
-							String[] divSche_temp = schedule.split("/");// 월(1,4) 수(4,7)
+							String[] divSche_arr = schedule.split("/");// 월(1,4) 수(4,7)
 
-							for (int i = 0; i < divSche_temp.length; i++) {
-								String divSche[] = divSche_temp[i].split("\\("); // 월(1,4)
+							for (int i = 0; i < divSche_arr.length; i++) {
+								String divSche[] = divSche_arr[i].split("\\("); // 월(1,4)
 								// System.out.println(divSche[0]); // 월 *****
 								// System.out.println(divSche[1]); // 1,4)
 								divSche[1] = divSche[1].replaceAll("\\)", " "); // )지우기 => 1,4 *****
@@ -233,9 +232,9 @@ public class InfoController {
 					classRegDate = currentRegYear + "-08-22";
 					semester = "2";
 					fm = new SimpleDateFormat("yy-MM-dd");
-					tempDate = fm.parse(classRegDate);
+					tocharDate = fm.parse(classRegDate);
 
-					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, tempDate);
+					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, tocharDate);
 					session.setAttribute("list_takingClass", list_takingClass);
 					session.setAttribute("openClassYear", openClassYear);
 					session.setAttribute("semester", semester);
@@ -254,10 +253,10 @@ public class InfoController {
 					semester = "1";
 					classOpenDate = currentRegYear + "-01-25";
 					fm = new SimpleDateFormat("yy-MM-dd");
-					tempDate = fm.parse(classOpenDate);
+					tocharDate = fm.parse(classOpenDate);
 
-					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, semester, tempDate);
-					List<TakingClassDTO> list_classSche = iservice.classSche(id, semester, tempDate);
+					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, semester, tocharDate);
+					List<TakingClassDTO> list_classSche = iservice.classSche(id, semester, tocharDate);
 
 					String schedule;
 					String classTitle;
@@ -274,10 +273,10 @@ public class InfoController {
 						String day = format1.format(time1);
 
 						if (schedule.contains("/")) { // 월(1,4)/수(4,7) 수(1,2)/목(3)
-							String[] divSche_temp = schedule.split("/");// 월(1,4) 수(4,7)
+							String[] divSche_arr = schedule.split("/");// 월(1,4) 수(4,7)
 
-							for (int i = 0; i < divSche_temp.length; i++) {
-								String divSche[] = divSche_temp[i].split("\\("); // 월(1,4)
+							for (int i = 0; i < divSche_arr.length; i++) {
+								String divSche[] = divSche_arr[i].split("\\("); // 월(1,4)
 								// System.out.println(divSche[0]); // 월 *****
 								// System.out.println(divSche[1]); // 1,4)
 								divSche[1] = divSche[1].replaceAll("\\)", " "); // )지우기 => 1,4 *****
@@ -374,9 +373,9 @@ public class InfoController {
 					classOpenDate = currentRegYear + "-08-22";
 					semester = "2";
 					fm = new SimpleDateFormat("yy-MM-dd");
-					tempDate = fm.parse(classOpenDate);
+					tocharDate = fm.parse(classOpenDate);
 
-					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, semester, tempDate);
+					List<TakingClassDTO> list_takingClass = iservice.takingClass(id, semester, tocharDate);
 					session.setAttribute("list_takingClass", list_takingClass); // 강의항목
 					session.setAttribute("semester", semester); // 학기
 					session.setAttribute("openClassYear", openClassYear); // 개강년도(현재년도)
@@ -412,9 +411,9 @@ public class InfoController {
 		String month_click2 =null;
 		month_click2 = arr[0]+"/0"+Integer.toString(month_click);
 		SimpleDateFormat fm = new SimpleDateFormat("yy/MM");
-		Date tempDate = fm.parse(month_click2);
+		Date mainDate = fm.parse(month_click2);
 		
-		List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(tempDate);
+		List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(mainDate);
 		
 		model.addAttribute("type", "info");
 		model.addAttribute("result", result);

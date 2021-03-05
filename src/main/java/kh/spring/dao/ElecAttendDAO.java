@@ -19,19 +19,17 @@ public class ElecAttendDAO {
 	@Autowired
 	private SqlSession db;
 
-	public List<ElecSelectClassDTO> getClassList(String id, Date tempDate) {
+	public List<ElecSelectClassDTO> getClassList(String id, Date date_registration) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id",id);
-		param.put("regDate",tempDate);
-		System.out.println("elecDAO ID : "+ id);
-		System.out.println("elecDAO regDate : "+ tempDate);
+		param.put("regDate",date_registration);
 		return db.selectList("Elec.getClassList", param);
 	}
 
-	public List<TakingClassDTO> getClassInfo(String id, Date tempDate, String className) {
+	public List<TakingClassDTO> getClassInfo(String id, Date date_registration, String className) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id",id);
-		param.put("regDate",tempDate);
+		param.put("regDate",date_registration);
 		param.put("className",className);
 		return db.selectList("Elec.getClassInfo", param);
 	}

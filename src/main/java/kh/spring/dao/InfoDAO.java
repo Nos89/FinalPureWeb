@@ -52,25 +52,25 @@ public class InfoDAO {
 		return db.selectList("Info.recentEnter");
 	}
 
-	public List<TakingClassDTO> takingClass(String id, Date tempDate) {
+	public List<TakingClassDTO> takingClass(String id, Date tocharDate) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id",id);
-		param.put("classRegDate",tempDate);
+		param.put("classRegDate",tocharDate);
 		return db.selectList("Info.takingClass_std", param);
 	}
 
-	public List<TakingClassDTO> takingClass(String id, String semester, Date tempDate) {
+	public List<TakingClassDTO> takingClass(String id, String semester, Date tocharDate) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id",id);
 		param.put("semester",semester);
-		param.put("classOpenDate",tempDate);
+		param.put("classOpenDate",tocharDate);
 		return db.selectList("Info.takingClass_pro", param);
 	}
 
-	public List<TakingClassDTO> classSche(String id, Date tempDate) {
+	public List<TakingClassDTO> classSche(String id, Date tocharDate) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id",id);
-		param.put("classRegDate",tempDate);
+		param.put("classRegDate",tocharDate);
 		return db.selectList("Info.takingClass_std", param);
 	}
 
@@ -82,17 +82,17 @@ public class InfoDAO {
 		return db.selectList("Info.takingClass_pro", param);
 	}
 
-	public List<ColScheduleDTO> getColSchedule(Date tempDate) {
-		return db.selectList("Info.getColSchedule",tempDate);
+	public List<ColScheduleDTO> getColSchedule(Date tocharDate) {
+		return db.selectList("Info.getColSchedule",tocharDate);
 	}
 
 	public List<ColScheduleDTO> get4ColSchedule(Date tempDate) {
 		return db.selectList("Info.get4ColSchedule",tempDate);
 	}
 	
-	public List<ColScheduleDTO> getMainSchedule(Date tempDate) {
+	public List<ColScheduleDTO> getMainSchedule(Date mainDate) {
 		//System.out.println("infoDAO tempdate : " + tempDate);
-		return db.selectList("Info.getColSchedule", tempDate);
+		return db.selectList("Info.getColSchedule", mainDate);
 	}
 
 	public String findIDPW(Map<String, String> parm) {
