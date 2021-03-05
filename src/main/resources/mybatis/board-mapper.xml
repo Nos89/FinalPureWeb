@@ -173,9 +173,9 @@
 		select * 
 		from (
 		    select board.*, row_number() over( order by writedate desc ) rn 
-		    from board where division_code = 4
+		    from board where division_code = ( select code from board_division where title = 'promote' )
 		)
-		where division_code = 4 and rn between 1 and 10
+		where rn between 1 and 10
 	</select>
 	
 	<!-- 메인 홈페이지 공지 게시글 10개 가져오기 -->

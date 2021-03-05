@@ -59,9 +59,6 @@ public class AdminController {
 	HttpSession session;
 	
 	@Autowired
-	HttpSession session;
-	
-	@Autowired
 	private BoardService bService;
 	
 	// 공지사항 로드
