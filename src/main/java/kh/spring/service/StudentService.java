@@ -12,12 +12,12 @@ import kh.spring.dao.StudentDAO;
 import kh.spring.dto.ChangeDeptApplyDTO;
 import kh.spring.dto.ClassTimeDTO;
 import kh.spring.dto.ClassTimeSearchDTO;
+import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.ConditionForMyClassDTO;
 import kh.spring.dto.ConditionForRoomInfoDTO;
+import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.GotMyCertificationDTO;
 import kh.spring.dto.GradeListDTO;
-import kh.spring.dto.MailDTO;
-import kh.spring.dto.MailDTO_NEX;
 import kh.spring.dto.MajorApplyDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.MyClassDTO;
@@ -30,7 +30,6 @@ import kh.spring.dto.StuUpdateDTO;
 import kh.spring.dto.StudentDetailDTO;
 import kh.spring.dto.StudentInfoDTO;
 import kh.spring.dto.TakeOffApplyDTO;
-import kh.spring.utils.ConvertDate;
 
 @Service
 public class StudentService {
@@ -243,5 +242,12 @@ public class StudentService {
 		menu.put("MENU_NM", menu_nm);
 		return sdao.checkMyMenu(menu);
 	}
-
+	
+	public List<CollegeDTO> getCollege(){
+		return sdao.getCollege();
+	}
+	
+	public List<CollegeDTO> getDepartment(){
+		return sdao.getDepartment();
+	}
 }
