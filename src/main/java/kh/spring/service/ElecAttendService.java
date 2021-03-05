@@ -18,12 +18,12 @@ public class ElecAttendService {
 	@Autowired
 	ElecAttendDAO edao;
 
-	public List<ElecSelectClassDTO> getClassList(String id, Date tempDate) {
-		return edao.getClassList(id,tempDate);
+	public List<ElecSelectClassDTO> getClassList(String id, Date date_registration) {
+		return edao.getClassList(id,date_registration);
 	}
 
-	public List<TakingClassDTO> getClassInfo(String id, Date tempDate, String className) {
-		return edao.getClassInfo(id,tempDate,className);
+	public List<TakingClassDTO> getClassInfo(String id, Date date_registration, String className) {
+		return edao.getClassInfo(id,date_registration,className);
 	}
 
 
