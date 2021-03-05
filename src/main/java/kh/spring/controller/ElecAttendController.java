@@ -50,7 +50,7 @@ public class ElecAttendController {
 		String sem = arr[1];
 
 		if (sem.contentEquals("1학기")) {
-			String regDate = arr[0] + "/02/19";
+			String regDate = arr[0] + "/03/05";
 			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
 			Date tempDate = sdf.parse(regDate);
 			List<ElecSelectClassDTO> classList = eservice.getClassList(id, tempDate);
