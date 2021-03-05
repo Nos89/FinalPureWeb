@@ -18,12 +18,12 @@ import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 import kh.spring.dto.ChangeDeptApplyDTO;
 import kh.spring.dto.ClassTimeDTO;
 import kh.spring.dto.ClassTimeSearchDTO;
+import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.ConditionForMyClassDTO;
 import kh.spring.dto.ConditionForRoomInfoDTO;
+import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.GotMyCertificationDTO;
 import kh.spring.dto.GradeListDTO;
-import kh.spring.dto.MailDTO;
-import kh.spring.dto.MailDTO_NEX;
 import kh.spring.dto.MajorApplyDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.MyClassDTO;
@@ -146,8 +146,20 @@ public class StudentController {
 		List<ClassTimeSearchDTO> ctsList = new ArrayList<>();
 		ctsList = sservice.selectAllCTS();
 		
-		nr.addDataSet("out_classList",ctsList);
+		List<CollegeDTO> outCode01 = new ArrayList<>();
+		CollegeDTO dto = new CollegeDTO();
+		dto.setCol_code("-1");
+		dto.setCol_title("--선택--");
+		outCode01.add(dto);
+		outCode01.addAll(sservice.getCollege());
 		
+		List<CollegeDTO> outCode02 = new ArrayList<>();
+		outCode02.add(dto);
+		outCode02.addAll(sservice.getDepartment());
+		
+		nr.addDataSet("out_classList",ctsList);
+		nr.addDataSet("out_code01",outCode01);
+		nr.addDataSet("out_code02",outCode02);
 		return nr;
 	}
 	
