@@ -213,7 +213,7 @@
 	UPDATE LECTURE SET LEC_APPROVAL=#{lec_approval} WHERE LEC_CODE=#{lec_code}
 </update>
 <update id="classOpened">
-	UPDATE OPEN_CLASS SET IS_OC_CLOSE='N' WHERE OC_CODE=#{lec_code}
+	UPDATE OPEN_CLASS SET OC_IS_CLOSE='N' WHERE OC_CODE=#{lec_code}
 </update>
 
 <update id="syllabusRejected">

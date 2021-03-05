@@ -368,7 +368,7 @@
 								<c:when test="${userPart == '학생' }">
 									<div class="col-12 col-sm-4 my">
 										<div class=name>${userName }님</div>
-										<div class="major">${userMajor }학과</div>
+										<div class="major">${userMajor }</div>
 										<div class="mail">
 											<div class=mail_notRead>안 읽은 메일</div>
 											<div class="mail_notReadNum">${unread}건</div>
@@ -378,7 +378,7 @@
 								<c:when test="${userPart == '교수' }">
 									<div class="col-12 col-sm-4 my">
 										<div class=name>${userName }님</div>
-										<div class="major">${userMajor }학과</div>
+										<div class="major">${userMajor }</div>
 										<div class="mail">
 											<div class=mail_notRead>안 읽은 메일</div>
 											<div class="mail_notReadNum">${unread}건</div>

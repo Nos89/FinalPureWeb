@@ -263,7 +263,7 @@ public class AdminDAO {
 	
 	// 학점포기신청 처리
 	public int creditRenounceApproval(CreditRenounceDTO dto) {
-		return db.update("Admin.creditRenounce",dto);
+		return db.update("Admin.creditRenounceApproval",dto);
 	}
 	
 	// 웹하드 이용 명단
