@@ -22,9 +22,13 @@ from military m, militarygroup g
 	</select>
 	
 	<update id="proInfoUpdate">
-		update users set name=#{name},gender=#{gender},country=#{country},birth=#{birth},indate=#{inDate},outdate=#{outDate},
+		update users set name=#{name},gender=#{gender},country=#{country},birth=#{birth},indate=#{inDate},
 		zipcode=#{zipcode},addr1=#{addr1},addr2=#{addr2},email=#{email},phone=#{phone},bank=#{bank},accountnum=#{accountnum}
 		where id=#{id}
+	</update>
+	
+	<update id="proMillUpdate">
+		update military set mil_indate=#{mil_inDate}, mil_outdate=#{mil_outDate},mil_groupcode=(select mil_groupcode from militarygroup where mil_title=#{mil_title}) where std_code=#{std_code}
 	</update>
 	
 	<select id="selectProList" resultType="kh.spring.dto.ProListDTO">
