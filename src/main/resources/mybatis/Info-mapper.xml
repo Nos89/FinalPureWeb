@@ -42,7 +42,7 @@
 	<select id="takingClass_pro" resultType="kh.spring.dto.TakingClassDTO">
 		select lec_isu,lec_title,lec_score,lec_schedule,lec_classroom from lecture 
 		where lec_code IN  
-			(select oc_code from open_class where oc_semester=#{semester}  and oc_year=#{classOpenDate} AND oc_pro_code=#{id} )
+			(select oc_code from open_class where oc_semester=#{semester}  and to_char(oc_year, 'yyyymmdd') = to_char(#{classOpenDate},'yyyymmdd') AND oc_pro_code=#{id})
 	</select>
 	
 	
