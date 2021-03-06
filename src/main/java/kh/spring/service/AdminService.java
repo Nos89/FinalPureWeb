@@ -228,7 +228,6 @@ public class AdminService {
 			this.createRootFolder(dto.getId());
 		} else if (rowType == DataSet.ROW_TYPE_UPDATED) {
 			result = admdao.modifyProfessor(dto);
-			wservice.deleteUserStorage(dto.getId());
 		} else {
 			result = -1;
 		}
@@ -239,6 +238,7 @@ public class AdminService {
 	@Transactional
 	public int deleteProfessor(String id, String filePath) {
 		this.deleteRootFolder(id, filePath);
+		wservice.deleteUserStorage(id);
 		return admdao.deleteProfessor(id);
 	}
 
@@ -261,7 +261,6 @@ public class AdminService {
 			this.createRootFolder(dto.getId());
 		} else if (rowType == DataSet.ROW_TYPE_UPDATED) {
 			result = admdao.modifyStudent(dto);
-			wservice.deleteUserStorage(dto.getId());
 		} else {
 			result = -1;
 		}
@@ -272,6 +271,7 @@ public class AdminService {
 	@Transactional
 	public int deleteStudent(String id, String filePath) {
 		this.deleteRootFolder(id, filePath);
+		wservice.deleteUserStorage(id);
 		return admdao.deleteStudent(id);
 	}
 
