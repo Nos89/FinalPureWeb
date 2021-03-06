@@ -9,13 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dao.StudentDAO;
-import kh.spring.dto.ChangeDeptApplyDTO;
+import kh.spring.dto.ChangeDeptApplyForStdDTO;
 import kh.spring.dto.ClassTimeDTO;
 import kh.spring.dto.ClassTimeSearchDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.ConditionForMyClassDTO;
 import kh.spring.dto.ConditionForRoomInfoDTO;
-import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.GotMyCertificationDTO;
 import kh.spring.dto.GradeListDTO;
 import kh.spring.dto.MajorApplyDTO;
@@ -25,11 +24,12 @@ import kh.spring.dto.MyClassListDTO;
 import kh.spring.dto.MyClassTimeDTO;
 import kh.spring.dto.MyGradeDTO;
 import kh.spring.dto.MyMenuDTO;
+import kh.spring.dto.ReturnApplyForStdDTO;
 import kh.spring.dto.RoomInfoDTO;
 import kh.spring.dto.StuUpdateDTO;
 import kh.spring.dto.StudentDetailDTO;
 import kh.spring.dto.StudentInfoDTO;
-import kh.spring.dto.TakeOffApplyDTO;
+import kh.spring.dto.TakeOffApplyForStdDTO;
 
 @Service
 public class StudentService {
@@ -67,22 +67,37 @@ public class StudentService {
 		return sdao.majorApply(major);
 	}
 	
-	public int takeOffApply(TakeOffApplyDTO dto,Date date){
+	public int takeOffApply(TakeOffApplyForStdDTO dto,Date date){
 		Map<String, Object> takeOff = new HashMap<>();
 		takeOff.put("dto", dto);
 		takeOff.put("date",date);
 		return sdao.takeOffApply(takeOff);
 	}
 	
+	public int returnApply(ReturnApplyForStdDTO dto,Date date){
+		Map<String, Object> returnApply = new HashMap<>();
+		returnApply.put("dto", dto);
+		returnApply.put("date",date);
+		return sdao.returnApply(returnApply);
+	}
+	
 	public int checkTakeOffApply(String id) {
 		return sdao.checkTakeOffApply(id);
+	}
+	
+	public int checkReturnApply(String id) {
+		return sdao.checkReturnApply(id);
 	}
 	
 	public String checkStatus(String id) {
 		return sdao.checkStatus(id);
 	}
 	
-	public int changeDeptApply(ChangeDeptApplyDTO dto,Date date){
+	public String checkStatus2(String id) {
+		return sdao.checkStatus(id);
+	}
+	
+	public int changeDeptApply(ChangeDeptApplyForStdDTO dto,Date date){
 		Map<String, Object> changeDept = new HashMap<>();
 		changeDept.put("dto", dto);
 		changeDept.put("date",date);
@@ -91,6 +106,18 @@ public class StudentService {
 	
 	public int checkChangeDeptApply(String id) {
 		return sdao.checkChangeDeptApply(id);
+	}
+	
+	public int takeOffCancel(String id) {
+		return sdao.takeOffCancel(id);
+	}
+	
+	public int returnCancel(String id) {
+		return sdao.returnCancel(id);
+	}
+	
+	public int changeDeptCancel(String id) {
+		return sdao.changeDeptCancel(id);
 	}
 	
 	public List<ClassTimeSearchDTO> selectAllCTS(){		

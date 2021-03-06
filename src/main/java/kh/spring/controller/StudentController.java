@@ -15,13 +15,12 @@ import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
 import com.nexacro.uiadapter17.spring.core.annotation.ParamVariable;
 import com.nexacro.uiadapter17.spring.core.data.NexacroResult;
 
-import kh.spring.dto.ChangeDeptApplyDTO;
+import kh.spring.dto.ChangeDeptApplyForStdDTO;
 import kh.spring.dto.ClassTimeDTO;
 import kh.spring.dto.ClassTimeSearchDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.ConditionForMyClassDTO;
 import kh.spring.dto.ConditionForRoomInfoDTO;
-import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.GotMyCertificationDTO;
 import kh.spring.dto.GradeListDTO;
 import kh.spring.dto.MajorApplyDTO;
@@ -33,11 +32,12 @@ import kh.spring.dto.MyGradeDTO;
 import kh.spring.dto.MyMenuDTO;
 import kh.spring.dto.MyMenuDTO2;
 import kh.spring.dto.ProFileDTO;
+import kh.spring.dto.ReturnApplyForStdDTO;
 import kh.spring.dto.RoomInfoDTO;
 import kh.spring.dto.StuUpdateDTO;
 import kh.spring.dto.StudentDetailDTO;
 import kh.spring.dto.StudentInfoDTO;
-import kh.spring.dto.TakeOffApplyDTO;
+import kh.spring.dto.TakeOffApplyForStdDTO;
 import kh.spring.service.ProfessorService;
 import kh.spring.service.StudentService;
 
@@ -96,7 +96,7 @@ public class StudentController {
 	}
 	
 	@RequestMapping("/stuTakeOffApply.nex")
-	public NexacroResult stuTakeOffApply(@ParamDataSet(name="in_takeOff") TakeOffApplyDTO tdto,@ParamVariable(name="date") Date e) {
+	public NexacroResult stuTakeOffApply(@ParamDataSet(name="in_takeOff") TakeOffApplyForStdDTO tdto,@ParamVariable(name="date") Date e) {
 		NexacroResult nr = new NexacroResult();
 		if(sservice.checkTakeOffApply(tdto.getId()) == 1) {
 			System.out.println("신청된 내역이 있음");
@@ -122,10 +122,75 @@ public class StudentController {
 		return nr;
 	}
 	
+	@RequestMapping("/checkStatus2.nex")
+	public NexacroResult checkStatus2() {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		if(sservice.checkStatus2(id).contentEquals("재학")) {
+			nr.setErrorCode(1);
+		}else {
+			nr.setErrorCode(0);
+		}
+		return nr;
+	}
+	
+	@RequestMapping("/stuReturnApply.nex")
+	public NexacroResult stuReturnApply(@ParamDataSet(name="in_return") ReturnApplyForStdDTO tdto,@ParamVariable(name="date") Date e) {
+		NexacroResult nr = new NexacroResult();
+		if(sservice.checkReturnApply(tdto.getId()) == 1) {
+			System.out.println("신청된 내역이 있음");
+		nr.setErrorCode(0);
+		}else {
+			java.sql.Date s = new java.sql.Date(e.getTime());
+			System.out.println("신청된 내역이 없음");
+			sservice.returnApply(tdto,s);
+			nr.setErrorCode(1);
+		}
+		return nr;
+	}
+	
+	@RequestMapping("/takeOffCancel.nex")
+	public NexacroResult takeOffCancel() {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		int result = sservice.takeOffCancel(id);
+		if(result == 1) {
+			nr.setErrorCode(1);
+		}else {
+			nr.setErrorCode(0);
+		}
+		return nr;
+	}
+	
+	@RequestMapping("/returnCancel.nex")
+	public NexacroResult returnCancel() {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		int result = sservice.returnCancel(id);
+		if(result == 1) {
+			nr.setErrorCode(1);
+		}else {
+			nr.setErrorCode(0);
+		}
+		return nr;
+	}
+	
+	@RequestMapping("/changeDeptCancel.nex")
+	public NexacroResult changeDeptCancel() {
+		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
+		int result = sservice.changeDeptCancel(id);
+		if(result == 1) {
+			nr.setErrorCode(1);
+		}else {
+			nr.setErrorCode(0);
+		}
+		return nr;
+	}
+	
 	@RequestMapping("/stuChangeDeptApply.nex")
-	public NexacroResult stuChangeDeptApply(@ParamDataSet(name="in_changeDept") ChangeDeptApplyDTO cdto,@ParamVariable(name="date") Date e) {
+	public NexacroResult stuChangeDeptApply(@ParamDataSet(name="in_changeDept") ChangeDeptApplyForStdDTO cdto,@ParamVariable(name="date") Date e) {
 		
-		cdto.setChangeDept(cdto.getChangeDept().replace(cdto.getChangeCollege(), ""));
 		NexacroResult nr = new NexacroResult();
 		if(sservice.checkChangeDeptApply(cdto.getId()) == 1) {
 			System.out.println("신청된 내역이 있음");
