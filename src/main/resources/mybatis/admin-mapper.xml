@@ -68,7 +68,7 @@
 			${search_target} LIKE '%'||#{search_keyword}||'%'
 		</if>
 		<if test='search_keyword!="" and "title_contents".equals(search_target)'>
-			B.TITLE LIKE '%'||#{search_keyword}||'%' OR CONTENTS LIKE '%'||#{search_keyword}||'%'
+			(B.TITLE LIKE '%'||#{search_keyword}||'%' OR CONTENTS LIKE '%'||#{search_keyword}||'%')
 		</if>
 	</trim>
 </select>
