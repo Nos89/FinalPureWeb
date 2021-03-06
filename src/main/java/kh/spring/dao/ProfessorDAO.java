@@ -1,6 +1,7 @@
 package kh.spring.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,11 @@ public class ProfessorDAO {
 	
 	public int updateProInfo(ProfessorDTO dto) {
 		return db.update("Professor.proInfoUpdate",dto);
+	}
+	
+	public int updateProMil(MilitaryDTO mdto) {
+		return db.update("Professor.proMillUpdate",mdto);
+		
 	}
 	public List<ProListDTO> selectProList(String id){
 		return db.selectList("Professor.selectProList", id);
