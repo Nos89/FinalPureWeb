@@ -100,6 +100,7 @@ $(document).ready(function(){
 		$(".btnInputComment").attr("disabled", false);
 		
 		$(".summernote").css("min-height", "450px");
+		
 		$(".inputComment").summernote({
 			height: 80,                 // 에디터 높이
 			minHeight: 80,             // 최소 높이
