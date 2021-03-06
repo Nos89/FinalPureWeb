@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dao.StudentDAO;
+import kh.spring.dto.BuildInfoDTO;
 import kh.spring.dto.ChangeDeptApplyForStdDTO;
 import kh.spring.dto.ClassTimeDTO;
 import kh.spring.dto.ClassTimeSearchDTO;
@@ -126,6 +127,10 @@ public class StudentService {
 	
 	public List<RoomInfoDTO> roomInfo(){
 		return sdao.roomInfo();
+	}
+	
+	public List<BuildInfoDTO> buildInfo(){
+		return sdao.buildInfo();
 	}
 	
 	public List<ClassTimeDTO> getClassTime(ConditionForRoomInfoDTO dto){

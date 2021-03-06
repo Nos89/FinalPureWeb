@@ -63,12 +63,12 @@
 	SELECT SEQ, B.TITLE, CONTENTS, WRITER, WRITEDATE, D.TITLE DIV, ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RANK
 		FROM BOARD B, BOARD_DIVISION D
 		WHERE CODE=DIVISION_CODE AND D.TITLE=#{boardType}
-	<trim prefix="AND">
-		<if test='search_keyword!="" and !"title_contents".equals(search_target)'>
+	<trim prefix="AND (" suffix=")">
+		<if test='search_keyword!=null and !"title_contents".equals(search_target)'>
 			${search_target} LIKE '%'||#{search_keyword}||'%'
 		</if>
 		<if test='search_keyword!="" and "title_contents".equals(search_target)'>
-			B.TITLE LIKE '%'||#{search_keyword}||'%' OR CONTENTS LIKE '%'||#{search_keyword}||'%'
+			(B.TITLE LIKE '%'||#{search_keyword}||'%' OR CONTENTS LIKE '%'||#{search_keyword}||'%')
 		</if>
 	</trim>
 </select>
@@ -165,7 +165,21 @@
 	ORDER BY U.ID
 </select>
 
-<!-- 학생 추가 -->
+<select id="getMilitaryInfo" resultType="kh.spring.dto.MilitaryDTO">
+	SELECT
+		STD_CODE, MIL_INDATE, MIL_OUTDATE, M.MIL_GROUPCODE, MIL_RANK, MIL_CODE
+		FROM MILITARY M, MILITARYGROUP G
+		WHERE M.MIL_GROUPCODE=G.MIL_GROUPCODE
+</select>
+
+<insert id="addMilInfo">
+	INSERT INTO MILITARY VALUES(#{std_code},#{mil_inDate},#{mil_outDate},#{mil_groupCode},#{mil_rank},#{mil_code})
+</insert>
+
+<update id="modifyMilInfo">
+	UPDATE MILITARY SET MIL_INDATE=#{mil_inDate}, MIL_OUTDATE=#{mil_outDate}, MIL_GROUPCODE=#{mil_groupCode}, MIL_RANK=#{mil_rank},MIL_CODE=#{mil_code} WHERE STD_CODE=#{std_code}
+</update>
+
 <insert id="addStudent">
 	INSERT ALL
 		INTO USERS(ID, PW, NAME, BIRTH, GENDER, COUNTRY,INDATE, OUTDATE, COLCODE, DEPTCODE,ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE,BANK, ACCOUNTNUM)

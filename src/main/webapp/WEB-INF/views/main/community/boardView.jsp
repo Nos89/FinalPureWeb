@@ -6,10 +6,10 @@
 		<div class="col-12 summernote">
 			${article.contents}
 		</div>
-		<div class="col-12">
+		<div class="col-12 border-top border-secondary">
 			<div class="row mt-3 text-center">
 				<c:if test="${loginID != article.writer}">
-				<div class="col-10"></div>
+				<div class="col-2"></div>
 				</c:if>
 				<div class="col-8">
 					<div class="row">
@@ -30,6 +30,7 @@
 				</c:if>
 				<div class="col-2"><button class="btn btn-outline-success btnList" type="button">목록으로</button></div>
 			</div>
+			<c:if test="${type != 'notice' }">
 			<div class="row mt-3 commentWrapper">
 				<div class="col-12">
 					<div class="row">
@@ -86,6 +87,7 @@
 					</div>
 				</div>
 			</div>
+			</c:if>
 		</div>
 </div>
 <script>
@@ -97,6 +99,7 @@ $(document).ready(function(){
 	} else {
 		$(".btnInputComment").attr("disabled", false);
 		
+		$(".summernote").css("min-height", "450px");
 		$(".inputComment").summernote({
 			height: 80,                 // 에디터 높이
 			minHeight: 80,             // 최소 높이

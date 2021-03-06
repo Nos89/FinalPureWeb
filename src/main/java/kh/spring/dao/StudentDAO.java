@@ -7,11 +7,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.BuildInfoDTO;
 import kh.spring.dto.ClassTimeDTO;
 import kh.spring.dto.ClassTimeSearchDTO;
 import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.ConditionForRoomInfoDTO;
-import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.GotMyCertificationDTO;
 import kh.spring.dto.GradeListDTO;
 import kh.spring.dto.MilitaryDTO;
@@ -100,6 +100,10 @@ public class StudentDAO {
 	
 	public List<RoomInfoDTO> roomInfo(){
 		return db.selectList("Student.roomInfo");
+	}
+	
+	public List<BuildInfoDTO> buildInfo(){
+		return db.selectList("Student.buildInfo");
 	}
 	
 	public List<ClassTimeDTO> getClassTime(ConditionForRoomInfoDTO dto){
