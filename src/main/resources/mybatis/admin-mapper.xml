@@ -203,6 +203,15 @@
 <update id="syllabusApproved">
 	UPDATE LECTURE SET LEC_APPROVAL=#{lec_approval} WHERE LEC_CODE=#{lec_code}
 </update>
+
+<update id="updateOcSchedule">
+	UPDATE OPEN_CLASS SET OC_SCHEDULE=#{lec_schedule} WHERE OC_CODE=#{lec_code}
+</update>
+
+<update id="updateSubjectTitle">
+	UPDATE SUBJECT SET NAME=#{lec_title} WHERE CODE=#{lec_code}
+</update>
+
 <update id="classOpened">
 	UPDATE OPEN_CLASS SET OC_IS_CLOSE='N' WHERE OC_CODE=#{lec_code}
 </update>

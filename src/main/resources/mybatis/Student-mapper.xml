@@ -39,20 +39,40 @@
 		insert into takeOffApply values(takeOffapply_seq.nextval,#{dto.id},#{dto.reason},#{dto.takeOff_Year},#{dto.takeOff_Semester},#{dto.expectedReturnYear},#{date},'신청')
 	</insert>
 	
-	<select id="checkTakeOffApply" resultType="kh.spring.dto.TakeOffApplyDTO">
-		select * from takeOffApply where id=#{id}
+	<insert id="returnApply">
+		insert into returnApply values(returnApply_seq.nextval,#{dto.id},#{dto.reason},#{dto.returnYear},#{dto.returnSemester},#{date},'신청')
+	</insert>
+	
+	<select id="checkTakeOffApply" resultType="Integer">
+		select count(*) from takeOffApply where id=#{id} and apply_approve = '신청'
+	</select>
+	
+	<select id="checkReturnApply" resultType="Integer">
+		select count(*) from returnApply where id=#{id} and apply_approve = '신청'
 	</select>
 	
 	<select id="checkStatus" resultType="String">
 		select std_status from students where id=#{id}
 	</select>
 	
+	<delete id="takeOffCancel">
+		delete from TakeOffApply where id=#{id}
+	</delete>
+	
+	<delete id="returnCancel">
+		delete from returnApply where id=#{id}
+	</delete>
+	
+	<delete id="changeDeptCancel">
+		delete from ChangeDeptApply where id=#{id}
+	</delete>
+	
 	<insert id="changeDeptApply">
 		insert into changeDeptApply values(changeDeptApply_seq.nextval,#{dto.id},#{dto.changeYear},#{dto.changeSemester},#{dto.reason},#{dto.changeCollege},#{dto.changeDept},#{date},'신청')
 	</insert>
 	
-	<select id="checkChangeDeptApply" resultType="kh.spring.dto.ChangeDeptApplyDTO">
-		select * from changeDeptApply where id=#{id}
+	<select id="checkChangeDeptApply" resultType="Integer">
+		select count(*) from changeDeptApply where id=#{id} and apply_approve='신청'
 	</select>
 	
 	<select id="selectAllCTS" resultType="kh.spring.dto.ClassTimeSearchDTO">
@@ -78,6 +98,10 @@
 			from users u,professor p,open_class o,subject s,ClassRegistration c
 		where c.lec_code = o.oc_code and u.id = p.pro_id and p.pro_id = o.oc_pro_code and o.oc_code = s.code and c.id=#{id} and substr(to_char(o.oc_year,'yyyyMMdd'),3,2) = #{dto.year} and o.oc_semester = #{dto.semester} and c.cr_completeDiv = '완료상태'
 	</select>
+	
+	<delete id="withdrawMyClass">
+		delete from ClassRegistration where id=#{id} and lec_code=#{oc_code} and substr(to_char(cr_date,'yyyyMMdd'),3,2) = #{dto.year}
+	</delete>
 	
 	<select id="getMyClassList" resultType="kh.spring.dto.MyClassListDTO">
 		select DISTINCT c.cr_completeDiv,s.isu,o.oc_code,s.name oc_name,o.oc_targetlevel,u.name pro_name,o.oc_schedule,s.reco_score,o.oc_part
@@ -173,6 +197,14 @@
 	
 	<select id="checkMyMenu" resultType="kh.spring.dto.MyMenuDTO">
 		select * from mymenu where id=#{id} and MENU_NM=#{MENU_NM}
+	</select>
+	
+	<select id="getCollege" resultType="kh.spring.dto.CollegeDTO">
+		select * from college 
+	</select>
+	
+	<select id="getDepartment" resultType="kh.spring.dto.CollegeDTO">
+		select CONCAT(c.col_code,d.dept_code) col_code,d.dept_title col_title from department d, college c where d.col_code = c.col_code
 	</select>
 
 </mapper>

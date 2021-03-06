@@ -8,17 +8,19 @@ public class CommentsDTO {
 	private String writer;
 	private String contents;
 	private Date reg_date;
+	private String formatDate;
 	public CommentsDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CommentsDTO(int seq, int parent_code, String writer, String contents, Date reg_date) {
+	public CommentsDTO(int seq, int parent_code, String writer, String contents, Date reg_date, String formatDate) {
 		super();
 		this.seq = seq;
 		this.parent_code = parent_code;
 		this.writer = writer;
 		this.contents = contents;
 		this.reg_date = reg_date;
+		this.formatDate = formatDate;
 	}
 	public int getSeq() {
 		return seq;
@@ -50,5 +52,12 @@ public class CommentsDTO {
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
 	}
+	public String getFormatDate() {
+		return formatDate;
+	}
+	public void setFormatDate(String formatDate) {
+		this.formatDate = formatDate;
+	}
+	
 	
 }

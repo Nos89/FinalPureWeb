@@ -9,10 +9,11 @@ import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.ClassTimeDTO;
 import kh.spring.dto.ClassTimeSearchDTO;
+import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.ConditionForRoomInfoDTO;
+import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.GotMyCertificationDTO;
 import kh.spring.dto.GradeListDTO;
-import kh.spring.dto.MailDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.MyClassDTO;
 import kh.spring.dto.MyClassListDTO;
@@ -53,16 +54,36 @@ public class StudentDAO {
 		return db.insert("Student.majorApply",major);
 	}
 	
+	public int returnApply(Map returnApply) {
+		return db.insert("Student.returnApply",returnApply);
+	}
+	
+	public int checkTakeOffApply(String id) {
+		return db.selectOne("Student.checkTakeOffApply",id);
+	}
+	
+	public int checkReturnApply(String id) {
+		return db.selectOne("Student.checkReturnApply",id);
+	}
+	
 	public int takeOffApply(Map takeOff) {
 		return db.insert("Student.takeOffApply",takeOff);
 	}
 	
-	public int checkTakeOffApply(String id) {
-		return db.selectList("Student.checkTakeOffApply",id).size();
-	}
-	
 	public String checkStatus(String id) {
 		return db.selectOne("Student.checkStatus",id);
+	}
+	
+	public int returnCancel(String id) {
+		return db.delete("Student.returnCancel",id);
+	}
+	
+	public int changeDeptCancel(String id) {
+		return db.delete("Student.changeDeptCancel",id);
+	}
+	
+	public int takeOffCancel(String id) {
+		return db.delete("Student.takeOffCancel",id);
 	}
 	
 	public int changeDeptApply(Map changeDept) {
@@ -70,7 +91,7 @@ public class StudentDAO {
 	}
 	
 	public int checkChangeDeptApply(String id) {
-		return db.selectList("Student.checkChangeDeptApply",id).size();
+		return db.selectOne("Student.checkChangeDeptApply",id);
 	}
 	
 	public List<ClassTimeSearchDTO> selectAllCTS(){
@@ -98,7 +119,7 @@ public class StudentDAO {
 	}
 	
 	public int withdrawMyClass(Map myClass) {
-		return db.delete("Student.checkTakeOffApply",myClass);
+		return db.delete("Student.withdrawMyClass",myClass);
 	}
 	
 	public int countDown(String oc_code) {
@@ -184,5 +205,12 @@ public class StudentDAO {
 	public int checkMyMenu(Map menu) {
 		return db.selectList("Student.checkMyMenu",menu).size();
 	}
-
+	
+	public List<CollegeDTO> getCollege(){
+		return db.selectList("Student.getCollege");
+	}
+	
+	public List<CollegeDTO> getDepartment(){
+		return db.selectList("Student.getDepartment");
+	}
 }

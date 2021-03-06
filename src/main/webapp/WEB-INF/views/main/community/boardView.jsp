@@ -308,7 +308,7 @@ let ajaxComments = function(data){
 					'<div class="col-2 mb-3">'+
 						'<div class="row">'+
 							'<div class="col-12 commentsWriter">'+responseComments[i].writer+'</div>'+
-							'<div class="col-12">'+responseComments[i].reg_date+'</div>'+
+							'<div class="col-12">'+responseComments[i].formatDate+'</div>'+
 						'</div></div>'+
 					'<div class="col-9 mb-3">'+responseComments[i].contents+'</div>'+
 					'<div class="col-1 mb-3 commentsBtnWrapper">'+
