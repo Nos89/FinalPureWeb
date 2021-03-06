@@ -941,8 +941,8 @@
 				if (day == "목") {
 					fillEmpty(3);
 					let lecture = $("<td></td>");
-					lecture.attr("style","background-color:#ce9663;color:white;font-size:12px; font-weight:bold;");
 					lecture.html(title);
+					lecture.attr("style","background-color:#ce9663;color:white;font-size:12px; font-weight:bold;");
 					$(".time").eq(time[0] - 1).append(lecture);
 				}
 				if (day == "금") {
