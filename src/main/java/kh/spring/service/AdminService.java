@@ -114,6 +114,7 @@ public class AdminService {
 
 	// 게시판 검색
 	public List<BoardDTO> searchBoard(String target, String keyword, String boardType) throws Exception {
+		System.out.println(target + " : " + keyword + " : " + boardType);
 		return admdao.searchBoard(target, keyword, boardType);
 	}
 

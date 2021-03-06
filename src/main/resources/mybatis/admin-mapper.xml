@@ -63,11 +63,11 @@
 	SELECT SEQ, B.TITLE, CONTENTS, WRITER, WRITEDATE, D.TITLE DIV, ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RANK
 		FROM BOARD B, BOARD_DIVISION D
 		WHERE CODE=DIVISION_CODE AND D.TITLE=#{boardType}
-	<trim prefix="AND">
-		<if test='search_keyword!="" and !"title_contents".equals(search_target)'>
+	<trim prefix="AND (" suffix=")">
+		<if test='search_keyword!=null and !"title_contents".equals(search_target)'>
 			${search_target} LIKE '%'||#{search_keyword}||'%'
 		</if>
-		<if test='search_keyword!="" and "title_contents".equals(search_target)'>
+		<if test='search_keyword!=null and "title_contents".equals(search_target)'>
 			B.TITLE LIKE '%'||#{search_keyword}||'%' OR CONTENTS LIKE '%'||#{search_keyword}||'%'
 		</if>
 	</trim>
