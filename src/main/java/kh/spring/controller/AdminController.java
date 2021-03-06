@@ -35,6 +35,7 @@ import kh.spring.dto.CreditRenounceDTO_NEX;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.FilesDTO;
 import kh.spring.dto.LectureDTO;
+import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
@@ -273,9 +274,11 @@ public class AdminController {
 		List<ProfessorDTO> list = admService.getProfessor();
 		List<CollegeDTO> list2 = admService.getCollege();
 		List<DepartmentDTO> list3 = admService.getDepartment();
+		List<MilitaryDTO> list4 = admService.getMilInfo();
 		nr.addDataSet("out_pro", list);
-		nr.addDataSet("out_col", list2);
-		nr.addDataSet("out_dept", list3);
+		nr.addDataSet("out_col",list2);
+		nr.addDataSet("out_dept",list3);
+		nr.addDataSet("out_military",list4);
 		return nr;
 	}
 
@@ -285,42 +288,55 @@ public class AdminController {
 		HttpPlatformRequest pReq = new HttpPlatformRequest(request);
 		pReq.receiveData();
 		PlatformData inData = pReq.getData();
-		DataSet ds = inData.getDataSet("in_pro");
+		DataSet pro = inData.getDataSet("in_pro");
+		DataSet mil = inData.getDataSet("in_military");
 		Variable var = inData.getVariable("user");
 		String user = var.getString();
 		String filePath = request.getSession().getServletContext().getRealPath("/resources/webhard/");
 
 		// 삭제된 데이터
-		for (int i = 0; i < ds.getRemovedRowCount(); i++) {
-			String id = ds.getRemovedStringData(i, "id");
+		for(int i=0;i<pro.getRemovedRowCount();i++) {
+			String id = pro.getRemovedStringData(i, "id");
 			admService.deleteProfessor(id, filePath);
 		}
 
 		// 추가, 수정된 데이터
-		for (int i = 0; i < ds.getRowCount(); i++) {
+		for(int i=0;i<pro.getRowCount();i++) {
 			ProfessorDTO dto = new ProfessorDTO();
-			dto.setId(dsGet(ds, i, "id"));
-			dto.setPw(dsGet(ds, i, "birth"));
-			dto.setName(dsGet(ds, i, "name"));
-			dto.setBirth(ConvertDate.stringToDate(dsGet(ds, i, "birth")));
-			dto.setGender(dsGet(ds, i, "gender"));
-			dto.setCountry(dsGet(ds, i, "country"));
-			dto.setInDate(ConvertDate.stringToDate(dsGet(ds, i, "inDate")));
-			dto.setOutDate(ConvertDate.stringToDate(dsGet(ds, i, "outDate")));
-			dto.setColcode(dsGet(ds, i, "colcode"));
-			dto.setDeptcode(dsGet(ds, i, "deptcode"));
-			dto.setZipcode(dsGet(ds, i, "zipcode"));
-			dto.setAddr1(dsGet(ds, i, "addr1"));
-			dto.setAddr2(dsGet(ds, i, "addr2"));
-			dto.setEmail(dsGet(ds, i, "email"));
-			dto.setPhone(dsGet(ds, i, "phone"));
-			dto.setBank(dsGet(ds, i, "bank"));
-			dto.setAccountnum(dsGet(ds, i, "accountnum"));
-			dto.setPro_office(dsGet(ds, i, "pro_office"));
-			dto.setPro_status(dsGet(ds, i, "pro_status"));
-			int rowType = ds.getRowType(i);
-			System.out.println("row타입: " + rowType);
-			admService.modifyProfessor(dto, rowType);
+			dto.setId(dsGet(pro,i,"id"));
+			dto.setPw(dsGet(pro,i,"birth"));
+			dto.setName(dsGet(pro,i,"name"));
+			dto.setBirth(ConvertDate.stringToDate(dsGet(pro,i,"birth")));
+			dto.setGender(dsGet(pro,i,"gender"));
+			dto.setCountry(dsGet(pro,i,"country"));
+			dto.setInDate(ConvertDate.stringToDate(dsGet(pro,i,"inDate")));
+			dto.setOutDate(ConvertDate.stringToDate(dsGet(pro,i,"outDate")));
+			dto.setColcode(dsGet(pro,i,"colcode"));
+			dto.setDeptcode(dsGet(pro,i,"deptcode"));
+			dto.setZipcode(dsGet(pro,i,"zipcode"));
+			dto.setAddr1(dsGet(pro,i,"addr1"));
+			dto.setAddr2(dsGet(pro,i,"addr2"));
+			dto.setEmail(dsGet(pro,i,"email"));
+			dto.setPhone(dsGet(pro,i,"phone"));
+			dto.setBank(dsGet(pro,i,"bank"));
+			dto.setAccountnum(dsGet(pro,i,"accountnum"));
+			dto.setPro_office(dsGet(pro,i,"pro_office"));
+			dto.setPro_status(dsGet(pro,i,"pro_status"));
+			int rowType = pro.getRowType(i);
+			admService.modifyProfessor(dto,rowType);
+		}
+		if(dsGet(mil,0,"std_id")!=null) {
+			for(int i=0;i<mil.getRowCount();i++) {
+				MilitaryDTO dto = new MilitaryDTO();
+				dto.setStd_code(dsGet(mil,i,"std_code"));
+				dto.setMil_inDate(ConvertDate.stringToDate(dsGet(mil,i,"mil_inDate")));
+				dto.setMil_outDate(ConvertDate.stringToDate(dsGet(mil,i,"mil_outDate")));
+				dto.setMil_groupCode(dsGet(mil,i,"mil_groupCode"));
+				dto.setMil_rank(dsGet(mil,i,"mil_rank"));
+				dto.setMil_code(dsGet(mil,i,"mil_code"));
+				int rowType = mil.getRowType(i);
+				admService.modifyMilInfo(dto, rowType);
+			}
 		}
 		return new NexacroResult();
 	}
@@ -332,10 +348,12 @@ public class AdminController {
 		List<StudentDTO> list = admService.getStudentOnLoad();
 		List<CollegeDTO> list2 = admService.getCollege();
 		List<DepartmentDTO> list3 = admService.getDepartment();
-		nr.addDataSet("out_std", list);
-		nr.addDataSet("out_col", list2);
-		nr.addDataSet("out_dept", list3);
-		return nr;
+		List<MilitaryDTO> list4 = admService.getMilInfo();
+		nr.addDataSet("out_std",list);
+		nr.addDataSet("out_col",list2);
+		nr.addDataSet("out_dept",list3);
+		nr.addDataSet("out_military",list4);
+		return nr;		
 	}
 
 	// 학생 정보 수정
@@ -344,39 +362,53 @@ public class AdminController {
 		HttpPlatformRequest pReq = new HttpPlatformRequest(request);
 		pReq.receiveData();
 		PlatformData inData = pReq.getData();
-		DataSet ds = inData.getDataSet("in_std");
+		DataSet std = inData.getDataSet("in_std");
+		DataSet mil = inData.getDataSet("in_military");
 		String filePath = request.getSession().getServletContext().getRealPath("/resources/webhard/");
 
 		// 삭제된 데이터
-		for (int i = 0; i < ds.getRemovedRowCount(); i++) {
-			String id = ds.getRemovedStringData(i, "id");
+		for(int i=0;i<std.getRemovedRowCount();i++) {
+			String id = std.getRemovedStringData(i, "id");
 			admService.deleteStudent(id, filePath);
 		}
 
 		// 추가, 수정된 데이터
-		for (int i = 0; i < ds.getRowCount(); i++) {
+		for(int i=0;i<std.getRowCount();i++) {
 			StudentDTO dto = new StudentDTO();
-			dto.setId(dsGet(ds, i, "id"));
-			dto.setPw(dsGet(ds, i, "birth"));
-			dto.setName(dsGet(ds, i, "name"));
-			dto.setBirth(ConvertDate.stringToDate(dsGet(ds, i, "birth")));
-			dto.setGender(dsGet(ds, i, "gender"));
-			dto.setCountry(dsGet(ds, i, "country"));
-			dto.setInDate(ConvertDate.stringToDate(dsGet(ds, i, "inDate")));
-			dto.setOutDate(ConvertDate.stringToDate(dsGet(ds, i, "outDate")));
-			dto.setColcode(dsGet(ds, i, "colcode"));
-			dto.setDeptcode(dsGet(ds, i, "deptcode"));
-			dto.setZipcode(dsGet(ds, i, "zipcode"));
-			dto.setAddr1(dsGet(ds, i, "addr1"));
-			dto.setAddr2(dsGet(ds, i, "addr2"));
-			dto.setEmail(dsGet(ds, i, "email"));
-			dto.setPhone(dsGet(ds, i, "phone"));
-			dto.setBank(dsGet(ds, i, "bank"));
-			dto.setAccountnum(dsGet(ds, i, "accountnum"));
-			dto.setStd_status(dsGet(ds, i, "std_status"));
-			dto.setStd_year(Integer.parseInt(dsGet(ds, i, "std_year")));
-			int rowType = ds.getRowType(i);
-			admService.modifyStudent(dto, rowType);
+			dto.setId(dsGet(std,i,"id"));
+			dto.setPw(dsGet(std,i,"birth"));
+			dto.setName(dsGet(std,i,"name"));
+			dto.setBirth(ConvertDate.stringToDate(dsGet(std,i,"birth")));
+			dto.setGender(dsGet(std,i,"gender"));
+			dto.setCountry(dsGet(std,i,"country"));
+			dto.setInDate(ConvertDate.stringToDate(dsGet(std,i,"inDate")));
+			dto.setOutDate(ConvertDate.stringToDate(dsGet(std,i,"outDate")));
+			dto.setColcode(dsGet(std,i,"colcode"));
+			dto.setDeptcode(dsGet(std,i,"deptcode"));
+			dto.setZipcode(dsGet(std,i,"zipcode"));
+			dto.setAddr1(dsGet(std,i,"addr1"));
+			dto.setAddr2(dsGet(std,i,"addr2"));
+			dto.setEmail(dsGet(std,i,"email"));
+			dto.setPhone(dsGet(std,i,"phone"));
+			dto.setBank(dsGet(std,i,"bank"));
+			dto.setAccountnum(dsGet(std,i,"accountnum"));
+			dto.setStd_status(dsGet(std,i,"std_status"));
+			dto.setStd_year(Integer.parseInt(dsGet(std,i,"std_year")));
+			int rowType = std.getRowType(i);
+			admService.modifyStudent(dto,rowType);
+		}
+		if(dsGet(mil,0,"std_id")!=null) {
+			for(int i=0;i<mil.getRowCount();i++) {
+				MilitaryDTO dto = new MilitaryDTO();
+				dto.setStd_code(dsGet(mil,i,"std_code"));
+				dto.setMil_inDate(ConvertDate.stringToDate(dsGet(mil,i,"mil_inDate")));
+				dto.setMil_outDate(ConvertDate.stringToDate(dsGet(mil,i,"mil_outDate")));
+				dto.setMil_groupCode(dsGet(mil,i,"mil_groupCode"));
+				dto.setMil_rank(dsGet(mil,i,"mil_rank"));
+				dto.setMil_code(dsGet(mil,i,"mil_code"));
+				int rowType = mil.getRowType(i);
+				admService.modifyMilInfo(dto, rowType);
+			}
 		}
 		return new NexacroResult();
 	}

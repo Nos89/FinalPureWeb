@@ -69,8 +69,9 @@ public class InfoService {
 		return idao.getColSchedule(tocharDate);
 	}
 
-	public List<ColScheduleDTO> get4ColSchedule(Date tempDate) {
-		return idao.get4ColSchedule(tempDate);
+	//로그인 창 학사일정 4개 보여지는
+	public List<ColScheduleDTO> get4ColSchedule(Date mainLogin4_date) {
+		return idao.get4ColSchedule(mainLogin4_date);
 	}
 
 	//메인페이지, 달에 맞는 학사일정 리스트로

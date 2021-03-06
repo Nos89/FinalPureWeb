@@ -21,6 +21,7 @@ import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.FilesDTO;
 import kh.spring.dto.LectureDTO;
 import kh.spring.dto.MailDTO;
+import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.ProfessorDTO;
 import kh.spring.dto.ReturnApplyDTO;
@@ -164,6 +165,21 @@ public class AdminDAO {
 	public int deleteStudent(String id) {
 		db.delete("Admin.deleteStudentS",id);
 		return db.delete("Admin.deleteStudentU",id);
+	}
+	
+	// 병역 정보 가져오기
+	public List<MilitaryDTO> getMilInfo(){
+		return db.selectList("Admin.getMilitaryInfo");
+	}
+	
+	// 병역 정보 입력
+	public int addMilInfo(MilitaryDTO dto) {
+		return db.insert("Admin.addMilInfo",dto);
+	}
+	
+	// 병역 정보 수정
+	public int modifyMilInfo(MilitaryDTO dto) {
+		return db.update("Admin.modifyMilInfo",dto);
 	}
 	
 	

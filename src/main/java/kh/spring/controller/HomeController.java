@@ -90,14 +90,11 @@ public class HomeController {
 			String arr[] = current.split("-");
 			arr[0] = arr[0].replaceAll("20", "");
 			String month_click2 = arr[0]+"/"+arr[1];
-			System.out.println("arr[1] : "+ arr[1]);
 			
 			SimpleDateFormat fm = new SimpleDateFormat("yy/MM");
-			Date tempDate = fm.parse(month_click2);
-			System.out.println("tempDate : "+ tempDate);
+			Date mainDate = fm.parse(month_click2);
 			
-			//List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(month_click2);
-			List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(tempDate);
+			List<ColScheduleDTO> main_colSche = iservice.getMainSchedule(mainDate);
 						
 			model.addAttribute("result_main", current+"-01");
 			model.addAttribute("main_colSche", main_colSche);
@@ -114,9 +111,9 @@ public class HomeController {
 		String yearMonth = dayArr[0]+"/"+dayArr[1];
 		
 		SimpleDateFormat fm = new SimpleDateFormat("yy/MM");
-		Date tempDate = fm.parse(yearMonth);
+		Date mainLogin4_date = fm.parse(yearMonth);
 		
-		List<ColScheduleDTO> list4_colSche = iservice.get4ColSchedule(tempDate);
+		List<ColScheduleDTO> list4_colSche = iservice.get4ColSchedule(mainLogin4_date);
 		model.addAttribute("list4_colSche", list4_colSche);
 		return "info/info";
 	}
