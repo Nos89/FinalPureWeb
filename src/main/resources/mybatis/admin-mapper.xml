@@ -165,7 +165,21 @@
 	ORDER BY U.ID
 </select>
 
-<!-- 학생 추가 -->
+<select id="getMilitaryInfo" resultType="kh.spring.dto.MilitaryDTO">
+	SELECT
+		STD_CODE, MIL_INDATE, MIL_OUTDATE, M.MIL_GROUPCODE, MIL_RANK, MIL_CODE
+		FROM MILITARY M, MILITARYGROUP G
+		WHERE M.MIL_GROUPCODE=G.MIL_GROUPCODE
+</select>
+
+<insert id="addMilInfo">
+	INSERT INTO MILITARY VALUES(#{std_code},#{mil_inDate},#{mil_outDate},#{mil_groupCode},#{mil_rank},#{mil_code})
+</insert>
+
+<update id="modifyMilInfo">
+	UPDATE MILITARY SET MIL_INDATE=#{mil_inDate}, MIL_OUTDATE=#{mil_outDate}, MIL_GROUPCODE=#{mil_groupCode}, MIL_RANK=#{mil_rank},MIL_CODE=#{mil_code} WHERE STD_CODE=#{std_code}
+</update>
+
 <insert id="addStudent">
 	INSERT ALL
 		INTO USERS(ID, PW, NAME, BIRTH, GENDER, COUNTRY,INDATE, OUTDATE, COLCODE, DEPTCODE,ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE,BANK, ACCOUNTNUM)
