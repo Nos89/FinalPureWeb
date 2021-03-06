@@ -32,6 +32,7 @@ import kh.spring.dto.CreditRenounceDTO_NEX;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.FilesDTO;
 import kh.spring.dto.LectureDTO;
+import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
@@ -288,6 +289,24 @@ public class AdminService {
 		for( CloudDTO cdto : flist ) {
 			wservice.delFile(cdto.getFile_savedName(), Integer.parseInt(cdto.getCloud_id()), filePath);
 		}
+	}
+	
+	// 병역 정보 가져오기
+	public List<MilitaryDTO> getMilInfo(){
+		return admdao.getMilInfo();
+	}
+	
+	// 병역 정보 추가, 수정
+	public int modifyMilInfo(MilitaryDTO dto, int rowType ) throws Exception {
+		int result = 0;
+		if (rowType == DataSet.ROW_TYPE_INSERTED) {
+			result = admdao.addMilInfo(dto);
+		} else if (rowType == DataSet.ROW_TYPE_UPDATED) {
+			result = admdao.modifyMilInfo(dto);
+		} else {
+			result = -1;
+		}
+		return result;
 	}
 	
 	// 강의계획서 가져오기
