@@ -97,7 +97,7 @@ public class InfoController {
 				String semester;
 				if (currentRegMonth >= 1 && currentRegMonth <= 6) {
 					// 1학기
-					classRegDate = currentRegYear + "/03/05";
+					classRegDate = currentRegYear + "/03/06";
 					fm = new SimpleDateFormat("yy/MM/dd");
 					tocharDate = fm.parse(classRegDate);
 
@@ -251,7 +251,7 @@ public class InfoController {
 				if (currentRegMonth >= 1 && currentRegMonth <= 6) {
 					// 1학기
 					semester = "1";
-					classOpenDate = currentRegYear + "-01-25";
+					classOpenDate = currentRegYear + "-03-06";
 					fm = new SimpleDateFormat("yy-MM-dd");
 					tocharDate = fm.parse(classOpenDate);
 
