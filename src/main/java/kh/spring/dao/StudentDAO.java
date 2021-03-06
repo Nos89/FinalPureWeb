@@ -54,16 +54,36 @@ public class StudentDAO {
 		return db.insert("Student.majorApply",major);
 	}
 	
+	public int returnApply(Map returnApply) {
+		return db.insert("Student.returnApply",returnApply);
+	}
+	
+	public int checkTakeOffApply(String id) {
+		return db.selectOne("Student.checkTakeOffApply",id);
+	}
+	
+	public int checkReturnApply(String id) {
+		return db.selectOne("Student.checkReturnApply",id);
+	}
+	
 	public int takeOffApply(Map takeOff) {
 		return db.insert("Student.takeOffApply",takeOff);
 	}
 	
-	public int checkTakeOffApply(String id) {
-		return db.selectList("Student.checkTakeOffApply",id).size();
-	}
-	
 	public String checkStatus(String id) {
 		return db.selectOne("Student.checkStatus",id);
+	}
+	
+	public int returnCancel(String id) {
+		return db.delete("Student.returnCancel",id);
+	}
+	
+	public int changeDeptCancel(String id) {
+		return db.delete("Student.changeDeptCancel",id);
+	}
+	
+	public int takeOffCancel(String id) {
+		return db.delete("Student.takeOffCancel",id);
 	}
 	
 	public int changeDeptApply(Map changeDept) {
@@ -71,7 +91,7 @@ public class StudentDAO {
 	}
 	
 	public int checkChangeDeptApply(String id) {
-		return db.selectList("Student.checkChangeDeptApply",id).size();
+		return db.selectOne("Student.checkChangeDeptApply",id);
 	}
 	
 	public List<ClassTimeSearchDTO> selectAllCTS(){
