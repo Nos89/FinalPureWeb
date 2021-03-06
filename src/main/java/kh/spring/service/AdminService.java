@@ -296,8 +296,20 @@ public class AdminService {
 	}
 
 	// 강의계획서 승인
+	@Transactional 
 	public int syllabusApproved(LectureDTO dto) {
-		return admdao.syllabusApproved(dto);
+		int result =  admdao.syllabusApproved(dto);
+		if(result>0) {
+			result = admdao.updateOcSchedule(dto);
+			if(result>0) {
+				return admdao.updateSubjectTitle(dto);
+			}else {
+				return -1;
+			}
+		}else {
+			return -1;
+		}
+		
 	}
 
 	// 강의계획서 반려

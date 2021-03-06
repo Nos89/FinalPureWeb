@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -401,8 +402,12 @@ public class AdminController {
 	// 강의계획서 승인
 	@RequestMapping("SyllabusApproved.nex")
 	public NexacroResult syllabusApproved(@ParamDataSet(name="in_lecture")LectureDTO dto) {
-		admService.syllabusApproved(dto);
-		return new NexacroResult();
+		NexacroResult nr = new NexacroResult();
+		int result  = admService.syllabusApproved(dto);
+		if(result== -1) {
+			nr.setErrorCode(0);
+		}
+		return nr;
 	}
 	
 	// 강의계획서 반려
