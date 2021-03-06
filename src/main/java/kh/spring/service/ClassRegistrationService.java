@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kh.spring.dao.ClassRegistrationDAO;
 import kh.spring.dao.LectureDAO;
@@ -43,6 +44,7 @@ public class ClassRegistrationService {
 		public List<ShoppingBasketDTO> selectBasketList(String id){
 			return crdao.selectBasketList(id);
 		}
+		@Transactional
 		public int insertBasketToCrList(List<ClassRegistrationDTO> list) {
 			int result = 0;
 			for(int i=0; i<list.size(); i++) {
