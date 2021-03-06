@@ -7,11 +7,12 @@ public class MailDTO_NEX {
 	private String contents;
 	private String received_date;
 	private int read;
+	private String sender;
 	
 	public MailDTO_NEX() {
 		super();
 	}
-	public MailDTO_NEX(int mail_seq, String receiver, String title, String contents, String received_date, int read) {
+	public MailDTO_NEX(int mail_seq, String receiver, String title, String contents, String received_date, int read, String sender) {
 		super();
 		this.mail_seq = mail_seq;
 		this.receiver = receiver;
@@ -19,6 +20,7 @@ public class MailDTO_NEX {
 		this.contents = contents;
 		this.received_date = received_date;
 		this.read = read;
+		this.sender = sender;
 	}
 	
 	public int getMail_seq() {
@@ -57,5 +59,10 @@ public class MailDTO_NEX {
 	public void setRead(int read) {
 		this.read = read;
 	}
-	
+	public String getSender() {
+		return sender;
+	}
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
 }
