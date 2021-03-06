@@ -178,6 +178,17 @@ public class AdminDAO {
 		return db.update("Admin.syllabusApproved", dto);
 	}
 	
+	//강의 계획서 승인시 개강목록에 강의시간update
+	public int updateOcSchedule(LectureDTO dto) {
+		return db.update("Admin.updateOcSchedule",dto);
+	}
+	
+	//강의 계획서 승인시 강의명 update
+	public int updateSubjectTitle(LectureDTO dto) {
+		return db.update("Admin.updateSubjectTitle",dto);
+		
+	}
+	
 	// 강의계획서 반려
 	public int syllabusRejected(LectureDTO dto) {
 		return db.update("Admin.syllabusRejected",dto);
