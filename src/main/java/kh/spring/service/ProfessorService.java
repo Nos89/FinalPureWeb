@@ -2,10 +2,13 @@ package kh.spring.service;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kh.spring.dao.ProFileDAO;
 import kh.spring.dao.ProfessorDAO;
@@ -15,6 +18,7 @@ import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.DepartmentOfficeDTO;
 import kh.spring.dto.GradeDTO;
 import kh.spring.dto.MilitaryDTO;
+import kh.spring.dto.MilitaryDTO_NEX;
 import kh.spring.dto.ProAttendMngDTO;
 import kh.spring.dto.ProAttendMngDTO_NEX;
 import kh.spring.dto.ProBusinessLog;
@@ -47,12 +51,19 @@ public class ProfessorService {
 		return pdao.selectMil(id);		
 	}
 	
-	public int updateProInfo(ProfessorDTO_NEX dto) {
-		ProfessorDTO pdto = new ProfessorDTO(dto.getId(),dto.getPw(),dto.getName(),con.utilToSql(dto.getBirth()),
-				dto.getGender(),dto.getCountry(),con.utilToSql(dto.getInDate()),con.utilToSql(dto.getOutDate()),
+	@Transactional
+	public int updateProInfo(ProfessorDTO_NEX dto, MilitaryDTO_NEX dto2) {
+		ProfessorDTO pdto = new ProfessorDTO(0,dto.getId(),dto.getPw(),dto.getName(),con.utilToSql(dto.getBirth()),
+				dto.getGender(),dto.getCountry(),con.utilToSql(dto.getInDate()),null,null,null,
 				dto.getCol_title(),dto.getDept_title(),dto.getZipcode(),dto.getAddr1(),dto.getAddr2(),dto.getEmail(),
-				dto.getPhone(),dto.getBank(),dto.getAccountnum());
-		return pdao.updateProInfo(pdto);
+				dto.getPhone(),dto.getBank(),dto.getAccountnum(),null,null);
+		pdao.updateProInfo(pdto);
+
+	MilitaryDTO mdto = new MilitaryDTO(dto2.getStd_code(),con.utilToSql(dto2.getMil_inDate()),con.utilToSql(dto2.getMil_outDate()),
+					dto2.getMil_title(),dto2.getMil_rank(),dto2.getMil_code());
+		System.out.println(mdto.getMil_inDate());
+		System.out.println( mdto.getMil_outDate());
+		return pdao.updateProMil(mdto);
 	}
 	
 	public ProFileDTO checkImg(String id) {
