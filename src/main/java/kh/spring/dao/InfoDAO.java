@@ -74,11 +74,11 @@ public class InfoDAO {
 		return db.selectList("Info.takingClass_std", param);
 	}
 
-	public List<TakingClassDTO> classSche(String id, String semester, Date tempDate) {
+	public List<TakingClassDTO> classSche(String id, String semester, Date tocharDate) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("id",id);
 		param.put("semester",semester);
-		param.put("classOpenDate",tempDate);
+		param.put("classOpenDate",tocharDate);
 		return db.selectList("Info.takingClass_pro", param);
 	}
 
@@ -86,12 +86,11 @@ public class InfoDAO {
 		return db.selectList("Info.getColSchedule",tocharDate);
 	}
 
-	public List<ColScheduleDTO> get4ColSchedule(Date tempDate) {
-		return db.selectList("Info.get4ColSchedule",tempDate);
+	public List<ColScheduleDTO> get4ColSchedule(Date mainLogin4_date) {
+		return db.selectList("Info.get4ColSchedule",mainLogin4_date);
 	}
 	
 	public List<ColScheduleDTO> getMainSchedule(Date mainDate) {
-		//System.out.println("infoDAO tempdate : " + tempDate);
 		return db.selectList("Info.getColSchedule", mainDate);
 	}
 
