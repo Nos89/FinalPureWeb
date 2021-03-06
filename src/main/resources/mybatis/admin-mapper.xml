@@ -9,29 +9,24 @@
 
 <!-- 공지게시판 목록 가져오기 -->
 <select id="getBoardNotice" resultType="kh.spring.dto.NoticeDTO">
-	SELECT *
-		FROM (SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_SEQ DESC) AS RANK
-				FROM BOARD_NOTICE
-				WHERE CATEGORY=#{category}
-			)
+	SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_SEQ DESC) AS RANK
+		FROM BOARD_NOTICE
+		WHERE CATEGORY=#{category}
 </select>
 
 <!-- 공지사항 검색 -->
 <select id="searchNotice" resultType="kh.spring.dto.NoticeDTO">
-	SELECT *
-		FROM (
-			SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_SEQ DESC) AS RANK
-				FROM BOARD_NOTICE
-			<trim prefix="WHERE">
-				<if test='search_keyword!="" and !"title_contents".equals(search_target)'>
-					${search_target} LIKE '%'||#{search_keyword}||'%'
-				</if>
-				<if test='search_keyword!="" and "title_contents".equals(search_target)'>
-					(NOTI_TITLE LIKE '%'||#{search_keyword}||'%' OR NOTI_CONTENTS LIKE '%'||#{search_keyword}||'%')
-				</if>
-			</trim>
-				AND CATEGORY=#{category}
-			)
+	SELECT BOARD_NOTICE.*, ROW_NUMBER() OVER(ORDER BY NOTI_SEQ DESC) AS RANK
+		FROM BOARD_NOTICE
+	<trim prefix="WHERE">
+		<if test='search_keyword!="" and !"title_contents".equals(search_target)'>
+			${search_target} LIKE '%'||#{search_keyword}||'%'
+		</if>
+		<if test='search_keyword!="" and "title_contents".equals(search_target)'>
+			(NOTI_TITLE LIKE '%'||#{search_keyword}||'%' OR NOTI_CONTENTS LIKE '%'||#{search_keyword}||'%')
+		</if>
+	</trim>
+		AND CATEGORY=#{category}
 </select>
 
 <!-- 공지사항 삭제 -->
@@ -57,30 +52,25 @@
 
 <!-- 게시판 가져오기 -->
 <select id="getBoard" resultType="kh.spring.dto.BoardDTO">
-	SELECT *
-    	FROM (
-    		SELECT SEQ, B.TITLE, CONTENTS, WRITER, WRITEDATE, D.TITLE BOARDTYPE, ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RANK
-    			FROM BOARD B, BOARD_DIVISION D
-    			WHERE CODE=DIVISION_CODE AND D.TITLE=#{bdDiv}
-    		)
+   	SELECT SEQ, B.TITLE, CONTENTS, WRITER, WRITEDATE, D.TITLE BOARDTYPE, ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RANK
+   		FROM BOARD B, BOARD_DIVISION D
+   		WHERE CODE=DIVISION_CODE AND D.TITLE=#{bdDiv}
+
 </select>
 
 <!-- 게시글 검색 -->
 <select id="searchBoard" resultType="kh.spring.dto.BoardDTO" parameterType="java.util.Map">
-	SELECT *
-		FROM (
-			SELECT SEQ, B.TITLE, CONTENTS, WRITER, WRITEDATE, D.TITLE DIV, ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RANK
-				FROM BOARD B, BOARD_DIVISION D
-			<trim prefix="WHERE">
-				<if test='search_keyword!="" and !"title_contents".equals(search_target)'>
-					${search_target} LIKE '%'||#{search_keyword}||'%'
-				</if>
-				<if test='search_keyword!="" and "title_contents".equals(search_target)'>
-					B.TITLE LIKE '%'||#{search_keyword}||'%' OR CONTENTS LIKE '%'||#{search_keyword}||'%'
-				</if>
-			</trim>
-			AND CODE=DIVISION_CODE AND D.TITLE=#{boardType}
-			)
+	SELECT SEQ, B.TITLE, CONTENTS, WRITER, WRITEDATE, D.TITLE DIV, ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RANK
+		FROM BOARD B, BOARD_DIVISION D
+		WHERE CODE=DIVISION_CODE AND D.TITLE=#{boardType}
+	<trim prefix="AND">
+		<if test='search_keyword!="" and !"title_contents".equals(search_target)'>
+			${search_target} LIKE '%'||#{search_keyword}||'%'
+		</if>
+		<if test='search_keyword!="" and "title_contents".equals(search_target)'>
+			B.TITLE LIKE '%'||#{search_keyword}||'%' OR CONTENTS LIKE '%'||#{search_keyword}||'%'
+		</if>
+	</trim>
 </select>
 
 <!-- 게시글 삭제 -->
@@ -175,10 +165,11 @@
 	ORDER BY U.ID
 </select>
 
+<!-- 학생 추가 -->
 <insert id="addStudent">
 	INSERT ALL
 		INTO USERS(ID, PW, NAME, BIRTH, GENDER, COUNTRY,INDATE, OUTDATE, COLCODE, DEPTCODE,ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE,BANK, ACCOUNTNUM)
-		VALUES(#{id},#{pw},#{name},#{birth},#{gender},#{country},#{inDate},#{outDate},#{colcode},#{deptcode},
+		VALUES(#{id},#{pw},#{name},#{birth},#{gender},#{country},#{inDate},#{outDate,jdbcType=DATE},#{colcode},#{deptcode},
 				#{zipcode},#{addr1},#{addr2},#{email},#{phone},#{bank},#{accountnum})
 		INTO STUDENTS(ID,STD_STATUS, STD_YEAR)
 		VALUES(#{id},#{std_status},#{std_year})
