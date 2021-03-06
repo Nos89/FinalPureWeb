@@ -91,6 +91,7 @@
 					let promotelink = '';
 					let href = '';
 					
+					console.log("${promote}");
 					<c:forEach var="i" items="${promote}">
 						tagp = '${i.contents}';
 						tagimg = $(tagp).children('img').eq(0);

@@ -56,7 +56,6 @@ public class AdminController {
 	private AdminService admService;
 	@Autowired
 	CommentService cservice;
-	
 	@Autowired
 	HttpSession session;
 	
@@ -173,7 +172,7 @@ public class AdminController {
 	@RequestMapping("writeBoard.nex")
 	public NexacroResult writePost(@ParamDataSet(name="in_board")BoardDTO dto) {
 		NexacroResult nr = new NexacroResult();
-		  dto.setWriter((String)session.getAttribute("loginID")); 
+		dto.setWriter((String)session.getAttribute("loginID")); 
 		int seq = admService.writePost(dto);
 		nr.addVariable("param",seq);
 		return nr;

@@ -79,6 +79,10 @@
 		where c.lec_code = o.oc_code and u.id = p.pro_id and p.pro_id = o.oc_pro_code and o.oc_code = s.code and c.id=#{id} and substr(to_char(o.oc_year,'yyyyMMdd'),3,2) = #{dto.year} and o.oc_semester = #{dto.semester} and c.cr_completeDiv = '완료상태'
 	</select>
 	
+	<delete id="withdrawMyClass">
+		delete from ClassRegistration where id=#{id} and lec_code=#{oc_code} and substr(to_char(cr_date,'yyyyMMdd'),3,2) = #{dto.year}
+	</delete>
+	
 	<select id="getMyClassList" resultType="kh.spring.dto.MyClassListDTO">
 		select DISTINCT c.cr_completeDiv,s.isu,o.oc_code,s.name oc_name,o.oc_targetlevel,u.name pro_name,o.oc_schedule,s.reco_score,o.oc_part
 			from users u,professor p,open_class o,subject s,ClassRegistration c
@@ -173,6 +177,14 @@
 	
 	<select id="checkMyMenu" resultType="kh.spring.dto.MyMenuDTO">
 		select * from mymenu where id=#{id} and MENU_NM=#{MENU_NM}
+	</select>
+	
+	<select id="getCollege" resultType="kh.spring.dto.CollegeDTO">
+		select * from college 
+	</select>
+	
+	<select id="getDepartment" resultType="kh.spring.dto.CollegeDTO">
+		select CONCAT(c.col_code,d.dept_code) col_code,d.dept_title col_title from department d, college c where d.col_code = c.col_code
 	</select>
 
 </mapper>

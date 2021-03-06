@@ -9,10 +9,11 @@ import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.ClassTimeDTO;
 import kh.spring.dto.ClassTimeSearchDTO;
+import kh.spring.dto.CollegeDTO;
 import kh.spring.dto.ConditionForRoomInfoDTO;
+import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.GotMyCertificationDTO;
 import kh.spring.dto.GradeListDTO;
-import kh.spring.dto.MailDTO;
 import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.MyClassDTO;
 import kh.spring.dto.MyClassListDTO;
@@ -98,7 +99,7 @@ public class StudentDAO {
 	}
 	
 	public int withdrawMyClass(Map myClass) {
-		return db.delete("Student.checkTakeOffApply",myClass);
+		return db.delete("Student.withdrawMyClass",myClass);
 	}
 	
 	public int countDown(String oc_code) {
@@ -184,5 +185,12 @@ public class StudentDAO {
 	public int checkMyMenu(Map menu) {
 		return db.selectList("Student.checkMyMenu",menu).size();
 	}
-
+	
+	public List<CollegeDTO> getCollege(){
+		return db.selectList("Student.getCollege");
+	}
+	
+	public List<CollegeDTO> getDepartment(){
+		return db.selectList("Student.getDepartment");
+	}
 }
