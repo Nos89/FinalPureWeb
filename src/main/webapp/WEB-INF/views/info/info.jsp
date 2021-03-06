@@ -25,12 +25,6 @@
 <body>
 	<!-- 테스트 -->
 	<script>
-		console.log("info.jsp 로딩 : ${loginID}");
-		console.log("userName : ${userName}");
-		console.log("userMajor : ${userMajor}");
-		console.log("${msg} : ${errMsg}");
-	</script>
-	<script>
 		if ("${errMsg}" != "") {
 			alert("${errMsg}");
 			location.href = "/info";
@@ -68,8 +62,7 @@
 								<div id=loginID>
 									<div id=idTitle>ID</div>
 									<input type=text name=id id=idText value="S-"
-										placeholder="ID 학번입력" required
-										value="${cookie.saveID!=''? cookie.saveID.value:'' }">
+										placeholder="ID 학번입력" required>
 								</div>
 								<div id=loginPW>
 									<div id=pwTitle>PW</div>
@@ -238,6 +231,21 @@
 												"비밀번호 찾기",
 												"width=500px; height=330px");
 									})
+							<c:if test="${cookie.saveID != null}">
+								console.log("${cookie.saveID.value}");
+								var savedID = "${cookie.saveID.value}";
+								var userType = savedID.substring(0, 1);
+								var id = savedID.substring(2, savedID.length);
+								console.log(userType);
+								if( userType == "A"){
+									loginAdmin.onclick();
+								} else if( userType == "S"){
+									loginStd.onclick();
+								} else if( userType == "P"){
+									loginPro.onclick();
+								}
+								$("#idText").val(savedID);
+							</c:if>
 						})
 			</script>
 		</c:when>
