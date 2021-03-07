@@ -53,10 +53,12 @@ public class MailController {
 	@RequestMapping("getOutBox.nex")
 	public NexacroResult getOutBox() {
 		NexacroResult nr = new NexacroResult();
-		List<MailDTO> list = mailService.getOutBox();
-		List<StudentDTO> list2 = mailService.getReceiverName();
+		String id = (String)session.getAttribute("loginID");
+		List<MailDTO> list = mailService.getOutBox(id);
+		List<StudentDTO> list2 = mailService.getMailName();
 		nr.addDataSet("out_mail",list);
 		nr.addDataSet("out_name",list2);
+		nr.addVariable("fv_loginID",id);
 		return nr;
 	}
 	
@@ -66,7 +68,9 @@ public class MailController {
 		String id = (String)session.getAttribute("loginID");
 		NexacroResult nr = new NexacroResult();
 		List<MailDTO> list = mailService.getInBox(id);
+		List<StudentDTO> list2 = mailService.getMailName();
 		nr.addDataSet("out_mail",list);
+		nr.addDataSet("out_name",list2);
 		return nr;
 	}
 	

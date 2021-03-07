@@ -28,13 +28,13 @@ public class MailService {
 	}
 	
 	// 수신인 이름
-	public List<StudentDTO> getReceiverName(){
-		return maildao.getReceiverName();
+	public List<StudentDTO> getMailName(){
+		return maildao.getMailName();
 	}
 	
 	// 발신메일함
-	public List<MailDTO> getOutBox(){
-		return maildao.getOutBox();
+	public List<MailDTO> getOutBox(String id){
+		return maildao.getOutBox(id);
 	}
 	
 	// 수신메일함
@@ -45,7 +45,7 @@ public class MailService {
 	// 읽음 표시
 	public int updateReadStatus(MailDTO_NEX dto) throws Exception {
 		MailDTO dto2 = new MailDTO(dto.getMail_seq(),dto.getReceiver(),dto.getTitle(),dto.getContents(),
-									ConvertDate.stringToDate(dto.getReceived_date()),dto.getRead());
+									ConvertDate.stringToDate(dto.getReceived_date()),dto.getRead(),dto.getSender());
 		return maildao.updateReadStatus(dto2);
 	}
 }

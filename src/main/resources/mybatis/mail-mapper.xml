@@ -4,7 +4,7 @@
 
 	<!-- 메일 작성 -->
 	<insert id="sendMail">
-		INSERT INTO MAIL VALUES(MAIL_SEQ.NEXTVAL,#{receiver},#{title},#{contents},SYSDATE, 0)
+		INSERT INTO MAIL VALUES(MAIL_SEQ.NEXTVAL,#{receiver},#{title},#{contents},SYSDATE,0,#{sender})
 	</insert>
 	
 	<!-- 수신인 목록 -->
@@ -19,13 +19,13 @@
 	</select>
 	
 	<!-- 수신인 이름 -->
-	<select id="getReceiverName" resultType="kh.spring.dto.StudentDTO">
+	<select id="getMailName" resultType="kh.spring.dto.StudentDTO">
 		SELECT ID, NAME FROM USERS
 	</select>
 	
 	<!-- 발신메일함  목록 -->
 	<select id="getOutBox" resultType="kh.spring.dto.MailDTO">
-		SELECT * FROM MAIL ORDER BY RECEIVED_DATE DESC
+		SELECT * FROM MAIL WHERE SENDER=#{value} ORDER BY RECEIVED_DATE DESC
 	</select>
 
 	<!-- 수신메일함 목록 -->

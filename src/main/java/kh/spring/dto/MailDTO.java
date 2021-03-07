@@ -9,12 +9,13 @@ public class MailDTO {
 	private String contents;
 	private Date received_date;
 	private int read;
+	private String sender;
 	
 	public MailDTO() {
 		super();
 	}
 
-	public MailDTO(int mail_seq, String receiver, String title, String contents, Date received_date, int read) {
+	public MailDTO(int mail_seq, String receiver, String title, String contents, Date received_date, int read, String sender) {
 		super();
 		this.mail_seq = mail_seq;
 		this.receiver = receiver;
@@ -22,6 +23,7 @@ public class MailDTO {
 		this.contents = contents;
 		this.received_date = received_date;
 		this.read = read;
+		this.sender = sender;
 	}
 
 	public int getMail_seq() {
@@ -71,6 +73,10 @@ public class MailDTO {
 	public void setRead(int read) {
 		this.read = read;
 	}
-	
-	
+	public String getSender() {
+		return sender;
+	}
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
 }
