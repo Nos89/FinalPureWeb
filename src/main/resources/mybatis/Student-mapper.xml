@@ -210,5 +210,13 @@
 	<select id="getDepartment" resultType="kh.spring.dto.CollegeDTO">
 		select CONCAT(c.col_code,d.dept_code) col_code,d.dept_title col_title from department d, college c where d.col_code = c.col_code
 	</select>
+	
+	<select id="checkGrade" resultType="Integer">
+		select count(*) from grade where std_id=#{id} and lec_code=#{oc_code}
+	</select>
+	
+	<delete id="delAttend">
+		delete from Pro_AttendMng where id=#{id}
+	</delete>
 
 </mapper>
