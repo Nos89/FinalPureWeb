@@ -22,6 +22,28 @@ public class ClassRegistrationService {
 		@Autowired
 		private ClassRegistrationDAO crdao;
 	
+		
+		public int login(String id, String pw) {
+			Map<String, String> param = new HashMap<>();
+			param.put("id", id);
+			param.put("pw", pw);
+			String result = "-1";
+			int sReturn  = -1;
+			 try {
+				 result = crdao.login(param);
+				 System.out.println(result);
+				 if(!result.contentEquals("재학")){
+						sReturn= -1;	
+					}else {
+						sReturn= 1;
+					}
+		 
+		        } catch (NullPointerException npe) {
+		        	 System.out.println(result);
+		        	sReturn=0;
+		        }
+			return sReturn;
+		}
 		public List<OpenClass_LecPlan> selectAllOpenClass(){
 			return ldao.selectAllOpenClass();
 		}
