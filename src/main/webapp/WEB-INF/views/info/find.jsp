@@ -6,6 +6,16 @@
 		<div class="row">
 			<div class="col-12 text-center"><h2>${ find == "id"? "아이디 " : "비밀번호 " } 찾기</h2></div>
 			<div class="col-12 findFormWrapper">
+				<div class="input-group mb-3">
+				  <div class="input-group-prepend">
+				    <label class="input-group-text" for="findUserType">구분</label>
+				  </div>
+				  <select class="custom-select" id="findUserType" name="userType">
+				    <option selected>선택해주세요.</option>
+				    <option value="S">학생</option>
+				    <option value="P">교수</option>
+				  </select>
+				</div>
 				<c:if test="${find != 'id' }">
 				<div class="input-group mb-3">
 				  <div class="input-group-prepend">
@@ -13,6 +23,15 @@
 				  </div>
 				  <input type="text" name="userID" class="form-control" placeholder="아이디를 입력해주세요.">
 				</div>
+				<script>
+					$(document).ready(function(){
+						var userType = "";
+						$("select[name=userType]").change(function(){
+							userType = $(this).val() + "-";
+							$("input[name=userID]").val(userType);
+						})
+					})
+				</script>
 				</c:if>
 				<div class="input-group mb-3">
 				  <div class="input-group-prepend">
@@ -70,6 +89,11 @@
 				var pn = $("input[name=firstPN]").val()+"-"+
 						$("input[name=secondPN]").val()+"-"+
 						$("input[name=thirdPN]").val();
+				console.log($("select[name=userType]").val());
+				if( $("select[name=userType]").val() == "선택해주세요." ){
+					alert("학생/교수 를 선택해주세요.");
+					return;
+				}
 				if( "${find}" == "id" ){
 					if( $("input[name=userName]").val() == "" ){
 						alert("이름을 입력해주세요.");
@@ -77,11 +101,12 @@
 					} else if( $("input[name=firstPN]").val() == "" || $("input[name=secondPN]").val() == "" || $("input[name=thirdPN]").val() == "" ){
 						alert("연락처를 입력해주세요.");
 						return;
-					}
+					} 
 					$.ajax({
 						url: "/info/findIDPW",
 						data: {
 							find : "${find}",
+							userType : $("select[name=userType]").val(),
 							userName : $("input[name=userName]").val(),
 							pn : pn
 						},
@@ -119,20 +144,23 @@
 						alert("연락처를 입력해주세요.");
 						return;
 					}
+					
 					$.ajax({
 						url: "/info/findIDPW",
 						data: {
 							find : "${find}",
+							userType : $("select[name=userType]").val(),
 							userID : $("input[name=userID]").val(),
 							userName : $("input[name=userName]").val(),
 							pn : pn
 						},
 						type: "post",
 					}).done(function(resp){
+						console.log(resp.result);
 						var sp = $("<span></span>");
 						sp.addClass("input-group-text");
 						
-						if( resp != "false" ){
+						if( resp.result != false ){
 							$(".resultDiv").html("");
 							$(".resultDiv").siblings().remove();
 							
@@ -181,6 +209,14 @@
 									})
 								}
 							})
+						} else {
+							$(".resultDiv").html("");
+							$(".resultDiv").siblings().remove();
+							
+							var sp = $("<span></span>");
+							sp.addClass("input-group-text");
+							sp.append("일치하는 정보가 없습니다.");
+							$(".resultDiv").append(sp);
 						}
 					})
 				}

@@ -63,17 +63,15 @@
 	</select>
 	<!-- 아이디 비번 찾기 -->
 	<select id="findIDPW" resultType="String">
-		select 
-			<choose>
-				<when test="find == 'id'">
-					id
-				</when>
-				<when test="find == 'pw'">
-					pw
-				</when>
-			</choose>
-		from users
-		where name = #{userName} and phone = #{pn}
+		select id from users where name = #{userName} and phone = #{pn} and 
+		<choose>
+			<when test="find == 'id'">
+				id like #{userType}||'%'
+			</when>
+			<when test="find == 'pw'">
+				id = #{userID}
+			</when>
+		</choose>
 	</select>
 	
 	<!-- 비밀번호 변경 -->

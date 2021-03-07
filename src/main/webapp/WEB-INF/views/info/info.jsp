@@ -221,7 +221,7 @@
 									function() {
 										var nw = window.open(
 												"/info/find?find=id", "아이디 찾기",
-												"width=500px; height=300px");
+												"width=500px; height=320px");
 									})
 
 							$("#findPW").click(
@@ -229,7 +229,7 @@
 										var nw = window.open(
 												"/info/find?find=pw",
 												"비밀번호 찾기",
-												"width=500px; height=330px");
+												"width=500px; height=380px");
 									})
 							<c:if test="${cookie.saveID != null}">
 								console.log("${cookie.saveID.value}");
