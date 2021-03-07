@@ -917,8 +917,6 @@
 				title = "${i}".split("/")[2];
 				classroom = "${i}".split("/")[3];
 				
-				//console.log(day +"  : "+ time + " : "+ title + " : "+ classroom);
-
 				if (day == "월") {
 					let lecture = $("<td></td>");
 					lecture.html(title);
@@ -933,7 +931,6 @@
 					$(".time").eq(time[0] - 1).append(lecture);
 				}
 				else if (day == "수") {
-					//console.log("수요일 if문 도착");
 					fillEmpty(2);
 					let lecture = $("<td></td>");
 					lecture.html(title);
