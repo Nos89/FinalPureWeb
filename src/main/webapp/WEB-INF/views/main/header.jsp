@@ -5,12 +5,12 @@
 			<!-- Header 부분입니다. 로고, 타이틀, 상단 메뉴 등을 넣어주세요. -->
 			<div class="col-12 h-50">
 				<div class="row">
-					<div class="col-1 d-none d-lg-block p-0 my-1">
+					<div class="col-1 d-none d-xl-block p-0 my-1">
 						<a href="/" class="navbar-brand">
 							<img src="/resources/img/info/gachalogo.png" class="headerLogo">
 						</a>
 					</div>
-					<div class="col-12 col-lg-11 text-center rounded mainMenu" >
+					<div class="col-12 col-xl-11 text-center rounded mainMenu" >
 						<div class="row navbarItemWrapper h-100">
 							<div class="col-3 menuItem pt-3" href="#introduce">
 								<a href="/main?pageGroup=intro&type=intro">학사 소개</a>
