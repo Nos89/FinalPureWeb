@@ -13,7 +13,7 @@
 	</select>
 	
 	<update id="updateLecturePlan">
-		update lecture set lec_title=#{lec_title},lec_schedule=#{lec_schedule},lec_summary=#{lec_summary},lec_way=#{lec_way},lec_book=#{lec_book},lec_eval=#{lec_eval} where lec_code=#{lec_code}
+		update lecture set lec_title=#{lec_title},lec_schedule=#{lec_schedule},lec_summary=#{lec_summary},lec_way=#{lec_way},lec_book=#{lec_book},lec_eval=#{lec_eval},lec_approval=#{lec_approval} where lec_code=#{lec_code}
 	</update>
 	<insert id="insertLecturePlan">
 	insert into lecture values(#{lec_code},#{lec_title},0,'',#{pro_name},#{lec_semester}
