@@ -168,10 +168,12 @@
 							var input1 = $("<input>");
 							input1.attr("type", "password");
 							input1.attr("name", "firstPW");
+							input1.attr("placeholder", "비밀번호 입력");
 							input1.addClass("form-control");
 							var input2 = $("<input>");
 							input2.attr("type", "password");
 							input2.attr("name", "secondPW");
+							input2.attr("placeholder", "비밀번호 확인");
 							input2.addClass("form-control");
 							$(".resultDiv").append(sp);
 							$(".resultDiv").parent().append(input1);
