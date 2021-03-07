@@ -79,9 +79,10 @@ public class InfoService {
 		return idao.getMainSchedule(mainDate);
 	}
 	
-	public String findIDPW(String find, String userID, String userName, String pn ) {
+	public String findIDPW(String find, String userType, String userID, String userName, String pn ) {
 		Map<String, String> parm = new HashMap<>();
 		parm.put("find", find);
+		parm.put("userType", userType);
 		parm.put("userID", userID);
 		parm.put("userName", userName);
 		parm.put("pn", pn);

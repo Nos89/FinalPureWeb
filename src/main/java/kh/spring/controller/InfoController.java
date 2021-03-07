@@ -390,9 +390,9 @@ public class InfoController {
 	
 	@RequestMapping(value="/findIDPW", produces="application/json; charset=utf8")
 	@ResponseBody
-	public String findIDPW(String find, String userID, String userName, String pn ) {
+	public String findIDPW(String find, String userID, String userName, String userType, String pn ) {
 		String result = "";
-		result = iservice.findIDPW(find, userID, userName, pn);
+		result = iservice.findIDPW(find, userType, userID, userName, pn);
 		JsonObject jo = new JsonObject();
 		if( result != null ) {
 			System.out.println(result.toString());
