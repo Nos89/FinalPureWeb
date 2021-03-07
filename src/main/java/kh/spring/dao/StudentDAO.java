@@ -74,6 +74,14 @@ public class StudentDAO {
 		return db.selectOne("Student.checkStatus",id);
 	}
 	
+	public int checkGrade(Map info) {
+		return db.selectOne("Student.checkGrade",info);
+	}
+	
+	public int delAttend(String id) {
+		return db.delete("Student.delAttend",id);
+	}
+	
 	public int returnCancel(String id) {
 		return db.delete("Student.returnCancel",id);
 	}

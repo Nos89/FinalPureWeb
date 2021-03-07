@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
@@ -283,13 +284,20 @@ public class StudentController {
 		return nr;
 	}
 	
+	@Transactional
 	@RequestMapping("/withdrawMyClass.nex")
 	public NexacroResult withdrawMyClass(@ParamDataSet(name="in_condition") ConditionForMyClassDTO cdto,@ParamVariable(name="oc_code") String oc_code) {
 		NexacroResult nr = new NexacroResult();
 		String id = (String)session.getAttribute("loginID");
+		if(sservice.checkGrade(id,oc_code) > 0) {
+			nr.addVariable("cancel", "점수를 취득한 과목은 취소가 불가능합니다.");
+			System.out.println("asd");
+			return nr;
+		}
 		int result = sservice.withdrawMyClass(cdto,id,oc_code);
 		if(result == 1) {
 			sservice.countDown(oc_code);
+			sservice.delAttend(id);
 		}
 		
 		return nr;
