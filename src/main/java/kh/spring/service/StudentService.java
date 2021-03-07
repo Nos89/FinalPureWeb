@@ -98,6 +98,17 @@ public class StudentService {
 		return sdao.checkStatus(id);
 	}
 	
+	public int checkGrade(String id, String oc_code) {
+		Map<String, Object> info = new HashMap<>();
+		info.put("id", id);
+		info.put("oc_code",oc_code);
+		return sdao.checkGrade(info);
+	}
+	
+	public int delAttend(String id) {
+		return sdao.delAttend(id);
+	}
+	
 	public int changeDeptApply(ChangeDeptApplyForStdDTO dto,Date date){
 		Map<String, Object> changeDept = new HashMap<>();
 		changeDept.put("dto", dto);
