@@ -397,6 +397,10 @@ public class AdminService {
 				dto.getExpectedReturnYear(), ConvertDate.stringToDate(dto.getApply_date()), dto.getApply_approve());
 		return admdao.takeOffApproval(dto2);
 	}
+	
+	public int stdTakeOffUpdate(String id) {
+		return admdao.stdTakeOffUpdate(id);
+	}
 
 	// 복학신청 목록
 	public List<ReturnApplyDTO> getReturnApply() {
@@ -409,6 +413,10 @@ public class AdminService {
 				dto.getDept_title(), dto.getReason(), dto.getReturn_year(), dto.getReturn_semester(),
 				ConvertDate.stringToDate(dto.getApply_date()), dto.getApply_approve());
 		return admdao.returnApproval(dto2);
+	}
+	
+	public int stdReturnUpdate(String id) {
+		return admdao.stdReturnUpdate(id);
 	}
 
 	// 학점포기신청 목록

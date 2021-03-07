@@ -301,6 +301,10 @@
 	UPDATE TAKEOFFAPPLY SET APPLY_APPROVE=#{apply_approve} WHERE SEQ=#{seq}
 </update>
 
+<update id="stdTakeOffUpdate">
+	UPDATE STUDENTS SET STD_STATUS='휴학' WHERE ID=#{id}
+</update>
+
 <select id="getReturnApply" resultType="kh.spring.dto.ReturnApplyDTO">
 	SELECT
     	SEQ, A.ID, NAME, COL_TITLE, DEPT_TITLE, REASON, RETURN_YEAR, RETURN_SEMESTER, APPLY_DATE, APPLY_APPROVE    
@@ -310,6 +314,10 @@
 
 <update id="returnApproval">
 	UPDATE RETURNAPPLY SET APPLY_APPROVE=#{apply_approve} WHERE SEQ=#{seq}
+</update>
+
+<update id="stdReturnUpdate">
+	UPDATE STUDENTS SET STD_STATUS='재학' WHERE ID=#{id}
 </update>
 
 <select id="getCreditRenounce" resultType="kh.spring.dto.CreditRenounceDTO">
