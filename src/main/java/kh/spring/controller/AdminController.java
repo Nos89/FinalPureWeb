@@ -182,7 +182,6 @@ public class AdminController {
 	// 게시글 수정폼
 	@RequestMapping("goModify")
 	public String goModifyPage(int seq, String commentPage, Model model, String type) {
-		System.out.println("type: " + type);
 		model.addAttribute("files", admService.getFiles(seq));
 		model.addAttribute("commentPage", this.convertPage(commentPage));
 		model.addAttribute("comments", cservice.getComments(seq, this.convertPage(commentPage)));
@@ -197,7 +196,7 @@ public class AdminController {
 
 	// 게시글 수정
 	@RequestMapping("modifyBoard.nex")
-	public NexacroResult modifyPost(@ParamDataSet(name = "in_board") BoardDTO_NEX dto) throws Exception {
+	public NexacroResult modifyPost(@ParamDataSet(name="in_board")BoardDTO_NEX dto) throws Exception {
 		admService.modifyPost(dto);
 		return new NexacroResult();
 	}
@@ -238,7 +237,6 @@ public class AdminController {
 	// 게시판 수정시 글에 첨부된 파일목록 불러오기
 	@RequestMapping("getFileList.nex")
 	public NexacroResult getFileList(@ParamVariable(name = "seq") int seq) {
-		System.out.println(seq);
 		NexacroResult nr = new NexacroResult();
 		List<FilesDTO> list = bService.getFiles(seq);
 		nr.addDataSet("out_ds", list);
@@ -525,6 +523,7 @@ public class AdminController {
 	@RequestMapping("getApplication.nex")
 	public NexacroResult getApplication(@ParamVariable(name = "applyFor") String applyFor) {
 		NexacroResult nr = new NexacroResult();
+		String id = (String)session.getAttribute("loginID");
 		if (applyFor.contentEquals("전과")) {
 			List<ChangeDeptApplyDTO> list = admService.getChangeDeptApply();
 			nr.addDataSet("out_changeDeptApply", list);
@@ -538,13 +537,13 @@ public class AdminController {
 			List<CreditRenounceDTO> list = admService.getCreditRenounceApply();
 			nr.addDataSet("out_creditRenounce", list);
 		}
+		nr.addVariable("fv_loginID",id);
 		return nr;
 	}
 
 	// 전과 처리
 	@RequestMapping("changeDeptApproval.nex")
-	public NexacroResult changeDeptApproval(@ParamDataSet(name = "in_changeDeptApply") ChangeDeptApplyDTO_NEX dto)
-			throws Exception {
+	public NexacroResult changeDeptApproval(@ParamDataSet(name = "in_changeDeptApply") ChangeDeptApplyDTO_NEX dto) throws Exception {
 		admService.changeDeptApproval(dto);
 		return new NexacroResult();
 	}
@@ -565,8 +564,7 @@ public class AdminController {
 
 	// 학첨포기 처리
 	@RequestMapping("creditRenounceApproval.nex")
-	public NexacroResult creditRenounceApproval(@ParamDataSet(name = "in_creditRenounce") CreditRenounceDTO_NEX dto)
-			throws Exception {
+	public NexacroResult creditRenounceApproval(@ParamDataSet(name = "in_creditRenounce") CreditRenounceDTO_NEX dto) throws Exception {
 		admService.creditRenounceApproval(dto);
 		return new NexacroResult();
 	}
