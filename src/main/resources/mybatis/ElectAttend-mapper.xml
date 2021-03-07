@@ -6,7 +6,7 @@
 	<select id="getClassList" resultType="kh.spring.dto.ElecSelectClassDTO">
 		select lec_code, lec_title from lecture 
 		where lec_code IN (select lec_code from classregistration 
-							where id=#{id} and to_char(cr_date, 'yyyymmdd') like to_char(#{regDate}, 'yyyymmdd') and cr_divide='정기' and cr_completeDiv='완료상태')
+							where id=#{id} and cr_divide='정기' and cr_completeDiv='완료상태')
 	</select>
 	
 	<!-- 과목 콤보박스에서 선택한 강의의 대한 정보 -->
@@ -14,7 +14,6 @@
 	select lec_title, lec_score, lec_schedule, lec_classroom, pro_name, lec_code from lecture 
 		where lec_code IN (select lec_code from classregistration 
 							where id=#{id} and 
-								to_char(cr_date, 'yyyymmdd') like to_char(#{regDate}, 'yyyymmdd') and 
 								lec_title=#{className} and
 							cr_divide='정기' and cr_completeDiv='완료상태')
 	</select> 
