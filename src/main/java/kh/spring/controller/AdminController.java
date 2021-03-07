@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nexacro.uiadapter17.spring.core.annotation.ParamDataSet;
@@ -588,6 +589,12 @@ public class AdminController {
 	@RequestMapping("modifyCloudStorage.nex")
 	public NexacroResult modifyStorage(@ParamDataSet(name = "in_cloudStorage") List<CloudStorageDTO> list) {
 		admService.modifyCloudStorage(list);
+		return new NexacroResult();
+	}
+	
+	@ExceptionHandler
+	public NexacroResult exceptionHandler(Exception e ) {
+		e.printStackTrace();
 		return new NexacroResult();
 	}
 }
