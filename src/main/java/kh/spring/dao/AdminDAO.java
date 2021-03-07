@@ -300,6 +300,16 @@ public class AdminDAO {
 	public int creditRenounceApproval(CreditRenounceDTO dto) {
 		return db.update("Admin.creditRenounceApproval",dto);
 	}
+	public int deleteAttendMNG( CreditRenounceDTO dto) {
+		return db.delete("Admin.deleteAttendMNG", dto);
+	}
+	public int deleteGrade( CreditRenounceDTO dto ) {
+		return db.delete("Admin.deleteGrade", dto);
+	}
+	
+	public int deleteClassReg( CreditRenounceDTO dto ) {
+		return db.delete("Admin.deleteClassReg", dto);
+	}
 	
 	// 웹하드 이용 명단
 	public List<CloudStorageDTO> getCloudStorage(){

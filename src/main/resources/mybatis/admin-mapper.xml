@@ -331,6 +331,22 @@
 	UPDATE CREDITRENOUNCE SET APPLY_APPROVE=#{apply_approve} WHERE SEQ=#{seq}
 </update>
 
+<!-- 학점포기 후 출결 삭제 -->
+<delete id="deleteAttendMNG">
+	delete from pro_attendmng where att_stdID = #{id} and 
+	att_leccode = ( select lec_code from lecture where lec_title = #{lec_title})
+</delete>
+<!-- 학점포기 후 수강신청 내역 삭제 -->
+<delete id="deleteClassReg">
+	delete from CLASSREGISTRATION where id = #{id} and 
+	lec_code = ( select lec_code from lecture where lec_title = #{lec_title})
+</delete>
+<!-- 학점포기 후 성적정보 삭제 -->
+<delete id="deleteGrade">
+	delete from GRADE where std_id = #{id} and 
+	lec_code = ( select lec_code from lecture where lec_title = #{lec_title})
+</delete>
+
 <select id="getCloudStorage" resultType="kh.spring.dto.CloudStorageDTO">
 	SELECT C.ID, NAME, MAXSTORAGE FROM CLOUDSTORAGE C, USERS U WHERE C.ID=U.ID ORDER BY C.ID
 </select>

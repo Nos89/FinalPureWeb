@@ -214,7 +214,7 @@ public class AdminService {
 	// 교수 목록 가져오기
 	public List<ProfessorDTO> getProfessor() throws Exception {
 		List<ProfessorDTO> list = admdao.getProfessor();
-		if( list.size() == 0 ) {
+		if (list.size() == 0) {
 			list.add(new ProfessorDTO());
 		}
 		return list;
@@ -247,7 +247,7 @@ public class AdminService {
 	// 학생 목록 가져오기
 	public List<StudentDTO> getStudentOnLoad() throws Exception {
 		List<StudentDTO> list = admdao.getStudentOnLoad();
-		if( list.size() == 0 ) {
+		if (list.size() == 0) {
 			list.add(new StudentDTO());
 		}
 		return list;
@@ -268,7 +268,7 @@ public class AdminService {
 		}
 		return result;
 	}
-	
+
 	// 학생 삭제
 	@Transactional
 	public int deleteStudent(String id, String filePath) {
@@ -286,19 +286,19 @@ public class AdminService {
 	private void deleteRootFolder(String id, String filePath) {
 		System.out.println(id + " : " + filePath);
 		Map<String, Object> delTarget = wservice.delFolder(0, id, id);
-		List<CloudDTO> flist = (List<CloudDTO>)delTarget.get("flist");
-		for( CloudDTO cdto : flist ) {
+		List<CloudDTO> flist = (List<CloudDTO>) delTarget.get("flist");
+		for (CloudDTO cdto : flist) {
 			wservice.delFile(cdto.getFile_savedName(), Integer.parseInt(cdto.getCloud_id()), filePath);
 		}
 	}
-	
+
 	// 병역 정보 가져오기
-	public List<MilitaryDTO> getMilInfo(){
+	public List<MilitaryDTO> getMilInfo() {
 		return admdao.getMilInfo();
 	}
-	
+
 	// 병역 정보 추가, 수정
-	public int modifyMilInfo(MilitaryDTO dto, int rowType ) throws Exception {
+	public int modifyMilInfo(MilitaryDTO dto, int rowType) throws Exception {
 		int result = 0;
 		if (rowType == DataSet.ROW_TYPE_INSERTED) {
 			result = admdao.addMilInfo(dto);
@@ -309,27 +309,27 @@ public class AdminService {
 		}
 		return result;
 	}
-	
+
 	// 강의계획서 가져오기
 	public List<LectureDTO> getSyllabus() {
 		return admdao.getSyllabus();
 	}
 
 	// 강의계획서 승인
-	@Transactional 
+	@Transactional
 	public int syllabusApproved(LectureDTO dto) {
-		int result =  admdao.syllabusApproved(dto);
-		if(result>0) {
+		int result = admdao.syllabusApproved(dto);
+		if (result > 0) {
 			result = admdao.updateOcSchedule(dto);
-			if(result>0) {
+			if (result > 0) {
 				return admdao.updateSubjectTitle(dto);
-			}else {
+			} else {
 				return -1;
 			}
-		}else {
+		} else {
 			return -1;
 		}
-		
+
 	}
 
 	// 강의계획서 반려
@@ -397,7 +397,7 @@ public class AdminService {
 				dto.getExpectedReturnYear(), ConvertDate.stringToDate(dto.getApply_date()), dto.getApply_approve());
 		return admdao.takeOffApproval(dto2);
 	}
-	
+
 	public int stdTakeOffUpdate(String id) {
 		return admdao.stdTakeOffUpdate(id);
 	}
@@ -414,7 +414,7 @@ public class AdminService {
 				ConvertDate.stringToDate(dto.getApply_date()), dto.getApply_approve());
 		return admdao.returnApproval(dto2);
 	}
-	
+
 	public int stdReturnUpdate(String id) {
 		return admdao.stdReturnUpdate(id);
 	}
@@ -425,18 +425,22 @@ public class AdminService {
 	}
 
 	// 학점포기 처리
+	@Transactional
 	public int creditRenounceApproval(CreditRenounceDTO_NEX dto) throws Exception {
 		CreditRenounceDTO dto2 = new CreditRenounceDTO(dto.getSeq(), dto.getId(), dto.getName(), dto.getCol_title(),
 				dto.getDept_title(), dto.getLec_title(), dto.getGrade_code(), dto.getReco_score(),
 				ConvertDate.stringToDate(dto.getApply_date()), dto.getApply_approve());
+		admdao.deleteAttendMNG(dto2);
+		admdao.deleteClassReg(dto2);
+		admdao.deleteGrade(dto2);
 		return admdao.creditRenounceApproval(dto2);
 	}
-	
+
 	// 웹하드 이용명단
-	public List<CloudStorageDTO> getCloudStorage(){
+	public List<CloudStorageDTO> getCloudStorage() {
 		return admdao.getCloudStorage();
 	}
-	
+
 	// 웹하드 용량 변경
 	public int modifyCloudStorage(List<CloudStorageDTO> list) {
 		return admdao.modifyCloudStorage(list);
