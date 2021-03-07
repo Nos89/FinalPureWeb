@@ -45,13 +45,14 @@ public class ClassRegistrationController {
 	@RequestMapping("login.nex")
 	public NexacroResult login(@ParamVariable(name="id")String id, @ParamVariable(name="pw")String pw) throws Exception {
 		NexacroResult nr = new NexacroResult();
-		int result = iservice.login(id, pw);
-		System.out.println(result);
-		if(result <1) {
+		int result = cservice.login(id, pw);
+		if(result== 0) {
 			nr.setErrorCode(0);
-			nr.setErrorMsg("아이디 또는 비밀번호가 틀립니다.");
-			
-		}else {
+			nr.setErrorMsg("아이디 또는 비밀번호가 틀립니다.");	
+		}else if(result==-1){
+			nr.setErrorCode(0);
+			nr.setErrorMsg("현재 재학중인 학생만 신청가능 합니다.");
+		}else if(result==1) {
 			nr.setErrorCode(1);
 			nr.setErrorMsg("로그인 성공");
 		}

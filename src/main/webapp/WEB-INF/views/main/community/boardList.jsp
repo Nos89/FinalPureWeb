@@ -56,7 +56,7 @@
 					</div>
 					<c:if test="${type != 'notice' }">
 						<div class="col-2 boardWriter text-center">
-							${ type == 'notice'? '관리자': type == 'anonym'? '익명' : i.writer}
+							${ type == 'notice'? '관리자': (type == 'anonym'? (loginID == i.writer? i.writer : '익명' ): i.writer)}
 						</div>
 					</c:if>
 					<div class="col-3 boardDate text-center">${i.writeDate}</div>

@@ -1,6 +1,7 @@
 package kh.spring.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,10 @@ public class ClassRegistrationDAO {
 	@Autowired
 	private SqlSession db;
 	
+	
+	public String login(Map<String,String> param) {
+		return db.selectOne("CR.login",param);
+	}
 	public List<ClassRegistrationDTO> selectCRList(String id){
 		return db.selectList("CR.selectMyList", id);
 	}
