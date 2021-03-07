@@ -95,6 +95,8 @@
 					<c:forEach var="i" items="${promote}">
 						tagp = '${i.contents}';
 						tagimg = $(tagp).children('img').eq(0);
+						tagimg.css("width", "200px");
+						tagimg.css("height", "150px");
 						
 						advItemWrapper = $("<div></div>");
 						advItemWrapper.addClass("advItemWrapper");

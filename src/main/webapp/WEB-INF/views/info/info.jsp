@@ -899,8 +899,7 @@
 				let fillEmpty = function(fillLength) {
 					for (let j = 0; j < 9; j++) {
 						if ($(".time").eq(j).children().length <= fillLength) {
-							let emptyLength = fillLength
-									- $(".time").eq(j).children().length + 1;
+							let emptyLength = fillLength - $(".time").eq(j).children().length + 1;
 							for (let k = 0; k < emptyLength; k++) {
 								let empty = $("<td></td>");
 								$(".time").eq(j).append(empty);
@@ -917,6 +916,8 @@
 				time = "${i}".split("/")[1];
 				title = "${i}".split("/")[2];
 				classroom = "${i}".split("/")[3];
+				
+				//console.log(day +"  : "+ time + " : "+ title + " : "+ classroom);
 
 				if (day == "월") {
 					let lecture = $("<td></td>");
@@ -924,35 +925,36 @@
 					lecture.attr("style","background-color:#c2786a;color:white;font-size:12px; font-weight:bold;");
 					$(".time").eq(time[0] - 1).append(lecture);
 				}
-				if (day == "화") {
+				else if (day == "화") {
 					fillEmpty(1);
 					let lecture = $("<td></td>");
 					lecture.html(title);
 					lecture.attr("style","background-color:#aec87a; color:white; font-size:12px; font-weight:bold;");
 					$(".time").eq(time[0] - 1).append(lecture);
 				}
-				if (day == "수") {
+				else if (day == "수") {
+					//console.log("수요일 if문 도착");
 					fillEmpty(2);
 					let lecture = $("<td></td>");
 					lecture.html(title);
-					lecture.attr("style","background-color:718dc3;color:white;font-size:12px; font-weight:bold;");
-					$(".time").eq(time[0] - 1).append(lecture);
+					lecture.attr("style","background-color:#718dc3;color:white;font-size:12px; font-weight:bold;");
+					$(".time").eq(time[0] - 1 ).append(lecture);
 				}
-				if (day == "목") {
+				else if (day == "목") {
 					fillEmpty(3);
 					let lecture = $("<td></td>");
-					lecture.attr("style","background-color:#ce9663;color:white;font-size:12px; font-weight:bold;");
 					lecture.html(title);
+					lecture.attr("style","background-color:#ce9663;color:white;font-size:12px; font-weight:bold;");
 					$(".time").eq(time[0] - 1).append(lecture);
 				}
-				if (day == "금") {
+				else if (day == "금") {
 					fillEmpty(4);
 					let lecture = $("<td></td>");
 					lecture.html(title);
 					lecture.attr("style","background-color:#8475bc;color:white;font-size:12px; font-weight:bold;");
 					$(".time").eq(time[0] - 1).append(lecture);
 				}
-				if (day == "토") {
+				else if (day == "토") {
 					fillEmpty(5);
 				}
 				</c:forEach>

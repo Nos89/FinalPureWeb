@@ -236,6 +236,7 @@ public class StudentController {
 		riList = sservice.roomInfo();
 		
 		nr.addDataSet("out_room",riList);
+		nr.addDataSet("out_build", sservice.buildInfo());
 		
 		return nr;
 	}

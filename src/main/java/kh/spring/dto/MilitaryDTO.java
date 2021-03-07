@@ -6,6 +6,7 @@ public class MilitaryDTO {
 	private String std_code;
 	private Date mil_inDate;
 	private Date mil_outDate;
+	private String mil_groupCode;
 	private String mil_title;  // 코드로 가져온 육군, 해군, 공군
 	private String mil_rank;
 	private String mil_code; // 군번
@@ -19,6 +20,18 @@ public class MilitaryDTO {
 		this.mil_rank = mil_rank;
 		this.mil_code = mil_code;
 	}
+	public MilitaryDTO(String std_code, Date mil_inDate, Date mil_outDate, String mil_groupCode, String mil_title,
+			String mil_rank, String mil_code) {
+		super();
+		this.std_code = std_code;
+		this.mil_inDate = mil_inDate;
+		this.mil_outDate = mil_outDate;
+		this.mil_groupCode = mil_groupCode;
+		this.mil_title = mil_title;
+		this.mil_rank = mil_rank;
+		this.mil_code = mil_code;
+	}
+
 	public MilitaryDTO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -41,6 +54,12 @@ public class MilitaryDTO {
 	public void setMil_outDate(Date mil_outDate) {
 		this.mil_outDate = mil_outDate;
 	}
+	public String getMil_groupCode() {
+		return mil_groupCode;
+	}
+	public void setMil_groupCode(String mil_groupCode) {
+		this.mil_groupCode = mil_groupCode;
+	}
 	public String getMil_title() {
 		return mil_title;
 	}
@@ -59,8 +78,4 @@ public class MilitaryDTO {
 	public void setMil_code(String mil_code) {
 		this.mil_code = mil_code;
 	}
-	
-	
-	
-	
 }

@@ -85,6 +85,10 @@
 		select b.build_name,CONCAT(CONCAT(c.build_code,'-'),c.room_num) room_num,c.room_use,c.room_max from buildinfo b,classroominfo c where b.build_code = c.build_code
 	</select>
 	
+	<select id="buildInfo" resultType="kh.spring.dto.BuildInfoDTO">
+		select * from buildInfo
+	</select>
+	
 	<select id="getClassTime" resultType="kh.spring.dto.ClassTimeDTO">
 		select o.oc_schedule,s.name s_name,u.name p_name from users u,open_class o,subject s where s.code = o.oc_code and o.oc_pro_code = u.id and o.oc_class_room = #{classroom} and substr(to_char(o.oc_year,'yyyyMMdd'),3,2) = #{year} and o.oc_semester = #{semester}
 	</select>

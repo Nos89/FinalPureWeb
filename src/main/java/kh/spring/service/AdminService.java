@@ -32,6 +32,7 @@ import kh.spring.dto.CreditRenounceDTO_NEX;
 import kh.spring.dto.DepartmentDTO;
 import kh.spring.dto.FilesDTO;
 import kh.spring.dto.LectureDTO;
+import kh.spring.dto.MilitaryDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.NoticeDTO_NEX;
 import kh.spring.dto.ProfessorDTO;
@@ -114,6 +115,7 @@ public class AdminService {
 
 	// 게시판 검색
 	public List<BoardDTO> searchBoard(String target, String keyword, String boardType) throws Exception {
+		System.out.println(target + " : " + keyword + " : " + boardType);
 		return admdao.searchBoard(target, keyword, boardType);
 	}
 
@@ -228,7 +230,6 @@ public class AdminService {
 			this.createRootFolder(dto.getId());
 		} else if (rowType == DataSet.ROW_TYPE_UPDATED) {
 			result = admdao.modifyProfessor(dto);
-			wservice.deleteUserStorage(dto.getId());
 		} else {
 			result = -1;
 		}
@@ -239,6 +240,7 @@ public class AdminService {
 	@Transactional
 	public int deleteProfessor(String id, String filePath) {
 		this.deleteRootFolder(id, filePath);
+		wservice.deleteUserStorage(id);
 		return admdao.deleteProfessor(id);
 	}
 
@@ -261,7 +263,6 @@ public class AdminService {
 			this.createRootFolder(dto.getId());
 		} else if (rowType == DataSet.ROW_TYPE_UPDATED) {
 			result = admdao.modifyStudent(dto);
-			wservice.deleteUserStorage(dto.getId());
 		} else {
 			result = -1;
 		}
@@ -272,6 +273,7 @@ public class AdminService {
 	@Transactional
 	public int deleteStudent(String id, String filePath) {
 		this.deleteRootFolder(id, filePath);
+		wservice.deleteUserStorage(id);
 		return admdao.deleteStudent(id);
 	}
 
@@ -288,6 +290,24 @@ public class AdminService {
 		for( CloudDTO cdto : flist ) {
 			wservice.delFile(cdto.getFile_savedName(), Integer.parseInt(cdto.getCloud_id()), filePath);
 		}
+	}
+	
+	// 병역 정보 가져오기
+	public List<MilitaryDTO> getMilInfo(){
+		return admdao.getMilInfo();
+	}
+	
+	// 병역 정보 추가, 수정
+	public int modifyMilInfo(MilitaryDTO dto, int rowType ) throws Exception {
+		int result = 0;
+		if (rowType == DataSet.ROW_TYPE_INSERTED) {
+			result = admdao.addMilInfo(dto);
+		} else if (rowType == DataSet.ROW_TYPE_UPDATED) {
+			result = admdao.modifyMilInfo(dto);
+		} else {
+			result = -1;
+		}
+		return result;
 	}
 	
 	// 강의계획서 가져오기

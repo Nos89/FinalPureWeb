@@ -20,8 +20,8 @@ import kh.spring.dto.GradeCardDTO;
 import kh.spring.dto.GradeDTO;
 import kh.spring.dto.LectureDTO;
 import kh.spring.dto.MilitaryDTO;
+import kh.spring.dto.MilitaryDTO_NEX;
 import kh.spring.dto.OpenClass_LecPlan;
-import kh.spring.dto.ProAttendMngDTO;
 import kh.spring.dto.ProAttendMngDTO_NEX;
 import kh.spring.dto.ProBusinessLog;
 import kh.spring.dto.ProBusinessLog_NEX;
@@ -68,9 +68,8 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping("/proInfoSave.nex")
-	public NexacroResult proInfoSave(@ParamDataSet(name="in_proInfo") ProfessorDTO_NEX pdto){
-		System.out.println("신호옴");
-		pservice.updateProInfo(pdto);
+	public NexacroResult proInfoSave(@ParamDataSet(name="in_proInfo") ProfessorDTO_NEX pdto, @ParamDataSet(name="in_proMil") MilitaryDTO_NEX mdto){
+		pservice.updateProInfo(pdto, mdto);
 		return new NexacroResult();
 	}
 	//학과정보보기
@@ -79,6 +78,7 @@ public class ProfessorController {
 	public NexacroResult departmentInfoOnload(@ParamVariable(name="id")String id) {
 		NexacroResult nr = new NexacroResult();
 		System.out.println(id);
+		
 		List<ProListDTO> list = new ArrayList<>();
 		list = pservice.selectProList(id);
 		
@@ -300,7 +300,6 @@ public class ProfessorController {
 		}
 		
 		return nr;
-		
 	}
 	@RequestMapping("/delProDiary.nex")
 	public NexacroResult delProDiary(@ParamDataSet(name="in_ds")List<ProBusinessLog_NEX> list) throws Exception{

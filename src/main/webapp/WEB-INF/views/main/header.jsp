@@ -124,6 +124,7 @@
 									<li><a href="/main?pageGroup=community&type=notice">공지사항</a></li>
 									<li><a href="/main?pageGroup=community&type=promote">홍보 게시판</a></li>
 									<li><a href="/main?pageGroup=community&type=event">행사 게시판</a></li>
+									<li><a href="/main?pageGroup=community&type=archive">학사 자료실</a></li>
 								</ol>
 							</div>
 						</div>	

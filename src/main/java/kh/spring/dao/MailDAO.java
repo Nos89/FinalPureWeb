@@ -26,13 +26,13 @@ public class MailDAO {
 	}
 	
 	// 수신인 이름
-	public List<StudentDTO> getReceiverName(){
-		return db.selectList("Mail.getReceiverName");
+	public List<StudentDTO> getMailName(){
+		return db.selectList("Mail.getMailName");
 	}
 	
 	// 발신메일함 목록
-	public List<MailDTO> getOutBox(){
-		return db.selectList("Mail.getOutBox");
+	public List<MailDTO> getOutBox(String id){
+		return db.selectList("Mail.getOutBox",id);
 	}
 	
 	// 수신메일함 목록

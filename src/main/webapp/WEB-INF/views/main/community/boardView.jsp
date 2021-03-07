@@ -1,19 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<div class="row writerWrapper">
 		<div class="col-8 border-bottom  mb-4 articleTitle">${article.title}</div>
-		<div class="col-2 border-bottom  mb-4 articleWriter">${ type == 'anonym'? '익명' : article.writer}</div>
+		<div class="col-2 border-bottom  mb-4 articleWriter">${ type == 'anonym'? (loginID == article.writer? article.writer : '익명') : article.writer}</div>
 		<div class="col-2 border-bottom  mb-4 articleWriteDate">${article.writeDate}</div>
 		<div class="col-12 summernote">
 			${article.contents}
 		</div>
-		<div class="col-12">
-			<div class="row mt-3 text-center">
+		<div class="col-12 border-top border-secondary">
+			<div class="row mt-3">
 				<c:if test="${loginID != article.writer}">
-				<div class="col-10"></div>
+					<div class="col-10">
 				</c:if>
-				<div class="col-8">
+				<c:if test="${loginID == article.writer}">
+					<div class="col-8">
+				</c:if>
 					<div class="row">
-						<div class="col-12 inputFileWrapper">
+						<div class="col-12 inputFileWrapper text-left">
 							<c:forEach var="i" items="${files}">
 							<div class="row">
 								<div class="col-12">
@@ -25,11 +27,12 @@
 					</div>
 				</div>
 				<c:if test="${loginID == article.writer}">
-				<div class="col-1"><button class="btn btn-outline-success btnModify" type="button">수정</button></div>
-				<div class="col-1"><button class="btn btn-outline-danger btnDelete" type="button">삭제</button></div>
+					<div class="col-1 text-center"><button class="btn btn-outline-success btnModify" type="button">수정</button></div>
+					<div class="col-1 text-center"><button class="btn btn-outline-danger btnDelete" type="button">삭제</button></div>
 				</c:if>
-				<div class="col-2"><button class="btn btn-outline-success btnList" type="button">목록으로</button></div>
+				<div class="col-2 text-center"><button class="btn btn-outline-success btnList" type="button">목록으로</button></div>
 			</div>
+			<c:if test="${type != 'notice' }">
 			<div class="row mt-3 commentWrapper">
 				<div class="col-12">
 					<div class="row">
@@ -49,7 +52,7 @@
 								<div class="col-12 commentsWriter">${i.writer}</div>
 								</c:if>
 								<c:if test="${type == 'anonym' }">
-								<div class="col-12 commentsWriter">${loginID == i.writer? '작성자':'익명' }</div>
+								<div class="col-12 commentsWriter">${loginID == i.writer? loginID : (i.writer == article.writer? '작성자' : '익명' )}</div>
 								<div class="realCommentsWriter">${i.writer}</div>								
 								</c:if>
 								<div class="col-12">${i.reg_date}</div>
@@ -86,10 +89,14 @@
 					</div>
 				</div>
 			</div>
+			</c:if>
 		</div>
 </div>
 <script>
 $(document).ready(function(){
+	
+	$(".summernote").css("min-height", "450px");
+	
 	if( "${loginID}" == "" ){
 		$(".btnInputComment").attr("disabled", true);
 		$(".inputComment").attr("placeholder", "로그인을 해주세요.");
@@ -317,6 +324,8 @@ let ajaxComments = function(data){
 		} else if( "${type}" == "anonym" ){
 			let writer = "익명";
 			if( "${loginID}" == responseComments[i].writer ){
+				writer = responseComments[i].writer;
+			} else if ( "${loginID}" == "${article.writer}"){
 				writer = "작성자";
 			}
 			$(".commentsList").append(

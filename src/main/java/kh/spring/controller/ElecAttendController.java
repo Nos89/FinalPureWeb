@@ -27,7 +27,7 @@ public class ElecAttendController {
 	@Autowired
 	private ElecAttendService eservice;
 
-	// 전자출결 페이지로 이
+	// 전자출결 페이지로 이동
 	@RequestMapping("/toElectAttend")
 	public String toElectAttend(Model model) {
 		model.addAttribute("first", "첫화면에 사진");
@@ -50,7 +50,7 @@ public class ElecAttendController {
 		String sem = arr[1];
 
 		if (sem.contentEquals("1학기")) {
-			String regDate = arr[0] + "/03/05";
+			String regDate = arr[0] + "/03/06";
 			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
 			Date date_registration = sdf.parse(regDate);
 			List<ElecSelectClassDTO> classList = eservice.getClassList(id, date_registration);
@@ -116,15 +116,10 @@ public class ElecAttendController {
 	//전자출결 학생 등록정보
 	@RequestMapping("/idRegisterInfo")
 	public String idRegisterInfo(Model model) {
-		String id = (String) session.getAttribute("loginID");
-		String name = (String) session.getAttribute("userName");
-		String major = (String) session.getAttribute("userMajor");
-		
 		model.addAttribute("regInfoBtn", "등록정보");
-		model.addAttribute("id", id);
-		model.addAttribute("name", name);
-		model.addAttribute("major", major);
-		
+		model.addAttribute("id", (String) session.getAttribute("loginID"));
+		model.addAttribute("name", (String) session.getAttribute("userName"));
+		model.addAttribute("major", (String) session.getAttribute("userMajor"));
 		return "/info/electAttend";
 	}
 	
