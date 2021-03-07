@@ -549,6 +549,7 @@ public class AdminController {
 	}
 
 	// 휴학 처리
+	@Transactional
 	@RequestMapping("/takeOffApproval.nex")
 	public NexacroResult takeOffApproval(@ParamDataSet(name = "in_takeOffApply") TakeOffApplyDTO_NEX dto,@ParamVariable(name="id") String id) throws Exception {
 		admService.stdTakeOffUpdate(id);
@@ -558,6 +559,7 @@ public class AdminController {
 	}
 
 	// 복학 처리
+	@Transactional
 	@RequestMapping("/returnApproval.nex")
 	public NexacroResult returnApproval(@ParamDataSet(name = "in_returnApply") ReturnApplyDTO_NEX dto,@ParamVariable(name="id") String id) throws Exception {
 		admService.stdReturnUpdate(id);
