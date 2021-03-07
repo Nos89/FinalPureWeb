@@ -549,16 +549,20 @@ public class AdminController {
 	}
 
 	// 휴학 처리
-	@RequestMapping("takeOffApproval.nex")
-	public NexacroResult takeOffApproval(@ParamDataSet(name = "in_takeOffApply") TakeOffApplyDTO_NEX dto) throws Exception {
+	@RequestMapping("/takeOffApproval.nex")
+	public NexacroResult takeOffApproval(@ParamDataSet(name = "in_takeOffApply") TakeOffApplyDTO_NEX dto,@ParamVariable(name="id") String id) throws Exception {
+		admService.stdTakeOffUpdate(id);
 		admService.takeOffApproval(dto);
+		System.out.println("확인1");
 		return new NexacroResult();
 	}
 
 	// 복학 처리
-	@RequestMapping("returnApproval.nex")
-	public NexacroResult returnApproval(@ParamDataSet(name = "in_returnApply") ReturnApplyDTO_NEX dto) throws Exception {
+	@RequestMapping("/returnApproval.nex")
+	public NexacroResult returnApproval(@ParamDataSet(name = "in_returnApply") ReturnApplyDTO_NEX dto,@ParamVariable(name="id") String id) throws Exception {
+		admService.stdReturnUpdate(id);
 		admService.returnApproval(dto);
+		System.out.println("확인2");
 		return new NexacroResult();
 	}
 

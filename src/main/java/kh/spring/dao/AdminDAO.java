@@ -273,6 +273,10 @@ public class AdminDAO {
 		return db.update("Admin.takeOffApproval",dto);
 	}
 	
+	public int stdTakeOffUpdate(String id) {
+		return db.update("Admin.stdTakeOffUpdate",id);
+	}
+	
 	// 복학신청 목록
 	public List<ReturnApplyDTO> getReturnApply(){
 		return db.selectList("Admin.getReturnApply");
@@ -281,6 +285,10 @@ public class AdminDAO {
 	// 복학신청 처리
 	public int returnApproval(ReturnApplyDTO dto){
 		return db.update("Admin.returnApproval",dto);
+	}
+	
+	public int stdReturnUpdate(String id) {
+		return db.update("Admin.stdReturnUpdate",id);
 	}
 	
 	// 학점포기신청 목록
