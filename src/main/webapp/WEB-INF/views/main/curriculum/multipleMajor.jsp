@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/resources/jsp/head.jsp"%>
 <%@ include file="../header.jsp"%>
-<div class="row body mt-3">
+<div class="row body mt-3 mx-1">
 	<!-- Body 부분 입니다. 왼쪽 메뉴, 메인 컨텐츠 부분 넣어주세요. -->
 	<%@ include file="../info/left.jsp"%>
 	 <div class="col-10">

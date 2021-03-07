@@ -221,7 +221,7 @@
 									function() {
 										var nw = window.open(
 												"/info/find?find=id", "아이디 찾기",
-												"width=500px; height=300px");
+												"width=500px; height=320px");
 									})
 
 							$("#findPW").click(
@@ -229,7 +229,7 @@
 										var nw = window.open(
 												"/info/find?find=pw",
 												"비밀번호 찾기",
-												"width=500px; height=330px");
+												"width=500px; height=380px");
 									})
 							<c:if test="${cookie.saveID != null}">
 								console.log("${cookie.saveID.value}");
@@ -917,8 +917,6 @@
 				title = "${i}".split("/")[2];
 				classroom = "${i}".split("/")[3];
 				
-				//console.log(day +"  : "+ time + " : "+ title + " : "+ classroom);
-
 				if (day == "월") {
 					let lecture = $("<td></td>");
 					lecture.html(title);
@@ -933,7 +931,6 @@
 					$(".time").eq(time[0] - 1).append(lecture);
 				}
 				else if (day == "수") {
-					//console.log("수요일 if문 도착");
 					fillEmpty(2);
 					let lecture = $("<td></td>");
 					lecture.html(title);

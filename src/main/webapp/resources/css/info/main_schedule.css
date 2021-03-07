@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-.subTitle{margin:20px;}
 .title{ float: none; margin: 0 auto}
 .title>select{text-align: center}
 .title>button{border:none; border-radius:2px; background-color:#063976; color:white;}
