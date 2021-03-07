@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<div class="row writerWrapper">
 		<div class="col-8 border-bottom  mb-4 articleTitle">${article.title}</div>
-		<div class="col-2 border-bottom  mb-4 articleWriter">${ type == 'anonym'? '익명' : article.writer}</div>
+		<div class="col-2 border-bottom  mb-4 articleWriter">${ type == 'anonym'? (loginID == article.writer? article.writer : '익명') : article.writer}</div>
 		<div class="col-2 border-bottom  mb-4 articleWriteDate">${article.writeDate}</div>
 		<div class="col-12 summernote">
 			${article.contents}
@@ -52,7 +52,7 @@
 								<div class="col-12 commentsWriter">${i.writer}</div>
 								</c:if>
 								<c:if test="${type == 'anonym' }">
-								<div class="col-12 commentsWriter">${loginID == i.writer? '작성자':'익명' }</div>
+								<div class="col-12 commentsWriter">${loginID == i.writer? loginID : (i.writer == article.writer? '작성자' : '익명' )}</div>
 								<div class="realCommentsWriter">${i.writer}</div>								
 								</c:if>
 								<div class="col-12">${i.reg_date}</div>
@@ -324,6 +324,8 @@ let ajaxComments = function(data){
 		} else if( "${type}" == "anonym" ){
 			let writer = "익명";
 			if( "${loginID}" == responseComments[i].writer ){
+				writer = responseComments[i].writer;
+			} else if ( "${loginID}" == "${article.writer}"){
 				writer = "작성자";
 			}
 			$(".commentsList").append(
