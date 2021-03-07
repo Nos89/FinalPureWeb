@@ -300,7 +300,6 @@ public class ProfessorController {
 		}
 		
 		return nr;
-		
 	}
 	@RequestMapping("/delProDiary.nex")
 	public NexacroResult delProDiary(@ParamDataSet(name="in_ds")List<ProBusinessLog_NEX> list) throws Exception{
