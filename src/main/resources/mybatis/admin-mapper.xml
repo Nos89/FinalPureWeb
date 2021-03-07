@@ -127,7 +127,7 @@
 
 <insert id="addProfessor">
 	INSERT ALL
-		INTO USERS(ID, PW, NAME, BIRTH, GENDER, COUNTRY,INDATE, OUTDATE, COLCODE, DEPTCODE,ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE,BANK, ACCOUNTNUM)
+		INTO USERS(ID, PW, NAME, BIRTH, GENDER, COUNTRY, INDATE, OUTDATE, COLCODE, DEPTCODE, ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE, BANK, ACCOUNTNUM)
 		VALUES(#{id},#{pw},#{name},#{birth},#{gender},#{country},#{inDate},#{outDate,jdbcType=DATE},#{colcode},#{deptcode},
 				#{zipcode},#{addr1},#{addr2},#{email},#{phone},#{bank},#{accountnum})
 		INTO PROFESSOR(PRO_ID,PRO_OFFICE,PRO_STATUS)
@@ -182,7 +182,7 @@
 
 <insert id="addStudent">
 	INSERT ALL
-		INTO USERS(ID, PW, NAME, BIRTH, GENDER, COUNTRY,INDATE, OUTDATE, COLCODE, DEPTCODE,ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE,BANK, ACCOUNTNUM)
+		INTO USERS(ID, PW, NAME, BIRTH, GENDER, COUNTRY, INDATE, OUTDATE, COLCODE, DEPTCODE, ZIPCODE, ADDR1, ADDR2, EMAIL, PHONE, BANK, ACCOUNTNUM)
 		VALUES(#{id},#{pw},#{name},#{birth},#{gender},#{country},#{inDate},#{outDate,jdbcType=DATE},#{colcode},#{deptcode},
 				#{zipcode},#{addr1},#{addr2},#{email},#{phone},#{bank},#{accountnum})
 		INTO STUDENTS(ID,STD_STATUS, STD_YEAR)

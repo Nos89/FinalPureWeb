@@ -33,14 +33,14 @@
 	
 	<!-- 수강과목 (학생), 강의시간표-->
 	<select id="takingClass_std" resultType="kh.spring.dto.TakingClassDTO">
-	    select lec_isu,lec_title,lec_schedule,lec_classroom from lecture 
+	    select * from lecture 
 		where lec_code in 
 			(select lec_code from classregistration where cr_divide='정기' and cr_completediv='완료상태' and  id=#{id} and to_char(cr_date, 'yyyymmdd') = to_char(#{classRegDate},'yyyymmdd'))			
 	</select>
 	
 	<!-- 강의과목 (교수), 강의시간표-->
 	<select id="takingClass_pro" resultType="kh.spring.dto.TakingClassDTO">
-		select lec_isu,lec_title,lec_score,lec_schedule,lec_classroom from lecture 
+		select * from lecture 
 		where lec_code IN  
 			(select oc_code from open_class where oc_semester=#{semester}  and to_char(oc_year, 'yyyymmdd') = to_char(#{classOpenDate},'yyyymmdd') AND oc_pro_code=#{id})
 	</select>
