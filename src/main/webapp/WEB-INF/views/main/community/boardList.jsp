@@ -76,7 +76,7 @@
 			<div class="col-2">
 				<select class="searchType" name="searchType">
 					<option value="title">제목</option>
-					<c:if test="${type != 'notice' }">
+					<c:if test="${type != 'notice' && type != 'anonym'}">
 					<option value="writer">작성자</option>
 					</c:if>
 				</select>

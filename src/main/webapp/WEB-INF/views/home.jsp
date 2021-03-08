@@ -101,19 +101,26 @@
 						advItemWrapper = $("<div></div>");
 						advItemWrapper.addClass("advItemWrapper");
 						//promoteTItle = $('<p>${i.title}</p>');
-						promoteTitle = $('<p class="mt-2"></p>');
-						promoteTitle.append('${i.title}');
-						promoteDate = $("<p>${i.writeDate}</p>");
+						//promoteTitle = $('<p class="mt-2"></p>');
+						//promoteTitle.append('${i.title}');
+						//promoteDate = $("<p>${i.writeDate}</p>");
 						
-						promotelink = $("<a></a>");
+						//promotelink = $("<a></a>");
 						href = "/main/board.view?pageGroup=community&type=promote&seq=${i.seq}&page=1&purp=view";
-						promotelink.attr("href", href);
+						
+						
+						tagimg.css("cursor", "pointer");
+						tagimg.click(function(){
+							location.href = href;
+						})
+						
+						//promotelink.attr("href", href);
 						//promotelink.attr("target", "_blank");
-						promotelink.append(promoteTitle);
+						//promotelink.append(promoteTitle);
 						
 						advItemWrapper.append(tagimg);
-						advItemWrapper.append(promotelink);
-						advItemWrapper.append(promoteDate);
+						//advItemWrapper.append(promotelink);
+						//advItemWrapper.append(promoteDate);
 						$(".advSlider").append(advItemWrapper);
 					</c:forEach>
 					
@@ -122,9 +129,9 @@
 						minSlides: 1,
 						maxSlides: 10,
 						slideWidth: 200,
-						slideHeight: 300,
+						slideHeight: 150,
 						moveSlides: 1,
-						captions: true,
+						captions: false,
 						pager: false,
 						autoHover: true,
 						stopAutoOnClick: true,
